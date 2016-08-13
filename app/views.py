@@ -14,6 +14,7 @@ def register_student(request):
  	if request.is_secure():
 		checkin_json = request.POST['body']
 		pair= json.loads(checkin_json)
+		print pair
 		obj=Student()
 		obj.user=pair["name"]
 		obj.email=pair["email"]
