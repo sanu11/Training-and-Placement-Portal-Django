@@ -13,7 +13,7 @@ def index(request):
 def register_student(request):
  	if request.is_secure():
 		checkin_json = request.POST['body']
-		pair= json.loads(request.POST)
+		pair= json.loads(checkin_json)
 		obj=Student()
 		obj.user=pair["name"]
 		obj.email=pair["email"]
