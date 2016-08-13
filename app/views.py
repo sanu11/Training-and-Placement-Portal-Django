@@ -6,7 +6,7 @@ from django.conf import settings
 from datetime import datetime
 from django.views.decorators.csrf import *
 def index(request):
-   return render(request,'samp.html',{})        
+   return render(request,'app/samp.html',{})        
 
 @csrf_exempt
 def register_student(request):
