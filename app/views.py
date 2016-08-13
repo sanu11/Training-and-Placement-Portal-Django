@@ -12,8 +12,7 @@ def index(request):
 @csrf_exempt
 def register_student(request):
  	if request.is_secure():
-		checkin_json = request.POST['body']
-		pair= json.loads(checkin_json)
+		pair= json.loads(request.body)
 		print pair
 		obj=Student()
 		obj.user=pair["name"]
