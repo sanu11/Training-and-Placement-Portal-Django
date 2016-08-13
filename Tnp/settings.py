@@ -16,7 +16,7 @@ import os
 
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
@@ -101,18 +101,25 @@ WSGI_APPLICATION = 'Tnp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 
-#         # 'NAME': 'Tnp',
-#         # 'USER': 'root',
-#         # 'PASSWORD': 'jerrysan',
-#         # 'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-#         # 'PORT': '3306',
-#     }
-# }
+        # 'NAME': 'Tnp',
+        # 'USER': 'root',
+        # 'PASSWORD': 'jerrysan',
+        # 'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        # 'PORT': '3306',
+    }
+}
+
+DATABASES={}
+# Parse database configuration from $DATABASE_URL
+DATABASES['default'] = dj_database_url.config()
+
+# Enable Connection Pooling (if desired)
+DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
 
 # Password validation
