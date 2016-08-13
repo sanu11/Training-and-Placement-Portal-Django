@@ -3,5 +3,5 @@ from app import views
 
 urlpatterns = [
 	url(r'^$', views.index),
-	url(r'register$',views.register_student),
+	url(r'register/$',views.register_student),
 ]

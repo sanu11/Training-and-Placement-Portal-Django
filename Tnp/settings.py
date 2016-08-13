@@ -34,7 +34,7 @@ STATICFILES_DIRS = (
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-#till here
+# #till here
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)

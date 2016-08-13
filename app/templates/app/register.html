@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>
+Welcome
+</title>
+</head>
+
+
+<body>
+	<form action="/register/" method="post" id="register">
+		                    {% csrf_token %}
+
+	<label > Name :</label> <textarea  name="name"> </textarea><br>
+	<label> Email:</label> <textarea  name="email"> </textarea><br>
+	<label> Password :</label> <textarea  name="password"> </textarea><br>
+	<label> Address :</label> <textarea  name="address"> </textarea><br>
+	<label> Phone :</label> <textarea  name="phone"> </textarea><br>
+	<label> Branch :</label> <textarea  name="branch"> </textarea><br>
+	<label> Average :</label> <textarea  name="average"> </textarea><br>
+	<label> Placed :</label> <textarea  name="placed"> </textarea><br>
+	<label> Active_back:</label> <textarea  name="active_back"> </textarea><br>
+	<label> Num_back :</label> <textarea  name="num_back"> </textarea><br>
+	<input type= "submit" value="Submit"> 
+</form>
+</body>
+
+
+</html>
