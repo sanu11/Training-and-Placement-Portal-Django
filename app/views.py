@@ -25,7 +25,7 @@ def register_student(request):
 		obj.placed=pair["placed"]
 		obj.active_back=pair["active_back"]
 		obj.num_back=pair["num_back"]
-		# print obj.user ,obj.email,obj.password,obj.address,obj.phone,obj.branch,obj.average,obj.placed,obj.num_back,obj.active_back
+		print obj.user ,obj.email,obj.password,obj.address,obj.phone,obj.branch,obj.average,obj.placed,obj.num_back,obj.active_back
 		obj.save()
 		return HttpResponse("Data saved")
 
