@@ -37,7 +37,7 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 DATABASES={}
-Parse database configuration from $DATABASE_URL
+# Parse database configuration from $DATABASE_URL
 DATABASES['default'] = dj_database_url.config()
 
 WSGI_APPLICATION = 'Tnp.wsgi.application'
