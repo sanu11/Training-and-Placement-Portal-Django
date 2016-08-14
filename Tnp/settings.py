@@ -34,6 +34,14 @@ STATICFILES_DIRS = (
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
+
+
+DATABASES={}
+Parse database configuration from $DATABASE_URL
+DATABASES['default'] = dj_database_url.config()
+
+WSGI_APPLICATION = 'Tnp.wsgi.application'
+
 # #till here
 
 
@@ -96,28 +104,22 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Tnp.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 
-        # 'NAME': 'Tnp',
-        # 'USER': 'root',
-        # 'PASSWORD': 'jerrysan',
-        # 'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        # 'PORT': '3306',
-    }
-}
-
-DATABASES={}
-# Parse database configuration from $DATABASE_URL
-DATABASES['default'] = dj_database_url.config()
+#         # 'NAME': 'Tnp',
+#         # 'USER': 'root',
+#         # 'PASSWORD': 'jerrysan',
+#         # 'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+#         # 'PORT': '3306',
+#     }
+# }
 
 # Enable Connection Pooling (if desired)
 # DATABASES['default']['ENGINE'] = 'django_postgrespool'
