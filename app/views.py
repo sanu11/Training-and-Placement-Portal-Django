@@ -11,22 +11,22 @@ def index(request):
 
 @csrf_exempt
 def register_student(request):
-	if(request.method=="POST"):
-		# data = json.loads(request.POST)
-		obj=Student()
-		obj.user=request.POST["name"]
-		obj.email=request.POST["email"]
-		obj.password=request.POST["password"]
-		obj.address=request.POST["address"]
-		obj.phone=request.POST["phone"]
-		obj.branch=request.POST["branch"]
-		obj.average=request.POST["average"]
-		obj.placed=request.POST["placed"]
-		obj.active_back=request.POST["active_back"]
-		obj.num_back=request.POST["num_back"]
-		# print obj.user ,obj.email,obj.password,obj.address,obj.phone,obj.branch,obj.average,obj.placed,obj.num_back,obj.active_back
-		obj.save()
-		return HttpResponse("Data saved")
+	# if(request.method=="POST"):
+	data = json.loads(request.POST)
+	obj=Student()
+	obj.user=data["name"]
+	obj.email=data["email"]
+	obj.password=data["password"]
+	obj.address=data["address"]
+	obj.phone=data["phone"]
+	obj.branch=data["branch"]
+	obj.average=data["average"]
+	obj.placed=data["placed"]
+	obj.active_back=data["active_back"]
+	obj.num_back=data["num_back"]
+	# print obj.user ,obj.email,obj.password,obj.address,obj.phone,obj.branch,obj.average,obj.placed,obj.num_back,obj.active_back
+	obj.save()
+	return HttpResponse("Data saved")
 
 
 @csrf_exempt
