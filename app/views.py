@@ -22,8 +22,8 @@ def register_student(request):
 	obj.branch=data["branch"]
 	obj.average=data["average"]
 	obj.placed=data["placed"]
-	obj.active_back=data["active_back"]
-	obj.num_back=data["num_back"]
+	obj.active_back=data["activeBack"]
+	obj.num_back=data["numBack"]
 	# print obj.user ,obj.email,obj.password,obj.address,obj.phone,obj.branch,obj.average,obj.placed,obj.num_back,obj.active_back
 	obj.save()
 	return HttpResponse("Data saved")
