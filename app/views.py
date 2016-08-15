@@ -12,7 +12,7 @@ def index(request):
 @csrf_exempt
 def register_student(request):
 	# if(request.method=="POST"):
-	data = json.loads(request.POST)
+	data = json.loads(request.body)
 	obj=Student()
 	obj.user=data["name"]
 	obj.email=data["email"]
