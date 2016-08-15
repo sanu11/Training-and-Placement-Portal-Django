@@ -42,7 +42,7 @@ DATABASES['default'] = dj_database_url.config()
 
 WSGI_APPLICATION = 'Tnp.wsgi.application'
 
-# #till here
+# # #till here
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
