@@ -9,12 +9,10 @@ class Student(models.Model):
 	email=models.EmailField(max_length=60,unique=True)
 	password=models.CharField(max_length=12)
 	phone=models.CharField(max_length=10)
-	address=models.CharField(max_length=200)
 	branch=models.IntegerField(default=0)
 	average=models.FloatField()
 	placed=models.IntegerField(default=0)
 	active_back=models.IntegerField(default=0)
-	num_back=models.IntegerField(default=0)
 	company_id=models.IntegerField(default=-1)
 #	resume=models.FileField()
 

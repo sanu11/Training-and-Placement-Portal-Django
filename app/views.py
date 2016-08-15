@@ -17,17 +17,13 @@ def register_student(request):
 	obj.user=data["name"]
 	obj.email=data["email"]
 	obj.password=data["password"]
-	obj.address=data["address"]
 	obj.phone=data["phone"]
 	obj.branch=data["branch"]
 	obj.average=data["average"]
 	obj.placed=data["placed"]
 	obj.active_back=data["activeBack"]
-	obj.num_back=data["numBack"]
-	# print obj.user ,obj.email,obj.password,obj.address,obj.phone,obj.branch,obj.average,obj.placed,obj.num_back,obj.active_back
 	obj.save()
 	return HttpResponse("Data saved")
-
 
 @csrf_exempt
 def register_company(request):
