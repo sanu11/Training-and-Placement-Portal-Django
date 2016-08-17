@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 
-#for heroku
+# uncomment this for deploying to heroku
 
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
@@ -34,8 +34,6 @@ STATICFILES_DIRS = (
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-
-
 DATABASES={}
 # Parse database configuration from $DATABASE_URL
 DATABASES['default'] = dj_database_url.config()
@@ -43,6 +41,25 @@ DATABASES['default'] = dj_database_url.config()
 WSGI_APPLICATION = 'Tnp.wsgi.application'
 
 # # #till here
+
+
+#comment this when deploying to heroku
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+
+#         'NAME': 'Tnp',
+#         'USER': 'root',
+#         'PASSWORD': 'jerrysan',
+#         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+#         'PORT': '3306',
+#     }
+# }
+
+#till here
+
+
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -107,19 +124,6 @@ TEMPLATES = [
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-
-#         'NAME': 'Tnp',
-#         'USER': 'root',
-#         'PASSWORD': 'jerrysan',
-#         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-#         'PORT': '3306',
-#     }
-# }
 
 # Enable Connection Pooling (if desired)
 # DATABASES['default']['ENGINE'] = 'django_postgrespool'
