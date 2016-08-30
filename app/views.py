@@ -43,17 +43,20 @@ def register_company(request):
 	obj.save()
 	return HttpResponse("Data saved")
 # Create your views here.
+
 @csrf_exempt
 def login_details(request):
 	data = json.loads(request.body)
 	get_mail=data["email"]
 	get_pw=data["password"]
-	if(Senior.objects.filter(email=get_mail).exists()):
-		obj=Junior.objects.get(email=get_mail)
+	if(Student.objects.filter(email=get_mail).exists()):
+		obj=Student.objects.get(email=get_mail)
 		if(obj.password==get_pw):
 			return HttpResponse("Valid user")
 		else:
 			return HttpResponse("Incorrect Password")
 	else:
 		return HttpResponse("User not found")
+
+
 
