@@ -27,19 +27,33 @@ def register_student(request):
 
 @csrf_exempt
 def register_company(request):
-	if(request.method=="POST"):
-		obj=Company()
-		obj.id=request.POST["id"]
-		obj.name=request.POST["name"]
-		obj.criteria=request.POST["criteria"]
-		obj.salary=request.POST["salary"]
-		obj.reg_start_date=request.POST["reg_start_date"]
-		obj.reg_end_date=request.POST["reg_end_date"]
-		obj.ppt_date=request.POST[ppt_date]
-		obj.apti_date=request.POST["apti_date"]
-		obj.interview_date=request.POST["interview_date"]
-		obj.last_date=request.POST["last_date"]
-		obj.hired_people=request.POST["hired_people"]
-		obj.save()
-		return HttpResponse("Data saved")
+	data = json.loads(request.body)
+	obj=Company()
+	obj.id=data["id"]
+	obj.name=data["name"]
+	obj.criteria=data["criteria"]
+	obj.salary=data["salary"]
+	obj.reg_start_date=data["reg_start_date"]
+	obj.reg_end_date=data["reg_end_date"]
+	obj.ppt_date=data[ppt_date]
+	obj.apti_date=data["apti_date"]
+	obj.interview_date=data["interview_date"]
+	obj.last_date=data["last_date"]
+	obj.hired_people=data["hired_people"]
+	obj.save()
+	return HttpResponse("Data saved")
 # Create your views here.
+@csrf_exempt
+def login_details(request):
+	data = json.loads(request.body)
+	get_mail=data["email"]
+	get_pw=data["password"]
+	if(Senior.objects.filter(email=get_mail).exists()):
+		obj=Junior.objects.get(email=get_mail)
+		if(obj.password==get_pw):
+			return HttpResponse("Valid user")
+		else:
+			return HttpResponse("Incorrect Password")
+	else:
+		return HttpResponse("User not found")
+
