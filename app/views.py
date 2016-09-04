@@ -29,7 +29,6 @@ def register_student(request):
 def register_company(request):
 	data = json.loads(request.body)
 	obj=Company()
-	obj.id=data["id"]
 	obj.name=data["name"]
 	obj.criteria=data["criteria"]
 	obj.salary=data["salary"]
@@ -38,7 +37,7 @@ def register_company(request):
 	obj.ppt_date=data[ppt_date]
 	obj.apti_date=data["apti_date"]
 	obj.interview_date=data["interview_date"]
-	obj.last_date=data["last_date"]
+	# obj.last_date=data["last_date"]
 	obj.hired_people=data["hired_people"]
 	obj.save()
 	return HttpResponse("Data saved")

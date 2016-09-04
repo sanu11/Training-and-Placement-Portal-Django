@@ -17,10 +17,10 @@ class Student(models.Model):
 #	resume=models.FileField()
 
 	def __str__(self):
-		return  self.user
+		return  self.email
 
 class Company(models.Model):
-	c_id=models.IntegerField(unique=True)
+	c_id=models.AutoField(primary_key=True)
 	name=models.CharField(max_length=40)
 	criteria=models.FloatField()
 	salary=models.IntegerField()
@@ -29,10 +29,8 @@ class Company(models.Model):
 	ppt_date=models.DateTimeField()
 	apti_date=models.DateTimeField()
 	interview_date=models.DateTimeField()
-	last_date=models.DateTimeField()
+	# last_date=models.DateTimeField()
 	hired_people=models.IntegerField(default=0)
 
 	def __str__(self):
 		return  self.name
-
-
