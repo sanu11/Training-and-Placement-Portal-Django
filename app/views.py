@@ -52,7 +52,7 @@ def login_details(request):
 	if(Student.objects.filter(email=get_mail).exists()):
 		obj=Student.objects.get(email=get_mail)
 		if(obj.password==get_pw):
-			return HttpResponse("Valid user")
+			return HttpResponse(obj.user)
 		else:
 			return HttpResponse("Incorrect Password")
 	else:
