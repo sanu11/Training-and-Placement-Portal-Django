@@ -40,7 +40,7 @@ DATABASES['default'] = dj_database_url.config()
 
 WSGI_APPLICATION = 'Tnp.wsgi.application'
 
-# # #till here
+# #till here
 
 
 #comment this when deploying to heroku
@@ -90,6 +90,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'gcm'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -166,3 +167,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+GCM_APIKEY = "<api_key>"
