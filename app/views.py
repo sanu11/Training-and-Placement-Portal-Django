@@ -58,4 +58,6 @@ def login_details(request):
 		return HttpResponse("User not found")
 
 
+def message(request):
+	
 
