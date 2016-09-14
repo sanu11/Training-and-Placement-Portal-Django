@@ -59,5 +59,6 @@ def login_details(request):
 
 
 def message(request):
-	
+	data = json.loads(request.body)
+	get_msg=data["message"]
 
