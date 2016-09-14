@@ -24,6 +24,7 @@ class Company(models.Model):
 	name=models.CharField(max_length=40)
 	criteria=models.FloatField()
 	salary=models.IntegerField()
+	other_details=models.CharField(max_length=1000,default="")
 	reg_start_date=models.DateTimeField()
 	reg_end_date=models.DateTimeField()
 	ppt_date=models.DateTimeField()
