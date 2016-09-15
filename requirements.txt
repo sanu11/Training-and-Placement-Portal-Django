@@ -1,4 +1,4 @@
-Django==1.10
+Django==1.9.9
 argparse==1.2.1
 dj-database-url==0.4.1
 gunicorn==19.6.0
