@@ -38,7 +38,8 @@ class Company(models.Model):
 
 class Message(models.Model):
 	msg_id=models.AutoField(primary_key=True)
-	message=models.CharField(max_length=1000,default="")
-
+	title=models.CharField(max_length=200,default="")
+	message=models.CharField(max_length=10000,default="")
+	
 	def __str__(self):
-		return self.message
+		return self.title
