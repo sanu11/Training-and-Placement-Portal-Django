@@ -35,7 +35,6 @@ def register_company(request):
 	obj.criteria=data["criteria"]
 	obj.salary=data["salary"]
 	obj.ppt_date=data["ppt_date"]
-	obj.apti_date=data["apti_date"]
 	obj.back=data["back"]
 	obj.save()
 	return HttpResponse("Data saved")
