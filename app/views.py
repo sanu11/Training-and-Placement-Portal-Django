@@ -69,6 +69,7 @@ def message(request):
 @csrf_exempt
 def notify(request):
 	data = json.loads(request.body)
-	get_msg=data["message"]
+	title=data["title"]
+	body=data["body"]
 	Device = get_device_model()
-	Device.objects.all().send_message({'message':get_msg})
+	Device.objects.all().send_message({'title':title,'body':body})
