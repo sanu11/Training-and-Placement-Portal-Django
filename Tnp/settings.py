@@ -14,48 +14,48 @@ import os
 
 # uncomment this for deploying to heroku
 
-# import dj_database_url
-# db_from_env = dj_database_url.config(conn_max_age=500)
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
 
 
-# # Static files (CSS, JavaScript, Images)
-# # https://docs.djangoproject.com/en/1.9/howto/static-files/
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-# PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-# STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-# STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+STATIC_URL = '/static/'
 
 
-# # Extra places for collectstatic to find static files.
-# STATICFILES_DIRS = (
-#     os.path.join(PROJECT_ROOT, 'static'),
-# )
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static'),
+)
 
-# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-# DATABASES={}
-# # Parse database configuration from $DATABASE_URL
-# DATABASES['default'] = dj_database_url.config()
+DATABASES={}
+# Parse database configuration from $DATABASE_URL
+DATABASES['default'] = dj_database_url.config()
 
-# WSGI_APPLICATION = 'Tnp.wsgi.application'
+WSGI_APPLICATION = 'Tnp.wsgi.application'
 
 # #till here
 
 
 #comment this when deploying to heroku
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 
-        'NAME': 'Tnp',
-        'USER': 'root',
-        'PASSWORD': 'jerrysan',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
-    }
-}
+#         'NAME': 'Tnp',
+#         'USER': 'root',
+#         'PASSWORD': 'jerrysan',
+#         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+#         'PORT': '3306',
+#     }
+# }
 
 #till here
 
