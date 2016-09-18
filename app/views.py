@@ -34,13 +34,9 @@ def register_company(request):
 	obj.name=data["name"]
 	obj.criteria=data["criteria"]
 	obj.salary=data["salary"]
-	obj.reg_start_date=data["reg_start_date"]
-	obj.reg_end_date=data["reg_end_date"]
-	obj.ppt_date=data[ppt_date]
+	obj.ppt_date=data["ppt_date"]
 	obj.apti_date=data["apti_date"]
-	obj.interview_date=data["interview_date"]
-	# obj.last_date=data["last_date"]
-	obj.hired_people=data["hired_people"]
+	obj.back=data["back"]
 	obj.save()
 	return HttpResponse("Data saved")
 # Create your views here.

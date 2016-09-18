@@ -25,9 +25,11 @@ class Company(models.Model):
 	criteria=models.FloatField()
 	salary=models.IntegerField()
 	other_details=models.CharField(max_length=1000,default="")
+	ppt_date=models.DateTimeField()
+	back=models.CharField(max_length=100)
+
 	reg_start_date=models.DateTimeField()
 	reg_end_date=models.DateTimeField()
-	ppt_date=models.DateTimeField()
 	apti_date=models.DateTimeField()
 	interview_date=models.DateTimeField()
 	# last_date=models.DateTimeField()
