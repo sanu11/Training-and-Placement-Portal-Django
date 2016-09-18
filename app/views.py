@@ -5,6 +5,8 @@ from django.http import HttpResponse
 from django.conf import settings
 from datetime import datetime
 from django.views.decorators.csrf import *
+from gcm.models import get_device_model
+
 import json
 def index(request):
    return render(request,'app/register.html',{})        
@@ -57,8 +59,14 @@ def login_details(request):
 	else:
 		return HttpResponse("User not found")
 
+
 @csrf_exempt
 def message(request):
 	data = json.loads(request.body)
 	get_msg=data["message"]
 
+
+@csrf_exempt
+def notify(request):
+	Device = get_device_model()
+	Device.objects.all().send_message({'message':'my test message'})
