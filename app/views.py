@@ -34,6 +34,7 @@ def register_company(request):
 	obj.name=data["name"]
 	obj.criteria=data["criteria"]
 	obj.salary=data["salary"]
+	obj.other_details=data["other_details"]
 	obj.ppt_date=data["ppt_date"]
 	obj.back=data["back"]
 	obj.save()

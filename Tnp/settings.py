@@ -44,18 +44,18 @@ WSGI_APPLICATION = 'Tnp.wsgi.application'
 
 
 #comment this when deploying to heroku
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # DATABASES = {
+    #     'default': {
+    #         'ENGINE': 'django.db.backends.mysql',
+    #         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 
-#         'NAME': 'Tnp',
-#         'USER': 'root',
-#         'PASSWORD': 'jerrysan',
-#         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-#         'PORT': '3306',
-#     }
-# }
+    #         'NAME': 'Tnp',
+    #         'USER': 'root',
+    #         'PASSWORD': 'jerrysan',
+    #         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+    #         'PORT': '3306',
+    #     }
+    # }
 
 #till here
 
