@@ -57,7 +57,7 @@ def login_details(request):
 	else:
 		return HttpResponse("User not found")
 
-
+@csrf_exempt
 def message(request):
 	data = json.loads(request.body)
 	get_msg=data["message"]
