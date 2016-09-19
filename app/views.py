@@ -79,4 +79,4 @@ def notify(request):
 	title=data["title"]
 	body=data["body"]
 	Device = get_device_model()
-	Device.objects.all().send_message({'type':'gen_msg',title':title,'body':body})
+	Device.objects.all().send_message({'type':'gen_msg','title':title,'body':body})
