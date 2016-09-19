@@ -30,16 +30,27 @@ def register_student(request):
 @csrf_exempt
 def register_company(request):
 	data = json.loads(request.body)
+	name=data["name"]
+	criteria=data["criteria"]
+	salary=data["salary"]
+	other_details=data["other_details"]
+	ppt_date=data["ppt_date"]
+	back=data["back"]
+
+	#add to database
 	obj=Company()
-	obj.name=data["name"]
-	obj.criteria=data["criteria"]
-	obj.salary=data["salary"]
-	obj.other_details=data["other_details"]
-	obj.ppt_date=data["ppt_date"]
-	obj.back=data["back"]
+	obj.name=name
+	obj.criteria=criteria
+	obj.salary=salary
+	obj.other_details=other_details
+	obj.ppt_date=ppt_date
+	obj.back=back
 	obj.save()
+
+	#send notification
+	Device = get_device_model()
+	Device.objects.all().send_message({'type':'company','name':name,'criteria':criteria,'salary':salary,'other_details':other_details,'ppt_date':ppt_date,'back':back})
 	return HttpResponse("Data saved")
-# Create your views here.
 
 @csrf_exempt
 def login_details(request):
@@ -68,4 +79,4 @@ def notify(request):
 	title=data["title"]
 	body=data["body"]
 	Device = get_device_model()
-	Device.objects.all().send_message({'title':title,'body':body})
+	Device.objects.all().send_message({'type':'gen_msg',title':title,'body':body})
