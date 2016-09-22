@@ -30,9 +30,10 @@ class Company(models.Model):
 
 	reg_start_date=models.DateTimeField(null=True,blank=True)
 	reg_end_date=models.DateTimeField(null=True,blank=True)
-	apti_date=models.DateTimeField(null=True,blank=True)
-	interview_date=models.DateTimeField(null=True,blank=True)
-	# last_date=models.DateTimeField()
+	hired_people=models.IntegerField(default=0)
+
+	#apti_date=models.DateTimeField(null=True,blank=True)
+	#last_date=models.DateTimeField()
 	hired_people=models.IntegerField(default=0)
 
 	def __str__(self):

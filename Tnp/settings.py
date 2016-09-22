@@ -42,7 +42,6 @@ WSGI_APPLICATION = 'Tnp.wsgi.application'
 
 # #till here
 
-
 #comment this when deploying to heroku
     # DATABASES = {
     #     'default': {

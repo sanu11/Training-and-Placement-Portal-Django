@@ -67,10 +67,6 @@ def login_details(request):
 		return HttpResponse("User not found")
 
 
-@csrf_exempt
-def message(request):
-	data = json.loads(request.body)
-	get_msg=data["message"]
 
 
 @csrf_exempt
@@ -78,5 +74,9 @@ def notify(request):
 	data = json.loads(request.body)
 	title=data["title"]
 	body=data["body"]
+	obj=Message()
+	obj.title=title
+	obj.message=body
+	obj.save()
 	Device = get_device_model()
 	Device.objects.all().send_message({'type':'gen_msg','title':title,'body':body})
