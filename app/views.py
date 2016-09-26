@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Student,Company
+from .models import Student,Company,Message
 from django.http import HttpRequest,HttpResponse, HttpResponseRedirect
 from django.http import HttpResponse
 from django.conf import settings
