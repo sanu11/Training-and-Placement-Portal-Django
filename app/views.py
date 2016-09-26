@@ -71,6 +71,8 @@ def login_details(request):
 def sync_data(request):
 	objs=Company.objects.all()
 	data = serializers.serialize("json", objs)
+	dump=json.dumps(objs)
+	print dump
 	print data[1:-1]
 	return HttpResponse(data[1:-1],content_type='json')
 
