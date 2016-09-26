@@ -72,7 +72,7 @@ def sync_data(request):
 	objs=Company.objects.all()
 	data = serializers.serialize("json", objs)
 	print data[1:-1]
-	return HttpResponse(data,content_type='json')
+	return HttpResponse(data[1:-1],content_type='json')
 
 @csrf_exempt
 def notify(request):
