@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.conf import settings
 from datetime import datetime
 from django.views.decorators.csrf import *
+from django.core import serializers
 from gcm.models import get_device_model
 
 import json
@@ -66,7 +67,11 @@ def login_details(request):
 	else:
 		return HttpResponse("User not found")
 
-
+@csrf_exempt
+def sync_data(request):
+	objs=Company.objects.all()
+	data = serializers.serialize("json", objs)
+	return HttpResponse(data,content_type='json')
 
 
 @csrf_exempt
