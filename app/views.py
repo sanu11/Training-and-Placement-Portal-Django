@@ -71,8 +71,8 @@ def login_details(request):
 def sync_data(request):
 	objs=Company.objects.all()
 	data = serializers.serialize("json", objs)
+	print data
 	return HttpResponse(data,content_type='json')
-
 
 @csrf_exempt
 def notify(request):
