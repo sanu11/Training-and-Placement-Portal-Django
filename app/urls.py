@@ -7,5 +7,6 @@ urlpatterns = [
 	url(r'register_company/$',views.register_company),
 	url(r'login/$',views.login_details),
 	url(r'notify/$',views.notify),
+	url(r'sync/$',views.sync_data),
 
 ]
