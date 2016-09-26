@@ -7,8 +7,8 @@ from datetime import datetime
 from django.views.decorators.csrf import *
 from django.core import serializers
 from gcm.models import get_device_model
-
 import json
+
 def index(request):
    return render(request,'app/register.html',{})        
 
@@ -85,3 +85,4 @@ def notify(request):
 	obj.save()
 	Device = get_device_model()
 	Device.objects.all().send_message({'type':'gen_msg','title':title,'body':body})
+	return HttpResponse("Message sent")
