@@ -8,5 +8,5 @@ urlpatterns = [
 	url(r'login/$',views.login_details),
 	url(r'notify/$',views.notify),
 	url(r'sync/$',views.sync_data),
-
+	url(r'update_company/$',views.update_company),
 ]
