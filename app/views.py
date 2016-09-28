@@ -53,7 +53,7 @@ def register_company(request):
 	Device.objects.all().send_message({'type':'company','name':name,'criteria':criteria,'salary':salary,'other_details':other_details,'ppt_date':ppt_date,'back':back})
 	return HttpResponse("Data saved")
 
-
+@csrf_exempt
 def update_company(request):
 	data = json.loads(request.body)	
 	name=data["name"]
