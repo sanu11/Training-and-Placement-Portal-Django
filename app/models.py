@@ -5,6 +5,7 @@ from datetime import datetime
 
 # Create your models here.
 class Student(models.Model):
+	
 	user=models.CharField(max_length=50)
 	email=models.EmailField(max_length=60,unique=True)
 	password=models.CharField(max_length=12)
@@ -20,17 +21,18 @@ class Student(models.Model):
 		return  self.email
 
 class Company(models.Model):
+
 	c_id=models.AutoField(primary_key=True)
 	name=models.CharField(max_length=40)
 	criteria=models.FloatField()
 	salary=models.IntegerField()
-	other_details=models.CharField(max_length=1000,null=True,blank=True)
-	ppt_date=models.DateTimeField(null=True,blank=True)
 	back=models.CharField(max_length=100)
-
+	ppt_date=models.DateTimeField(null=True,blank=True)
+	other_details=models.CharField(max_length=1000,null=True,blank=True)
+	
 	reg_start_date=models.DateTimeField(null=True,blank=True)
 	reg_end_date=models.DateTimeField(null=True,blank=True)
-	hired_people=models.IntegerField(default=0)
+	reg_link=models.CharField(max_length=1000,null=True,blank=True)
 
 	#apti_date=models.DateTimeField(null=True,blank=True)
 	#last_date=models.DateTimeField()
@@ -40,6 +42,7 @@ class Company(models.Model):
 		return  self.name
 
 class Message(models.Model):
+
 	msg_id=models.AutoField(primary_key=True)
 	title=models.CharField(max_length=200,default="")
 	message=models.CharField(max_length=10000,default="")
