@@ -50,7 +50,7 @@ def register_company(request):
 
 	#send notification
 	Device = get_device_model()
-	Device.objects.all().send_message({'type':'company','name':name,'criteria':criteria,'salary':salary,'other_details':other_details,'ppt_date':ppt_date,'back':back})
+	Device.objects.all().send_message({'type':'company_reg','name':name,'criteria':criteria,'salary':salary,'other_details':other_details,'ppt_date':ppt_date,'back':back})
 	return HttpResponse("Data saved")
 
 @csrf_exempt
@@ -67,6 +67,11 @@ def update_company(request):
 	obj.reg_link=reg_link
 	obj.other_details=obj.other_details + " " +  other_details
 	obj.save()
+
+	#send notifications
+	Device = get_device_model()
+	Device.objects.all().send_message({'type':'company_update','name':name,'reg_link':reg_link ,'reg_start':reg_start, 'reg_end':reg_end ,'other_details':other_details})
+
 	return HttpResponse("Data saved")
 
 @csrf_exempt
