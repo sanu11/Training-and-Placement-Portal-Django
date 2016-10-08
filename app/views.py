@@ -34,8 +34,7 @@ def register_company(request):
 	criteria=data["criteria"]
 	salary=data["salary"]
 	other_details=data["other_details"]
-	if(ppt_date!=""):
-		ppt_date=data["ppt_date"]
+	ppt_date=data["ppt_date"]
 	back=data["back"]
 
 	#add to database
@@ -44,7 +43,8 @@ def register_company(request):
 	obj.criteria=criteria
 	obj.salary=salary
 	obj.other_details=other_details
-	obj.ppt_date=ppt_date
+	if(ppt_date!=""):
+		obj.ppt_date=ppt_date
 	obj.back=back
 	obj.save()
 
