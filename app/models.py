@@ -24,20 +24,19 @@ class Company(models.Model):
 
 	c_id=models.AutoField(primary_key=True)
 	name=models.CharField(max_length=40)
-	criteria=models.FloatField()
-	salary=models.IntegerField()
-	back=models.CharField(max_length=100)
+	criteria=models.FloatField(blank=True,null=True)
+	salary=models.IntegerField(blank=True,null=True)
+	back=models.CharField(max_length=100,blank=True,null=True)
 	ppt_date=models.DateTimeField(null=True,blank=True)
 	other_details=models.CharField(max_length=1000,null=True,blank=True)
 	
 	reg_start_date=models.DateTimeField(null=True,blank=True)
 	reg_end_date=models.DateTimeField(null=True,blank=True)
 	reg_link=models.CharField(max_length=1000,null=True,blank=True)
+	hired_people=models.IntegerField(default=0)
 
 	#apti_date=models.DateTimeField(null=True,blank=True)
 	#last_date=models.DateTimeField()
-	hired_people=models.IntegerField(default=0)
-
 	def __str__(self):
 		return  self.name
 
