@@ -35,7 +35,8 @@ def register_company(request):
 	criteria=data["criteria"]
 	salary=data["salary"]
 	other_details=data["other_details"]
-	ppt_date=data["ppt_date"]
+	if(ppt_date!="")
+		ppt_date=data["ppt_date"]
 	back=data["back"]
 
 	#add to database
