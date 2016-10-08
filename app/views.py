@@ -14,7 +14,6 @@ def index(request):
 
 @csrf_exempt
 def register_student(request):
-	# if(request.method=="POST"):
 	data = json.loads(request.body)
 	obj=Student()
 	obj.user=data["name"]
@@ -35,7 +34,7 @@ def register_company(request):
 	criteria=data["criteria"]
 	salary=data["salary"]
 	other_details=data["other_details"]
-	if(ppt_date!="")
+	if(ppt_date!=""):
 		ppt_date=data["ppt_date"]
 	back=data["back"]
 
