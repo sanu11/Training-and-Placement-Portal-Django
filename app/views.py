@@ -31,8 +31,8 @@ def register_student(request):
 def register_company(request):
 	data = json.loads(request.body)
 	name=data["name"]
-	criteria=data["criteria"]
-	print "hello criteria" , criteria
+	print "hello criteria" , data["criteria"]
+	criteria = data["criteria"]
 	salary=data["salary"]
 	other_details=data["other_details"]
 	ppt_date=data["ppt_date"]
