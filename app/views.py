@@ -40,9 +40,10 @@ def register_company(request):
 	#add to database
 	obj=Company()
 	obj.name=name
-	if(criteria!=0):
+	if(criteria!=null):
 		obj.criteria=criteria
-	if(salary!=0):
+		
+	if(salary!=null):
 		obj.salary=salary
 	obj.other_details=other_details
 	if(ppt_date!=""):
@@ -111,4 +112,3 @@ def notify(request):
 	Device = get_device_model()
 	Device.objects.all().send_message({'type':'gen_msg','title':title,'body':body})
 	return HttpResponse("Message sent")
-
