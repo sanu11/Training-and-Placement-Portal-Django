@@ -30,12 +30,9 @@ def register_student(request):
 @csrf_exempt
 def register_company(request):
 	data = json.loads(request.body)
-	print data
-	name=data["name"]
-	if(data["criteria"] != None):
-		criteria = data["criteria"]
-	else:
-		criteria= None
+
+	name=data["name"]	
+	criteria = data["criteria"]
 	salary=data["salary"]
 	other_details=data["other_details"]
 	ppt_date=data["ppt_date"]
@@ -44,13 +41,10 @@ def register_company(request):
 	#add to database
 	obj=Company()
 	obj.name=name
-	
 	obj.criteria=criteria
-		
 	obj.salary=salary
 	obj.other_details=other_details
-	if(ppt_date!=""):
-		obj.ppt_date=ppt_date
+	obj.ppt_date=ppt_date
 	obj.back=back
 	obj.save()
 
@@ -98,8 +92,6 @@ def login_details(request):
 def sync_data(request):
 	objs=Company.objects.all()
 	data = serializers.serialize("json", objs)
-	# dump=json.dumps(objs)
-	# print dump
 	print data[1:-1]
 	return HttpResponse(data,content_type='json')
 
