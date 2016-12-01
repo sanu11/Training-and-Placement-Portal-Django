@@ -40,10 +40,10 @@ def register_company(request):
 	#add to database
 	obj=Company()
 	obj.name=name
-	if(criteria!=null):
+	if(criteria):
 		obj.criteria=criteria
 		
-	if(salary!=null):
+	if(salary):
 		obj.salary=salary
 	obj.other_details=other_details
 	if(ppt_date!=""):
