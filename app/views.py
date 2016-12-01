@@ -67,7 +67,7 @@ def update_company(request):
 	obj.reg_link=reg_link
 	if(other_details):
 		obj.other_details=obj.other_details + " " +  other_details
-	else
+	else:
 		obj.other_details=other_details
 	obj.save()
 
