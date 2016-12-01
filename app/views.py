@@ -65,7 +65,7 @@ def update_company(request):
 	obj.reg_start_date=reg_start
 	obj.reg_end_date=reg_end
 	obj.reg_link=reg_link
-	if(other_details):
+	if(obj.other_details):
 		obj.other_details=obj.other_details + " " +  other_details
 	else:
 		obj.other_details=other_details
