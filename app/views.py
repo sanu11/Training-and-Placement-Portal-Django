@@ -32,7 +32,7 @@ def register_company(request):
 	data = json.loads(request.body)
 	name=data["name"]
 	criteria=data["criteria"]
-	print criteria
+	print "hello criteria" , criteria
 	salary=data["salary"]
 	other_details=data["other_details"]
 	ppt_date=data["ppt_date"]
