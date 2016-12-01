@@ -31,7 +31,7 @@ def register_student(request):
 def register_company(request):
 	data = json.loads(request.body)
 	name=data["name"]
-	if(data[criteria] != None):
+	if(data["criteria"] != None):
 		criteria = data["criteria"]
 	else:
 		criteria= None
