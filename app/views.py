@@ -33,7 +33,7 @@ def register_company(request):
 	name=data["name"]
 	if(data[criteria] != None):
 		criteria = data["criteria"]
-	else
+	else:
 		criteria= None
 	salary=data["salary"]
 	other_details=data["other_details"]
