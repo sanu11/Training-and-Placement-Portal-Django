@@ -30,6 +30,7 @@ def register_student(request):
 @csrf_exempt
 def register_company(request):
 	data = json.loads(request.body)
+	print data
 	name=data["name"]
 	if(data["criteria"] != None):
 		criteria = data["criteria"]
