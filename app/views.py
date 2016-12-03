@@ -16,8 +16,8 @@ def index(request):
 def register_student(request):
 	data = json.loads(request.body)
 	obj=Student()
-	name = data["name"]
-	if(Student.objects.filter(name=name).exists()):
+	email = data["email"]
+	if(Student.objects.filter(email=email).exists()):
 		return HttpResponse("Already Registered")
 	obj.user=data["name"]
 	obj.email=data["email"]
