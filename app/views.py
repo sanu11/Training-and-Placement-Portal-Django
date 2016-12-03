@@ -61,6 +61,7 @@ def update_company(request):
 	reg_end=data["reg_end"]
 	reg_link=data["reg_link"]
 	other_details=data["other_details"]
+	print name
 	obj=Company.objects.get(name=name)
 	obj.reg_start_date=reg_start
 	obj.reg_end_date=reg_end
