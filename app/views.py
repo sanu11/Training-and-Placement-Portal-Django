@@ -68,7 +68,7 @@ def update_company(request):
 	other_details=data["other_details"]
 
 	obj=Company.objects.get(name=name)
-	if(not obj.reg_link):
+	if(obj.reg_link):
 		return HttpResponse("Already Updated")
 	obj.reg_start_date=reg_start
 	obj.reg_end_date=reg_end
