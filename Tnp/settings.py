@@ -62,12 +62,12 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 #uncomment this on deploying to digitalocean
 DATABASES = {
   'default': {
-      'ENGINE': 'django.db.backends.postgresql_psycopg2',
+      'ENGINE': 'django.db.backends.mysql',
       'NAME': 'mydb',
-      'USER': 'myuser',
+      'USER': 'root',
       'PASSWORD': 'password',
       'HOST': 'localhost',
-      'PORT': '',
+      'PORT': '3306',
   }
 }
 
