@@ -83,7 +83,7 @@ def update_company(request):
 	Device = get_device_model()
 	Device.objects.all().send_message({'type':'company_update','name':name,'reg_link':reg_link ,'reg_start':reg_start, 'reg_end':reg_end ,'other_details':other_details})
 
-	return HttpResponse("Data saved")
+	return HttpResponse("Company Updated")
 
 @csrf_exempt
 def login_details(request):
