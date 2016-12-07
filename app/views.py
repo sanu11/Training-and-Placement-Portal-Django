@@ -16,7 +16,7 @@ def index(request):
 def verify(request):
 	data = json.loads(request.body)
 	prn=data["prn"]
-	if(Verify.objects.filter(prn=prn)).exists()):
+	if(Verify.objects.filter(prn=prn).exists()):
 		return HttpResponse("Success")
 	else
 		return HttpResponse("Failed")
