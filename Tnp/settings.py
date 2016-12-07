@@ -35,11 +35,11 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 #for heroku
-# DATABASES={}
-# # Parse database configuration from $DATABASE_URL
-# DATABASES['default'] = dj_database_url.config()
+DATABASES={}
+# Parse database configuration from $DATABASE_URL
+DATABASES['default'] = dj_database_url.config()
 
-# WSGI_APPLICATION = 'Tnp.wsgi.application'
+WSGI_APPLICATION = 'Tnp.wsgi.application'
 
 # 
 
@@ -60,16 +60,16 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 #for digital ocean
 #comment this on deploying to heroku
 #uncomment this on deploying to digitalocean
-DATABASES = {
-  'default': {
-      'ENGINE': 'django.db.backends.mysql',
-      'NAME': 'mydb',
-      'USER': 'root',
-      'PASSWORD': 'password',
-      'HOST': 'localhost',
-      'PORT': '3306',
-  }
-}
+# DATABASES = {
+#   'default': {
+#       'ENGINE': 'django.db.backends.mysql',
+#       'NAME': 'mydb',
+#       'USER': 'root',
+#       'PASSWORD': 'password',
+#       'HOST': 'localhost',
+#       'PORT': '3306',
+#   }
+# }
 
 #till here
 
