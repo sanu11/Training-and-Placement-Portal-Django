@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Student,Company,Message
+from .models import Student,Company,Message,Verify
 from django.http import HttpRequest,HttpResponse, HttpResponseRedirect
 from django.http import HttpResponse
 from django.conf import settings
@@ -11,6 +11,15 @@ import json
 
 def index(request):
    return render(request,'app/register.html',{})        
+
+@csrf_exempt
+def verify(request):
+	data = json.loads(request.body)
+	prn=data["prn"]
+	if(Verify.objects.filter(prn=prn)).exists()):
+		return HttpResponse("Success")
+	else
+		return HttpResponse("Failed")
 
 @csrf_exempt
 def register_student(request):
