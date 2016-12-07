@@ -18,7 +18,7 @@ def verify(request):
 	prn=data["prn"]
 	if(Verify.objects.filter(prn=prn).exists()):
 		return HttpResponse("Success")
-	else
+	else:
 		return HttpResponse("Failed")
 
 @csrf_exempt
