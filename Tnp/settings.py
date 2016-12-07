@@ -12,11 +12,10 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 
-# uncomment this for deploying to heroku
+uncomment this for deploying to heroku
 
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
@@ -43,7 +42,7 @@ WSGI_APPLICATION = 'Tnp.wsgi.application'
 
 # 
 
-#for local , comment this when deploying to heroku
+# #for local , comment this when deploying to heroku
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
