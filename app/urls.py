@@ -3,7 +3,7 @@ from app import views
 
 urlpatterns = [
 	url(r'^$', views.index),
-	url(r'verify/$',views.update_company),	
+	url(r'verify/$',views.verify),	
 	url(r'register_student/$',views.register_student),
 	url(r'register_company/$',views.register_company),
 	url(r'login/$',views.login_details),
