@@ -37,7 +37,7 @@ def register_student(request):
 	obj.placed=data["placed"]
 	obj.active_back=data["activeBack"]
 	obj.save()
-	return HttpResponse("Registered Successfully")
+	return HttpResponse("Success")
 
 @csrf_exempt
 def register_company(request):
@@ -65,7 +65,7 @@ def register_company(request):
 	#send notification
 	Device = get_device_model()
 	Device.objects.all().send_message({'type':'company_reg','name':name,'criteria':criteria,'salary':salary,'other_details':other_details,'ppt_date':ppt_date,'back':back})
-	return HttpResponse("Registered Successfully")
+	return HttpResponse("Success")
 
 @csrf_exempt
 def update_company(request):
