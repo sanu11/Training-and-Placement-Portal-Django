@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 
-uncomment this for deploying to heroku
+#uncomment this for deploying to heroku
 
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
