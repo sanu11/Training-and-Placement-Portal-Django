@@ -39,7 +39,7 @@ DATABASES={}
 DATABASES['default'] = dj_database_url.config()
 
 WSGI_APPLICATION = 'Tnp.wsgi.application'
-USE_L10N=False
+USE_L10N=True
 # 
 
 # #for local , comment this when deploying to heroku
