@@ -58,7 +58,7 @@ def register_company(request):
 	obj.criteria=criteria
 	obj.salary=salary
 	obj.other_details=other_details
-	obj.ppt_date=ppt_date
+	obj.ppt_date="29 Oct 2016 10:00"
 	obj.back=back
 	obj.save()
 
