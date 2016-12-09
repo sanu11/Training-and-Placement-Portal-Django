@@ -14,16 +14,17 @@ import os
 
 #uncomment this for deploying to heroku
 
-# import dj_database_url
-# db_from_env = dj_database_url.config(conn_max_age=500)
+#import dj_database_url
+#db_from_env = dj_database_url.config(conn_max_age=500)
 
 # # Static files (CSS, JavaScript, Images)
 # # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 # PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-# STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-# STATIC_URL = '/static/'
+
+#STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+#STATIC_URL = '/static/'
 
 
 # # Extra places for collectstatic to find static files.
@@ -33,7 +34,9 @@ import os
 
 # STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-# #for heroku
+
+#for heroku
+
 # DATABASES={}
 # # Parse database configuration from $DATABASE_URL
 # DATABASES['default'] = dj_database_url.config()
@@ -66,9 +69,8 @@ DATABASES = {
     }
 }
 
-ALLOWED_HOSTS = ['*']
 
-#till here
+ALLOWED_HOSTS = ['*']
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
