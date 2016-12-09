@@ -14,31 +14,31 @@ import os
 
 #uncomment this for deploying to heroku
 
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
+# import dj_database_url
+# db_from_env = dj_database_url.config(conn_max_age=500)
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.9/howto/static-files/
+# # Static files (CSS, JavaScript, Images)
+# # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+# PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+# STATIC_URL = '/static/'
 
 
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static'),
-)
+# # Extra places for collectstatic to find static files.
+# STATICFILES_DIRS = (
+#     os.path.join(PROJECT_ROOT, 'static'),
+# )
 
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-#for heroku
-DATABASES={}
-# Parse database configuration from $DATABASE_URL
-DATABASES['default'] = dj_database_url.config()
+# #for heroku
+# DATABASES={}
+# # Parse database configuration from $DATABASE_URL
+# DATABASES['default'] = dj_database_url.config()
 
-WSGI_APPLICATION = 'Tnp.wsgi.application'
+#WSGI_APPLICATION = 'Tnp.wsgi.application'
 # 
 
 # #for local , comment this when deploying to heroku
@@ -58,20 +58,17 @@ WSGI_APPLICATION = 'Tnp.wsgi.application'
 #for digital ocean
 #comment this on deploying to heroku
 #uncomment this on deploying to digitalocean
-# DATABASES = {
-#   'default': {
-#       'ENGINE': 'django.db.backends.mysql',
-#       'NAME': 'mydb',
-#       'USER': 'root',
-#       'PASSWORD': 'password',
-#       'HOST': 'localhost',
-#       'PORT': '3306',
-#   }
-# }
+PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(PROJECT_DIR, 'sanika.db'),
+    }
+}
+
+ALLOWED_HOSTS = ['*']
 
 #till here
-
-
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -85,9 +82,6 @@ SECRET_KEY = 'cte8a0)849rmpw%h4lq@oy^f0o9^50jo@d23#$&&-so73_ps*+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
