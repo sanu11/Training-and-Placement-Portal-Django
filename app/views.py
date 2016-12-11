@@ -1,3 +1,4 @@
+
 from django.shortcuts import render
 from .models import Student,Company,Message,Verify
 from django.http import HttpRequest,HttpResponse, HttpResponseRedirect
@@ -8,9 +9,7 @@ from django.views.decorators.csrf import *
 from django.core import serializers
 from gcm.models import get_device_model
 import json
-
-def index(request):
-   return render(request,'app/register.html',{})        
+      
 
 @csrf_exempt
 def verify(request):
@@ -128,31 +127,68 @@ def notify(request):
 	return HttpResponse("Message sent")
 
 
-#WEB
+###WEB###
+
+
+def index(request):
+   return render(request,'app/index.html',{})  
+
+@csrf_exempt
+def get_main_page(request):
+	companies=list(Company.objects.all().order_by('-c_id'))
+	return render(request,'app/main.html',{"companies":companies})
+
+@csrf_exempt
+def get_login_page(request):
+	return render(request,'app/login.html',{})
+
+@csrf_exempt
+def get_upload_page(request):
+	return render(request,'app/upload.html',{})
+
+@csrf_exempt
+def get_update_page(request):
+	companies=list(Company.objects.all().order_by('-c_id'))
+	return render(request,'app/update.html',{"companies":companies})
+
+@csrf_exempt
+def get_notify_page(request):
+	return render(request,'app/notify.html',{})
+
+@csrf_exempt
+def get_notifications_page(request):
+	notifications = Message.objects.all().order_by('-msg_id')
+	return render(request,'app/notification.html',{"notifications":notifications})
+
+@csrf_exempt
+def logout(request):
+	del request.session['email']
+	print "end"
+	return render(request,'app/index.html',{})  
+   
+
+@csrf_exempt
 def web_register_student(request):
-    if request.method=="POST":
-        get_mail=request.POST["email"]
-        if(Student.objects.filter(email=get_mail).exists()):
-            return HttpResponse('Already Registered')
-        else:
-			c=Student()
-			c.name=request.POST["name"]
-			mail=request.POST["email"]    
-			c.mail=mail
-			c.password=request.POST["password"]
-			c.phone=request.POST["phone"]
-			c.branch=request.POST["branch"]
-	    	c.average=request.POST["average"]
-	    	c.activeBack=request.POST["activeBack"]
-            c.save()
-			request.session['email']= mail          #send cookie
-            return HttpResponse('Success');
-    else:
-        return HttpResponse('Error');
+	if request.method=="POST":
+		get_mail=request.POST["email"]
+		if(Student.objects.filter(email=get_mail).exists()):
+			return HttpResponse('Already Registered')
+		c=Student()
+		c.name=request.POST["name"]
+		mail=request.POST["email"]    
+		c.mail=mail
+		c.password=request.POST["password"]
+		c.phone=request.POST["phone"]
+		c.branch=request.POST["branch"]
+		c.average=request.POST["average"]
+		c.activeBack=request.POST["activeBack"]
+		c.save()
+		request.session['email']= mail          #send cookie
+		return HttpResponse('Success');
+	else:
+		return HttpResponse('Error');
 
-
-##WEB##
-
+@csrf_exempt
 def web_verify(request):
 	if request.method=="POST":
 		prn=request.POST["prn"]
@@ -161,80 +197,83 @@ def web_verify(request):
 		else:
 			return HttpResponse("Failed")
 
-
+@csrf_exempt
 def web_register_company(request):
 	if request.method=="POST":
-		get_mail=request.POST["email"]
-        if(Student.objects.filter(email=get_mail).exists()):
-    	    return HttpResponse('Already Registered')
-       
+		name=request.POST["name"]
+		if(Company.objects.filter(name=name).exists()):
+			return HttpResponse('Already Registered')
 		name=request.POST["name"]			
-		salary=request.POSt["salary"]
-		criteria=reques.POST["criteria"]
+		salary=request.POST["salary"]
+		criteria=request.POST["criteria"]
 		back=request.POST["back"]
-		ppt_date=request.POSt["ppt_date"]
+		ppt_date=request.POST["ppt_date"]
 		other_details=request.POST["other_details"]
  #add to database
-	    obj=Company()
-    	obj.name=name
-    	obj.criteria=criteria
-    	obj.salary=salary
-    	obj.other_details=other_details
-    	obj.ppt_date=ppt_date
-    	obj.back=back
-    	obj.save()
+		obj=Company()
+		obj.name=name
+		obj.criteria=criteria
+		obj.salary=salary
+		obj.other_details=other_details
+		obj.ppt_date=ppt_date
+		obj.back=back
+		obj.save()
 
     	#send notification
 		Device = get_device_model()
 
 		Device.objects.all().send_message({'type':'company_reg','name':name,'criteria':criteria,'salary':salary,'other_details':other_details,'ppt_date':ppt_date,'back':back})
-		 return HttpResponse("Success")
+		return HttpResponse("Success")
 	else:
 		return HttpResponse("Error")
 
-
-def web_company_update(request):
+@csrf_exempt
+def web_update_company(request):
 	if request.method=="POST":
 		name=request.POST["name"]
 		reg_link=request.POST["reg_link"]
 		reg_start=request.POST["reg_start"]
 		reg_end=request.POST["reg_end"]
 		other_details=request.POST["other_details"]
-	    obj=Company.objects.get(name=name)
+		obj=Company.objects.get(name=name)
 		if(obj.reg_link):
-    	    return HttpResponse("Already Updated")
+			return HttpResponse("Already Updated")
 		obj.reg_start_date=reg_start
 		obj.reg_end_date=reg_end
-    	obj.reg_link=reg_link
-    	if(obj.other_details and other_details):
-        	obj.other_details=obj.other_details + " " +  other_details
-    	elif(other_details):
-        	obj.other_details=other_details
-    	obj.save()
+		obj.reg_link=reg_link
+		if(obj.other_details and other_details):
+			obj.other_details=obj.other_details + " " +  other_details
+		elif(other_details):
+			obj.other_details=other_details
+		obj.save()
 
     #send notifications
-    	Device = get_device_model()
+		Device = get_device_model()
 		Device.objects.all().send_message({'type':'company_update','name':name,'reg_link':reg_link ,'reg_start':reg_start, 'reg_end':reg_end ,'other_details':other_details})
 
-    	return HttpResponse("Company Updated")
+		return HttpResponse("Company Updated")
 	return HttpResponse("Error")
 
-
+@csrf_exempt
 def web_login(request):
 	if request.method=="POST":
-		get_mail=request.POST["email"]
-		get_pw=request.POST["password"]
+		get_mail=request.POST.get("email")
+		get_pw=request.POST.get("password")
+		st=Student.objects.all()
+		companies=list(Company.objects.all().order_by('-c_id'))
 		if(Student.objects.filter(email=get_mail).exists()):
 			obj=Student.objects.get(email=get_mail)
 			if(obj.password==get_pw):
-				return HttpResponse("Success")
+				request.session['email']= get_mail 
+				return render(request,'app/main.html',{"companies":companies})
 			else:
 				return HttpResponse("Incorrect Password")
 		else:
 			return HttpResponse("User not found")
 
+@csrf_exempt
 def web_notify(request):
-	if request.method=="POST"
+	if request.method=="POST":
 		title=request.POST["title"]
 		body=request.POST["body"]
 		obj=Message()
@@ -243,7 +282,9 @@ def web_notify(request):
 		obj.save()
 		Device = get_device_model()
 		Device.objects.all().send_message({'type':'gen_msg','title':title,'body':body})
-	return HttpResponse("Message sent")
+		return HttpResponse("Message sent")
+	else:
+		return HttpResponse("Error")
 
 
 
