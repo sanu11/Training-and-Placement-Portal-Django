@@ -2,4 +2,4 @@ venv
 *.pyc
 staticfiles
 .env
-myprojectenv/*
+/myprojectenv/*
