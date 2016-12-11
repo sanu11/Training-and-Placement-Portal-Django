@@ -135,17 +135,17 @@ def web_register_student(request):
         if(Student.objects.filter(email=get_mail).exists()):
             return HttpResponse('Already Registered')
         else:
-            c=Student()
-	    c.name=request.POST["name"]
-            mail=request.POST["email"]    
-            c.mail=mail
-	    c.password=request.POST["password"]
-	    c.phone=request.POST["phone"]
-	    c.branch=request.POST["branch"]
-	    c.average=request.POST["average"]
-	    c.activeBack=request.POST["activeBack"]
+			c=Student()
+			c.name=request.POST["name"]
+			mail=request.POST["email"]    
+			c.mail=mail
+			c.password=request.POST["password"]
+			c.phone=request.POST["phone"]
+			c.branch=request.POST["branch"]
+	    	c.average=request.POST["average"]
+	    	c.activeBack=request.POST["activeBack"]
             c.save()
-            request.session['email']= mail          #send cookie
+			request.session['email']= mail          #send cookie
             return HttpResponse('Success');
     else:
         return HttpResponse('Error');
