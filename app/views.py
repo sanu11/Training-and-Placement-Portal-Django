@@ -126,3 +126,125 @@ def notify(request):
 	Device = get_device_model()
 	Device.objects.all().send_message({'type':'gen_msg','title':title,'body':body})
 	return HttpResponse("Message sent")
+
+
+#WEB
+def web_register_student(request):
+    if request.method=="POST":
+        get_mail=request.POST["email"]
+        if(Student.objects.filter(email=get_mail).exists()):
+            return HttpResponse('Already Registered')
+        else:
+            c=Student()
+	    c.name=request.POST["name"]
+            mail=request.POST["email"]    
+            c.mail=mail
+	    c.password=request.POST["password"]
+	    c.phone=request.POST["phone"]
+	    c.branch=request.POST["branch"]
+	    c.average=request.POST["average"]
+	    c.activeBack=request.POST["activeBack"]
+            c.save()
+            request.session['email']= mail          #send cookie
+            return HttpResponse('Success');
+    else:
+        return HttpResponse('Error');
+
+
+##WEB##
+
+def web_verify(request):
+	if request.method=="POST":
+		prn=request.POST["prn"]
+		if(Verify.objects.filter(prn=prn).exists()):
+			return HttpResponse("Success")
+		else:
+			return HttpResponse("Failed")
+
+
+def web_register_company(request):
+	if request.method=="POST":
+		get_mail=request.POST["email"]
+        if(Student.objects.filter(email=get_mail).exists()):
+    	    return HttpResponse('Already Registered')
+       
+		name=request.POST["name"]			
+		salary=request.POSt["salary"]
+		criteria=reques.POST["criteria"]
+		back=request.POST["back"]
+		ppt_date=request.POSt["ppt_date"]
+		other_details=request.POST["other_details"]
+ #add to database
+	    obj=Company()
+    	obj.name=name
+    	obj.criteria=criteria
+    	obj.salary=salary
+    	obj.other_details=other_details
+    	obj.ppt_date=ppt_date
+    	obj.back=back
+    	obj.save()
+
+    	#send notification
+		Device = get_device_model()
+
+		Device.objects.all().send_message({'type':'company_reg','name':name,'criteria':criteria,'salary':salary,'other_details':other_details,'ppt_date':ppt_date,'back':back})
+		 return HttpResponse("Success")
+	else:
+		return HttpResponse("Error")
+
+
+def web_company_update(request):
+	if request.method=="POST":
+		name=request.POST["name"]
+		reg_link=request.POST["reg_link"]
+		reg_start=request.POST["reg_start"]
+		reg_end=request.POST["reg_end"]
+		other_details=request.POST["other_details"]
+	    obj=Company.objects.get(name=name)
+		if(obj.reg_link):
+    	    return HttpResponse("Already Updated")
+		obj.reg_start_date=reg_start
+		obj.reg_end_date=reg_end
+    	obj.reg_link=reg_link
+    	if(obj.other_details and other_details):
+        	obj.other_details=obj.other_details + " " +  other_details
+    	elif(other_details):
+        	obj.other_details=other_details
+    	obj.save()
+
+    #send notifications
+    	Device = get_device_model()
+		Device.objects.all().send_message({'type':'company_update','name':name,'reg_link':reg_link ,'reg_start':reg_start, 'reg_end':reg_end ,'other_details':other_details})
+
+    	return HttpResponse("Company Updated")
+	return HttpResponse("Error")
+
+
+def web_login(request):
+	if request.method=="POST":
+		get_mail=request.POST["email"]
+		get_pw=request.POST["password"]
+		if(Student.objects.filter(email=get_mail).exists()):
+			obj=Student.objects.get(email=get_mail)
+			if(obj.password==get_pw):
+				return HttpResponse("Success")
+			else:
+				return HttpResponse("Incorrect Password")
+		else:
+			return HttpResponse("User not found")
+
+def web_notify(request):
+	if request.method=="POST"
+		title=request.POST["title"]
+		body=request.POST["body"]
+		obj=Message()
+		obj.title=title
+		obj.message=body
+		obj.save()
+		Device = get_device_model()
+		Device.objects.all().send_message({'type':'gen_msg','title':title,'body':body})
+	return HttpResponse("Message sent")
+
+
+
+
