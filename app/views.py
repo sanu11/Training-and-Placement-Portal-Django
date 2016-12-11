@@ -34,7 +34,6 @@ def register_student(request):
 	obj.phone=data["phone"]
 	obj.branch=data["branch"]
 	obj.average=data["average"]
-	obj.placed=data["placed"]
 	obj.active_back=data["activeBack"]
 	obj.save()
 	return HttpResponse("Success")
