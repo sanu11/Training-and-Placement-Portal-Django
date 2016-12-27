@@ -144,6 +144,7 @@ def get_signup_page(request):
 
 @csrf_exempt
 def get_login_page(request):
+	print "in login page"
 	return render(request,'app/login.html',{})
 
 @csrf_exempt
