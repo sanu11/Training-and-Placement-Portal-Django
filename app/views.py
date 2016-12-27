@@ -176,7 +176,7 @@ def get_statistics_page(request):
 @csrf_exempt
 def logout(request):
 	del request.session['email']
-    request.session.modified = True
+	request.session.modified = True
 	print "end"
 	return render(request,'app/index.html',{})  
    
