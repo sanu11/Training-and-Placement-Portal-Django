@@ -176,10 +176,10 @@ def get_statistics_page(request):
 @csrf_exempt
 def logout(request):
 	del request.session['email']
+    request.session.modified = True
 	print "end"
 	return render(request,'app/index.html',{})  
    
-
 @csrf_exempt
 def web_signup(request):
 	if request.method=="POST":
@@ -200,6 +200,24 @@ def web_signup(request):
 		return HttpResponse('Success');
 	else:
 		return HttpResponse('Error');
+
+
+@csrf_exempt
+def web_login(request):
+	if request.method=="POST":
+		get_mail=request.POST.get("email")
+		get_pw=request.POST.get("password")
+		st=Student.objects.all()
+		companies=list(Company.objects.all().order_by('-c_id'))
+		if(Student.objects.filter(email=get_mail).exists()):
+			obj=Student.objects.get(email=get_mail)
+			if(obj.password==get_pw):
+				request.session['email']= get_mail 
+				return render(request,'app/main.html',{"companies":companies})
+			else:
+				return HttpResponse("Incorrect Password")
+		else:
+			return HttpResponse("User not found")
 
 @csrf_exempt
 def web_verify(request):
@@ -267,22 +285,6 @@ def web_update_company(request):
 		return HttpResponse("Company Updated")
 	return HttpResponse("Error")
 
-@csrf_exempt
-def web_login(request):
-	if request.method=="POST":
-		get_mail=request.POST.get("email")
-		get_pw=request.POST.get("password")
-		st=Student.objects.all()
-		companies=list(Company.objects.all().order_by('-c_id'))
-		if(Student.objects.filter(email=get_mail).exists()):
-			obj=Student.objects.get(email=get_mail)
-			if(obj.password==get_pw):
-				request.session['email']= get_mail 
-				return render(request,'app/main.html',{"companies":companies})
-			else:
-				return HttpResponse("Incorrect Password")
-		else:
-			return HttpResponse("User not found")
 
 @csrf_exempt
 def web_notify(request):
