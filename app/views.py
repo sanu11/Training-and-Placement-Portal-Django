@@ -139,11 +139,15 @@ def get_main_page(request):
 	return render(request,'app/main.html',{"companies":companies})
 
 @csrf_exempt
+def get_signup_page(request):
+	return render(request,'app/upload.html',{})
+
+@csrf_exempt
 def get_login_page(request):
 	return render(request,'app/login.html',{})
 
 @csrf_exempt
-def get_upload_page(request):
+def get_register_page(request):
 	return render(request,'app/upload.html',{})
 
 @csrf_exempt
@@ -160,6 +164,14 @@ def get_notifications_page(request):
 	notifications = Message.objects.all().order_by('-msg_id')
 	return render(request,'app/notification.html',{"notifications":notifications})
 
+
+@csrf_exempt
+def get_statistics_page(request):
+	companies = Company.objects.all().order_by('-c_id')
+	return render(request,'app/notification.html',{"companies":companies})
+
+
+
 @csrf_exempt
 def logout(request):
 	del request.session['email']
@@ -168,7 +180,7 @@ def logout(request):
    
 
 @csrf_exempt
-def web_register_student(request):
+def web_signup(request):
 	if request.method=="POST":
 		get_mail=request.POST["email"]
 		if(Student.objects.filter(email=get_mail).exists()):
