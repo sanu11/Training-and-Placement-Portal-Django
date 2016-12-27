@@ -10,7 +10,7 @@ urlpatterns = [
 	url(r'pupdate/$',views.get_update_page),
 	url(r'pnotify/$',views.get_notify_page),
 
-	url(r'login/$',views.web_login),
+	url(r'home/$',views.web_login),
 	url(r'register/$',views.web_register_company),
 	url(r'update/$',views.web_update_company),
 	url(r'notify/$',views.web_notify),
