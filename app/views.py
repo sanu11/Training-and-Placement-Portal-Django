@@ -151,28 +151,32 @@ def get_login_page(request):
 
 @csrf_exempt
 def get_register_page(request):
-	return render(request,'app/upload.html',{})
+	name=request.session["name"]
+	return render(request,'app/upload.html',{"name":name})
 
 @csrf_exempt
 def get_update_page(request):
+	name=request.session["name"]
 	companies=list(Company.objects.all().order_by('-c_id'))
-	return render(request,'app/update.html',{"companies":companies})
+	return render(request,'app/update.html',{"companies":companies,"name":name})
 
 @csrf_exempt
 def get_notify_page(request):
-	return render(request,'app/notify.html',{})
+	name=request.session["name"]
+	return render(request,'app/notify.html',{"name":name})
 
 @csrf_exempt
 def get_notifications_page(request):
+	name=request.session["name"]
 	notifications = Message.objects.all().order_by('-msg_id')
-	return render(request,'app/notification.html',{"notifications":notifications})
+	return render(request,'app/notification.html',{"notifications":notifications,"name":name})
 
 
 @csrf_exempt
 def get_statistics_page(request):
+	name=request.session["name"]
 	companies = Company.objects.all().order_by('-c_id')
-	return render(request,'app/notification.html',{"companies":companies})
-
+	return render(request,'app/statistics.html',{"companies":companies,"name":name})
 
 
 @csrf_exempt
@@ -186,19 +190,19 @@ def logout(request):
 @csrf_exempt
 def web_signup(request):
 	if request.method=="POST":
-		get_mail=request.POST["email"]
-		if(Student.objects.filter(email=get_mail).exists()):
+		mail=request.POST["email"]
+		
+		if(Student.objects.filter(email=mail).exists()):
 			return HttpResponse('Already Registered')
 		c=Student()
-		name=request.POST["name"]
-		mail=request.POST["email"]    
+		name=request.POST["name"] 
 		c.name=name
 		c.mail=mail
 		c.password=request.POST["password"]
 		c.phone=request.POST["phone"]
 		c.branch=request.POST["branch"]
 		c.average=request.POST["average"]
-		c.activeBack=request.POST["activeBack"]
+		# c.activeBack=request.POST.get("activeBack")
 		c.save()
 		request.session['email']= mail          #send cookie
 		request.session['name']=name

@@ -1,181 +1,212 @@
-
- <!DOCTYPE html>
-<!-- Template by quackit.com -->
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>3 Column Layout</title>
-	<style type="text/css">
+  <title>Company Upload</title>
+  <meta charset="utf-8">
+  <meta name="description" content="PICT Training and placement online portal">
+<meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!---- BootStrap Libraries         -->
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="/static/js/bootstrap.min.js"></script>
+  
+   <!---- BootStrap online Libraries        
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   -->
+ <style>
+ 
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+	body {
+    background-color: #eee;
+}
 
-		/* Layout */
-		body {
-			min-width: 630px;
-		}
+*[role="form"] {
+    max-width: 530px;
+    padding: 15px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 0.3em;
+}
 
-		#container {
-			padding-left: 200px;
-			padding-right: 190px;
-		}
-		
-		#container .column {
-			position: relative;
-			float: left;
-		}
-		
-		#center {
-			padding: 10px 20px;
-			width: 100%;
-		}
-		
-		#left {
-			width: 180px;
-			padding: 0 10px;
-			right: 240px;
-			margin-left: -100%;
-		}
-		
-		#right {
-			width: 130px;
-			padding: 0 10px;
-			margin-right: -100%;
-		}
-		
-		#footer {
-			clear: both;
-		}
-		
-		/* IE hack */
-		* html #left {
-			left: 150px;
-		}
+*[role="form"] h2 {
+    margin-left: 5em;
+    margin-bottom: 1em;
+}
 
-		/* Make the columns the same height as each other */
-		#container {
-			overflow: hidden;
-		}
-
-		#container .column {
-			padding-bottom: 1001em;
-			margin-bottom: -1000em;
-		}
-
-		/* Fix for the footer */
-		* html body {
-			overflow: hidden;
-		}
-		
-		* html #footer-wrapper {
-			float: left;
-			position: relative;
-			width: 100%;
-			padding-bottom: 10010px;
-			margin-bottom: -10000px;
-			background: #fff;
-		}
-
-		/* Aesthetics */
-		body {
-			margin: 0;
-			padding: 0;
-			font-family:Sans-serif;
-			line-height: 1.5em;
-		}
-		
-		p {
-			color: #555;
-		}
-
-		nav ul {
-			list-style-type: none;
-			margin: 0;
-			padding: 0;
-		}
-		
-		nav ul a {
-			color: darkgreen;
-			text-decoration: none;
-		}
-
-		#header, #footer {
-			font-size: large;
-			padding: 0.3em;
-			background: #BCCE98;
-		}
-
-		#left {
-			background: #DAE9BC;
-		}
-		
-		#right {
-			background: #F7FDEB;
-		}
-
-		#center {
-			background: #fff;
-		}
-
-		#container .column {
-			padding-top: 1em;
-		}
-		
-	</style>
-		
-
-</head>
-
+  </style>
+  
+  </head>
 <body>
 
-	<header id="header"><p>Training and Placement</p></header>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+<h1 class="text-center"> 
+<a class="pull-left" href="http://139.59.34.20:8090/"> 
+<img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
+</a><span style="margin-left: -20%; color: rgb(222, 222, 222);">Training and Placement</span></h1>  
 
-	<div id="container">
-		<a href="/home/"> <button>Home </button></a>
-		<main id="center" class="column">
-			<article>
-			
-		<section id="authentication" >
-		
-				<h2 class="title">Register</h2>
-				<form action="/cregister/" method="post" id="register">
-					{% csrf_token %}
-					<div >	
-						Company &ensp;&ensp;
-						<input type="text" name="name" maxlength="15" />
-					</div><br>
-					<div   >
-						Salary&ensp;&ensp;
-						<input type="number" name="salary" />
-					</div><br>
-					Criteria&ensp;&ensp;
-					<input type="number" name="criteria"/>
-					<br><br>
-					Back &ensp;&ensp;&ensp;
-					<select name="back">
-                        <option value="1">No criteria</option>
-                        <option value="2">Active not allowed</option>
-                        <option value="3">Passive not allowed</option>
-                        
-                    </select>
-                    <br>
-                    <br>
-                    PPT Date&ensp;&ensp;
-					<input type="text" name="ppt_date" />
-					<br>
-					(yyyy-mm-dd hh:mm)
-					<br><br>
-					Other Details&ensp;&ensp;
-					<input type="text" name="other_details" maxlength="25"/>
-					<br><br>
-                    <button type="submit" class="button button_highlight">Register</button>
-                </form>
-			</div>
-			
-			</article>								
-		</main>
-	</div>
-	<div id="footer-wrapper">
-		<footer id="footer"><p>Pune Institute Of Computer Technology</p></footer>
-	</div>
 
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav" style="margin-left:11%;">
+        <li class="active"><a href="/home/">Home</a></li>
+        
+        <li><a href="/pregister/">Upload</a></li>
+        <li><a href="/pupdate/">Update</a></li>
+    <li><a href="/pnotify/">Notify</a></li>
+    <li><a href="/statistics/">Statistics</a></li>
+    <li><a href="/notifications/">Notifications</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+      
+    <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/logout/">Logout</a></li>
+           
+          </ul>
+        </li>
+    
+     </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid ">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav ">
+	<div class="navbar">
+	<div class="navbar-header">
+      </div>
+      <ul class="nav navbar-nav">
+	  
+	  </ul>
+	  </div>
+    </div>
+    <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 
+      <form class="form-horizontal" role="form">
+                <h2><b>Company Registration</b></h2>
+                <div class="form-group">
+                    <label for="firstName" class="col-sm-3 control-label">Company</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="firstName" placeholder="Company Name" class="form-control" required autofocus>
+                       
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="text" class="col-sm-3 control-label">Salary</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="salary" placeholder="Salary" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="text" class="col-sm-3 control-label">Criteria</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="criteria" placeholder="Criteria" class="form-control" required>
+                    </div>
+                </div>
+				
+                <div class="form-group">
+                    <label for="date" class="col-sm-3 control-label">PPT Date:Time</label>
+                    <div class="col-sm-5">
+                       <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text" required/>
+                    </div>
+					<div class="col-sm-4">
+					<input type="time" class="form-control" placeholder="HH:MM" required>
+					</div>
+                </div>
+				
+                <div class="form-group">
+                    <label for="text" class="col-sm-3 control-label">Backlog</label>
+                    <div class="col-sm-9">
+                        <select id="country" class="form-control">
+                            <option>No Criteria</option>
+                            <option>Active not Allowed</option>
+                            <option>Passive not Allowed</option>
+                            
+                        </select>
+                    </div>
+                </div> <!-- /.form-group -->
+
+				<div class="form-group">
+				<label class="control-label col-sm-3" for="other_details">Other Details</label>
+      			<div class="col-sm-9">
+				<textarea class="form-control"  id="other_details" name="other_details" maxlength="550"></textarea>
+				</div>
+				</div>
+				
+                <div class="form-group">
+                    <div class="col-sm-9 col-sm-offset-3" align="center">
+                        <button type="submit" class="btn btn-primary btn-block"><b>Register</b></button>
+                    </div>
+                </div>
+            </form> <!-- /form -->
+    </div>
+    
+  </div>
+</div>
+<!-- Extra JavaScript/CSS added manually in "Settings" tab -->
+<!-- Include jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+<script>
+	$(document).ready(function(){
+		var date_input=$('input[name="date"]'); //our date input has the name "date"
+		var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+		date_input.datepicker({
+			format: 'mm/dd/yyyy',
+			container: container,
+			todayHighlight: true,
+			autoclose: true,
+		})
+	})
+</script>
+<footer class="container-fluid text-center">
+ <p>Copyrights <span  class="glyphicon glyphicon-copyright-mark"</span> 2016-17 by Pune Institute of Computer Technology</p> 
+</footer>
 </body>
-
 </html>

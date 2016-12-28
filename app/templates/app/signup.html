@@ -118,7 +118,7 @@ input:checked + .slider:before {
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
 <h1 class="text-center"> 
-<a class="pull-left" href="http://139.59.34.20:8090/"> 
+<a class="pull-left" href="/home/"> 
 <img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
 </a><span style="margin-left: -20%; color: rgb(222, 222, 222);">Training and Placement</span></h1>  
 
@@ -140,22 +140,21 @@ input:checked + .slider:before {
     </div>
   </div>
 </nav>
-<form class="form-horizontal">
+
+<form class="form-horizontal" method="POST" action ='/signup/'>
 <fieldset>
 
 <!-- Form Name -->
 <br><br><br><br><br>
 <h2 align="center">Registration</h2>
 <br>
-<form class="form-horizontal">
-<fieldset>
 
 
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="textinput">Name</label>  
   <div class="col-md-4">
-  <input id="textinput" name="textinput" type="text" placeholder="Name" class="form-control input-md">
+  <input id="textinput" name="name" type="text" placeholder="Name" class="form-control input-md">
     
   </div>
 </div>
@@ -164,7 +163,7 @@ input:checked + .slider:before {
 <div class="form-group">
   <label class="col-md-4 control-label" for="textinput">Email </label>  
   <div class="col-md-4">
-  <input id="textinput" name="textinput" type="text" placeholder="Email" class="form-control input-md">
+  <input id="textinput" name="email" type="text" placeholder="Email" class="form-control input-md">
     
   </div>
 </div>
@@ -173,7 +172,7 @@ input:checked + .slider:before {
 <div class="form-group">
   <label class="col-md-4 control-label" for="passwordinput">Password </label>
   <div class="col-md-4">
-    <input id="passwordinput" name="passwordinput" type="password" placeholder="Password" class="form-control input-md">
+    <input id="passwordinput" name="password" type="password" placeholder="Password" class="form-control input-md">
     
   </div>
 </div>
@@ -182,7 +181,7 @@ input:checked + .slider:before {
 <div class="form-group">
   <label class="col-md-4 control-label" for="textinput">Phone</label>  
   <div class="col-md-4">
-  <input id="textinput" name="textinput" type="text" placeholder="Phone" class="form-control input-md">
+  <input id="textinput" name="phone" type="text" placeholder="Phone" class="form-control input-md">
     
   </div>
 </div>
@@ -191,7 +190,7 @@ input:checked + .slider:before {
 <div class="form-group">
   <label class="col-md-4 control-label" for="selectbasic">Branch</label>
   <div class="col-md-4">
-    <select id="selectbasic" name="selectbasic" class="form-control">
+    <select id="selectbasic" name="branch" class="form-control">
       <option value="1">COMP</option>
       <option value="2">ENTC</option>
       <option value="3">IT </option>
@@ -204,7 +203,7 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" for="appendedtext">Average %</label>
   <div class="col-md-4">
     <div class="input-group">
-      <input id="appendedtext" name="appendedtext" class="form-control" placeholder="Average" type="text">
+      <input id="appendedtext" name="average" class="form-control" placeholder="Average" type="text">
       <span class="input-group-addon">%</span>
     </div>
     
@@ -217,7 +216,7 @@ input:checked + .slider:before {
   <div class="col-md-8"> 
    
 <label class="switch">
-  <input type="checkbox"name="passiveBacklog" value="yes">
+  <input type="checkbox" name="activeBack" value="yes">
   <div class="slider round"></div>
 </label>
 </label>

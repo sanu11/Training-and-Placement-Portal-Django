@@ -1,181 +1,220 @@
-
- <!DOCTYPE html>
-<!-- Template by quackit.com -->
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>3 Column Layout</title>
-	<style type="text/css">
-
-		/* Layout */
-		body {
-			min-width: 630px;
-		}
-
-		#container {
-			padding-left: 200px;
-			padding-right: 190px;
-		}
-		
-		#container .column {
-			position: relative;
-			float: left;
-		}
-		
-		#center {
-			padding: 10px 20px;
-			width: 100%;
-		}
-		
-		#left {
-			width: 180px;
-			padding: 0 10px;
-			right: 240px;
-			margin-left: -100%;
-		}
-		
-		#right {
-			width: 130px;
-			padding: 0 10px;
-			margin-right: -100%;
-		}
-		
-		#footer {
-			clear: both;
-		}
-		
-		/* IE hack */
-		* html #left {
-			left: 150px;
-		}
-
-		/* Make the columns the same height as each other */
-		#container {
-			overflow: hidden;
-		}
-
-		#container .column {
-			padding-bottom: 1001em;
-			margin-bottom: -1000em;
-		}
-
-		/* Fix for the footer */
-		* html body {
-			overflow: hidden;
-		}
-		
-		* html #footer-wrapper {
-			float: left;
-			position: relative;
-			width: 100%;
-			padding-bottom: 10010px;
-			margin-bottom: -10000px;
-			background: #fff;
-		}
-
-		/* Aesthetics */
-		body {
-			margin: 0;
-			padding: 0;
-			font-family:Sans-serif;
-			line-height: 1.5em;
-		}
-		
-		p {
-			color: #555;
-		}
-
-		nav ul {
-			list-style-type: none;
-			margin: 0;
-			padding: 0;
-		}
-		
-		nav ul a {
-			color: darkgreen;
-			text-decoration: none;
-		}
-
-		#header, #footer {
-			font-size: large;
-			padding: 0.3em;
-			background: #BCCE98;
-		}
-
-		#left {
-			background: #DAE9BC;
-		}
-		
-		#right {
-			background: #F7FDEB;
-		}
-
-		#center {
-			background: #fff;
-		}
-
-		#container .column {
-			padding-top: 1em;
-		}
-		
-	</style>
-		
-
+    <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
+    <title>Company Update</title>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <!---- BootStrap Libraries         -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="/static/js/bootstrap.min.js"></script>
+<style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar 
+	{
+	  position:relative; 
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px;position fixed}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+	  background-color: #555;
+      color: white;
+      padding: 15px;
+	  position:relative;
+	  height:50px;
+      bottom:0px;
+      left:0px;
+      right:0px;
+      margin-bottom:0px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+	textarea.form-control
+	{
+		height: 30%;
+	}
+  </style>
 </head>
-
 <body>
+<nav class="navbar navbar-inverse">
+<div class="container-fluid">
+<h1 class="text-center"> 
+<a class="pull-left" href="/home/"> 
+<img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
+</a><span style="margin-left: -20%; color: rgb(222, 222, 222);">Training and Placement</span></h1>  
 
-	<header id="header"><p>Training and Placement</p></header>
 
-	<div id="container">
-		<a href="/home/"> <button>Home </button></a>
-		<main id="center" class="column">
-			<article>
-			
-		<section id="authentication" >
-		
-				<h2 class="title">Update Company</h2>
-				<form action="/update/" method="post" id="register">
-					{% csrf_token %}
-					<div >	
-						Company &ensp;&ensp;
-					<select name="name">
-                        {% for company in companies %}
-                        <option > {{company.name}} </option>
-                        {% endfor %}
-                        
-                    </select>				
-                    	</div><br>
-					<div   >
-						Reg Link &ensp;&ensp;
-						<input type="link" name="reg_link" />
-					</div><br>
-					Reg Start Date&ensp;&ensp;
-					<input type="text" name="reg_start"/>
-					<br>
-					(yyyy-mm-dd hr:mm)
-					<br>
-					<br>
-					Reg End Date &ensp;&ensp;&ensp;
-					<input type="text" name="reg_end"/>
-                    <br>
-                    (yyyy-mm-dd hr:mm)
-				<br>
-                   	<br>
-					Other Details&ensp;&ensp;
-					<input type="text" name="other_details" maxlength="25"/>
-					<br><br>
-                    <button type="submit" class="button button_highlight">Update</button>
-                </form>
-			</div>
-			
-			</article>								
-		</main>
-	</div>
-	<div id="footer-wrapper">
-		<footer id="footer"><p>Pune Institute Of Computer Technology</p></footer>
-	</div>
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav" style="margin-left:11%;">
+        <li class="active"><a href="/home/">Home</a></li>
+        
+        <li><a href="/pregister/">Upload</a></li>
+        <li><a href="/pupdate/">Update</a></li>
+    <li><a href="/pnotify/">Notify</a></li>
+    <li><a href="/statistics/">Statistics</a></li>
+    <li><a href="/notifications/">Notifications</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+      
+    <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/logout/">Logout</a></li>
+           
+          </ul>
+        </li>
+    
+     </ul>
+    </div>
+  </div>
+</nav>
+<form class="form-horizontal" autocomplete="off" method="post" enctype="multipart/form-data">
+<fieldset>
 
+<!-- Form Name -->
+
+
+<!-- Button Drop Down -->
+<div class="form-group">
+<br>
+<h2 align="center"> <b>Company Update</b></h2>
+  <br>
+  <label class="col-md-4 control-label" for="buttondropdown">Company</label>
+  <div class="col-md-4">
+    <div class="input-group">
+      
+      <div class="input-group-btn">
+        <select class="form-control" name="companyNames" id="company">
+		<option selected disabled hidden>Select Company</option>
+        <option value="MorganStanley">Morgan Stanley</option>
+        <option value="Amura">Amura</option>
+        <option value="Rakuten">Rakuten</option>
+        <option value="NVDIA">NVDIA</option>
+      </select>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="registrationLink">Registration Link</label>  
+  <div class="col-md-4">
+  <input id="registrationLink" name="registrationLink" type="url" placeholder="Registration Link" class="form-control input-md" required="">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="registrationStartDate">Registration Start</label>  
+  <div class="col-md-2">
+  <input id="registrationStartDate" name="registrationDate" type="text" placeholder="MM/DD/YYYY" class="form-control input-md" required="">
+  </div>
+  <div class="col-md-2">
+  <input id="registrationStartTime" name="registrationStartTime" type="time" placeholder="HH:MM" class="form-control input-md" required="">
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="registrationEndDate">Registration End </label>  
+  <div class="col-md-2">
+  <input id="registrationEndDate" name="registrationDate" type="text" placeholder="MM/DD/YYYY" class="form-control input-md" required="">
+    
+  </div>
+  <div class="col-md-2">
+  <input id="registrationEndTime" name="registrationEndTime" type="time" placeholder="HH:MM" class="form-control input-md" required="">
+    </div>
+</div>
+
+
+  
+
+
+<!-- Text input
+<div class="form-group">
+  <label class="col-md-4 control-label" for="registrationEndTime">Registration End Time</label>  
+  <div class="col-md-4">
+  <input id="registrationEndTime" name="registrationEndTime" type="time" placeholder="Registration End time" class="form-control input-md" required="">
+    
+  
+</div>
+-->
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="otherDetails">Other Details</label>
+  <div class="col-md-4">                     
+    <textarea class="form-control" id="otherDetails" name="otherDetails" maxlength="550"></textarea>
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="update"></label>
+  <div class="col-md-4" align="center">
+    <button id="update" name="update" class="btn btn-info">Update</button>
+  </div>
+</div>
+
+</fieldset>
+</form>
+
+<!-- Extra JavaScript/CSS added manually in "Settings" tab -->
+<!-- Include jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+<script type="text/javascript">
+$('.clockpicker').clockpicker();
+</script>
+
+<script>
+	$(document).ready(function(){
+		var date_input=$('input[name="registrationDate"]' ); //our date input has the name "date"
+		var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+		date_input.datepicker({
+			format: 'mm/dd/yyyy',
+			container: container,
+			todayHighlight: true,
+			autoclose: true,
+		})
+	})
+</script>
+<footer class="container-fluid text-center">
+ <p>Copyrights <span  class="glyphicon glyphicon-copyright-mark"</span> 2016-17 by Pune Institute of Computer Technology</p> 
+</footer>
 </body>
-
 </html>
