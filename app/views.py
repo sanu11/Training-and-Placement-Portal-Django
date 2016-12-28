@@ -243,7 +243,8 @@ def web_register_company(request):
 		back=request.POST["back"]
 		ppt_date=request.POST["ppt_date"]
 		other_details=request.POST["other_details"]
-		print name," ",salary," ",other_details
+		if(other_details==""):
+			other_details=None
  #add to database
 		obj=Company()
 		obj.name=name
