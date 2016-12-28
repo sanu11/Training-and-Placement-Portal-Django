@@ -2,6 +2,16 @@ from django.conf.urls import url
 from app import views
 
 urlpatterns = [
+#android
+
+	url(r'verify/$',views.verify),	
+	url(r'register_student/$',views.register_student),
+	url(r'register_company/$',views.register_company),
+	url(r'update_company/$',views.update_company),
+	url(r'app_login/$',views.login_details),
+	url(r'app_notify/$',views.notify),
+	url(r'app_sync/$',views.sync_data),
+	
 ##web
 
 	url(r'psignup/$',views.get_signup_page),		
@@ -24,15 +34,7 @@ urlpatterns = [
 
 	url(r'^$', views.index),
 
-#android
 
-	url(r'verify/$',views.verify),	
-	url(r'register_student/$',views.register_student),
-	url(r'register_company/$',views.register_company),
-	url(r'update_company/$',views.update_company),
-	url(r'app_login/$',views.login_details),
-	url(r'app_notify/$',views.notify),
-	url(r'app_sync/$',views.sync_data),
 
 ]
 

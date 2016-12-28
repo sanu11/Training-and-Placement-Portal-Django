@@ -119,14 +119,14 @@ def sync_data(request):
 def notify(request):
 	data = json.loads(request.body)
 	print data
-	# title=data['title']
-	# body=data['body']
-	# obj=Message()
-	# obj.title=title
-	# obj.message=body
-	# obj.save()
-	# Device = get_device_model()
-	# Device.objects.all().send_message({'type':'gen_msg','title':title,'body':body})
+	title=data["title"]
+	body=data["body"]
+	obj=Message()
+	obj.title=title
+	obj.message=body
+	obj.save()
+	Device = get_device_model()
+	Device.objects.all().send_message({'type':'gen_msg','title':title,'body':body})
 	return HttpResponse("Message sent")
 
 
