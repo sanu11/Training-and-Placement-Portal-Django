@@ -34,7 +34,5 @@ urlpatterns = [
 	url(r'app_notify/$',views.notify),
 	url(r'app_sync/$',views.sync_data),
 
-
-
 ]
 
