@@ -38,6 +38,21 @@ def register_student(request):
 	return HttpResponse("Success")
 
 @csrf_exempt
+def login_details(request):
+	data = json.loads(request.body)
+	get_mail=data["email"]
+	get_pw=data["password"]
+	if(Student.objects.filter(email=get_mail).exists()):
+		obj=Student.objects.get(email=get_mail)
+		if(obj.password==get_pw):
+			return HttpResponse("Success")
+		else:
+			return HttpResponse("Incorrect Password")
+	else:
+		return HttpResponse("User not found")
+
+
+@csrf_exempt
 def register_company(request):
 	data = json.loads(request.body)
 	name=data["name"]	
@@ -92,19 +107,6 @@ def update_company(request):
 
 	return HttpResponse("Company Updated")
 
-@csrf_exempt
-def login_details(request):
-	data = json.loads(request.body)
-	get_mail=data["email"]
-	get_pw=data["password"]
-	if(Student.objects.filter(email=get_mail).exists()):
-		obj=Student.objects.get(email=get_mail)
-		if(obj.password==get_pw):
-			return HttpResponse("Success")
-		else:
-			return HttpResponse("Incorrect Password")
-	else:
-		return HttpResponse("User not found")
 
 @csrf_exempt
 def sync_data(request):
@@ -116,6 +118,7 @@ def sync_data(request):
 @csrf_exempt
 def notify(request):
 	data = json.loads(request.body)
+	print data
 	title=data["title"]
 	body=data["body"]
 	obj=Message()
