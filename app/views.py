@@ -119,8 +119,8 @@ def sync_data(request):
 def notify(request):
 	data = json.loads(request.body)
 	print data
-	title=data["title"]
-	body=data["body"]
+	title=data['title']
+	body=data['body']
 	obj=Message()
 	obj.title=title
 	obj.message=body
