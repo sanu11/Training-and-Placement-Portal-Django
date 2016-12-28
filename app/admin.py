@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Student,Company,Message,Verify
+from gcm.models import get_device_model
 
 # Register your models here.
 admin.site.register(Student)
