@@ -11,7 +11,7 @@ urlpatterns = [
 	url(r'app_login/$',views.login_details),
 	url(r'app_notify/$',views.notify),
 	url(r'app_sync/$',views.sync_data),
-	
+
 ##web
 
 	url(r'psignup/$',views.get_signup_page),		
@@ -20,7 +20,7 @@ urlpatterns = [
 	url(r'pupdate/$',views.get_update_page),
 	url(r'pnotify/$',views.get_notify_page),
 
-	url(r'register/$',views.web_register_company),
+	url(r'cregister/$',views.web_register_company),
 	url(r'update/$',views.web_update_company),
 	url(r'notify/$',views.web_notify),
 	url(r'signup/$',views.web_signup),	
