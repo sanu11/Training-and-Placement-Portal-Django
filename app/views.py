@@ -9,7 +9,6 @@ from django.views.decorators.csrf import *
 from django.core import serializers
 from gcm.models import get_device_model
 import json
-      
 
 @csrf_exempt
 def verify(request):
@@ -138,12 +137,12 @@ def index(request):
 
 @csrf_exempt
 def get_main_page(request):
-	companies=list(Company.objects.all().order_by('-c_id'))
-	return render(request,'app/main.html',{"companies":companies})
+	name=request.session["name"]
+	return render(request,'app/home.html',{"name":name})
 
 @csrf_exempt
 def get_signup_page(request):
-	return render(request,'app/upload.html',{})
+	return render(request,'app/signup.html',{})
 
 @csrf_exempt
 def get_login_page(request):
@@ -179,6 +178,7 @@ def get_statistics_page(request):
 @csrf_exempt
 def logout(request):
 	del request.session['email']
+	del request.session['name']
 	request.session.modified = True
 	print "end"
 	return render(request,'app/index.html',{})  
@@ -190,8 +190,9 @@ def web_signup(request):
 		if(Student.objects.filter(email=get_mail).exists()):
 			return HttpResponse('Already Registered')
 		c=Student()
-		c.name=request.POST["name"]
+		name=request.POST["name"]
 		mail=request.POST["email"]    
+		c.name=name
 		c.mail=mail
 		c.password=request.POST["password"]
 		c.phone=request.POST["phone"]
@@ -200,6 +201,7 @@ def web_signup(request):
 		c.activeBack=request.POST["activeBack"]
 		c.save()
 		request.session['email']= mail          #send cookie
+		request.session['name']=name
 		return HttpResponse('Success');
 	else:
 		return HttpResponse('Error');
@@ -210,13 +212,14 @@ def web_login(request):
 	if request.method=="POST":
 		get_mail=request.POST.get("email")
 		get_pw=request.POST.get("password")
-		st=Student.objects.all()
-		companies=list(Company.objects.all().order_by('-c_id'))
+	
 		if(Student.objects.filter(email=get_mail).exists()):
 			obj=Student.objects.get(email=get_mail)
 			if(obj.password==get_pw):
+				name=obj.user
 				request.session['email']= get_mail 
-				return render(request,'app/main.html',{"companies":companies})
+				request.session['name']=name
+				return render(request,'app/redirect.html',{})
 			else:
 				return HttpResponse("Incorrect Password")
 		else:

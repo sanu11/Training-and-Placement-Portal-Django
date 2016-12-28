@@ -1,0 +1,244 @@
+﻿
+<html>
+<head>
+ <meta charset="utf-8">
+    
+    <title>Registration Page</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="/static/js/bootstrap.min.js"></script>
+<style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+	  background-color: #555;
+      color: white;
+      padding: 15px;
+	 
+	  height:50px;
+      bottom:0px;
+      left:0px;
+      right:0px;
+      margin-bottom:0px;
+    }
+    header{
+      position: static;
+    }
+
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+	textarea.form-control
+	{
+		height: 30%;
+	}
+	
+	.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+	
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+<h1 class="text-center"> 
+<a class="pull-left" href="http://139.59.34.20:8090/"> 
+<img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
+</a><span style="margin-left: -20%; color: rgb(222, 222, 222);">Training and Placement</span></h1>  
+
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+      
+      <ul class="nav navbar-nav navbar-right">
+
+      </ul>
+    </div>
+  </div>
+</nav>
+<form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+<br><br><br><br><br>
+<h2 align="center">Registration</h2>
+<br>
+<form class="form-horizontal">
+<fieldset>
+
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Name</label>  
+  <div class="col-md-4">
+  <input id="textinput" name="textinput" type="text" placeholder="Name" class="form-control input-md">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Email </label>  
+  <div class="col-md-4">
+  <input id="textinput" name="textinput" type="text" placeholder="Email" class="form-control input-md">
+    
+  </div>
+</div>
+
+<!-- Password input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="passwordinput">Password </label>
+  <div class="col-md-4">
+    <input id="passwordinput" name="passwordinput" type="password" placeholder="Password" class="form-control input-md">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Phone</label>  
+  <div class="col-md-4">
+  <input id="textinput" name="textinput" type="text" placeholder="Phone" class="form-control input-md">
+    
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="selectbasic">Branch</label>
+  <div class="col-md-4">
+    <select id="selectbasic" name="selectbasic" class="form-control">
+      <option value="1">COMP</option>
+      <option value="2">ENTC</option>
+      <option value="3">IT </option>
+    </select>
+  </div>
+</div>
+
+<!-- Appended Input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="appendedtext">Average %</label>
+  <div class="col-md-4">
+    <div class="input-group">
+      <input id="appendedtext" name="appendedtext" class="form-control" placeholder="Average" type="text">
+      <span class="input-group-addon">%</span>
+    </div>
+    
+  </div>
+</div>
+<!-- Button toggle -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="button1id">Active Backlog</label>
+  
+  <div class="col-md-8"> 
+   
+<label class="switch">
+  <input type="checkbox"name="passiveBacklog" value="yes">
+  <div class="slider round"></div>
+</label>
+</label>
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="singlebutton"></label>
+  <div class="col-md-4">
+    <button id="singlebutton" name="singlebutton" class="btn btn-primary">Register</button>
+  </div>
+</div>
+
+</fieldset>
+</form>
+
+<br>
+<br>
+<footer class="container-fluid text-center">
+ <p>Copyrights <span  class="glyphicon glyphicon-copyright-mark"</span> 2016-17 by PICT, Pune. All rights reserved | Made with <span class="glyphicon glyphicon-heart" style="color:red;"></span> in PICT.</p> 
+</footer>
+</body>
+</html>

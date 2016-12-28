@@ -119,68 +119,46 @@
 		}
 		
 	</style>
-	
 	</head>
 
 <body>
 
-	<header id="header"><p>Placements</p></header>
-
+	<header id="header"><p>Training and Placement</p></header>
+<a href="/home/"> <button>Home </button></a>
 	<div id="container">
 
 		<main id="center" class="column">
 			<article>
-				<a href="/logout/"> <button>Log out </button></a>
-
-				<h1>Statistics</h1>
-				<section id="leaderboard" class="cf">
+				
+				<h1>Notifications</h1>
+				<section id="notifications" class="cf">
 		<div class="wrapper">
 	
 			<div class="column">
 			
-				<table class="table">
-					<tr>
-						<th>Id</th>
-						<th>Company</th>
-						<th>Salary</th>
-					</tr>
-					{% for company in companies %}
-					<tr>
-						<td>{{forloop.counter}} &ensp;&ensp;&ensp;</td>
+					
+					{% for message in notifications %}
+					
+					{{forloop.counter}} &ensp;&ensp;&ensp;
 
-						<td>{{company.name}}&ensp;&ensp;</td>
-						<td>{{company.salary}}</td>
-					</tr>
+					<b>{{message.title}}</b><br>
+					&ensp;&ensp;&ensp;{{message.message}}<br><br><br>
+				
 					{% endfor %}
-				</table>
+			
 			</div>
 			</section>
-	
 
-		
-
-			
-			</article>								
+			</article>	
 		</main>
-
-		<nav id="left" class="column">
-			<h3></h3>
-			<ul>
-				<li><a href="/pregister">Upload Company</a></li>
-				<li><a href="/pupdate">Update Company</a></li>
-				<li><a href="/pnotify/">Notify</a></li>
-				<li><a href="/notifications">Notifications</a></li>
-			</ul>
-				</nav>
-
-
-
-	</div>
-
-	<div id="footer-wrapper">
+		</div>
+			
+	
+<div id="footer-wrapper">
 		<footer id="footer"><p>Pune Institute Of Computer Technology</p></footer>
 	</div>
-
+					
+									
 </body>
 
 </html>

@@ -23,10 +23,12 @@ urlpatterns = [
 	url(r'cregister/$',views.web_register_company),
 	url(r'update/$',views.web_update_company),
 	url(r'notify/$',views.web_notify),
-	url(r'signup/$',views.web_signup),	
+	url(r'signup/$',views.web_signup),
+	url(r'login/$',views.web_login),
+
 
 	
-	url(r'pstatistics/$',views.get_statistics_page),	
+	url(r'statistics/$',views.get_statistics_page),	
 	url(r'notifications/$',views.get_notifications_page),
 
 	url(r'logout/$',views.logout),

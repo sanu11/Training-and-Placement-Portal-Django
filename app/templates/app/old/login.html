@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  
+  <body>
+
+    <div class="container">
+
+      <form method="post" action="/home/" >
+        <br>
+        {% csrf_token %}
+
+        <h2 >Please sign in</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" name= "email" id="email" placeholder="Email address">
+        <br><br>
+        <label for="inputPassword" class="sr-only">Password </label>
+
+        <input type="password" name = "password" id="password" placeholder="Password" >
+        <br><br>
+         <button class="btn btn-lg btn-primary btn-block" type="submit"> Sign in</button>
+      </form>
+
+    </div> <!-- /container -->
+
+  </body>
+</html>
+
+
