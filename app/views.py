@@ -35,7 +35,7 @@ def register_student(request):
 	obj.average=data["average"]
 	obj.active_back=data["activeBack"]
 	obj.save()
-	return HttpResponse("Success")
+	return HttpResponse(obj.user)
 
 @csrf_exempt
 def login_details(request):
