@@ -1,22 +1,213 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>
-Welcome
-</title>
-</head>
+  <title>Company Upload</title>
+  <meta charset="utf-8">
+  <meta name="description" content="PICT Training and placement online portal">
+<meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!---- BootStrap Libraries         -->
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="/static/js/bootstrap.min.js"></script>
+  
+   <!---- BootStrap online Libraries        
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   -->
+ <style>
+ 
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+	body {
+    background-color: #eee;
+}
 
+*[role="form"] {
+    max-width: 530px;
+    padding: 15px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 0.3em;
+}
 
+*[role="form"] h2 {
+    margin-left: 5em;
+    margin-bottom: 1em;
+}
+
+  </style>
+  
+  </head>
 <body>
-	<label> Name :</label> <textarea  id="name"> </textarea><br>
-	<label> Email:</label> <textarea  id="email"> </textarea><br>
-	<label> Password :</label> <textarea  id="password"> </textarea><br>
-	<label> Address :</label> <textarea  id="address"> </textarea><br>
-	<label> Phone :</label> <textarea  id="phone"> </textarea><br>
-	<label> Branch :</label> <textarea  id="branch"> </textarea><br>
-	<label> Average :</label> <textarea  id="average"> </textarea><br>
-	<label> Placed :</label> <textarea  id="placed"> </textarea><br>
-	<label> Active_back:</label> <textarea  id="active_back"> </textarea><br>
-	<label> Num_back :</label> <textarea  id="num_back"> </textarea><br>
-</body>
 
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+<h1 class="text-center"> 
+<a class="pull-left" href="/home/"> 
+<img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
+</a><span style="margin-left: -20%; color: rgb(222, 222, 222);">Training and Placement</span></h1>  
+
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav" style="margin-left:11%;">
+        <li class="active"><a href="/home/">Home</a></li>
+        
+        <li><a href="/pregister/">Register</a></li>
+        <li><a href="/pupdate/">Update</a></li>
+    <li><a href="/pnotify/">Notify</a></li>
+    <li><a href="/statistics/">Statistics</a></li>
+    <li><a href="/notifications/">Notifications</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+      
+    <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/logout/">Logout</a></li>
+          </ul>
+        </li>
+     </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid ">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav ">
+	<div class="navbar">
+	<div class="navbar-header">
+      </div>
+      <ul class="nav navbar-nav">
+	  
+	  </ul>
+	  </div>
+    </div>
+    <br><br><br><br><br><br>
+    <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 
+      <form class="form-horizontal" role="form" action="/cregister/" method="POST">
+          {% csrf_token %}
+                <h2><b>Company Registration</b></h2>
+                <div class="form-group">
+                    <label for="firstName" class="col-sm-3 control-label">Company</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="firstName" name="name" placeholder="Company Name" class="form-control" required autofocus>
+                       
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="text" class="col-sm-3 control-label">Salary</label>
+                    <div class="col-sm-9">
+                        <input type="number" step="0.01" min=0 id="salary" name="salary" placeholder="Salary" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="text" class="col-sm-3 control-label">Criteria</label>
+                    <div class="col-sm-9">
+                        <input type="number" step="0.01" min=0 id="criteria" name="criteria" placeholder="Criteria" class="form-control" required>
+                    </div>
+                </div>
+				
+                <div class="form-group">
+                    <label for="date" class="col-sm-3 control-label">PPT/Apti</label>
+                    <div class="col-sm-5">
+                       <input class="form-control" id="date" name="ppt_date" placeholder="MM/DD/YYYY" type="date" required/>
+                    </div>
+					<div class="col-sm-4">
+					<input type="time" class="form-control" name="ppt_time" placeholder="HH:MM" required>
+					</div>
+                </div>
+				
+                <div class="form-group">
+                    <label for="text" class="col-sm-3 control-label">Backlog</label>
+                    <div class="col-sm-9">
+                        <select id="country" name="back" class="form-control">
+                            <option value="No Criteria">No Criteria</option>
+                            <option value="Active not Allowed">Active not Allowed</option>
+                            <option value="Passive not Allowed">Passive not Allowed</option>
+                            
+                        </select>
+                    </div>
+                </div> <!-- /.form-group -->
+
+				<div class="form-group">
+				<label class="control-label col-sm-3" for="other_details">Other Details</label>
+      			<div class="col-sm-9">
+				<textarea class="form-control"  id="other_details" name="other_details" maxlength="550"></textarea>
+				</div>
+				</div>
+				
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="update"></label>
+          <div class="col-md-7" align="center">
+            <button id="update" name="register" class="btn btn-info">Register</button>
+          </div>
+        </div>
+            </form> <!-- /form -->
+    </div>
+    
+  </div>
+</div>
+<!-- Extra JavaScript/CSS added manually in "Settings" tab -->
+<!-- Include jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+<script>
+	$(document).ready(function(){
+		var date_input=$('input[name="date"]'); //our date input has the name "date"
+		var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+		date_input.datepicker({
+			format: 'mm/dd/yyyy',
+			container: container,
+			todayHighlight: true,
+			autoclose: true,
+		})
+	})
+</script>
+<footer class="container-fluid text-center">
+ <p>Copyrights <span  class="glyphicon glyphicon-copyright-mark"</span> 2016-17 by Pune Institute of Computer Technology</p> 
+</footer>
+</body>
 </html>

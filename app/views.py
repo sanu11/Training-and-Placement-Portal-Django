@@ -91,8 +91,8 @@ def update_company(request):
 	obj=Company.objects.get(name=name)
 	if(obj.reg_link):
 		return HttpResponse("Already Updated")
-	obj.reg_start_date=reg_start
-	obj.reg_end_date=reg_end
+	obj.reg_start=reg_start
+	obj.reg_end=reg_end
 	obj.reg_link=reg_link
 	if(obj.other_details and other_details):
 		obj.other_details=obj.other_details + " " +  other_details
@@ -152,7 +152,7 @@ def get_login_page(request):
 @csrf_exempt
 def get_register_page(request):
 	name=request.session["name"]
-	return render(request,'app/upload.html',{"name":name})
+	return render(request,'app/register.html',{"name":name})
 
 @csrf_exempt
 def get_update_page(request):
@@ -190,23 +190,23 @@ def logout(request):
 @csrf_exempt
 def web_signup(request):
 	if request.method=="POST":
-		mail=request.POST["email"]
-		
-		if(Student.objects.filter(email=mail).exists()):
+		email=request.POST["email"]
+		name=request.POST["name"]
+		print name,email
+		if(Student.objects.filter(email=email).exists()):
 			return HttpResponse('Already Registered')
 		c=Student()
-		name=request.POST["name"] 
-		c.name=name
-		c.mail=mail
+		c.user=name
+		c.email=email
 		c.password=request.POST["password"]
 		c.phone=request.POST["phone"]
 		c.branch=request.POST["branch"]
 		c.average=request.POST["average"]
 		# c.activeBack=request.POST.get("activeBack")
 		c.save()
-		request.session['email']= mail          #send cookie
+		request.session['email']= email          #send cookie
 		request.session['name']=name
-		return HttpResponse('Success');
+		return render(request,'app/login.html',{})
 	else:
 		return HttpResponse('Error');
 
@@ -241,7 +241,7 @@ def web_verify(request):
 @csrf_exempt
 def web_register_company(request):
 	if request.method=="POST":
-		name=request.POST["name"]
+		name=request.POST["name"]	
 		if(Company.objects.filter(name=name).exists()):
 			return HttpResponse('Already Registered')
 		name=request.POST["name"]			
@@ -249,6 +249,7 @@ def web_register_company(request):
 		criteria=request.POST["criteria"]
 		back=request.POST["back"]
 		ppt_date=request.POST["ppt_date"]
+		ppt_time=request.POST["ppt_time"]
 		other_details=request.POST["other_details"]
 		if(other_details==""):
 			other_details=None
@@ -258,15 +259,16 @@ def web_register_company(request):
 		obj.criteria=criteria
 		obj.salary=salary
 		obj.other_details=other_details
-		obj.ppt_date=ppt_date
+		obj.ppt_date=ppt_date + " " + ppt_time
 		obj.back=back
 		obj.save()
 
+		name=request.session["name"]
     	#send notification
 		Device = get_device_model()
 
 		Device.objects.all().send_message({'type':'company_reg','name':name,'criteria':criteria,'salary':salary,'other_details':other_details,'ppt_date':ppt_date,'back':back})
-		return HttpResponse("Success")
+		return render(request,'app/home.html',{"name":name})
 	else:
 		return HttpResponse("Error")
 
@@ -274,15 +276,20 @@ def web_register_company(request):
 def web_update_company(request):
 	if request.method=="POST":
 		name=request.POST["name"]
-		reg_link=request.POST["reg_link"]
-		reg_start=request.POST["reg_start"]
-		reg_end=request.POST["reg_end"]
-		other_details=request.POST["other_details"]
+		reg_link=request.POST["regLink"]
+		reg_start_date=request.POST["regStartDate"]
+		reg_start_time=request.POST["regStartTime"]
+		reg_end_date=request.POST["regEndDate"]
+		reg_end_time=request.POST["regEndTime"]
+		other_details=request.POST["otherDetails"]
 		obj=Company.objects.get(name=name)
 		if(obj.reg_link):
 			return HttpResponse("Already Updated")
-		obj.reg_start_date=reg_start
-		obj.reg_end_date=reg_end
+		reg_start=reg_start_date + " " + reg_start_time
+		reg_end =reg_end_date + " " + reg_end_time
+		print reg_start , reg_end
+		obj.reg_start=reg_start
+		obj.reg_end=reg_end
 		obj.reg_link=reg_link
 		if(obj.other_details and other_details):
 			obj.other_details=obj.other_details + " " +  other_details
@@ -293,8 +300,8 @@ def web_update_company(request):
     #send notifications
 		Device = get_device_model()
 		Device.objects.all().send_message({'type':'company_update','name':name,'reg_link':reg_link ,'reg_start':reg_start, 'reg_end':reg_end ,'other_details':other_details})
-
-		return HttpResponse("Company Updated")
+		name=request.session["name"]
+		return render(request,'app/home.html',{"name":name})
 	return HttpResponse("Error")
 
 
@@ -309,10 +316,8 @@ def web_notify(request):
 		obj.save()
 		Device = get_device_model()
 		Device.objects.all().send_message({'type':'gen_msg','title':title,'body':body})
-		return HttpResponse("Message sent")
+		
+		name=request.session["name"]
+		return render(request,'app/home.html',{"name":name})
 	else:
 		return HttpResponse("Error")
-
-
-
-

@@ -1,0 +1,182 @@
+
+ <!DOCTYPE html>
+<!-- Template by quackit.com -->
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>3 Column Layout</title>
+	<style type="text/css">
+
+		/* Layout */
+		body {
+			min-width: 630px;
+		}
+
+		#container {
+			padding-left: 200px;
+			padding-right: 190px;
+		}
+		
+		#container .column {
+			position: relative;
+			float: left;
+		}
+		
+		#center {
+			padding: 10px 20px;
+			width: 100%;
+		}
+		
+		#left {
+			width: 180px;
+			padding: 0 10px;
+			right: 240px;
+			margin-left: -100%;
+		}
+		
+		#right {
+			width: 130px;
+			padding: 0 10px;
+			margin-right: -100%;
+		}
+		
+		#footer {
+			clear: both;
+		}
+		
+		/* IE hack */
+		* html #left {
+			left: 150px;
+		}
+
+		/* Make the columns the same height as each other */
+		#container {
+			overflow: hidden;
+		}
+
+		#container .column {
+			padding-bottom: 1001em;
+			margin-bottom: -1000em;
+		}
+
+		/* Fix for the footer */
+		* html body {
+			overflow: hidden;
+		}
+		
+		* html #footer-wrapper {
+			float: left;
+			position: relative;
+			width: 100%;
+			padding-bottom: 10010px;
+			margin-bottom: -10000px;
+			background: #fff;
+		}
+
+		/* Aesthetics */
+		body {
+			margin: 0;
+			padding: 0;
+			font-family:Sans-serif;
+			line-height: 1.5em;
+		}
+		
+		p {
+			color: #555;
+		}
+
+		nav ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+		}
+		
+		nav ul a {
+			color: darkgreen;
+			text-decoration: none;
+		}
+
+		#header, #footer {
+			font-size: large;
+			padding: 0.3em;
+			background: #BCCE98;
+		}
+
+		#left {
+			background: #DAE9BC;
+		}
+		
+		#right {
+			background: #F7FDEB;
+		}
+
+		#center {
+			background: #fff;
+		}
+
+		#container .column {
+			padding-top: 1em;
+		}
+		
+	</style>
+		
+
+</head>
+
+<body>
+
+	<header id="header"><p>Training and Placement</p></header>
+
+	<div id="container">
+		<a href="/home/"> <button>Home </button></a>
+		<main id="center" class="column">
+			<article>
+			
+		<section id="authentication" >
+		
+				<h2 class="title">Register</h2>
+				<form action="/cregister/" method="post" id="register">
+					{% csrf_token %}
+					<div >	
+						Company &ensp;&ensp;
+						<input type="text" name="name" maxlength="15" />
+					</div><br>
+					<div   >
+						Salary&ensp;&ensp;
+						<input type="number" name="salary" />
+					</div><br>
+					Criteria&ensp;&ensp;
+					<input type="number" name="criteria"/>
+					<br><br>
+					Back &ensp;&ensp;&ensp;
+					<select name="back">
+                        <option value="1">No criteria</option>
+                        <option value="2">Active not allowed</option>
+                        <option value="3">Passive not allowed</option>
+              
+                    </select>
+
+                    <br>
+                    <br>
+                    PPT Date&ensp;&ensp;
+					<input type="text" name="ppt_date" />
+					<br>
+					(yyyy-mm-dd hh:mm)
+					<br><br>
+					Other Details&ensp;&ensp;
+					<input type="text" name="other_details" maxlength="25"/>
+					<br><br>
+                    <button type="submit" class="button button_highlight">Register</button>
+                </form>
+			</div>
+			
+			</article>								
+		</main>
+	</div>
+	<div id="footer-wrapper">
+		<footer id="footer"><p>Pune Institute Of Computer Technology</p></footer>
+	</div>
+
+</body>
+
+</html>

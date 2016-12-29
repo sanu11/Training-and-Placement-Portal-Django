@@ -132,21 +132,29 @@ input:checked + .slider:before {
       
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
+
       <ul class="nav navbar-nav">
       
       <ul class="nav navbar-nav navbar-right">
 
       </ul>
     </div>
+    <br>
   </div>
 </nav>
+    
+<br><br><br><br>
+<a href ="/"><button id="singlebutton" name="singlebutton" class="btn btn-primary" style="position:relative;left:1200px;top:45px">Home</button></a>
 
 <form class="form-horizontal" method="POST" action ='/signup/'>
+{% csrf_token %}
 <fieldset>
 
 <!-- Form Name -->
-<br><br><br><br><br>
-<h2 align="center">Registration</h2>
+ 
+
+
+<h2 align="center"><b>Registration</b></h2>
 <br>
 
 
@@ -191,9 +199,9 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" for="selectbasic">Branch</label>
   <div class="col-md-4">
     <select id="selectbasic" name="branch" class="form-control">
-      <option value="1">COMP</option>
-      <option value="2">ENTC</option>
-      <option value="3">IT </option>
+      <option value="Comp">COMP</option>
+      <option value="EnTC">ENTC</option>
+      <option value="IT">IT </option>
     </select>
   </div>
 </div>
@@ -237,7 +245,7 @@ input:checked + .slider:before {
 <br>
 <br>
 <footer class="container-fluid text-center">
- <p>Copyrights <span  class="glyphicon glyphicon-copyright-mark"</span> 2016-17 by PICT, Pune. All rights reserved | Made with <span class="glyphicon glyphicon-heart" style="color:red;"></span> in PICT.</p> 
+ <p>Copyrights <span  class="glyphicon glyphicon-copyright-mark"</span> 2016-17 by Pune Institute Of Computer Technology</p> 
 </footer>
 </body>
 </html>

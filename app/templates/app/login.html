@@ -53,10 +53,10 @@
   </style>
 </head>
 <body>
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
 <h1 class="text-center"> 
-<a class="pull-left" href="http://139.59.34.20:8090/"> 
+<a class="pull-left" href="/"> 
 <img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
 </a><span style="margin-left: -20%; color: rgb(222, 222, 222);">Training and Placement</span></h1>  
 
@@ -72,14 +72,22 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       
     </div>
+    <br>
   </div>
 </nav>
+
+
+<br><br><br><br>
+<a href ="/"><button id="singlebutton" name="singlebutton" class="btn btn-primary" style="position:relative;left:1200px;top:45px">Home</button></a>
+
+
 <form action="/login/" method="post" class="form-horizontal">
+{% csrf_token %}
 <fieldset>
 
 <!-- Form Name -->
 <br>
-<h2 align="center">Login</h2>
+<h2 align="center"><b>Login</b></h2>
 <br>
 <!-- <form   class="form-horizontal"> -->
 <!-- <fieldset> -->
@@ -116,7 +124,7 @@
 </fieldset>
 </form>
 <footer class="container-fluid text-center">
- <p>Copyrights <span  class="glyphicon glyphicon-copyright-mark"</span> 2016-17 by PICT, Pune. All rights reserved | Made with <span class="glyphicon glyphicon-heart" style="color:red;"></span> in PICT.</p> 
+ <p>Copyrights <span  class="glyphicon glyphicon-copyright-mark"</span> 2016-17 by Pune Institute Of Computer Technology</p> 
 </footer>
 </body>
 </html>

@@ -56,7 +56,7 @@
   </style>
 </head>
 <body>
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
 <div class="container-fluid">
 <h1 class="text-center"> 
 <a class="pull-left" href="/home/"> 
@@ -76,7 +76,7 @@
       <ul class="nav navbar-nav" style="margin-left:11%;">
         <li class="active"><a href="/home/">Home</a></li>
         
-        <li><a href="/pregister/">Upload</a></li>
+        <li><a href="/pregister/">Register</a></li>
         <li><a href="/pupdate/">Update</a></li>
     <li><a href="/pnotify/">Notify</a></li>
     <li><a href="/statistics/">Statistics</a></li>
@@ -96,7 +96,8 @@
     </div>
   </div>
 </nav>
-<form class="form-horizontal" autocomplete="off" method="post" enctype="multipart/form-data">
+<form class="form-horizontal" autocomplete="off" method="POST"  action="/update/" enctype="multipart/form-data">
+{% csrf_token %}
 <fieldset>
 
 <!-- Form Name -->
@@ -112,14 +113,15 @@
     <div class="input-group">
       
       <div class="input-group-btn">
-        <select class="form-control" name="companyNames" id="company">
+        <select class="form-control" name="name" id="company">
 		<option selected disabled hidden>Select Company</option>
-        <option value="MorganStanley">Morgan Stanley</option>
-        <option value="Amura">Amura</option>
-        <option value="Rakuten">Rakuten</option>
-        <option value="NVDIA">NVDIA</option>
+           {% for company in companies %}
+            <option > {{company.name}} </option>
+            {% endfor %}
+                           
       </select>
-        
+     
+                    
       </div>
     </div>
   </div>
@@ -129,7 +131,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="registrationLink">Registration Link</label>  
   <div class="col-md-4">
-  <input id="registrationLink" name="registrationLink" type="url" placeholder="Registration Link" class="form-control input-md" required="">
+  <input id="registrationLink" name="regLink" type="url" placeholder="Registration Link" class="form-control input-md" required="">
     
   </div>
 </div>
@@ -138,10 +140,10 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="registrationStartDate">Registration Start</label>  
   <div class="col-md-2">
-  <input id="registrationStartDate" name="registrationDate" type="text" placeholder="MM/DD/YYYY" class="form-control input-md" required="">
+  <input class="form-control" id="date" name="regStartDate" min="2016-06-01" placeholder="MM/DD/YYYY" type="date" required/>
   </div>
   <div class="col-md-2">
-  <input id="registrationStartTime" name="registrationStartTime" type="time" placeholder="HH:MM" class="form-control input-md" required="">
+  <input id="registrationStartTime" name="regStartTime" type="time" placeholder="HH:MM" class="form-control input-md" required="">
   </div>
 </div>
 
@@ -149,26 +151,14 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="registrationEndDate">Registration End </label>  
   <div class="col-md-2">
-  <input id="registrationEndDate" name="registrationDate" type="text" placeholder="MM/DD/YYYY" class="form-control input-md" required="">
+  <input class="form-control" id="date" name=regEndDate min="2016-06-01" placeholder="MM/DD/YYYY" type="date" required/>
     
   </div>
   <div class="col-md-2">
-  <input id="registrationEndTime" name="registrationEndTime" type="time" placeholder="HH:MM" class="form-control input-md" required="">
+  <input id="registrationEndTime" name="regEndTime" type="time" placeholder="HH:MM" class="form-control input-md" required="">
     </div>
 </div>
 
-
-  
-
-
-<!-- Text input
-<div class="form-group">
-  <label class="col-md-4 control-label" for="registrationEndTime">Registration End Time</label>  
-  <div class="col-md-4">
-  <input id="registrationEndTime" name="registrationEndTime" type="time" placeholder="Registration End time" class="form-control input-md" required="">
-    
-  
-</div>
 -->
 <!-- Textarea -->
 <div class="form-group">
@@ -182,7 +172,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="update"></label>
   <div class="col-md-4" align="center">
-    <button id="update" name="update" class="btn btn-info">Update</button>
+    <input type="submit" value="Update" id="update" name="update" class="btn btn-info">
   </div>
 </div>
 

@@ -1,163 +1,135 @@
-
- <!DOCTYPE html>
-<!-- Template by quackit.com -->
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>3 Column Layout</title>
-	<style type="text/css">
-
-		/* Layout */
-		body {
-			min-width: 630px;
-		}
-
-		#container {
-			padding-left: 200px;
-			padding-right: 190px;
-		}
-		
-		#container .column {
-			position: relative;
-			float: left;
-		}
-		
-		#center {
-			padding: 10px 20px;
-			width: 100%;
-		}
-		
-		#left {
-			width: 180px;
-			padding: 0 10px;
-			right: 240px;
-			margin-left: -100%;
-		}
-		
-		#right {
-			width: 130px;
-			padding: 0 10px;
-			margin-right: -100%;
-		}
-		
-		#footer {
-			clear: both;
-		}
-		
-		/* IE hack */
-		* html #left {
-			left: 150px;
-		}
-
-		/* Make the columns the same height as each other */
-		#container {
-			overflow: hidden;
-		}
-
-		#container .column {
-			padding-bottom: 1001em;
-			margin-bottom: -1000em;
-		}
-
-		/* Fix for the footer */
-		* html body {
-			overflow: hidden;
-		}
-		
-		* html #footer-wrapper {
-			float: left;
-			position: relative;
-			width: 100%;
-			padding-bottom: 10010px;
-			margin-bottom: -10000px;
-			background: #fff;
-		}
-
-		/* Aesthetics */
-		body {
-			margin: 0;
-			padding: 0;
-			font-family:Sans-serif;
-			line-height: 1.5em;
-		}
-		
-		p {
-			color: #555;
-		}
-
-		nav ul {
-			list-style-type: none;
-			margin: 0;
-			padding: 0;
-		}
-		
-		nav ul a {
-			color: darkgreen;
-			text-decoration: none;
-		}
-
-		#header, #footer {
-			font-size: large;
-			padding: 0.3em;
-			background: #BCCE98;
-		}
-
-		#left {
-			background: #DAE9BC;
-		}
-		
-		#right {
-			background: #F7FDEB;
-		}
-
-		#center {
-			background: #fff;
-		}
-
-		#container .column {
-			padding-top: 1em;
-		}
-		
-	</style>
-		
-
+ <meta charset="utf-8">
+    <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
+    <title>Notify</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="/static/js/bootstrap.min.js"></script>
+<style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar 
+	{
+	  position:relative; 
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px;position fixed}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+	  background-color: #555;
+      color: white;
+      padding: 15px;
+	  position:relative;
+	  height:50px;
+      bottom:0px;
+      left:0px;
+      right:0px;
+      margin-bottom:0px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+	textarea.form-control
+	{
+		height: 30%;
+	}
+  </style>
 </head>
-
 <body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+<h1 class="text-center"> 
+<a class="pull-left" href="/home/"> 
+<img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
+</a><span style="margin-left: -20%; color: rgb(222, 222, 222);">Training and Placement</span></h1>  
 
-	<header id="header"><p>Training and Placement</p></header>
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      
+    </div>
+     <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav" style="margin-left:11%;">
+        <li class="active"><a href="/home/">Home</a></li>
+        
+        <li><a href="/pregister/">Register</a></li>
+        <li><a href="/pupdate/">Update</a></li>
+    <li><a href="/pnotify/">Notify</a></li>
+    <li><a href="/statistics/">Statistics</a></li>
+    <li><a href="/notifications/">Notifications</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+      
+    <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/logout/">Logout</a></li>
+           
+          </ul>
+        </li>
+    
+     </ul>
+    </div>
+  </div>
+</nav>
 
-	<div id="container">
-		<a href="/home/"> <button>Home </button></a>
-		<main id="center" class="column">
-			<article>
-			
-		<section id="authentication" >
-		
-				<h2 class="title">Send Message</h2>
-				<form action="/notify/" method="post" id="register">
-					{% csrf_token %}
-					
-					<div>
-						Title &ensp;&ensp;
-						<input type="link" name="title" />
-					</div><br><br>
-					<div>
-						Body &ensp;&ensp;
-						<input type="link" name="body" />
-					</div><br>
-		
-                    <button type="submit" class="button button_highlight">Send</button>
-                </form>
-			</div>
-			
-			</article>								
-		</main>
-	</div>
-	<div id="footer-wrapper">
-		<footer id="footer"><p>Pune Institute Of Computer Technology</p></footer>
-	</div>
 
+<form class="form-horizontal" action="/notify/" method="POST">
+<fieldset>
+
+<!-- Form Name -->
+<br>
+<h2 align="center"><b>Notify Candidate</b></h2>
+<br>
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="title">Title</label>  
+  <div class="col-md-4">
+  <input id="title" name="title" type="text" placeholder="Subject Of Message" class="form-control input-md" required="">
+</div>
+<br>
+</div>
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="message">Message</label>
+  <div class="col-md-4">                     
+    <textarea name = "body" class="form-control" id="message" name="message"></textarea>
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="notify"></label>
+  <div class="col-md-4" align="center">
+    <button id="notify" name="notify" class="btn btn-info">Notify Candidate</button>
+  </div>
+</div>
+
+</fieldset>
+</form>
+<footer class="container-fluid text-center">
+ <p>Copyrights <span  class="glyphicon glyphicon-copyright-mark"</span> 2016-17 by Pune Institute Of Computer Technology</p> 
+</footer>
 </body>
-
 </html>

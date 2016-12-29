@@ -134,38 +134,20 @@
 			
 		<section id="authentication" >
 		
-				<h2 class="title">Register</h2>
-				<form action="/cregister/" method="post" id="register">
+				<h2 class="title">Send Message</h2>
+				<form action="/notify/" method="post" id="register">
 					{% csrf_token %}
-					<div >	
-						Company &ensp;&ensp;
-						<input type="text" name="name" maxlength="15" />
+					
+					<div>
+						Title &ensp;&ensp;
+						<input type="link" name="title" />
+					</div><br><br>
+					<div>
+						Body &ensp;&ensp;
+						<input type="link" name="body" />
 					</div><br>
-					<div   >
-						Salary&ensp;&ensp;
-						<input type="number" name="salary" />
-					</div><br>
-					Criteria&ensp;&ensp;
-					<input type="number" name="criteria"/>
-					<br><br>
-					Back &ensp;&ensp;&ensp;
-					<select name="back">
-                        <option value="1">No criteria</option>
-                        <option value="2">Active not allowed</option>
-                        <option value="3">Passive not allowed</option>
-                        
-                    </select>
-                    <br>
-                    <br>
-                    PPT Date&ensp;&ensp;
-					<input type="text" name="ppt_date" />
-					<br>
-					(yyyy-mm-dd hh:mm)
-					<br><br>
-					Other Details&ensp;&ensp;
-					<input type="text" name="other_details" maxlength="25"/>
-					<br><br>
-                    <button type="submit" class="button button_highlight">Register</button>
+		
+                    <button type="submit" class="button button_highlight">Send</button>
                 </form>
 			</div>
 			
