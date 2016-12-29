@@ -263,11 +263,12 @@ def web_register_company(request):
 		obj.back=back
 		obj.save()
 
-		name=request.session["name"]
+		
     	#send notification
 		Device = get_device_model()
 
 		Device.objects.all().send_message({'type':'company_reg','name':name,'criteria':criteria,'salary':salary,'other_details':other_details,'ppt_date':ppt_date,'back':back})
+		name=request.session["name"]
 		return render(request,'app/home.html',{"name":name})
 	else:
 		return HttpResponse("Error")
