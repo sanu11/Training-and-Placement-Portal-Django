@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Company Upload</title>
+  <title>Company Registration</title>
   <meta charset="utf-8">
   <meta name="description" content="PICT Training and placement online portal">
 <meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
@@ -49,7 +49,7 @@
       }
       .row.content {height:auto;} 
     }
-	body {
+  body {
     background-color: #eee;
 }
 
@@ -71,14 +71,20 @@
   </head>
 <body>
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse">
   <div class="container-fluid">
-<h1 class="text-center"> 
-<a class="pull-left" href="/home/"> 
-<img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
-</a><span style="margin-left: -20%; color: rgb(222, 222, 222);">Training and Placement</span></h1>  
-
-
+<div class="container-fluid">
+ <div class="row">
+  <div class="col-sm-3">
+   <a class="pull-left" href="/home/"> 
+   <img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
+   </a>
+  </div>
+  <div class="col-sm-6"><h1 class="text-center">
+  <span style="color: rgb(222, 222, 222);">Training and Placement</span></h1>  
+  </div>
+ </div>
+</div>
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
@@ -87,11 +93,12 @@
       </button>
       
     </div>
+  <div class="col-sm-2"></div>
     <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav" style="margin-left:11%;">
-        <li class="active"><a href="/home/">Home</a></li>
+      <ul class="nav navbar-nav" style="margin-left:15%;">
+        <li ><a href="/home/">Home</a></li>
         
-        <li><a href="/pregister/">Register</a></li>
+        <li class="active"><a href="/pregister/">Register</a></li>
         <li><a href="/pupdate/">Update</a></li>
     <li><a href="/pnotify/">Notify</a></li>
     <li><a href="/statistics/">Statistics</a></li>
@@ -110,21 +117,23 @@
   </div>
 </nav>
   
-<div class="container-fluid ">    
+<div class="container-fluid">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
-	<div class="navbar">
-	<div class="navbar-header">
-      </div>
+  <!-- <div class="navbar">
+  <div class="navbar-header">
+      </div> 
       <ul class="nav navbar-nav">
-	  
-	  </ul>
-	  </div>
+    -->
+    <br>
+    <p>{% csrf_token %}</p>
+   <!-- </ul>
+     </div> -->
     </div>
-    <br><br><br><br><br><br>
+    
     <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 
       <form class="form-horizontal" role="form" action="/cregister/" method="POST">
-          {% csrf_token %}
+          
                 <h2><b>Company Registration</b></h2>
                 <div class="form-group">
                     <label for="firstName" class="col-sm-3 control-label">Company</label>
@@ -145,17 +154,17 @@
                         <input type="number" step="0.01" min=0 id="criteria" name="criteria" placeholder="Criteria" class="form-control" required>
                     </div>
                 </div>
-				
+        
                 <div class="form-group">
                     <label for="date" class="col-sm-3 control-label">PPT/Apti</label>
                     <div class="col-sm-5">
                        <input class="form-control" id="date" name="ppt_date" placeholder="MM/DD/YYYY" type="date" required/>
                     </div>
-					<div class="col-sm-4">
-					<input type="time" class="form-control" name="ppt_time" placeholder="HH:MM" required>
-					</div>
+          <div class="col-sm-4">
+          <input type="time" class="form-control" name="ppt_time" placeholder="HH:MM" required>
+          </div>
                 </div>
-				
+        
                 <div class="form-group">
                     <label for="text" class="col-sm-3 control-label">Backlog</label>
                     <div class="col-sm-9">
@@ -168,13 +177,13 @@
                     </div>
                 </div> <!-- /.form-group -->
 
-				<div class="form-group">
-				<label class="control-label col-sm-3" for="other_details">Other Details</label>
-      			<div class="col-sm-9">
-				<textarea class="form-control"  id="other_details" name="other_details" maxlength="550"></textarea>
-				</div>
-				</div>
-				
+        <div class="form-group">
+        <label class="control-label col-sm-3" for="other_details">Other Details</label>
+            <div class="col-sm-9">
+        <textarea class="form-control"  id="other_details" name="other_details" maxlength="550"></textarea>
+        </div>
+        </div>
+        
         <div class="form-group">
           <label class="col-md-4 control-label" for="update"></label>
           <div class="col-md-7" align="center">
@@ -195,19 +204,19 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
 <script>
-	$(document).ready(function(){
-		var date_input=$('input[name="date"]'); //our date input has the name "date"
-		var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-		date_input.datepicker({
-			format: 'mm/dd/yyyy',
-			container: container,
-			todayHighlight: true,
-			autoclose: true,
-		})
-	})
+  $(document).ready(function(){
+    var date_input=$('input[name="date"]'); //our date input has the name "date"
+    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+    date_input.datepicker({
+      format: 'mm/dd/yyyy',
+      container: container,
+      todayHighlight: true,
+      autoclose: true,
+    })
+  })
 </script>
 <footer class="container-fluid text-center">
- <p>Copyrights <span  class="glyphicon glyphicon-copyright-mark"</span> 2016-17 by Pune Institute of Computer Technology</p> 
+ <p>Copyrights © 2016-17 by Pune Institute of Computer Technology.</p> 
 </footer>
 </body>
 </html>

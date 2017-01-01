@@ -1,14 +1,23 @@
-﻿
-<html>
+﻿<!DOCTYPE html>
+<html lang="en">
 <head>
- <meta charset="utf-8">
-    
-    <title>Registration Page</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script src="/static/js/bootstrap.min.js"></script>
-<style>
+  <title>Registration Page</title>
+  <meta charset="utf-8">
+  <meta name="description" content="PICT Training and placement online portal">
+<meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!---- BootStrap Libraries         -->
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="/static/js/bootstrap.min.js"></script>
+  
+   <!---- BootStrap online Libraries        
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   -->
+ <style>
+ 
     /* Remove the navbar's default margin-bottom and rounded borders */ 
     .navbar {
       margin-bottom: 0;
@@ -16,7 +25,7 @@
     }
     
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 450px}
+    .row.content {height: 650px}
     
     /* Set gray background color and 100% height */
     .sidenav {
@@ -27,20 +36,10 @@
     
     /* Set black background color, white text and some padding */
     footer {
-	  background-color: #555;
+      background-color: #555;
       color: white;
       padding: 15px;
-	 
-	  height:50px;
-      bottom:0px;
-      left:0px;
-      right:0px;
-      margin-bottom:0px;
     }
-    header{
-      position: static;
-    }
-
     
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
@@ -50,12 +49,13 @@
       }
       .row.content {height:auto;} 
     }
-	textarea.form-control
-	{
-		height: 30%;
-	}
-	
-	.switch {
+  
+  textarea.form-control
+  {
+    height: 30%;
+  }
+  
+  .switch {
   position: relative;
   display: inline-block;
   width: 60px;
@@ -110,18 +110,24 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
-
-	
   </style>
-</head>
+  </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container-fluid">
-<h1 class="text-center"> 
-<a class="pull-left" href="/home/"> 
-<img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
-</a><span style="margin-left: -20%; color: rgb(222, 222, 222);">Training and Placement</span></h1>  
 
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+<div class="container-fluid">
+ <div class="row">
+  <div class="col-sm-3">
+   <a class="pull-left" href="/home/"> 
+   <img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
+   </a>
+  </div>
+  <div class="col-sm-6"><h1 class="text-center">
+  <span style="color: rgb(222, 222, 222);">Training and Placement</span></h1>  
+  </div>
+ </div>
+</div>
 
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -131,73 +137,65 @@ input:checked + .slider:before {
       </button>
       
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-
-      <ul class="nav navbar-nav">
-      
-      <ul class="nav navbar-nav navbar-right">
-
-      </ul>
-    </div>
-    <br>
+<br><br>
   </div>
 </nav>
-    
-<br><br><br><br>
-<a href ="/"><button id="singlebutton" name="singlebutton" class="btn btn-primary" style="position:relative;left:1200px;top:45px">Home</button></a>
-
-<form class="form-horizontal" method="POST" action ='/signup/'>
-{% csrf_token %}
+  
+<div class="container-fluid ">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav ">
+  <!-- <div class="navbar">
+  <div class="navbar-header">
+      <h4> &nbsp; &nbsp;Menu </h4></div>
+        <ul class="nav navbar-nav" style="margin-left:10%;">
+    <li><a href="http://pict.edu">PICT Main Site</a></li>
+      <li><a href="#">Students Info</a></li>
+      <li><a href="#">Teachers Info</a></li>
+    </ul>
+    </div> -->{% csrf_token %}
+    </div>
+    <div class="col-sm-8 text-left"> 
+       <h1 class="text-center"><b>Registration</b></h1>
+      <br><br><br>
+     <form class="form-horizontal" method="POST" action ='/signup/'>
 <fieldset>
-
 <!-- Form Name -->
- 
-
-
-<h2 align="center"><b>Registration</b></h2>
-<br>
-
-
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Name</label>  
-  <div class="col-md-4">
-  <input id="textinput" name="name" type="text" placeholder="Name" class="form-control input-md">
-    
+  <label class="col-sm-4 control-label" for="textinput">Name</label>  
+  <div class="col-sm-5">
+  <input id="textinput" name="name" type="text" placeholder="Name" class="form-control input-md">  
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="textinput">Email </label>  
-  <div class="col-md-4">
-  <input id="textinput" name="email" type="text" placeholder="Email" class="form-control input-md">
-    
+  <div class="col-sm-5">
+  <input id="textinput" name="email" type="text" placeholder="Email" class="form-control input-md">  
   </div>
 </div>
 
 <!-- Password input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="passwordinput">Password </label>
-  <div class="col-md-4">
+  <div class="col-sm-5">
     <input id="passwordinput" name="password" type="password" placeholder="Password" class="form-control input-md">
-    
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="textinput">Phone</label>  
-  <div class="col-md-4">
+  <div class="col-sm-5">
   <input id="textinput" name="phone" type="text" placeholder="Phone" class="form-control input-md">
-    
-  </div>
+</div>
 </div>
 
 <!-- Select Basic -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="selectbasic">Branch</label>
-  <div class="col-md-4">
+  <div class="col-sm-5">
     <select id="selectbasic" name="branch" class="form-control">
       <option value="Comp">COMP</option>
       <option value="EnTC">ENTC</option>
@@ -209,12 +207,11 @@ input:checked + .slider:before {
 <!-- Appended Input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="appendedtext">Average %</label>
-  <div class="col-md-4">
+  <div class="col-sm-5">
     <div class="input-group">
       <input id="appendedtext" name="average" class="form-control" placeholder="Average" type="text">
       <span class="input-group-addon">%</span>
     </div>
-    
   </div>
 </div>
 <!-- Button toggle -->
@@ -222,8 +219,7 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" for="button1id">Active Backlog</label>
   
   <div class="col-md-8"> 
-   
-<label class="switch">
+ <label class="switch">
   <input type="checkbox" name="activeBack" value="yes">
   <div class="slider round"></div>
 </label>
@@ -234,18 +230,25 @@ input:checked + .slider:before {
 <!-- Button -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="singlebutton"></label>
-  <div class="col-md-4">
-    <button id="singlebutton" name="singlebutton" class="btn btn-primary">Register</button>
+  
+  <div class="col-sm-4 text-center" align="center" style="margin-left:4%;margin-right:4%;">
+    <button id="singlebutton" name="singlebutton" class="btn btn-info" ><b>Register</b></button>
   </div>
 </div>
-
 </fieldset>
 </form>
 
-<br>
-<br>
+ </div>
+ <div class="col-sm-2 sidenav">
+<!--- Side navigation data paste here-->
+<a href ="/"><button id="singlebutton" name="singlebutton" class="btn btn-primary "><b>Home</b></button></a>
+</div>
+</div>
+</div>
+
+
 <footer class="container-fluid text-center">
- <p>Copyrights <span  class="glyphicon glyphicon-copyright-mark"</span> 2016-17 by Pune Institute Of Computer Technology</p> 
+ <p>Copyrights ©<!-- <span  class="glyphicon glyphicon-copyright-mark"</span> --> 2016-17 by Pune Institute of Computer Technology.</span></p> 
 </footer>
 </body>
 </html>
