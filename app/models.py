@@ -11,6 +11,8 @@ class Student(models.Model):
 	password=models.CharField(max_length=12)
 	phone=models.CharField(max_length=10)
 	branch=models.CharField(max_length=6)
+	ssc=models.FloatField()
+	hsc=models.FloatField()
 	average=models.FloatField()
 	placed=models.CharField(max_length=4,default="No")
 	active_back=models.CharField(max_length=4,default="No")

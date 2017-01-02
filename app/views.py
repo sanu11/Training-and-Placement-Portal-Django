@@ -31,6 +31,8 @@ def register_student(request):
 	obj.password=data["password"]
 	obj.phone=data["phone"]
 	obj.branch=data["branch"]
+	obj.ssc=data["10th"]
+	obj.hsc=data["12th"]
 	obj.average=data["average"]
 	obj.active_back=data["activeBack"]
 	obj.save()
