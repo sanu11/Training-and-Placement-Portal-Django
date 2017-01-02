@@ -54,7 +54,8 @@
   </style>
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
+
+<nav class="navbar navbar-inverse">
   <div class="container-fluid">
 <div class="container-fluid">
  <div class="row">
@@ -74,18 +75,17 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      
-    </div>
-  <div class="col-sm-2"></div>
-     <div class="collapse navbar-collapse" id="myNavbar">
+      </div>
+    </div><div class="col-sm-2"></div>
+    <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav" style="margin-left:15%;">
         <li><a href="/home/">Home</a></li>
         
         <li><a href="/pregister/">Register</a></li>
         <li><a href="/pupdate/">Update</a></li>
-    <li class="active"><a href="/pnotify/">Notify</a></li>
+    <li><a href="/pnotify/">Notify</a></li>
     <li><a href="/statistics/">Statistics</a></li>
-    <li><a href="/notifications/">Notifications</a></li>
+    <li class="active"><a href="/notifications/">Notifications</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
       
@@ -102,18 +102,24 @@
   </div>
 </nav>
 
-
+<div class="container-fluid ">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav ">
+ 
+    </div>
+<div class="col-sm-8 text-left"> 
+      
+      <br>
 <form class="form-horizontal" action="/notify/" method="POST">
 <fieldset>
 
 <!-- Form Name -->
 <br>
-<h2 align="center"><b>Notify Candidate</b></h2>
-<br>
+<h1 class="text-center"><b>Notify Candidate</b></h1>
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="title">Title</label>  
-  <div class="col-md-4">
+  <label class="col-md-3 control-label" for="title">Title</label>  
+  <div class="col-md-7">
   <input id="title" name="title" type="text" placeholder="Subject Of Message" class="form-control input-md" required="">
 </div>
 <br>
@@ -121,24 +127,36 @@
 <!-- Textarea -->
 <br>
 <div class="form-group">
-  <label class="col-md-4 control-label" for="message">Message</label>
-  <div class="col-md-4">                     
+  <label class="col-md-3 control-label" for="message">Message</label>
+  <div class="col-md-7">                     
     <textarea name = "body" class="form-control" id="message"  rows="10" name="message"></textarea>
   </div>
 </div>
 
 <!-- Button -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="notify"></label>
-  <div class="col-md-4" align="center">
+  <label class="col-md-3 control-label" for="notify"></label>
+  <div class="col-md-7" align="center">
     <button id="notify" name="notify" class="btn btn-info">Notify Candidate</button>
   </div>
 </div>
 
 </fieldset>
 </form>
+</div>
+    <div class="col-sm-2 sidenav">
+      <!-- <div class="well">
+        <p>ADS</p>
+      </div>
+      <div class="well">
+        <p>ADS</p>
+      </div> -->
+    </div>
+  </div>
+</div>
+
 <footer class="container-fluid text-center">
- <p>Copyrights <!-- <span  class="glyphicon glyphicon-copyright-mark"</span> --> 2016-17 by Pune Institute Of Computer Technology</p> 
+ <p>Copyrights ©<!-- <span  class="glyphicon glyphicon-copyright-mark"</span> --> 2016-17 by Pune Institute Of Computer Technology.</p> 
 </footer>
 </body>
 </html>
