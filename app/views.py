@@ -205,9 +205,22 @@ def web_signup(request):
 		c.password=request.POST["password"]
 		c.phone=request.POST["phone"]
 		c.branch=request.POST["branch"]
+		c.ssc=request.POST["10th"]
+		c.hsc=request.POST["12th"]
 		c.average=request.POST["average"]
 		# c.activeBack=request.POST.get("activeBack")
 		c.save()
+		
+		dbx = dropbox.Dropbox('Lae_eeDcmDgAAAAAAAACYGGOlVBXXp705xfnqfYDFobxdk4nYIAEAGwpp9OmLCa7')
+		st = dbx.users_get_current_account()
+		if request.FILES['resume']:
+			myfile = request.FILES['resume']
+			data=myfile.read()
+			name=myfile.name
+			file_to="/"+name
+			print file_to   
+			dbx.files_upload(data, file_to)
+
 		request.session['email']= email          #send cookie
 		request.session['name']=name
 		return render(request,'app/login.html',{})
