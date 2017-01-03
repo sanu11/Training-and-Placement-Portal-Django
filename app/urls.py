@@ -30,11 +30,12 @@ urlpatterns = [
 	
 	url(r'statistics/$',views.get_statistics_page),	
 	url(r'notifications/$',views.get_notifications_page),
+	url(r'students/$',views.get_students_page),
 
 	url(r'logout/$',views.logout),
 	url(r'home/$',views.get_main_page),
 
-	url(r'^$', views.index),
+	url(r'^$', views.get_main_page),
 
 
 

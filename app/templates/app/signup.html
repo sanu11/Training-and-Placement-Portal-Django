@@ -114,20 +114,14 @@ input:checked + .slider:before {
   </head>
 <body>
 
+
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
-<div class="container-fluid">
- <div class="row">
-  <div class="col-sm-3">
-   <a class="pull-left" href="/home/"> 
-   <img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
-   </a>
-  </div>
-  <div class="col-sm-6"><h1 class="text-center">
-  <span style="color: rgb(222, 222, 222);">Training and Placement</span></h1>  
-  </div>
- </div>
-</div>
+<h1 class="text-center"> 
+<a class="pull-left" href="/home/"> 
+<img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
+</a><span style="margin-left: -20%; color: rgb(222, 222, 222);">Training and Placement</span></h1>  
+
 
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -137,7 +131,10 @@ input:checked + .slider:before {
       </button>
       
     </div>
-<br><br>
+    <div class="collapse navbar-collapse" id="myNavbar">
+    
+    </div>
+    <br>
   </div>
 </nav>
   
@@ -155,9 +152,10 @@ input:checked + .slider:before {
     </div> -->{% csrf_token %}
     </div>
     <div class="col-sm-8 text-left"> 
+    <br>
        <h1 class="text-center"><b>Registration</b></h1>
-      <br><br>
-     <form class="form-horizontal" method="POST" action ='/signup/'>
+      <br>
+     <form class="form-horizontal" enctype="multipart/form-data" method="POST" action ='/signup/'>
 <fieldset>
 <!-- Form Name -->
 <!-- Text input-->
@@ -167,6 +165,14 @@ input:checked + .slider:before {
   <input id="textinput" name="name" type="text" placeholder="Name" class="form-control input-md">  
   </div>
 </div>
+
+<div class="form-group">
+  <label class="col-sm-4 control-label" for="textinput">Roll Number</label>  
+  <div class="col-sm-5">
+  <input id="textinput" name="roll" type="number" placeholder="Roll Number" min="1000" class="form-control input-md">  
+  </div>
+</div>
+
 
 <!-- Text input-->
 <div class="form-group">
@@ -208,7 +214,7 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" for="appendedtext">10th</label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="appendedtext" name="10th" class="form-control" placeholder="Percentage" type="number">
+      <input id="appendedtext" name="10th" class="form-control" placeholder="Percentage" type="number" min="1" max="100" >
       <span class="input-group-addon">%</span>
     </div>
   </div>
@@ -218,7 +224,7 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" for="appendedtext">12th</label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="appendedtext" name="12th" class="form-control" placeholder="Percentage" type="number">
+      <input id="appendedtext" name="12th" class="form-control" placeholder="Percentage" type="number" min="1" max="100" >
       <span class="input-group-addon">%</span>
     </div>
   </div>
@@ -229,7 +235,7 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" for="appendedtext">Average (5 sems) %</label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="appendedtext" name="average" class="form-control" placeholder="Average" type="number">
+      <input id="appendedtext" name="average" class="form-control" placeholder="Average"  type="number" min="1" max="100">
       <span class="input-group-addon">%</span>
     </div>
   </div>
@@ -261,7 +267,7 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" for="singlebutton"></label>
   
   <div class="col-sm-4 text-center" align="center" style="margin-left:4%;margin-right:4%;">
-    <button id="singlebutton" name="singlebutton" class="btn btn-info" ><b>Register</b></button>
+    <input type="submit" id="singlebutton" name="singlebutton" class="btn btn-info" value="Register"><b></b>
   </div>
 </div>
 </fieldset>

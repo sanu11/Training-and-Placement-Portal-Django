@@ -10,6 +10,7 @@ from django.core import serializers
 from gcm.models import get_device_model
 import json
 import dropbox
+import requests
 
 @csrf_exempt
 def verify(request):
@@ -132,14 +133,15 @@ def notify(request):
 
 ###WEB###
 
-
-def index(request):
-   return render(request,'app/index.html',{})  
-
 @csrf_exempt
 def get_main_page(request):
-	name=request.session["name"]
-	return render(request,'app/home.html',{"name":name})
+	if( not request.session.get("name")):
+		login=0
+		return render(request,'app/home.html',{"login":login})
+	else:
+		login=1
+		name=request.session["name"]
+		return render(request,'app/home.html',{"login":login,"name":name})
 
 @csrf_exempt
 def get_signup_page(request):
@@ -152,47 +154,75 @@ def get_login_page(request):
 
 @csrf_exempt
 def get_register_page(request):
-	name=request.session["name"]
-	return render(request,'app/register.html',{"name":name})
+	if( not request.session.get("name")):
+		return HttpResponse("Please Login")			
+	else:
+		name=request.session["name"]
+		return render(request,'app/register.html',{"name":name})
 
 @csrf_exempt
 def get_update_page(request):
-	name=request.session["name"]
-	companies=list(Company.objects.all().order_by('-c_id'))
-	return render(request,'app/update.html',{"companies":companies,"name":name})
+	if( not request.session.get("name")):
+		return HttpResponse("Please Login")			
+	else:
+		name=request.session["name"]
+		companies=list(Company.objects.all().order_by('-c_id'))
+		return render(request,'app/update.html',{"companies":companies,"name":name})
 
 @csrf_exempt
 def get_notify_page(request):
-	name=request.session["name"]
-	return render(request,'app/notify.html',{"name":name})
+	if( not request.session.get("name")):
+		return HttpResponse("Please Login")			
+	else:
+		name=request.session["name"]
+		return render(request,'app/notify.html',{"name":name})
 
 @csrf_exempt
 def get_notifications_page(request):
-	name=request.session["name"]
-	notifications = Message.objects.all().order_by('-msg_id')
-	return render(request,'app/notification.html',{"notifications":notifications,"name":name})
+	if( not request.session.get("name")):
+		return HttpResponse("Please Login")			
+	else:
+		name=request.session["name"]
+		notifications = Message.objects.all().order_by('-msg_id')
+		return render(request,'app/notification.html',{"notifications":notifications,"name":name})
 
 
 @csrf_exempt
 def get_statistics_page(request):
-	name=request.session["name"]
-	companies = Company.objects.all().order_by('-c_id')
-	return render(request,'app/statistics.html',{"companies":companies,"name":name})
+	if( not request.session.get("name")):
+		return HttpResponse("Please Login")			
+	else:
+		name=request.session["name"]
+		companies = Company.objects.all().order_by('-c_id')
+		return render(request,'app/statistics.html',{"companies":companies,"name":name})
+
+@csrf_exempt
+def get_students_page(request):
+	if( not request.session.get("name")):
+		return HttpResponse("Please Login")			
+	else:
+		name=request.session["name"]
+		students = Student.objects.all().order_by('s_id')
+		return render(request,'app/students.html',{"students":students,"name":name})
 
 
 @csrf_exempt
 def logout(request):
-	del request.session['email']
-	del request.session['name']
-	request.session.modified = True
-	print "end"
-	return render(request,'app/index.html',{})  
-   
+	if( not request.session.get("name")):
+		return HttpResponse("Please Login")			
+	else:
+		del request.session['email']
+		del request.session['name']
+		request.session.modified = True
+		print "end"
+		return render(request,'app/redirect2.html',{})  
+	   
 @csrf_exempt
 def web_signup(request):
 	if request.method=="POST":
 		email=request.POST["email"]
 		name=request.POST["name"]
+		roll=request.POST["roll"]
 		print name,email
 		if(Student.objects.filter(email=email).exists()):
 			return HttpResponse('Already Registered')
@@ -200,30 +230,48 @@ def web_signup(request):
 		c.user=name
 		c.email=email
 		c.password=request.POST["password"]
+		c.roll=roll
 		c.phone=request.POST["phone"]
 		c.branch=request.POST["branch"]
 		c.ssc=request.POST["10th"]
 		c.hsc=request.POST["12th"]
 		c.average=request.POST["average"]
 		# c.activeBack=request.POST.get("activeBack")
-		c.save()
-		
-		dbx = dropbox.Dropbox('Lae_eeDcmDgAAAAAAAACYGGOlVBXXp705xfnqfYDFobxdk4nYIAEAGwpp9OmLCa7')
+		dbx = dropbox.Dropbox('Lae_eeDcmDgAAAAAAAACpAf6K4pN2cMT9Pa3UcARF6HVT5kbljzzyo7DazeUtE9D')
 		st = dbx.users_get_current_account()
-		if request.FILES['resume']:
-			myfile = request.FILES['resume']
+		for entry in dbx.files_list_folder('').entries:
+			print(entry.name)
+		if request.FILES["resume"]:
+			myfile = request.FILES["resume"]
 			data=myfile.read()
-			name=myfile.name
-			file_to="/"+name
+			filename=myfile.name
+			extension=filename.split('.')
+			file_to="/"+roll+'.'+extension[1]
 			print file_to   
 			dbx.files_upload(data, file_to)
+			
+			url = "https://api.dropboxapi.com/2/sharing/create_shared_link"
+		
+			payload = "{\"path\":"+ '"' + file_to + '"' + ",\"short_url\": true}"
+			print payload
+			headers = {
+			'authorization': "Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR",
+			'content-type': "application/json",
+			'cache-control': "no-cache",
+			}
+
+			response = requests.request("POST", url, data=payload, headers=headers)
+
+			res=json.loads(response.text)
+			url=res["url"]
+			c.url=url
+			c.save()
 
 		request.session['email']= email          #send cookie
 		request.session['name']=name
 		return render(request,'app/login.html',{})
 	else:
 		return HttpResponse('Error');
-
 
 @csrf_exempt
 def web_login(request):
@@ -336,3 +384,6 @@ def web_notify(request):
 		return render(request,'app/home.html',{"name":name})
 	else:
 		return HttpResponse("Error")
+
+
+		

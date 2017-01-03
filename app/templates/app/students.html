@@ -93,8 +93,6 @@
   </div>
 </nav>
   
-  
-
 
 <div class="container-fluid ">    
   <div class="row content">
@@ -111,6 +109,7 @@
     </div>
     </div>
 
+
     <div class="col-sm-8 text-left">
   
   <h2 class="text-center"><b>Statistics</b></h2> 
@@ -122,18 +121,23 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Company</th>
-        <th>Salary Lpa</th>
-        <th>Hired</th>
+        <th>Roll No</th> 
+        <th>Name</th>
+        <th>Branch</th>
+        <th>Average</th>
+        <th>Company</th>   
       </tr>
     </thead>
     <tbody>
-{% for company in companies %}
+{% for student in students %}
       <tr>
         <td>{{forloop.counter}}</td>
-        <td>{{company.name}}</td>
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{company.salary}}</td>
-        <td>{{company.hired}}</td>
+          <td><a href= {{student.url}} >{{student.roll}}</a> </td>
+        
+        <td>{{student.user}}</td>
+        <td>&nbsp;{{student.branch}}</td>
+        <td>&nbsp;&nbsp;{{student.average}}</td>
+      
       </tr>
       {% endfor %}
     </tbody>

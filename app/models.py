@@ -5,17 +5,22 @@ from datetime import datetime
 
 # Create your models here.
 class Student(models.Model):
-	
+
+	s_id=models.AutoField(primary_key=True)
+	college_id=models.CharField(max_length=50)
 	user=models.CharField(max_length=50)
 	email=models.EmailField(max_length=60,unique=True)
 	password=models.CharField(max_length=12)
 	phone=models.CharField(max_length=10)
+	gender=models.CharField(max_length=10)
+	roll=models.IntegerField()
 	branch=models.CharField(max_length=6)
-	ssc=models.FloatField(null=True,blank=True)
-	hsc=models.FloatField(null=True,blank=True)
+	ssc=models.FloatField()
+	hsc=models.FloatField()
 	average=models.FloatField()
 	placed=models.CharField(max_length=4,default="No")
 	active_back=models.CharField(max_length=4,default="No")
+	url=models.CharField(max_length=500)
 	company_id=models.IntegerField(default=-1)
 #	resume=models.FileField()
 
