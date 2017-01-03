@@ -202,7 +202,7 @@ def get_students_page(request):
 		return HttpResponse("Please Login")			
 	else:
 		name=request.session["name"]
-		students = Student.objects.all().order_by('s_id')
+		students = Student.objects.all().order_by('_id')
 		return render(request,'app/students.html',{"students":students,"name":name})
 
 
@@ -236,7 +236,7 @@ def web_signup(request):
 		c.ssc=request.POST["10th"]
 		c.hsc=request.POST["12th"]
 		c.average=request.POST["average"]
-		
+
 		# c.activeBack=request.POST.get("activeBack")
 		dbx = dropbox.Dropbox('Lae_eeDcmDgAAAAAAAACpAf6K4pN2cMT9Pa3UcARF6HVT5kbljzzyo7DazeUtE9D')
 		st = dbx.users_get_current_account()
