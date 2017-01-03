@@ -236,7 +236,7 @@ def web_signup(request):
 		c.ssc=request.POST["10th"]
 		c.hsc=request.POST["12th"]
 		c.average=request.POST["average"]
-		c.college_id="1"
+		
 		# c.activeBack=request.POST.get("activeBack")
 		dbx = dropbox.Dropbox('Lae_eeDcmDgAAAAAAAACpAf6K4pN2cMT9Pa3UcARF6HVT5kbljzzyo7DazeUtE9D')
 		st = dbx.users_get_current_account()
