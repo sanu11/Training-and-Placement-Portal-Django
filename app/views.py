@@ -202,7 +202,7 @@ def get_students_page(request):
 		return HttpResponse("Please Login")			
 	else:
 		name=request.session["name"]
-		students = Student.objects.all().order_by('_id')
+		students = Student.objects.all()
 		return render(request,'app/students.html',{"students":students,"name":name})
 
 
