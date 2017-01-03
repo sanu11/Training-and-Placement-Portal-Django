@@ -93,12 +93,9 @@
       </div>
     </div><div class="col-sm-2"></div>
     <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav" style="margin-left:15%;">
+      <ul class="nav navbar-nav" style="margin-left:24%;">
         <li><a href="/home/">Home</a></li>
         
-        <li><a href="/pregister/">Register</a></li>
-        <li><a href="/pupdate/">Update</a></li>
-    <li><a href="/pnotify/">Notify</a></li>
     <li><a href="/statistics/">Statistics</a></li>
     <li class="active"><a href="/notifications/">Notifications</a></li>
       </ul>
@@ -120,14 +117,18 @@
 <div class="container-fluid ">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
-  <div class="navbar">
-  <div class="navbar-header">
-      </div>
-      <ul class="nav navbar-nav">
-    {% csrf_token %}
+ <div class="navbar"  >
+      <ul class="nav navbar-nav" >
+    <br><br>
+      <li ><a href="/students/"><b>Students  Info</b></a></li>
+      <li><a href="/pregister/"><b>Register  Company</b></a></li>
+      <li><a href="/pupdate/"><b>Update  Company</b></a> </li>
+      <li><a href="/pnotify/"><b>Notify  Candidate</b></a> </li>
+
     </ul>
     </div>
     </div>
+
     <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 
 <form class="form-horizontal" autocomplete="off" method="POST"  action="/update/" enctype="multipart/form-data">
 

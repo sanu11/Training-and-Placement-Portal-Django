@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Training and Placement</title>
+  <title>Placement Statistics</title>
   <meta charset="utf-8">
   <meta name="description" content="PICT Training and placement online portal">
 <meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
@@ -31,7 +31,7 @@
     .sidenav {
       padding-top: 20px;
       background-color: #f1f1f1;
-      height: 100%;
+      height: 150%;
     }
     
     /* Set black background color, white text and some padding */
@@ -53,42 +53,36 @@
   </head>
 <body>
 
+
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
-  
-  <div class="container-fluid">
-  <div class="row">
+<div class="container-fluid">
+ <div class="row">
   <div class="col-sm-3">
- 
-<a class="pull-left" href="/home/"> 
-<img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
-</a>
+   <a class="pull-left" href="/home/"> 
+   <img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
+   </a>
+  </div>
+  <div class="col-sm-6"><h1 class="text-center">
+  <span style="color: rgb(222, 222, 222);">Training and Placement</span></h1>  
+  </div>
+ </div>
 </div>
-
-<div class="col-sm-6"><h1 class="text-center">
-<span style="color: rgb(222, 222, 222);">Training and Placement</span></h1>  
-</div>
-</div>
-</div>
-
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
+      </div>
     </div><div class="col-sm-2"></div>
-    {% if login %}
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav" style="margin-left:24%;">
-
-        <li class="active"><a href="/home/">Home</a></li>
+        <li><a href="/home/">Home</a></li>
         
-        <li><a href="/statistics/">Statistics</a></li>
-        <li><a href="/notifications/">Notifications</a></li>
-
+    <li><a href="/statistics/">Statistics</a></li>
+    <li class="active"><a href="/notifications/">Notifications</a></li>
       </ul>
-
       <ul class="nav navbar-nav navbar-right">
       
     <li class="dropdown">
@@ -100,21 +94,13 @@
         </li>
     
      </ul>
-     {% else %}
-    <ul class="nav navbar-nav navbar-right">
-        <li><a href="/psignup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="/plogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
-     {% endif %}
-
     </div>
   </div>
 </nav>
-  
+
 <div class="container-fluid ">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
-    {% if login %}
  <div class="navbar"  >
       <ul class="nav navbar-nav" >
     <br><br>
@@ -125,32 +111,52 @@
 
     </ul>
     </div>
-    {% endif %}
     </div>
 
-    <div class="col-sm-8 text-left"> 
-      <h1 class="text-center"><b>Welcome</b></h1>
-      <br>
-      <p>The Training and Placement cell is headed by Dr. G.S.Mundada (TPO)
-    who is keen in encouraging students to prefer jobs that better suit their profile.
-    The placement season commences in the first month of every academic year and continues
-    till the end of the academic year.
-    Pre-Placement Talks are conducted for the final year students prior to the placement session every year.</p>
-      <hr>
+
+    <div class="col-sm-8 text-left">
+  
+  <h2 class="text-center"><b>Statistics</b></h2> 
+<div style="margin-bottom:20px"></div>  
+<!-- <p>Table contains placement statistics for the year 2016-17. </p> -->
+  <div class="table-responsive">          
+  <table class="table">
+
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Roll No</th> 
+        <th>Name</th>
+        <th>Branch</th>
+        <th>Average</th>
+        <th>Company</th>   
+      </tr>
+    </thead>
+    <tbody>
+{% for student in students %}
+      <tr>
+        <td>{{forloop.counter}}</td>
+          <td><a href= {{student.url}} >{{student.roll}}</a> </td>
+        
+        <td>{{student.user}}</td>
+        <td>&nbsp;{{student.branch}}</td>
+        <td>&nbsp;&nbsp;{{student.average}}</td>
+      
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+      
     </div>
     <div class="col-sm-2 sidenav">
-      <!-- <div class="well">
-        <p>ADS</p>
-      </div>
-      <div class="well">
-        <p>ADS</p>
-      </div> -->
+      
     </div>
   </div>
 </div>
 
 <footer class="container-fluid text-center">
- <p>Copyrights © 2016-17 by Pune Institute of Computer Technology.</span></p> 
+ <p>Copyrights © 2016-17 by Pune Institute of Computer Technology</p> 
 </footer>
 </body>
 </html>

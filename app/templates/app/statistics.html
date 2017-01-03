@@ -77,12 +77,9 @@
       </div>
     </div><div class="col-sm-2"></div>
     <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav" style="margin-left:15%;">
+      <ul class="nav navbar-nav" style="margin-left:24%;">
         <li><a href="/home/">Home</a></li>
-        
-        <li><a href="/pregister/">Register</a></li>
-        <li><a href="/pupdate/">Update</a></li>
-    <li><a href="/pnotify/">Notify</a></li>
+
     <li><a href="/statistics/">Statistics</a></li>
     <li class="active"><a href="/notifications/">Notifications</a></li>
       </ul>
@@ -101,16 +98,23 @@
   </div>
 </nav>
   
+
+
 <div class="container-fluid ">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
-  <div class="navbar">
-  <div class="navbar-header">
-      </div>
-      <ul class="nav navbar-nav">
-        </ul>
+ <div class="navbar"  >
+      <ul class="nav navbar-nav" >
+    <br><br>
+      <li ><a href="/students/"><b>Students  Info</b></a></li>
+      <li><a href="/pregister/"><b>Register  Company</b></a></li>
+      <li><a href="/pupdate/"><b>Update  Company</b></a> </li>
+      <li><a href="/pnotify/"><b>Notify  Candidate</b></a> </li>
+
+    </ul>
     </div>
     </div>
+
     <div class="col-sm-8 text-left">
   
   <h2 class="text-center"><b>Statistics</b></h2> 
@@ -130,7 +134,7 @@
     <tbody>
 {% for company in companies %}
       <tr>
-        <td>{{company.c_id}}</td>
+        <td>{{forloop.counter}}</td>
         <td>{{company.name}}</td>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{company.salary}}</td>
         <td>{{company.hired}}</td>

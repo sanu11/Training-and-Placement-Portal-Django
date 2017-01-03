@@ -157,7 +157,7 @@ input:checked + .slider:before {
     <div class="col-sm-8 text-left"> 
        <h1 class="text-center"><b>Registration</b></h1>
       <br><br>
-     <form class="form-horizontal" method="POST" action ='/signup/'>
+     <form class="form-horizontal" enctype="multipart/form-data" method="POST" action ='/signup/'>
 <fieldset>
 <!-- Form Name -->
 <!-- Text input-->
@@ -167,6 +167,14 @@ input:checked + .slider:before {
   <input id="textinput" name="name" type="text" placeholder="Name" class="form-control input-md">  
   </div>
 </div>
+
+<div class="form-group">
+  <label class="col-sm-4 control-label" for="textinput">Roll Number</label>  
+  <div class="col-sm-5">
+  <input id="textinput" name="roll" type="number" placeholder="Roll Number" min="1000" class="form-control input-md">  
+  </div>
+</div>
+
 
 <!-- Text input-->
 <div class="form-group">
@@ -208,7 +216,7 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" for="appendedtext">10th</label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="appendedtext" name="10th" class="form-control" placeholder="Percentage" type="number">
+      <input id="appendedtext" name="10th" class="form-control" placeholder="Percentage" type="number" min="1" max="100" >
       <span class="input-group-addon">%</span>
     </div>
   </div>
@@ -218,7 +226,7 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" for="appendedtext">12th</label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="appendedtext" name="12th" class="form-control" placeholder="Percentage" type="number">
+      <input id="appendedtext" name="12th" class="form-control" placeholder="Percentage" type="number" min="1" max="100" >
       <span class="input-group-addon">%</span>
     </div>
   </div>
@@ -229,7 +237,7 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" for="appendedtext">Average (5 sems) %</label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="appendedtext" name="average" class="form-control" placeholder="Average" type="number">
+      <input id="appendedtext" name="average" class="form-control" placeholder="Average"  type="number" min="1" max="100">
       <span class="input-group-addon">%</span>
     </div>
   </div>
@@ -261,7 +269,7 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" for="singlebutton"></label>
   
   <div class="col-sm-4 text-center" align="center" style="margin-left:4%;margin-right:4%;">
-    <button id="singlebutton" name="singlebutton" class="btn btn-info" ><b>Register</b></button>
+    <input type="submit" id="singlebutton" name="singlebutton" class="btn btn-info" value="Register"><b></b>
   </div>
 </div>
 </fieldset>
