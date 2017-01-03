@@ -332,7 +332,7 @@ def web_register_company(request):
 
 		Device.objects.all().send_message({'type':'company_reg','name':name,'criteria':criteria,'salary':salary,'other_details':other_details,'ppt_date':ppt_date,'back':back})
 		name=request.session["name"]
-		return render(request,'app/home.html',{"name":name})
+		return render(request,'app/home.html',{"name":name,"login":1})
 	else:
 		return HttpResponse("Error")
 
@@ -365,7 +365,7 @@ def web_update_company(request):
 		Device = get_device_model()
 		Device.objects.all().send_message({'type':'company_update','name':name,'reg_link':reg_link ,'reg_start':reg_start, 'reg_end':reg_end ,'other_details':other_details})
 		name=request.session["name"]
-		return render(request,'app/home.html',{"name":name})
+		return render(request,'app/home.html',{"name":name,"login":1})
 	return HttpResponse("Error")
 
 
@@ -382,7 +382,7 @@ def web_notify(request):
 		Device.objects.all().send_message({'type':'gen_msg','title':title,'body':body})
 		
 		name=request.session["name"]
-		return render(request,'app/home.html',{"name":name})
+		return render(request,'app/home.html',{"name":name,"login":1})
 	else:
 		return HttpResponse("Error")
 
