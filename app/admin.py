@@ -8,7 +8,6 @@ admin.site.register(Company)
 admin.site.register(Message)
 admin.site.register(Verify)
 
-
 # admin.site.register(gcm_device)
 
 

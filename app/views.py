@@ -151,6 +151,10 @@ def get_login_page(request):
 
 @csrf_exempt
 def get_register_page(request):
+	# if(request.session):
+	# 	print "yes"
+	# else:
+	# 	print "no"
 	name=request.session["name"]
 	return render(request,'app/register.html',{"name":name})
 
