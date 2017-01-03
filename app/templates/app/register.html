@@ -71,7 +71,6 @@
   </head>
 <body>
 
-
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
 <div class="container-fluid">
@@ -92,14 +91,24 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      </div>
-    </div><div class="col-sm-2"></div>
+      
+    </div>
+  <div class="col-sm-2"></div>
     <div class="collapse navbar-collapse" id="myNavbar">
+<<<<<<< HEAD
       <ul class="nav navbar-nav" style="margin-left:24%;">
         <li><a href="/home/">Home</a></li>
         
+=======
+      <ul class="nav navbar-nav" style="margin-left:15%;">
+        <li ><a href="/home/">Home</a></li>
+        
+        <li class="active"><a href="/pregister/">Register</a></li>
+        <li><a href="/pupdate/">Update</a></li>
+    <li><a href="/pnotify/">Notify</a></li>
+>>>>>>> 9034cf4f4df37bbdeab9226799ede319d605fa2b
     <li><a href="/statistics/">Statistics</a></li>
-    <li class="active"><a href="/notifications/">Notifications</a></li>
+    <li><a href="/notifications/">Notifications</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
       
@@ -107,10 +116,8 @@
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="/logout/">Logout</a></li>
-           
           </ul>
         </li>
-    
      </ul>
     </div>
   </div>
@@ -205,7 +212,7 @@
 
 <script>
   $(document).ready(function(){
-    var date_input=$('input[name="date"]'); //our date input has the name "date"
+    var date_input=$('input[name="ppt_date"]'); //our date input has the name "date"
     var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
     date_input.datepicker({
       format: 'mm/dd/yyyy',
