@@ -7,7 +7,7 @@ from datetime import datetime
 class Student(models.Model):
 
 	# s_id=models.AutoField(primary_key=True)
-	college_id=models.CharField(max_length=50)
+	#college_id=models.CharField(max_length=50)
 	user=models.CharField(max_length=50)
 	email=models.EmailField(max_length=60,unique=True)
 	password=models.CharField(max_length=12)
