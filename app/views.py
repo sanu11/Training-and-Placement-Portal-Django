@@ -215,7 +215,7 @@ def logout(request):
 		del request.session['name']
 		request.session.modified = True
 		print "end"
-		return render(request,'app/index.html',{})  
+		return render(request,'app/redirect2.html',{})  
 	   
 @csrf_exempt
 def web_signup(request):
