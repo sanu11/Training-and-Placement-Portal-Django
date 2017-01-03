@@ -89,10 +89,10 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav" style="margin-left:11%;">
-        <li class="active"><a href="/home/">Home</a></li>
+        <li><a href="/home/">Home</a></li>
         
         <li><a href="/pregister/">Register</a></li>
-        <li><a href="/pupdate/">Update</a></li>
+        <li class="active"><a href="/pupdate/">Update</a></li>
     <li><a href="/pnotify/">Notify</a></li>
     <li><a href="/statistics/">Statistics</a></li>
     <li><a href="/notifications/">Notifications</a></li>
@@ -119,69 +119,93 @@
 	<div class="navbar-header">
       </div>
       <ul class="nav navbar-nav">
-	  
+	  {% csrf_token %}
 	  </ul>
 	  </div>
     </div>
     <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 
-      <form class="form-horizontal" role="form">
-                <h2><b>Company Registration</b></h2>
-                <div class="form-group">
-                    <label for="firstName" class="col-sm-3 control-label">Company</label>
-                    <div class="col-sm-9">
-                        <input type="text" id="firstName" placeholder="Company Name" class="form-control" required autofocus>
-                       
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="text" class="col-sm-3 control-label">Salary</label>
-                    <div class="col-sm-9">
-                        <input type="text" id="salary" placeholder="Salary" class="form-control" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="text" class="col-sm-3 control-label">Criteria</label>
-                    <div class="col-sm-9">
-                        <input type="text" id="criteria" placeholder="Criteria" class="form-control" required>
-                    </div>
-                </div>
-				
-                <div class="form-group">
-                    <label for="date" class="col-sm-3 control-label">PPT Date:Time</label>
-                    <div class="col-sm-5">
-                       <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text" required/>
-                    </div>
-					<div class="col-sm-4">
-					<input type="time" class="form-control" placeholder="HH:MM" required>
-					</div>
-                </div>
-				
-                <div class="form-group">
-                    <label for="text" class="col-sm-3 control-label">Backlog</label>
-                    <div class="col-sm-9">
-                        <select id="country" class="form-control">
-                            <option>No Criteria</option>
-                            <option>Active not Allowed</option>
-                            <option>Passive not Allowed</option>
-                            
-                        </select>
-                    </div>
-                </div> <!-- /.form-group -->
+<form class="form-horizontal" autocomplete="off" method="POST"  action="/update/" enctype="multipart/form-data">
 
-				<div class="form-group">
-				<label class="control-label col-sm-3" for="other_details">Other Details</label>
-      			<div class="col-sm-9">
-				<textarea class="form-control"  id="other_details" name="other_details" maxlength="550"></textarea>
-				</div>
-				</div>
-				
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="update"></label>
-          <div class="col-md-7" align="center">
-            <button id="update" name="register" class="btn btn-info">Register</button>
-          </div>
-        </div>
-            </form> <!-- /form -->
+<fieldset>
+
+<!-- Form Name -->
+
+
+<!-- Button Drop Down -->
+<div class="form-group">
+<br>
+<h2 align="center" class="text-center" style="margin-left:11%;"> <b>Company Update</b></h2>
+  <br>
+  <label class="col-sm-4 control-label" for="buttondropdown">Company</label>
+  <div class="col-sm-6">
+    <div class="input-group">
+      
+      <div class="input-group-btn">
+        <select class="form-control" name="name" id="company">
+		<option selected disabled hidden>Select Company</option>
+           {% for company in companies %}
+            <option > {{company.name}} </option>
+            {% endfor %}
+                           
+      </select>
+     
+                    
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-sm-4 control-label" for="registrationLink">Registration Link</label>  
+  <div class="col-sm-6">
+  <input id="registrationLink" name="regLink" type="url" placeholder="Registration Link" class="form-control input-md" required="">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-sm-4 control-label" for="registrationStartDate">Registration Start</label>  
+  <div class="col-sm-3">
+  <input class="form-control" id="date" name="regStartDate" min="2016-06-01" placeholder="MM/DD/YYYY" type="date" required/>
+  </div>
+  <div class="col-sm-3">
+  <input id="registrationStartTime" name="regStartTime" type="time" placeholder="HH:MM" class="form-control input-md" required="">
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-sm-4 control-label" for="registrationEndDate">Registration End </label>  
+  <div class="col-sm-3">
+  <input class="form-control" id="date" name="regEndDate" min="2016-06-01" placeholder="MM/DD/YYYY" type="date" required/>
+    
+  </div>
+  <div class="col-sm-3">
+  <input id="registrationEndTime" name="regEndTime" type="time" placeholder="HH:MM" class="form-control input-md" required="">
+    </div>
+</div>
+
+-->
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-sm-4 control-label" for="otherDetails">Other Details</label>
+  <div class="col-sm-6">                     
+    <textarea class="form-control" id="otherDetails" name="otherDetails" maxlength="550"></textarea>
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-sm-4 control-label" for="update"></label>
+  <div class="col-sm-6" align="center">
+    <input type="submit" value="Update" id="update" name="update" class="btn btn-info">
+  </div>
+</div>
+
+</fieldset>
+</form>
     </div>
     
   </div>
@@ -196,7 +220,19 @@
 
 <script>
 	$(document).ready(function(){
-		var date_input=$('input[name="date"]'); //our date input has the name "date"
+		var date_input=$('input[name="regStartDate"]'); //our date input has the name "date"
+		var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+		date_input.datepicker({
+			format: 'mm/dd/yyyy',
+			container: container,
+			todayHighlight: true,
+			autoclose: true,
+		})
+	})
+</script>
+<script>
+	$(document).ready(function(){
+		var date_input=$('input[name="regEndDate"]'); //our date input has the name "date"
 		var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
 		date_input.datepicker({
 			format: 'mm/dd/yyyy',
@@ -207,7 +243,7 @@
 	})
 </script>
 <footer class="container-fluid text-center">
- <p>Copyrights <span  class="glyphicon glyphicon-copyright-mark"</span> 2016-17 by Pune Institute of Computer Technology</p> 
+ <p>Copyrights © 2016-17 by Pune Institute of Computer Technology.</p> 
 </footer>
 </body>
 </html>

@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!---- BootStrap Libraries         -->
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-  <script src="/static/js/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
   
    <!---- BootStrap online Libraries        
@@ -49,7 +49,7 @@
       }
       .row.content {height:auto;} 
     }
-  body {
+	body {
     background-color: #eee;
 }
 
@@ -70,37 +70,32 @@
   
   </head>
 <body>
+
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
-<div class="container-fluid">
- <div class="row">
-  <div class="col-sm-3">
-   <a class="pull-left" href="/home/"> 
-   <img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
-   </a>
-  </div>
-  <div class="col-sm-6"><h1 class="text-center">
-  <span style="color: rgb(222, 222, 222);">Training and Placement</span></h1>  
-  </div>
- </div>
-</div>
+<h1 class="text-center"> 
+<a class="pull-left" href="http://139.59.34.20:8090/"> 
+<img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
+</a><span style="margin-left: -20%; color: rgb(222, 222, 222);">Training and Placement</span></h1>  
+
+
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      </div>
-    </div><div class="col-sm-2"></div>
+      
+    </div>
     <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav" style="margin-left:15%;">
+      <ul class="nav navbar-nav" style="margin-left:11%;">
         <li><a href="/home/">Home</a></li>
         
         <li><a href="/pregister/">Register</a></li>
-        <li><a href="/pupdate/">Update</a></li>
+        <li class="active"><a href="/pupdate/">Update</a></li>
     <li><a href="/pnotify/">Notify</a></li>
     <li><a href="/statistics/">Statistics</a></li>
-    <li class="active"><a href="/notifications/">Notifications</a></li>
+    <li><a href="/notifications/">Notifications</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
       
@@ -120,13 +115,13 @@
 <div class="container-fluid ">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
-  <div class="navbar">
-  <div class="navbar-header">
+	<div class="navbar">
+	<div class="navbar-header">
       </div>
       <ul class="nav navbar-nav">
-    {% csrf_token %}
-    </ul>
-    </div>
+	  {% csrf_token %}
+	  </ul>
+	  </div>
     </div>
     <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 
 <form class="form-horizontal" autocomplete="off" method="POST"  action="/update/" enctype="multipart/form-data">
@@ -147,7 +142,7 @@
       
       <div class="input-group-btn">
         <select class="form-control" name="name" id="company">
-    <option selected disabled hidden>Select Company</option>
+		<option selected disabled hidden>Select Company</option>
            {% for company in companies %}
             <option > {{company.name}} </option>
             {% endfor %}
@@ -184,13 +179,14 @@
 <div class="form-group">
   <label class="col-sm-4 control-label" for="registrationEndDate">Registration End </label>  
   <div class="col-sm-3">
-  <input class="form-control" id="date" name=regEndDate min="2016-06-01" placeholder="MM/DD/YYYY" type="date" required/>
+  <input class="form-control" id="date" name="regEndDate" min="2016-06-01" placeholder="MM/DD/YYYY" type="date" required/>
     
   </div>
   <div class="col-sm-3">
   <input id="registrationEndTime" name="regEndTime" type="time" placeholder="HH:MM" class="form-control input-md" required="">
     </div>
 </div>
+
 
 <!-- Textarea -->
 <div class="form-group">
@@ -223,16 +219,28 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
 <script>
-  $(document).ready(function(){
-    var date_input=$('input[name="date"]'); //our date input has the name "date"
-    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-    date_input.datepicker({
-      format: 'mm/dd/yyyy',
-      container: container,
-      todayHighlight: true,
-      autoclose: true,
-    })
-  })
+	$(document).ready(function(){
+		var date_input=$('input[name="regStartDate"]'); //our date input has the name "date"
+		var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+		date_input.datepicker({
+			format: 'mm/dd/yyyy',
+			container: container,
+			todayHighlight: true,
+			autoclose: true,
+		})
+	})
+</script>
+<script>
+	$(document).ready(function(){
+		var date_input=$('input[name="regEndDate"]'); //our date input has the name "date"
+		var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+		date_input.datepicker({
+			format: 'mm/dd/yyyy',
+			container: container,
+			todayHighlight: true,
+			autoclose: true,
+		})
+	})
 </script>
 <footer class="container-fluid text-center">
  <p>Copyrights © 2016-17 by Pune Institute of Computer Technology.</p> 
