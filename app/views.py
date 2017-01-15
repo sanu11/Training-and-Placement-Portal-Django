@@ -207,6 +207,18 @@ def get_students_page(request):
 
 
 @csrf_exempt
+def get_student_page(request,roll):
+	if( not request.session.get("name")):
+		return HttpResponse("Please Login")			
+	else:
+		name=request.session["name"]
+		if(Student.objects.filter(roll=roll).exists()):
+			student=Student.objects.get(roll=roll)
+			return render(request,'app/student.html',{"student":student,"name":name})
+		else:
+			return HttpResponse("Not Found")
+
+@csrf_exempt
 def logout(request):
 	if( not request.session.get("name")):
 		return HttpResponse("Please Login")			
