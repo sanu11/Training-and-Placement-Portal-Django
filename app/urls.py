@@ -15,19 +15,21 @@ urlpatterns = [
 ##web
 
 	url(r'student/(?P<roll>[0-9]+)/$',views.get_student_page),
-	
 
 	url(r'psignup/$',views.get_signup_page),		
 	url(r'plogin/$',views.get_login_page),
 	url(r'pregister/$',views.get_register_page),
 	url(r'pupdate/$',views.get_update_page),
 	url(r'pnotify/$',views.get_notify_page),
+	url(r'presult/$',views.get_result_upload_page),
 
 	url(r'cregister/$',views.web_register_company),
 	url(r'update/$',views.web_update_company),
 	url(r'notify/$',views.web_notify),
 	url(r'signup/$',views.web_signup),
 	url(r'login/$',views.web_login),
+	url(r'result/$',views.web_upload_result),
+
 
 	url(r'statistics/$',views.get_statistics_page),	 
 	url(r'notifications/$',views.get_notifications_page),

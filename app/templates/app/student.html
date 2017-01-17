@@ -126,79 +126,84 @@
     </div>
 
     <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 
+	<h2 class="text-center">{{student.user}}</h2>
       <form class="form-horizontal" role="form" action="/cregister/" method="POST">
           
-                <h2>{{student.user}}</h2>
+                
+				<table class="table">
+				<tr><th class="row">
                 <div class="form-group ">
-                    <label for="firstName" class="col-sm-3">Roll Number</label>
+                 <label for="firstName" class="col-sm-4" style="width:66%;">Roll Number</label></th>
                     <div class="col-sm-9">
-                     <label for="firstName" class="col-sm-3">{{student.roll}}</label>
-
+                   <td>  <label for="firstName" class="col-sm-3">{{student.roll}}</label></td>
                     </div>
                 </div>
-
-
+</tr>
+<tr><th class="row">
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">Branch</label>
+                   <label for="firstName" class="col-sm-3 ">Branch</label></th>
                     <div class="col-sm-9">
-                     <label for="firstName" class="col-sm-3 ">{{student.branch}}</label>
+                    <td> <label for="firstName" class="col-sm-3 ">{{student.branch}}</label></td>
 
                     </div>
                 </div>
-
+</tr><tr><th class="row">
                 <div class="form-group">
                     <label for="firstName" class="col-sm-3 ">Email</label>
+					</th>
+					 
                     <div class="col-sm-9">
-                     <label for="firstName" class="col-sm-3">{{student.email}}</label>
-
+                    <td> <label for="firstName" class="col-sm-3">{{student.email}}</label>
+</td>
                     </div>
                 </div>
-                
+         </tr><tr><th class="row">       
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">Phone</label>
+                    <label for="firstName" class="col-sm-3 ">Phone</label></th>
                     <div class="col-sm-9">
-                     <label for="firstName" class="col-sm-3 ">{{student.phone}}</label>
+                   <td>  <label for="firstName" class="col-sm-3 ">{{student.phone}}</label></td>
 
                     </div>
                 </div>
-
+</tr><tr><th class="row">
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">10th</label>
+                    <label for="firstName" class="col-sm-3 ">10th</label></th>
                     <div class="col-sm-9">
-                     <label for="firstName" class="col-sm-3 ">{{student.ssc}}</label>
+                 <td>    <label for="firstName" class="col-sm-3 ">{{student.ssc}}</label></td>
 
                     </div>
                 </div>
-
+</tr><tr><th class="row">
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">12th</label>
+                    <label for="firstName" class="col-sm-3 ">12th</label></th>
                     <div class="col-sm-9">
-                     <label for="firstName" class="col-sm-3 ">{{student.hsc}}</label>
+                     <td><label for="firstName" class="col-sm-3 ">{{student.hsc}}</label></td>
 
                     </div>
                 </div>
-                
+     </tr><tr><th class="row">           
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">Average</label>
+                    <label for="firstName" class="col-sm-3 ">Average</label></th>
                     <div class="col-sm-9">
-                     <label for="firstName" class="col-sm-3 ">{{student.average}}</label>
+                    <td> <label for="firstName" class="col-sm-3 ">{{student.average}}</label></td>
 
                     </div>
                 </div>
-
+</tr><tr><th class="row">
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">Back</label>
+                    <label for="firstName" class="col-sm-3 ">Back</label></th>
                     <div class="col-sm-9">
-                     <label for="firstName" class="col-sm-3 ">{{student.active_back}}</label>
-
+                  <td>   <label for="firstName" class="col-sm-3 ">{{student.active_back}}</label>
+</td>
                     </div>
                 </div>
-
-
-
+</tr>
+<tr><th class="row"> </th><td></td></tr>
+</table>
+</form>
                 
         </div>
-            </form> <!-- /form -->
+             <!-- /form -->
     </div>
     
   </div>

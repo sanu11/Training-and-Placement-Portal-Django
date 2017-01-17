@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>:: PICT :: Training and Placement</title>
+  <meta charset="utf-8">
+  <meta name="description" content="PICT Training and placement online portal">
+<meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!---- BootStrap Libraries         -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  
+   <!---- BootStrap online Libraries        
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   -->
+ <style>
+ 
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 40px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+
+    footer {
+    background-color: #555;
+color: white;
+    padding:15px;
+	position: absolute;
+    left: 00;
+    bottom: 0;
+    
+    width: 100%;
+    overflow:hidden;
+}
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+	body {
+    background-color: #eee;
+}
+
+*[role="form"] {
+    max-width: 530px;
+    padding: 15px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 0.3em;
+}
+
+*[role="form"] h2 {
+    margin-left: 5em;
+    margin-bottom: 1em;
+}
+
+  </style>
+  </head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+<h1 class="text-center"> 
+<a class="pull-left" href="http://139.59.34.20:8090/"> 
+<img class="img-responsive" style="vertical-align: bottom;" src="pict_logo.png" alt="pict logo"/>
+</a><span style="margin-left: -20%; color: rgb(222, 222, 222);">Training and Placement</span></h1>  
+
+
+    <div class="navbar-header">
+      
+      
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid ">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav ">
+	<div class="navbar">
+	<div class="navbar-header">
+      <h4>Menu Name</h4></div>
+      <ul class="nav navbar-nav">
+	  <li><a href="http://pict.edu">PICT Main Site</a></li>
+      <li><a href="#">Students Info</a></li>
+      <li><a href="#">Teachers Info</a></li>
+	  </ul>
+	  </div>
+    </div>
+    <div class="col-sm-8 text-left"> 
+      <form class="form-horizontal" role="form">
+                <h2>VERIFICATION</h2>
+                <div class="form-group">
+                    <label for="prnnumber" class="col-sm-3 control-label">PRN No. :</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="prnno" placeholder="PRN No." class="form-control" autofocus>
+
+                    </div>
+                <br><br><br>
+<br><br>
+
+
+<label for="CollegeID" class="col-sm-3 control-label">College ID :</label>
+<form action="upload.php" method="post" enctype="multipart/form-data">
+<div class="form-group">
+
+<div class="col-sm-9 col-sm-offset-3" align="center">    
+Select image to upload:<br>
+    <input type="file" name="fileToUpload" id="fileToUpload">;
+</div>
+</div>
+<br><br><br><br>
+
+<button type="submit" class="btn btn-primary btn-block"><b>Upload</b></button>
+                    
+            <br><br><br><br>
+    
+</form>
+
+<footer class="container-fluid text-center">
+ <p>Copyrights <span  class="glyphicon glyphicon-copyright-mark"</span> 2016-17 by PICT, Pune. All rights reserved | Made with <span class="glyphicon glyphicon-heart" style="color:red;"></span> in PICT.</p> 
+</footer>
+</body>
+</html>

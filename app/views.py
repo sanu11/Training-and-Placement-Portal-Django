@@ -1,6 +1,6 @@
 
 from django.shortcuts import render
-from .models import Student,Company,Message,Verify
+from .models import Student,Company,Message,Verify,Result
 from django.http import HttpRequest,HttpResponse, HttpResponseRedirect
 from django.http import HttpResponse
 from django.conf import settings
@@ -11,6 +11,10 @@ from gcm.models import get_device_model
 import json
 import dropbox
 import requests
+
+
+dbx = dropbox.Dropbox('Lae_eeDcmDgAAAAAAAACpAf6K4pN2cMT9Pa3UcARF6HVT5kbljzzyo7DazeUtE9D')
+st = dbx.users_get_current_account()
 
 @csrf_exempt
 def verify(request):
@@ -178,6 +182,16 @@ def get_notify_page(request):
 		return render(request,'app/notify.html',{"name":name})
 
 @csrf_exempt
+def get_result_upload_page(request):
+	if( not request.session.get("name")):
+		return HttpResponse("Please Login")			
+	else:
+		name=request.session["name"]
+		companies=list(Company.objects.all().order_by('-c_id'))
+		return render(request,'app/result.html',{"companies":companies,"name":name})
+
+
+@csrf_exempt
 def get_notifications_page(request):
 	if( not request.session.get("name")):
 		return HttpResponse("Please Login")			
@@ -218,6 +232,10 @@ def get_student_page(request,roll):
 		else:
 			return HttpResponse("Not Found")
 
+
+
+
+
 @csrf_exempt
 def logout(request):
 	if( not request.session.get("name")):
@@ -250,16 +268,15 @@ def web_signup(request):
 		c.average=request.POST["average"]
 
 		# c.activeBack=request.POST.get("activeBack")
-		dbx = dropbox.Dropbox('Lae_eeDcmDgAAAAAAAACpAf6K4pN2cMT9Pa3UcARF6HVT5kbljzzyo7DazeUtE9D')
-		st = dbx.users_get_current_account()
-		for entry in dbx.files_list_folder('').entries:
-			print(entry.name)
+		
+		# for entry in dbx.files_list_folder('').entries:
+		# 	print(entry.name)
 		if request.FILES["resume"]:
 			myfile = request.FILES["resume"]
 			data=myfile.read()
 			filename=myfile.name
 			extension=filename.split('.')
-			file_to="/"+roll+'.'+extension[1]
+			file_to="/students/"+roll+'.'+extension[1]
 			print file_to   
 			dbx.files_upload(data, file_to)
 			
@@ -396,6 +413,50 @@ def web_notify(request):
 		return render(request,'app/home.html',{"name":name,"login":1})
 	else:
 		return HttpResponse("Error")
+
+@csrf_exempt
+def web_upload_result(request):
+	if(request.method=="POST"):
+		choice=request.POST["choice"]
+		company= request.POST["company"]
+		print choice
+		if request.FILES["result"]:
+			myfile = request.FILES["result"]
+			data=myfile.read()
+			filename=myfile.name
+			extension=filename.split('.')
+			filename=company + ' ' + choice + '.'+extension[1]
+			file_to="/results/"+filename
+			print file_to   
+			dbx.files_upload(data, file_to)
+			
+			url = "https://api.dropboxapi.com/2/sharing/create_shared_link"
+		
+			payload = "{\"path\":"+ '"' + file_to + '"' + ",\"short_url\": true}"
+			print payload
+			headers = {
+			'authorization': "Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR",
+			'content-type': "application/json",
+			'cache-control': "no-cache",
+			}
+
+			response = requests.request("POST", url, data=payload, headers=headers)
+
+			res=json.loads(response.text)
+			url=res["url"]
+
+			#store in table
+			obj=Result()
+			obj.company=company
+			obj.shortlist=choice
+			obj.filename=filename
+			obj.url=url
+			
+			title = company + " " + choice
+			body = url
+			Device = get_device_model()
+			Device.objects.all().send_message({'type':'gen_msg','title':title,'body':body})
+			return HttpResponse("Success " + url)
 
 
 		

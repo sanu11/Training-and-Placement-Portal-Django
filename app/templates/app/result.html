@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Placement Statistics</title>
+  <title>Result Upload</title>
   <meta charset="utf-8">
   <meta name="description" content="PICT Training and placement online portal">
 <meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
@@ -25,13 +25,13 @@
     }
     
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 450px}
+    .row.content {height: 650px}
     
     /* Set gray background color and 100% height */
     .sidenav {
       padding-top: 20px;
       background-color: #f1f1f1;
-      height: 150%;
+      height: 100%;
     }
     
     /* Set black background color, white text and some padding */
@@ -49,10 +49,70 @@
       }
       .row.content {height:auto;} 
     }
+  
+  textarea.form-control
+  {
+    height: 30%;
+  }
+  
+  .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
   </style>
   </head>
 <body>
-
 
 
 <nav class="navbar navbar-inverse">
@@ -71,6 +131,7 @@
       </button>
       
     </div>
+    
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav" style="margin-left:21%;">
         <li><a href="/home/">Home</a></li>
@@ -78,6 +139,7 @@
     <li><a href="/statistics/">Statistics</a></li>
     <li><a href="/notifications/">Notifications</a></li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
       
     <li class="dropdown">
@@ -89,14 +151,16 @@
         </li>
     
      </ul>
+       
     </div>
   </div>
 </nav>
-  
 
+  
 <div class="container-fluid ">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
+  
  <div class="navbar"  >
       <ul class="nav navbar-nav" >
     <br><br>
@@ -104,55 +168,85 @@
       <li><a href="/pregister/"><b>Register  Company</b></a></li>
       <li><a href="/pupdate/"><b>Update  Company</b></a> </li>
       <li><a href="/pnotify/"><b>Notify  Candidate</b></a> </li>
+      <li><a href="/presult/"><b>Upload Result</b></a> </li>
+
 
     </ul>
     </div>
-    </div>
-
-
-    <div class="col-sm-8 text-left">
   
-  <h2 class="text-center"><b>Statistics</b></h2> 
-<div style="margin-bottom:20px"></div>  
-<!-- <p>Table contains placement statistics for the year 2016-17. </p> -->
-  <div class="table-responsive">          
-  <table class="table">
-
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Roll No</th> 
-        <th>Name</th>
-        <th>Branch</th>
-        <th>Average</th>
-        <th>Company</th>   
-      </tr>
-    </thead>
-    <tbody>
-{% for student in students %}
-      <tr>
-        <td>{{forloop.counter}}</td>
-          <td><a href= {{student.url}} >{{student.roll}}</a> </td>
-        
-        <td> <a href= /student/{{student.roll}}/ > {{student.user}}</a> </td>
-        <td>&nbsp;{{student.branch}}</td>
-        <td>&nbsp;&nbsp;{{student.average}}</td>
-      
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  </div>
-      
     </div>
-    <div class="col-sm-2 sidenav">
-      
+    <div class="col-sm-8 text-left"> 
+    <br>
+       <h1 class="text-center"><b>Result</b></h1>
+      <br>
+
+
+<form class="form-horizontal" enctype="multipart/form-data" method="POST" action ='/result/'>
+<fieldset>
+<!-- Form Name -->
+<!-- Text input-->
+<!-- Select Basic -->
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="selectbasic">Company</label>
+
+  <div class="col-sm-5">
+    <select id="selectbasic" name="company" class="form-control">
+     <option selected disabled hidden>Select Company</option>
+           {% for company in companies %}
+            <option > {{company.name}} </option>
+            {% endfor %}
+                           
+    </select>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="selectbasic">Result</label>
+
+  <div class="col-sm-5">
+    <select id="selectbasic" name="choice" class="form-control">
+      <option value="AptitudeShortlist">Aptitude Shortlist</option>
+      <option value="CodingShortlist">Coding round Shorlist</option>
+      <option value="TechnicalShortlist">Technical Interview Shorlist</option>
+      <option value="HRShorlist">HR Shorlist</option>
+      <option value="Placed">Placed</option>
+    </select>
+  </div>
+</div>
+
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="appendedtext">File</label>
+  <div class="col-sm-4">
+    <div class="input-group">
+      <input  name="result" class="form-control"   type="file">
     </div>
   </div>
 </div>
 
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="singlebutton"></label>
+  
+  <div class="col-sm-4 text-center" align="center" style="margin-left:-2%;margin-right:4%;">
+    <input type="submit" id="singlebutton" name="singlebutton" class="btn btn-info " value="Upload"><b></b>
+  </div>
+</div>
+</fieldset>
+</form>
+
+ </div>
+ <div class="col-sm-2 sidenav">
+<!--- Side navigation data paste here-->
+<a href ="/"><button id="singlebutton" name="singlebutton" class="btn btn-primary btn-block"><b>Home</b></button></a>
+</div>
+</div>
+</div>
+
+
 <footer class="container-fluid text-center">
- <p>Copyrights © 2016-17 by Pune Institute of Computer Technology</p> 
+ <p>Copyrights ©<!-- <span  class="glyphicon glyphicon-copyright-mark"</span> --> 2016-17 by Pune Institute of Computer Technology.</span></p> 
 </footer>
 </body>
 </html>
