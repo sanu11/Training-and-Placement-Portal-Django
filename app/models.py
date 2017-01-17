@@ -63,3 +63,13 @@ class Message(models.Model):
 	
 	def __str__(self):
 		return self.title
+
+
+class Result(models.Model):
+	company = models.CharField(max_length=200)
+	shortlist = models.CharField(max_length=100)
+	filename = models.CharField(max_length=100)
+	url = models.CharField(max_length=100)
+
+	def __str__(self):
+		return filename
