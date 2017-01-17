@@ -453,9 +453,9 @@ def web_upload_result(request):
 			obj.url=url
 			
 			title = company + " " + choice
-
+			body = url
 			Device = get_device_model()
-			Device.objects.all().send_message({'type':'result','title':title,'url':url})
+			Device.objects.all().send_message({'type':'gen_msg','title':title,'body':body})
 			return HttpResponse("Success " + url)
 
 
