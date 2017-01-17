@@ -451,6 +451,7 @@ def web_upload_result(request):
 			obj.shortlist=choice
 			obj.filename=filename
 			obj.url=url
+			obj.save()
 			
 			title = company + " " + choice
 			body = url
