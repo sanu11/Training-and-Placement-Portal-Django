@@ -232,9 +232,17 @@ def get_student_page(request,roll):
 		else:
 			return HttpResponse("Not Found")
 
-
-
-
+@csrf_exempt
+def get_company_page(request,cid):
+	if( not request.session.get("name")):
+		return HttpResponse("Please Login")			
+	else:
+		name=request.session["name"]
+		if(Company.objects.filter(c_id=cid).exists()):
+			company=Company.objects.get(c_id=cid)
+			return render(request,'app/company.html',{"company":company,"name":name})
+		else:
+			return HttpResponse("Not Found")
 
 @csrf_exempt
 def logout(request):
@@ -368,6 +376,7 @@ def web_register_company(request):
 def web_update_company(request):
 	if request.method=="POST":
 		name=request.POST["name"]
+		print name
 		reg_link=request.POST["regLink"]
 		reg_start_date=request.POST["regStartDate"]
 		reg_start_time=request.POST["regStartTime"]

@@ -15,6 +15,8 @@ urlpatterns = [
 ##web
 
 	url(r'student/(?P<roll>[0-9]+)/$',views.get_student_page),
+	url(r'company/(?P<cid>[0-9]+)/$',views.get_company_page),
+
 
 	url(r'psignup/$',views.get_signup_page),		
 	url(r'plogin/$',views.get_login_page),
