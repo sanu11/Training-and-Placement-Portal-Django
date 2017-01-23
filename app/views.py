@@ -466,7 +466,8 @@ def web_upload_result(request):
 			body = url
 			Device = get_device_model()
 			Device.objects.all().send_message({'type':'gen_msg','title':title,'body':body})
-			return HttpResponse("Success " + url)
+			name=request.session["name"]
+			return render(request,'app/home.html',{"name":name,"login":1})
 
 
 		
