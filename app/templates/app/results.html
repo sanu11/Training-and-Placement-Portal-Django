@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Company Registration</title>
+  <title>Results</title>
   <meta charset="utf-8">
   <meta name="description" content="PICT Training and placement online portal">
 <meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
@@ -89,10 +89,11 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav" style="margin-left:21%;">
-        <li><a href="/home/">Home</a></li>        
+        <li><a href="/home/">Home</a></li>
+        
     <li><a href="/statistics/">Statistics</a></li>
     <li><a href="/notifications/">Notifications</a></li>
-     <li><a href="/results/">Results</a></li>
+    <li><a href="/results/">Results</a></li>
 
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -124,89 +125,28 @@
       <li><a href="/presult/"><b>Upload Result</b></a> </li>
 
 
+
     </ul>
     </div>
     </div>
 
     <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 
-	<h2 class="text-center">{{student.user}}</h2>
-      <form class="form-horizontal" role="form" action="/cregister/" method="POST">
+      <form class="form-horizontal" role="form">
           
+                <h2><b>Results</b></h2>
+                {% for result in results %}
+              
                 
-				<table class="table">
-				<tr><th class="row">
-                <div class="form-group ">
-                 <label for="firstName" class="col-sm-4" style="width:66%;">Roll Number</label></th>
-                    <div class="col-sm-9">
-                   <td>  <label for="firstName" class="col-sm-3">{{student.roll}}</label></td>
-                    </div>
-                </div>
-</tr>
-<tr><th class="row">
                 <div class="form-group">
-                   <label for="firstName" class="col-sm-3 ">Branch</label></th>
-                    <div class="col-sm-9">
-                    <td> <label for="firstName" class="col-sm-3 ">{{student.branch}}</label></td>
-
-                    </div>
+                    <label for="firstName" class="col-sm-20 control-label"> {{forloop.counter}} &nbsp;&nbsp; {{result.company }} {{result.shortlist}}</label>
                 </div>
-</tr><tr><th class="row">
-                <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">Email</label>
-					</th>
-					 
-                    <div class="col-sm-9">
-                    <td> <label for="firstName" class="col-sm-3">{{student.email}}</label>
-</td>
-                    </div>
-                </div>
-         </tr><tr><th class="row">       
-                <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">Phone</label></th>
-                    <div class="col-sm-9">
-                   <td>  <label for="firstName" class="col-sm-3 ">{{student.phone}}</label></td>
-
-                    </div>
-                </div>
-</tr><tr><th class="row">
-                <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">10th</label></th>
-                    <div class="col-sm-9">
-                 <td>    <label for="firstName" class="col-sm-3 ">{{student.ssc}}</label></td>
-
-                    </div>
-                </div>
-</tr><tr><th class="row">
-                <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">12th</label></th>
-                    <div class="col-sm-9">
-                     <td><label for="firstName" class="col-sm-3 ">{{student.hsc}}</label></td>
-
-                    </div>
-                </div>
-     </tr><tr><th class="row">           
-                <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">Average</label></th>
-                    <div class="col-sm-9">
-                    <td> <label for="firstName" class="col-sm-3 ">{{student.average}}</label></td>
-
-                    </div>
-                </div>
-</tr><tr><th class="row">
-                <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">Back</label></th>
-                    <div class="col-sm-9">
-                  <td>   <label for="firstName" class="col-sm-3 ">{{student.active_back}}</label>
-</td>
-                    </div>
-                </div>
-</tr>
-<tr><th class="row"> </th><td></td></tr>
-</table>
-</form>
                 
-        </div>
-             <!-- /form -->
+                <div class="form-group">
+                    <label for="firstName" class="col-sm-20 control-label"><a href= {{result.url}} > {{result.url}}</a></label>
+                </div>
+                {% endfor %}
+        
+            </form> <!-- /form -->
     </div>
     
   </div>
