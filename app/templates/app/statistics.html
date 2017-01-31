@@ -129,6 +129,8 @@
         <th>Company</th>
         <th>Salary Lpa</th>
         <th>Hired</th>
+        <th>Placed</th>
+        
       </tr>
     </thead>
     <tbody>
@@ -139,6 +141,13 @@
       
         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{company.salary}}</td>
         <td>{{company.hired}}</td>
+        {% if company.placed_url %}
+        <td><a href={{company.placed_url}}>{{company.placed_url}}</td>
+        {% else %}
+        <td></td>
+        
+        {% endif %}
+        
       </tr>
       {% endfor %}
     </tbody>
