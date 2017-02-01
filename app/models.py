@@ -40,6 +40,8 @@ class Company(models.Model):
 	reg_start=models.DateTimeField(null=True,blank=True)
 	reg_end=models.DateTimeField(null=True,blank=True)
 	reg_link=models.CharField(max_length=1000,null=True,blank=True)
+	
+	placed_url=models.CharField(max_length=500,null=True,blank=True)
 	hired_people=models.IntegerField(default=0)
 
 	#apti_date=models.DateTimeField(null=True,blank=True)
@@ -56,7 +58,6 @@ class Verify(models.Model):
 		return self.prn
 
 class Message(models.Model):
-
 	msg_id=models.AutoField(primary_key=True)
 	title=models.CharField(max_length=200,default="")
 	message=models.CharField(max_length=10000,default="")
@@ -66,10 +67,12 @@ class Message(models.Model):
 
 
 class Result(models.Model):
+	r_id = models.AutoField(primary_key=True)
 	company = models.CharField(max_length=200)
 	shortlist = models.CharField(max_length=100)
 	filename = models.CharField(max_length=100)
 	url = models.CharField(max_length=100)
 
 	def __str__(self):
-		return filename
+		return self.filename
+

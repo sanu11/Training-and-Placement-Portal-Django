@@ -93,6 +93,8 @@
         
     <li><a href="/statistics/">Statistics</a></li>
     <li><a href="/notifications/">Notifications</a></li>
+     <li><a href="/results/">Results</a></li>
+
       </ul>
       <ul class="nav navbar-nav navbar-right">
       
@@ -120,6 +122,8 @@
       <li><a href="/pregister/"><b>Register  Company</b></a></li>
       <li><a href="/pupdate/"><b>Update  Company</b></a> </li>
       <li><a href="/pnotify/"><b>Notify  Candidate</b></a> </li>
+      <li><a href="/presult/"><b>Upload Result</b></a> </li>
+
 
     </ul>
     </div>
@@ -165,7 +169,9 @@
 
                     </div>
                 </div>
-</tr><tr><th class="row">
+
+                {% if company.other_details %}
+                </tr><tr><th class="row">
                 <div class="form-group">
                     <label for="firstName" class="col-sm-8 ">Other Details</label></th>
                     <div class="col-sm-9">
@@ -173,7 +179,11 @@
 
                     </div>
                 </div>
-</tr><tr><th class="row">
+                {% endif %}
+
+
+                {% if company.reg_link %}
+                </tr><tr><th class="row">
                 <div class="form-group">
                     <label for="firstName" class="col-sm-10 ">Registration Link</label></th>
                     <div class="col-sm-9">
@@ -181,7 +191,8 @@
 
                     </div>
                 </div>
-     </tr><tr><th class="row">           
+
+                </tr><tr><th class="row">           
                 <div class="form-group">
                     <label for="firstName" class="col-sm-10 ">Registration Start </label></th>
                     <div class="col-sm-9">
@@ -189,24 +200,39 @@
 
                     </div>
                 </div>
-</tr><tr><th class="row">
+
+
+                </tr><tr><th class="row">
                 <div class="form-group">
                     <label for="firstName" class="col-sm-10 ">Registration End</label></th>
                     <div class="col-sm-9">
                   <td>   <label for="firstName" class="col-sm-10 ">{{company.reg_end}}</label>
-</td>
+                    </td>
                     </div>
                 </div>
-
+                {% endif %}
 
                 </tr><tr><th class="row">
                 <div class="form-group">
                     <label for="firstName" class="col-sm-3 ">Hired</label></th>
                     <div class="col-sm-9">
                   <td>   <label for="firstName" class="col-sm-3 ">{{company.hired_people}}</label>
-</td>
+                  </td>
                     </div>
                 </div>
+
+                {% if company.placed %}
+                </tr><tr><th class="row">
+                <div class="form-group">
+                    <label for="firstName" class="col-sm-3 ">Placed</label></th>
+                    <div class="col-sm-9">
+                  <td>   <label for="firstName" class="col-sm-15 "> <a href={{company.placed_url}}>{{company.placed_url}}</label>
+                  </td>
+                    </div>
+                </div>
+                {%  endif %}
+                
+               
 </tr>
 <tr><th class="row"> </th><td></td></tr>
 </table>

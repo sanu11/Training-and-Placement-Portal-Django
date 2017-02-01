@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Placement Statistics</title>
+  <title>Results</title>
   <meta charset="utf-8">
   <meta name="description" content="PICT Training and placement online portal">
 <meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!---- BootStrap Libraries         -->
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="/static/js/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
   
    <!---- BootStrap online Libraries        
@@ -31,7 +31,7 @@
     .sidenav {
       padding-top: 20px;
       background-color: #f1f1f1;
-      height: 150%;
+      height: 100%;
     }
     
     /* Set black background color, white text and some padding */
@@ -49,11 +49,27 @@
       }
       .row.content {height:auto;} 
     }
+  body {
+    background-color: #eee;
+}
+
+*[role="form"] {
+    max-width: 530px;
+    padding: 15px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 0.3em;
+}
+
+*[role="form"] h2 {
+    margin-left: 5em;
+    margin-bottom: 1em;
+}
+
   </style>
+  
   </head>
 <body>
-
-
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -77,7 +93,7 @@
         
     <li><a href="/statistics/">Statistics</a></li>
     <li><a href="/notifications/">Notifications</a></li>
-     <li><a href="/results/">Results</a></li>
+    <li><a href="/results/">Results</a></li>
 
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -96,8 +112,6 @@
 </nav>
   
   
-
-
 <div class="container-fluid ">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
@@ -111,58 +125,54 @@
       <li><a href="/presult/"><b>Upload Result</b></a> </li>
 
 
+
     </ul>
     </div>
     </div>
 
-    <div class="col-sm-8 text-left">
-  
-  <h2 class="text-center"><b>Statistics</b></h2> 
-<div style="margin-bottom:20px"></div>  
-<!-- <p>Table contains placement statistics for the year 2016-17. </p> -->
-  <div class="table-responsive">          
-  <table class="table">
-
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Company</th>
-        <th>Salary Lpa</th>
-        <th>Hired</th>
-        <th>Placed</th>
+    <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 
+      <form class="form-horizontal" role="form">
+          
+                <h2><b>Results</b></h2>
+                {% for result in results %}
+              
+                
+                <div class="form-group">
+                    <label for="firstName" class="col-sm-20 control-label"> {{forloop.counter}} &nbsp;&nbsp; {{result.company }} {{result.shortlist}}</label>
+                </div>
+                
+                <div class="form-group">
+                    <label for="firstName" class="col-sm-20 control-label"><a href= {{result.url}} > {{result.url}}</a></label>
+                </div>
+                {% endfor %}
         
-      </tr>
-    </thead>
-    <tbody>
-{% for company in companies %}
-      <tr>
-        <td>{{forloop.counter}}</td>
-        <td> <a href= /company/{{company.c_id}}/ > {{company.name}}</a> </td>
-      
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{company.salary}}</td>
-        <td>{{company.hired}}</td>
-        {% if company.placed_url %}
-        <td><a href={{company.placed_url}}>{{company.placed_url}}</td>
-        {% else %}
-        <td></td>
-        
-        {% endif %}
-        
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  </div>
-      
+            </form> <!-- /form -->
     </div>
-    <div class="col-sm-2 sidenav">
-      
-    </div>
+    
   </div>
 </div>
+<!-- Extra JavaScript/CSS added manually in "Settings" tab -->
+<!-- Include jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+<script>
+  $(document).ready(function(){
+    var date_input=$('input[name="ppt_date"]'); //our date input has the name "date"
+    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+    date_input.datepicker({
+      format: 'mm/dd/yyyy',
+      container: container,
+      todayHighlight: true,
+      autoclose: true,
+    })
+  })
+</script>
 <footer class="container-fluid text-center">
- <p>Copyrights © 2016-17 by Pune Institute of Computer Technology</p> 
+ <p>Copyrights © 2016-17 by Pune Institute of Computer Technology.</p> 
 </footer>
 </body>
 </html>
