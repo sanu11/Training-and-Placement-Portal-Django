@@ -89,7 +89,8 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav" style="margin-left:21%;">
-        <li><a href="/home/">Home</a></li>        
+        <li><a href="/home/">Home</a></li>
+        
     <li><a href="/statistics/">Statistics</a></li>
     <li><a href="/notifications/">Notifications</a></li>
      <li><a href="/results/">Results</a></li>
@@ -129,77 +130,109 @@
     </div>
 
     <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 
-	<h2 class="text-center">{{student.user}}</h2>
+	<h2 class="text-center">{{company.name}}</h2>
       <form class="form-horizontal" role="form" action="/cregister/" method="POST">
           
                 
 				<table class="table">
 				<tr><th class="row">
                 <div class="form-group ">
-                 <label for="firstName" class="col-sm-4" style="width:66%;">Roll Number</label></th>
+                 <label for="firstName" class="col-sm-4" style="width:66%;">Criteria</label></th>
                     <div class="col-sm-9">
-                   <td>  <label for="firstName" class="col-sm-3">{{student.roll}}</label></td>
+                   <td>  <label for="firstName" class="col-sm-3">{{company.criteria}}</label></td>
                     </div>
                 </div>
 </tr>
 <tr><th class="row">
                 <div class="form-group">
-                   <label for="firstName" class="col-sm-3 ">Branch</label></th>
+                   <label for="firstName" class="col-sm-3 ">Salary</label></th>
                     <div class="col-sm-9">
-                    <td> <label for="firstName" class="col-sm-3 ">{{student.branch}}</label></td>
+                    <td> <label for="firstName" class="col-sm-3 ">{{company.salary}}</label></td>
 
                     </div>
                 </div>
 </tr><tr><th class="row">
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">Email</label>
+                    <label for="firstName" class="col-sm-3 ">Back</label>
 					</th>
 					 
                     <div class="col-sm-9">
-                    <td> <label for="firstName" class="col-sm-3">{{student.email}}</label>
+                    <td> <label for="firstName" class="col-sm-10">{{company.back}}</label>
 </td>
                     </div>
                 </div>
          </tr><tr><th class="row">       
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">Phone</label></th>
+                    <label for="firstName" class="col-sm-8 ">PPT Date</label></th>
                     <div class="col-sm-9">
-                   <td>  <label for="firstName" class="col-sm-3 ">{{student.phone}}</label></td>
+                   <td>  <label for="firstName" class="col-sm-10 ">{{company.ppt_date}}</label></td>
 
                     </div>
                 </div>
-</tr><tr><th class="row">
+
+                {% if company.other_details %}
+                </tr><tr><th class="row">
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">10th</label></th>
+                    <label for="firstName" class="col-sm-8 ">Other Details</label></th>
                     <div class="col-sm-9">
-                 <td>    <label for="firstName" class="col-sm-3 ">{{student.ssc}}</label></td>
+                 <td>    <label for="firstName" class="col-sm-10 ">{{company.other_details}}</label></td>
 
                     </div>
                 </div>
-</tr><tr><th class="row">
+                {% endif %}
+
+
+                {% if company.reg_link %}
+                </tr><tr><th class="row">
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">12th</label></th>
+                    <label for="firstName" class="col-sm-10 ">Registration Link</label></th>
                     <div class="col-sm-9">
-                     <td><label for="firstName" class="col-sm-3 ">{{student.hsc}}</label></td>
+                     <td><label for="firstName" class="col-sm-10 "> <a href={{company.reg_link}} > {{company.reg_link}} </a> </label></td>
 
                     </div>
                 </div>
-     </tr><tr><th class="row">           
+
+                </tr><tr><th class="row">           
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">Average</label></th>
+                    <label for="firstName" class="col-sm-10 ">Registration Start </label></th>
                     <div class="col-sm-9">
-                    <td> <label for="firstName" class="col-sm-3 ">{{student.average}}</label></td>
+                    <td> <label for="firstName" class="col-sm-10 ">{{company.reg_start}}</label></td>
 
                     </div>
                 </div>
-</tr><tr><th class="row">
+
+
+                </tr><tr><th class="row">
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">Back</label></th>
+                    <label for="firstName" class="col-sm-10 ">Registration End</label></th>
                     <div class="col-sm-9">
-                  <td>   <label for="firstName" class="col-sm-3 ">{{student.active_back}}</label>
-</td>
+                  <td>   <label for="firstName" class="col-sm-10 ">{{company.reg_end}}</label>
+                    </td>
                     </div>
                 </div>
+                {% endif %}
+
+                </tr><tr><th class="row">
+                <div class="form-group">
+                    <label for="firstName" class="col-sm-3 ">Hired</label></th>
+                    <div class="col-sm-9">
+                  <td>   <label for="firstName" class="col-sm-3 ">{{company.hired_people}}</label>
+                  </td>
+                    </div>
+                </div>
+
+                {% if company.placed %}
+                </tr><tr><th class="row">
+                <div class="form-group">
+                    <label for="firstName" class="col-sm-3 ">Placed</label></th>
+                    <div class="col-sm-9">
+                  <td>   <label for="firstName" class="col-sm-15 "> <a href={{company.placed_url}}>{{company.placed_url}}</label>
+                  </td>
+                    </div>
+                </div>
+                {%  endif %}
+                
+               
 </tr>
 <tr><th class="row"> </th><td></td></tr>
 </table>

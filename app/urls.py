@@ -15,6 +15,8 @@ urlpatterns = [
 ##web
 
 	url(r'student/(?P<roll>[0-9]+)/$',views.get_student_page),
+	url(r'company/(?P<cid>[0-9]+)/$',views.get_company_page),
+
 
 	url(r'psignup/$',views.get_signup_page),		
 	url(r'plogin/$',views.get_login_page),
@@ -30,7 +32,7 @@ urlpatterns = [
 	url(r'login/$',views.web_login),
 	url(r'result/$',views.web_upload_result),
 
-
+	url(r'results/$',views.get_results_page),	 
 	url(r'statistics/$',views.get_statistics_page),	 
 	url(r'notifications/$',views.get_notifications_page),
 	url(r'students/$',views.get_students_page),

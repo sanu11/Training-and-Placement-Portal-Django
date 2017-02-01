@@ -89,7 +89,8 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav" style="margin-left:21%;">
-        <li><a href="/home/">Home</a></li>        
+        <li><a href="/home/">Home</a></li>
+        
     <li><a href="/statistics/">Statistics</a></li>
     <li><a href="/notifications/">Notifications</a></li>
      <li><a href="/results/">Results</a></li>
@@ -129,84 +130,65 @@
     </div>
 
     <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 
-	<h2 class="text-center">{{student.user}}</h2>
       <form class="form-horizontal" role="form" action="/cregister/" method="POST">
           
-                
-				<table class="table">
-				<tr><th class="row">
-                <div class="form-group ">
-                 <label for="firstName" class="col-sm-4" style="width:66%;">Roll Number</label></th>
+                <h2><b>Company Registration</b></h2>
+                <div class="form-group">
+                    <label for="firstName" class="col-sm-3 control-label">Company</label>
                     <div class="col-sm-9">
-                   <td>  <label for="firstName" class="col-sm-3">{{student.roll}}</label></td>
+                        <input type="text" id="firstName" name="name" placeholder="Company Name" class="form-control" required autofocus>
+                       
                     </div>
                 </div>
-</tr>
-<tr><th class="row">
                 <div class="form-group">
-                   <label for="firstName" class="col-sm-3 ">Branch</label></th>
+                    <label for="text" class="col-sm-3 control-label">Salary</label>
                     <div class="col-sm-9">
-                    <td> <label for="firstName" class="col-sm-3 ">{{student.branch}}</label></td>
+                        <input type="number" step="0.01" min=0 id="salary" name="salary" placeholder="Salary" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="text" class="col-sm-3 control-label">Criteria</label>
+                    <div class="col-sm-9">
+                        <input type="number" step="0.01" min=0 id="criteria" name="criteria" placeholder="Criteria" class="form-control" required>
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <label for="date" class="col-sm-3 control-label">PPT/Apti</label>
+                    <div class="col-sm-5">
+                       <input class="form-control" id="date" name="ppt_date" placeholder="MM/DD/YYYY" type="date" required/>
+                    </div>
+          <div class="col-sm-4">
+          <input type="time" class="form-control" name="ppt_time" placeholder="HH:MM" required>
+          </div>
+                </div>
+        
+                <div class="form-group">
+                    <label for="text" class="col-sm-3 control-label">Backlog</label>
+                    <div class="col-sm-9">
+                        <select id="country" name="back" class="form-control">
+                            <option value="No Criteria">No Criteria</option>
+                            <option value="Active not Allowed">Active not Allowed</option>
+                            <option value="Passive not Allowed">Passive not Allowed</option>
+                            
+                        </select>
+                    </div>
+                </div> <!-- /.form-group -->
 
-                    </div>
-                </div>
-</tr><tr><th class="row">
-                <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">Email</label>
-					</th>
-					 
-                    <div class="col-sm-9">
-                    <td> <label for="firstName" class="col-sm-3">{{student.email}}</label>
-</td>
-                    </div>
-                </div>
-         </tr><tr><th class="row">       
-                <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">Phone</label></th>
-                    <div class="col-sm-9">
-                   <td>  <label for="firstName" class="col-sm-3 ">{{student.phone}}</label></td>
-
-                    </div>
-                </div>
-</tr><tr><th class="row">
-                <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">10th</label></th>
-                    <div class="col-sm-9">
-                 <td>    <label for="firstName" class="col-sm-3 ">{{student.ssc}}</label></td>
-
-                    </div>
-                </div>
-</tr><tr><th class="row">
-                <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">12th</label></th>
-                    <div class="col-sm-9">
-                     <td><label for="firstName" class="col-sm-3 ">{{student.hsc}}</label></td>
-
-                    </div>
-                </div>
-     </tr><tr><th class="row">           
-                <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">Average</label></th>
-                    <div class="col-sm-9">
-                    <td> <label for="firstName" class="col-sm-3 ">{{student.average}}</label></td>
-
-                    </div>
-                </div>
-</tr><tr><th class="row">
-                <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">Back</label></th>
-                    <div class="col-sm-9">
-                  <td>   <label for="firstName" class="col-sm-3 ">{{student.active_back}}</label>
-</td>
-                    </div>
-                </div>
-</tr>
-<tr><th class="row"> </th><td></td></tr>
-</table>
-</form>
-                
+        <div class="form-group">
+        <label class="control-label col-sm-3" for="other_details">Other Details</label>
+            <div class="col-sm-9">
+        <textarea class="form-control"  id="other_details" name="other_details" maxlength="550"></textarea>
         </div>
-             <!-- /form -->
+        </div>
+        
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="update"></label>
+          <div class="col-md-7" align="center">
+            <button id="update" name="register" class="btn btn-info">Register</button>
+          </div>
+        </div>
+            </form> <!-- /form -->
     </div>
     
   </div>

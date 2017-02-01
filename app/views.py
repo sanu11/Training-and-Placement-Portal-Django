@@ -159,15 +159,15 @@ def get_login_page(request):
 @csrf_exempt
 def get_register_page(request):
 	if( not request.session.get("name")):
-		return HttpResponse("Please Login")			
+		return render(request,'app/login.html',{})			
 	else:
 		name=request.session["name"]
-		return render(request,'app/register.html',{"name":name})
+		return render(request,'app/companyRegister.html',{"name":name})
 
 @csrf_exempt
 def get_update_page(request):
 	if( not request.session.get("name")):
-		return HttpResponse("Please Login")			
+		return render(request,'app/login.html',{})			
 	else:
 		name=request.session["name"]
 		companies=list(Company.objects.all().order_by('-c_id'))
@@ -176,7 +176,7 @@ def get_update_page(request):
 @csrf_exempt
 def get_notify_page(request):
 	if( not request.session.get("name")):
-		return HttpResponse("Please Login")			
+		return render(request,'app/login.html',{})			
 	else:
 		name=request.session["name"]
 		return render(request,'app/notify.html',{"name":name})
@@ -184,17 +184,17 @@ def get_notify_page(request):
 @csrf_exempt
 def get_result_upload_page(request):
 	if( not request.session.get("name")):
-		return HttpResponse("Please Login")			
+		return render(request,'app/login.html',{})			
 	else:
 		name=request.session["name"]
 		companies=list(Company.objects.all().order_by('-c_id'))
-		return render(request,'app/result.html',{"companies":companies,"name":name})
+		return render(request,'app/resultUpload.html',{"companies":companies,"name":name})
 
 
 @csrf_exempt
 def get_notifications_page(request):
 	if( not request.session.get("name")):
-		return HttpResponse("Please Login")			
+		return render(request,'app/login.html',{})			
 	else:
 		name=request.session["name"]
 		notifications = Message.objects.all().order_by('-msg_id')
@@ -204,16 +204,28 @@ def get_notifications_page(request):
 @csrf_exempt
 def get_statistics_page(request):
 	if( not request.session.get("name")):
-		return HttpResponse("Please Login")			
+		return render(request,'app/login.html',{})			
 	else:
 		name=request.session["name"]
 		companies = Company.objects.all().order_by('-c_id')
 		return render(request,'app/statistics.html',{"companies":companies,"name":name})
 
+
+@csrf_exempt
+def get_results_page(request):
+	if( not request.session.get("name")):
+		return render(request,'app/login.html',{})			
+	else:
+		name=request.session["name"]
+		results = Result.objects.all().order_by('-r_id')
+		print results
+		return render(request,'app/results.html',{"results":results,"name":name})
+
+
 @csrf_exempt
 def get_students_page(request):
 	if( not request.session.get("name")):
-		return HttpResponse("Please Login")			
+		return render(request,'app/login.html',{})			
 	else:
 		name=request.session["name"]
 		students = Student.objects.all()
@@ -223,7 +235,7 @@ def get_students_page(request):
 @csrf_exempt
 def get_student_page(request,roll):
 	if( not request.session.get("name")):
-		return HttpResponse("Please Login")			
+		return render(request,'app/login.html',{})			
 	else:
 		name=request.session["name"]
 		if(Student.objects.filter(roll=roll).exists()):
@@ -232,14 +244,22 @@ def get_student_page(request,roll):
 		else:
 			return HttpResponse("Not Found")
 
-
-
-
+@csrf_exempt
+def get_company_page(request,cid):
+	if( not request.session.get("name")):
+		return render(request,'app/login.html',{})			
+	else:
+		name=request.session["name"]
+		if(Company.objects.filter(c_id=cid).exists()):
+			company=Company.objects.get(c_id=cid)
+			return render(request,'app/company.html',{"company":company,"name":name})
+		else:
+			return HttpResponse("Not Found")
 
 @csrf_exempt
 def logout(request):
 	if( not request.session.get("name")):
-		return HttpResponse("Please Login")			
+		return render(request,'app/login.html',{})			
 	else:
 		del request.session['email']
 		del request.session['name']
@@ -368,6 +388,7 @@ def web_register_company(request):
 def web_update_company(request):
 	if request.method=="POST":
 		name=request.POST["name"]
+		print name
 		reg_link=request.POST["regLink"]
 		reg_start_date=request.POST["regStartDate"]
 		reg_start_time=request.POST["regStartTime"]
@@ -451,12 +472,20 @@ def web_upload_result(request):
 			obj.shortlist=choice
 			obj.filename=filename
 			obj.url=url
-			
+			obj.save()
+		
+			#save the url in company table
+			if(choice=="Placed"):
+				obj=Company.objects.get(name=company)
+				obj.placed_url=url
+				obj.save()
+		
 			title = company + " " + choice
 			body = url
 			Device = get_device_model()
 			Device.objects.all().send_message({'type':'gen_msg','title':title,'body':body})
-			return HttpResponse("Success " + url)
+			name=request.session["name"]
+			return render(request,'app/home.html',{"name":name,"login":1})
 
 
 		
