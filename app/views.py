@@ -487,5 +487,4 @@ def web_upload_result(request):
 			name=request.session["name"]
 			return render(request,'app/home.html',{"name":name,"login":1})
 
-
 		
