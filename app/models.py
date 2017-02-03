@@ -8,7 +8,7 @@ class Student(models.Model):
 
 	# s_id=models.AutoField(primary_key=True)
 	#college_id=models.CharField(max_length=50)
-	user=models.CharField(max_length=50)
+	name=models.CharField(max_length=50)
 	email=models.EmailField(max_length=60,unique=True)
 	password=models.CharField(max_length=12)
 	phone=models.CharField(max_length=10)
@@ -25,7 +25,16 @@ class Student(models.Model):
 #	resume=models.FileField()
 
 	def __str__(self):
-		return  self.email
+		return  self.name
+
+class Admin(models.Model):
+	name=models.CharField(max_length=50)
+	email=models.EmailField(max_length=60,unique=True)
+	password=models.CharField(max_length=12)
+	other_details=models.CharField(max_length=1000,null=True,blank=True)
+
+	def __str__(self):
+		return  self.name
 
 class Company(models.Model):
 
