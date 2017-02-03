@@ -97,10 +97,10 @@
   
   
 
-
 <div class="container-fluid ">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
+    {% if login == 1 %}
  <div class="navbar"  >
       <ul class="nav navbar-nav" >
     <br><br>
@@ -113,8 +113,10 @@
 
     </ul>
     </div>
+    {% endif %}
     </div>
 
+    
     <div class="col-sm-8 text-left">
   
   <h2 class="text-center"><b>Statistics</b></h2> 

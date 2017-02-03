@@ -9,10 +9,10 @@ admin.site.register(Message)
 admin.site.register(Verify)
 admin.site.register(Result)
 admin.site.register(Admin)
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 7c81c50abaafe274c465a6ae70177e169d91ebc1
 
 # admin.site.register(gcm_device)
-
-
-

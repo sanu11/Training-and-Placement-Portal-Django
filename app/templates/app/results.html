@@ -115,6 +115,7 @@
 <div class="container-fluid ">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
+    {% if login == 1 %}
  <div class="navbar"  >
       <ul class="nav navbar-nav" >
     <br><br>
@@ -125,9 +126,9 @@
       <li><a href="/presult/"><b>Upload Result</b></a> </li>
 
 
-
     </ul>
     </div>
+    {% endif %}
     </div>
 
     <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 
