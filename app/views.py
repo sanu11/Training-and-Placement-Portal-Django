@@ -1,6 +1,6 @@
 
 from django.shortcuts import render
-from .models import Student,Company,Message,Verify,Result
+from .models import Student,Company,Message,Verify,Result,Admin
 from django.http import HttpRequest,HttpResponse, HttpResponseRedirect
 from django.http import HttpResponse
 from django.conf import settings
@@ -32,7 +32,7 @@ def register_student(request):
 	email = data["email"]
 	if(Student.objects.filter(email=email).exists()):
 		return HttpResponse("Already Registered")
-	obj.user=data["name"]
+	obj.name=data["name"]
 	obj.email=data["email"]
 	obj.password=data["password"]
 	obj.phone=data["phone"]
@@ -40,7 +40,7 @@ def register_student(request):
 	obj.average=data["average"]
 	obj.active_back=data["activeBack"]
 	obj.save()
-	return HttpResponse(obj.user)
+	return HttpResponse(obj.name)
 
 @csrf_exempt
 def login_details(request):
@@ -50,7 +50,7 @@ def login_details(request):
 	if(Student.objects.filter(email=get_mail).exists()):
 		obj=Student.objects.get(email=get_mail)
 		if(obj.password==get_pw):
-			return HttpResponse(obj.user)
+			return HttpResponse(obj.name)
 		else:
 			return HttpResponse("Incorrect Password")
 	else:
@@ -134,17 +134,24 @@ def notify(request):
 	Device.objects.all().send_message({'type':'gen_msg','title':title,'body':body})
 	return HttpResponse("Message sent")
 
-
 ###WEB###
-
 @csrf_exempt
 def get_main_page(request):
 	if( not request.session.get("name")):
 		login=0
 		return render(request,'app/home.html',{"login":login})
 	else:
-		login=1
 		name=request.session["name"]
+		get_mail=request.session["email"]
+		#admin login
+		if(Admin.objects.filter(email=get_mail).exists()):
+			login=1
+			print "Admin login"
+		#student login
+		elif(Student.objects.filter(email=get_mail).exists()):
+			login=2
+			print "Student login"
+
 		return render(request,'app/home.html',{"login":login,"name":name})
 
 @csrf_exempt
@@ -156,49 +163,124 @@ def get_login_page(request):
 	print "in login page"
 	return render(request,'app/login.html',{})
 
+
+
+#####UPLOAD pages
 @csrf_exempt
 def get_register_page(request):
 	if( not request.session.get("name")):
 		return render(request,'app/login.html',{})			
 	else:
-		name=request.session["name"]
-		return render(request,'app/companyRegister.html',{"name":name})
+		get_mail=request.session["email"]
+		if(Admin.objects.filter(email=get_mail).exists()):
+			name=request.session["name"]
+			return render(request,'app/companyRegister.html',{"name":name})
+			
+		#student login
+		else:
+			return HttpResponse("Not permitted to access")
+			
 
 @csrf_exempt
 def get_update_page(request):
 	if( not request.session.get("name")):
 		return render(request,'app/login.html',{})			
 	else:
-		name=request.session["name"]
-		companies=list(Company.objects.all().order_by('-c_id'))
-		return render(request,'app/update.html',{"companies":companies,"name":name})
+		get_mail=request.session["email"]
+		if(Admin.objects.filter(email=get_mail).exists()):		
+			name=request.session["name"]
+			companies=list(Company.objects.all().order_by('-c_id'))
+			return render(request,'app/update.html',{"companies":companies,"name":name})
+
+		#student login
+		else:
+			return HttpResponse("Not permitted to access")
+			
 
 @csrf_exempt
 def get_notify_page(request):
 	if( not request.session.get("name")):
 		return render(request,'app/login.html',{})			
 	else:
-		name=request.session["name"]
-		return render(request,'app/notify.html',{"name":name})
+		get_mail=request.session["email"]
+		if(Admin.objects.filter(email=get_mail).exists()):
+			name=request.session["name"]
+			return render(request,'app/notify.html',{"name":name})
+
+		#student login
+		else:
+			return HttpResponse("Not permitted to access")
+
 
 @csrf_exempt
 def get_result_upload_page(request):
 	if( not request.session.get("name")):
 		return render(request,'app/login.html',{})			
 	else:
-		name=request.session["name"]
-		companies=list(Company.objects.all().order_by('-c_id'))
-		return render(request,'app/resultUpload.html',{"companies":companies,"name":name})
+		get_mail=request.session["email"]
+		if(Admin.objects.filter(email=get_mail).exists()):
+			name=request.session["name"]
+			companies=list(Company.objects.all().order_by('-c_id'))
+			return render(request,'app/resultUpload.html',{"companies":companies,"name":name})
+		
+		#student login
+		else:
+			return HttpResponse("Not permitted to access")
 
 
+#######DISPLAY Pages######
+
+@csrf_exempt
+def get_students_page(request):
+	if( not request.session.get("name")):
+		return render(request,'app/login.html',{})			
+	else:
+		get_mail=request.session["email"]
+		if(Admin.objects.filter(email=get_mail).exists()):
+			name=request.session["name"]
+			students = Student.objects.all()
+			return render(request,'app/students.html',{"students":students,"name":name})
+
+		#student login
+		else:
+			return HttpResponse("Not permitted to access")
+
+@csrf_exempt
+def get_student_page(request,roll):
+	if( not request.session.get("name")):
+		return render(request,'app/login.html',{})			
+	else:
+		get_mail=request.session["email"]
+		if(Admin.objects.filter(email=get_mail).exists()):
+			name=request.session["name"]
+			if(Student.objects.filter(roll=roll).exists()):
+				student=Student.objects.get(roll=roll)
+				return render(request,'app/student.html',{"student":student,"name":name})
+			else:
+				return HttpResponse("Not Found")
+		#student login
+		else:
+			return HttpResponse("Not permitted to access")
+
+
+
+###Accessible to students
 @csrf_exempt
 def get_notifications_page(request):
 	if( not request.session.get("name")):
 		return render(request,'app/login.html',{})			
 	else:
+		get_mail=request.session["email"]
+		if(Admin.objects.filter(email=get_mail).exists()):
+			login=1
+			print "Admin login"
+		#student login
+		elif(Student.objects.filter(email=get_mail).exists()):
+			login=2
+			print "Student login"
 		name=request.session["name"]
 		notifications = Message.objects.all().order_by('-msg_id')
-		return render(request,'app/notification.html',{"notifications":notifications,"name":name})
+		return render(request,'app/notification.html',{"notifications":notifications,"name":name,"login":login})
 
 
 @csrf_exempt
@@ -206,9 +288,17 @@ def get_statistics_page(request):
 	if( not request.session.get("name")):
 		return render(request,'app/login.html',{})			
 	else:
+		get_mail=request.session["email"]
+		if(Admin.objects.filter(email=get_mail).exists()):
+			login=1
+			print "Admin login"
+		#student login
+		elif(Student.objects.filter(email=get_mail).exists()):
+			login=2
+			print "Student login"
 		name=request.session["name"]
 		companies = Company.objects.all().order_by('-c_id')
-		return render(request,'app/statistics.html',{"companies":companies,"name":name})
+		return render(request,'app/statistics.html',{"companies":companies,"name":name,"login":login})
 
 
 @csrf_exempt
@@ -216,43 +306,37 @@ def get_results_page(request):
 	if( not request.session.get("name")):
 		return render(request,'app/login.html',{})			
 	else:
+		get_mail=request.session["email"]
+		if(Admin.objects.filter(email=get_mail).exists()):
+			login=1
+			print "Admin login"
+		#student login
+		elif(Student.objects.filter(email=get_mail).exists()):
+			login=2
+			print "Student login"
 		name=request.session["name"]
 		results = Result.objects.all().order_by('-r_id')
 		print results
-		return render(request,'app/results.html',{"results":results,"name":name})
+		return render(request,'app/results.html',{"results":results,"name":name,"login":login})
 
-
-@csrf_exempt
-def get_students_page(request):
-	if( not request.session.get("name")):
-		return render(request,'app/login.html',{})			
-	else:
-		name=request.session["name"]
-		students = Student.objects.all()
-		return render(request,'app/students.html',{"students":students,"name":name})
-
-
-@csrf_exempt
-def get_student_page(request,roll):
-	if( not request.session.get("name")):
-		return render(request,'app/login.html',{})			
-	else:
-		name=request.session["name"]
-		if(Student.objects.filter(roll=roll).exists()):
-			student=Student.objects.get(roll=roll)
-			return render(request,'app/student.html',{"student":student,"name":name})
-		else:
-			return HttpResponse("Not Found")
 
 @csrf_exempt
 def get_company_page(request,cid):
 	if( not request.session.get("name")):
 		return render(request,'app/login.html',{})			
 	else:
+		get_mail=request.session["email"]
+		if(Admin.objects.filter(email=get_mail).exists()):
+			login=1
+			print "Admin login"
+		#student login
+		elif(Student.objects.filter(email=get_mail).exists()):
+			login=2
+			print "Student login"
 		name=request.session["name"]
 		if(Company.objects.filter(c_id=cid).exists()):
 			company=Company.objects.get(c_id=cid)
-			return render(request,'app/company.html',{"company":company,"name":name})
+			return render(request,'app/company.html',{"company":company,"name":name,"login":login})
 		else:
 			return HttpResponse("Not Found")
 
@@ -261,6 +345,7 @@ def logout(request):
 	if( not request.session.get("name")):
 		return render(request,'app/login.html',{})			
 	else:
+
 		del request.session['email']
 		del request.session['name']
 		request.session.modified = True
@@ -277,7 +362,7 @@ def web_signup(request):
 		if(Student.objects.filter(email=email).exists()):
 			return HttpResponse('Already Registered')
 		c=Student()
-		c.user=name
+		c.name=name
 		c.email=email
 		c.password=request.POST["password"]
 		c.roll=roll
@@ -328,16 +413,27 @@ def web_login(request):
 	if request.method=="POST":
 		get_mail=request.POST.get("email")
 		get_pw=request.POST.get("password")
-	
-		if(Student.objects.filter(email=get_mail).exists()):
+		if(Admin.objects.filter(email=get_mail).exists()):
+			obj=Admin.objects.get(email=get_mail)
+			if(obj.password==get_pw):
+				name=obj.name
+				request.session['email']=get_mail
+				request.session['name']=name
+				return render(request,'app/redirect.html',{})
+			else:
+				return HttpResponse("Incorrect Password")
+
+		elif(Student.objects.filter(email=get_mail).exists()):
 			obj=Student.objects.get(email=get_mail)
 			if(obj.password==get_pw):
-				name=obj.user
+				name=obj.name
+				print name,get_mail
 				request.session['email']= get_mail 
 				request.session['name']=name
 				return render(request,'app/redirect.html',{})
 			else:
 				return HttpResponse("Incorrect Password")
+
 		else:
 			return HttpResponse("User not found")
 
