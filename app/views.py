@@ -365,13 +365,15 @@ def web_signup(request):
 		c.name=name
 		c.email=email
 		c.password=request.POST["password"]
+		c.gender=request.POST["gender"]
 		c.roll=roll
 		c.phone=request.POST["phone"]
+		c.year=request.POST["year"]
 		c.branch=request.POST["branch"]
 		c.ssc=request.POST["10th"]
 		c.hsc=request.POST["12th"]
 		c.average=request.POST["average"]
-
+		
 		# c.activeBack=request.POST.get("activeBack")
 		
 		# for entry in dbx.files_list_folder('').entries:
