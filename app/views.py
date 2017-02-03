@@ -582,5 +582,3 @@ def web_upload_result(request):
 			Device.objects.all().send_message({'type':'gen_msg','title':title,'body':body})
 			name=request.session["name"]
 			return render(request,'app/home.html',{"name":name,"login":1})
-
-		
