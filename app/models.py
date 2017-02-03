@@ -14,6 +14,7 @@ class Student(models.Model):
 	phone=models.CharField(max_length=10)
 	gender=models.CharField(max_length=10)
 	roll=models.IntegerField()
+	year=models.CharField(max_length=50)
 	branch=models.CharField(max_length=6)
 	ssc=models.FloatField()
 	hsc=models.FloatField()

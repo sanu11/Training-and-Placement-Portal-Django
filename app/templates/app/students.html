@@ -130,6 +130,7 @@
         <th>Name</th>
         <th>Branch</th>
         <th>Average</th>
+        <th>Resume</th>
         <th>Company</th>   
       </tr>
     </thead>
@@ -137,11 +138,13 @@
 {% for student in students %}
       <tr>
         <td>{{forloop.counter}}</td>
-          <td><a href= {{student.url}} >{{student.roll}}</a> </td>
+          <td>{{student.roll}}</td>
         
-        <td> <a href= /student/{{student.roll}}/ > {{student.user}}</a> </td>
+        <td> <a href= /student/{{student.roll}}/ > {{student.name}}</a> </td>
         <td>&nbsp;{{student.branch}}</td>
         <td>&nbsp;&nbsp;{{student.average}}</td>
+        <td><a href= {{student.url}}> {{student.url}}</a></td>
+        <td></td>
       
       </tr>
       {% endfor %}
