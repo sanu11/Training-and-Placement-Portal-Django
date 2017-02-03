@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 """
 Django settings for Tnp project.
 
