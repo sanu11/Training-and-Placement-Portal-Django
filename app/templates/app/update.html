@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
+   <script src="/static/js/check.js"></script>
   
    <!---- BootStrap online Libraries        
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -132,8 +133,9 @@
  
     </div>
 
-    <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 
-<form class="form-horizontal" autocomplete="off" method="POST"  action="/update/" enctype="multipart/form-data">
+
+    <div class="col-sm-8 text-left" style="background-color:#FFFFFF">
+<form class="form-horizontal" id="update" autocomplete="off" method="POST"  enctype="multipart/form-data">
 
 <fieldset>
 
@@ -145,7 +147,7 @@
 <br>
 <h2 align="center" class="text-center" style="margin-left:11%;"> <b>Company Update</b></h2>
   <br>
-  <label class="col-sm-4 control-label" for="buttondropdown">Company</label>
+  <label class="col-sm-4 control-label">Company</label>
   <div class="col-sm-6">
     <div class="input-group">
       
@@ -175,9 +177,9 @@
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-sm-4 control-label" for="registrationStartDate">Registration Start</label>  
+  <label class="col-sm-4 control-label" for="registrationStartDate">Registration Start</label>
   <div class="col-sm-3">
-  <input class="form-control" id="date" name="regStartDate" min="2016-06-01" placeholder="MM/DD/YYYY" type="date" required/>
+  <input class="form-control" id="registrationStartDate" name="regStartDate" min="2016-06-01" placeholder="MM/DD/YYYY" type="date" required/>
   </div>
   <div class="col-sm-3">
   <input id="registrationStartTime" name="regStartTime" type="time" placeholder="HH:MM" class="form-control input-md" required="">
@@ -186,9 +188,9 @@
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-sm-4 control-label" for="registrationEndDate">Registration End </label>  
+  <label class="col-sm-4 control-label" for="registrationEndDate">Registration End </label>
   <div class="col-sm-3">
-  <input class="form-control" id="date" name="regEndDate" min="2016-06-01" placeholder="MM/DD/YYYY" type="date" required/>
+  <input class="form-control" id="registrationEndDate" name="regEndDate" min="2016-06-01" placeholder="MM/DD/YYYY" type="date" required/>
     
   </div>
   <div class="col-sm-3">
@@ -207,9 +209,10 @@
 
 <!-- Button -->
 <div class="form-group">
-  <label class="col-sm-4 control-label" for="update"></label>
+  <label class="col-sm-4 control-label" ></label>
   <div class="col-sm-6" align="center">
-    <input type="submit" value="Update" id="update" name="update" class="btn btn-info">
+    <button type="button" name="update" onclick="companyUpdate()" class="btn btn-info">Update</button>
+
   </div>
 </div>
 

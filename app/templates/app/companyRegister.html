@@ -10,8 +10,8 @@
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
   <script src="/static/js/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
-  
-   <!---- BootStrap online Libraries        
+  <script src="/static/js/check.js"></script>
+   <!---- BootStrap online Libraries
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -174,8 +174,8 @@
     </div>
 
     <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 
-      <form class="form-horizontal" role="form" action="/cregister/" method="POST">
-          
+      <form class="form-horizontal" role="form" id="register"  method="POST">
+           {% csrf_token %}
                 <h2><b>Company Registration</b></h2>
                 <div class="form-group">
                     <label for="firstName" class="col-sm-3 control-label">Company</label>
@@ -185,13 +185,13 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="text" class="col-sm-3 control-label">Salary</label>
+                    <label  class="col-sm-3 control-label">Salary</label>
                     <div class="col-sm-9">
                         <input type="number" step="0.01" min=0 id="salary" name="salary" placeholder="Salary" class="form-control" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="text" class="col-sm-3 control-label">Criteria</label>
+                    <label  class="col-sm-3 control-label">Criteria</label>
                     <div class="col-sm-9">
                         <input type="number" step="0.01" min=0 id="criteria" name="criteria" placeholder="Criteria" class="form-control" required>
                     </div>
@@ -208,7 +208,7 @@
                 </div>
         
                 <div class="form-group">
-                    <label for="text" class="col-sm-3 control-label">Backlog</label>
+                    <label class="col-sm-3 control-label">Backlog</label>
                     <div class="col-sm-9">
                         <select id="country" name="back" class="form-control">
                             <option value="No Criteria">No Criteria</option>
@@ -227,9 +227,9 @@
         </div>
         
         <div class="form-group">
-          <label class="col-md-4 control-label" for="update"></label>
+          <label class="col-md-4 control-label" for="cregister"></label>
           <div class="col-md-7" align="center">
-            <button id="update" name="register" class="btn btn-info">Register</button>
+            <button type="button" id="cregister" name="register" onclick="companyRegister()" class="btn btn-info">Register</button>
           </div>
         </div>
             </form> <!-- /form -->

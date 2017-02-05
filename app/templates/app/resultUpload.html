@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/check.js"></script>
   
    <!---- BootStrap online Libraries        
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -184,7 +185,7 @@ input:checked + .slider:before {
       <br>
 
 
-<form class="form-horizontal" enctype="multipart/form-data" method="POST" action ='/result/'>
+<form class="form-horizontal" id="result" enctype="multipart/form-data" action="/result/" method="POST" >
 <fieldset>
 <!-- Form Name -->
 <!-- Text input-->
@@ -208,7 +209,7 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" for="selectbasic">Result</label>
 
   <div class="col-sm-5">
-    <select id="selectbasic" name="choice" class="form-control">
+    <select  name="choice" class="form-control">
       <option value="Aptitude Shortlist">Aptitude Shortlist</option>
       <option value="Coding Shortlist">Coding round Shorlist</option>
       <option value="Technical Shortlist">Technical Interview Shorlist</option>
@@ -220,10 +221,10 @@ input:checked + .slider:before {
 
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="appendedtext">File</label>
+  <label class="col-md-4 control-label" >File</label>
   <div class="col-sm-4">
     <div class="input-group">
-      <input  name="result" class="form-control"   type="file">
+      <input  name="resultfile" class="form-control"  id="resultfile" type="file">
     </div>
   </div>
 </div>
@@ -233,7 +234,7 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" for="singlebutton"></label>
   
   <div class="col-sm-4 text-center" align="center" style="margin-left:-2%;margin-right:4%;">
-    <input type="submit" id="singlebutton" name="singlebutton" class="btn btn-info " value="Upload"><b></b>
+      <input type="submit" id="singlebutton"  name="singlebutton" class="btn btn-info " value="Upload Result" ></input>
   </div>
 </div>
 </fieldset>
