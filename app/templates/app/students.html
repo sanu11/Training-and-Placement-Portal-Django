@@ -116,8 +116,28 @@
     </div>
 
     <div class="col-sm-8 text-left">
-  
-  <h2 class="text-center"><b>Statistics</b></h2> 
+    <div >
+  <h2 class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <b>Students</b>
+  <div class="col-sm-3 text-right" >
+    <div class="input-group">
+      <div class="input-group-btn">
+        <select class="form-control" name="year" id="year">
+		<option selected disabled hidden>Select Year</option>
+           {% for company in companies %}
+            <option value = {{company.name}} > {{company.name}} </option>
+            {% endfor %}
+
+      </select>
+
+
+      </div>
+    </div>
+  </div>
+      </h2></div>
+
+
+
 <div style="margin-bottom:20px"></div>  
 <!-- <p>Table contains placement statistics for the year 2016-17. </p> -->
   <div class="table-responsive">          

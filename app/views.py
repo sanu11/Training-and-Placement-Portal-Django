@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Student, Company, Message, Verify, Result, Admin
+from .models import Student, Company, Message, Verify, Result, Admin ,Year
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.http import HttpResponse
 from django.conf import settings
@@ -165,7 +165,9 @@ def get_main_page(request):
 
 @csrf_exempt
 def get_signup_page(request):
-    return render(request, 'app/signup.html', {})
+    years = list(Year.objects.all().order_by('-y_id'))
+    print ("hello")
+    return render(request, 'app/signup.html', {"years":years})
 
 
 @csrf_exempt
