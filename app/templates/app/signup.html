@@ -212,9 +212,9 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" for="selectbasic">Passing year</label>
   <div class="col-sm-5">
     <select id="selectbasic" name="year" class="form-control">
-      <option value="2016-17">2016-17</option>
-      <option value="201718">2017-18</option>
-      
+      {% for passyear in years %}
+      <option value= {{passyear.year}} > {{passyear.year}} </option>
+      {% endfor %}
     </select>
   </div>
 </div>

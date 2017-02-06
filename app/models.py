@@ -86,3 +86,15 @@ class Result(models.Model):
 	def __str__(self):
 		return self.filename
 
+class Year(models.Model):
+	y_id=models.AutoField(primary_key=True)
+	year=models.CharField(max_length=50,unique=True)
+	comp=models.IntegerField()
+	it=models.IntegerField()
+	entc=models.IntegerField()
+	comp_placed=models.IntegerField(null=True,blank=True)
+	it_placed=models.IntegerField(null=True,blank=True)
+	entc_placed=models.IntegerField(null=True,blank=True)
+
+	def __str__(self):
+		return  self.year

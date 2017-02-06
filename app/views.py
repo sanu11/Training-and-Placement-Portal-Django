@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from .models import Student, Company, Message, Verify, Result, Admin
+from .models import Student, Company, Message, Verify, Result, Admin ,Year
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.http import HttpResponse
 from django.conf import settings
 from datetime import datetime
+from django.template.loader import render_to_string
 from django.views.decorators.csrf import *
 from django.core import serializers
 from gcm.models import get_device_model
@@ -165,7 +166,9 @@ def get_main_page(request):
 
 @csrf_exempt
 def get_signup_page(request):
-    return render(request, 'app/signup.html', {})
+    years = list(Year.objects.all().order_by('-y_id'))
+    print ("hello")
+    return render(request, 'app/signup.html', {"years":years})
 
 
 @csrf_exempt
@@ -247,8 +250,29 @@ def get_students_page(request):
         if Admin.objects.filter(email=get_mail).exists():
             name = request.session["name"]
             students = Student.objects.all()
-            return render(request, 'app/students.html', {"students": students, "name": name})
+            years = Year.objects.all().order_by('-y_id')
+            return render(request, 'app/students.html', {"students": students, "years":years ,"name": name})
+        # student login
+        else:
+            return HttpResponse("Not permitted to access")
 
+#handled using ajax
+@csrf_exempt
+def get_yearwise_students_page(request):
+    if not request.session.get("name"):
+        return render(request, 'app/login.html', {})
+    else:
+        year=request.POST["year"]
+        print year
+        get_mail = request.session["email"]
+        if Admin.objects.filter(email=get_mail).exists():
+            name = request.session["name"]
+            students = Student.objects.filter(year=year)
+            print students
+            years = Year.objects.all().order_by('-y_id')
+            #render the html and convert it to string which is received by ajax. It then converts it to  html document.
+            html = render_to_string('app/students.html', {"students": students, "years":years ,"name": name})
+            return HttpResponse(html)
         # student login
         else:
             return HttpResponse("Not permitted to access")
@@ -463,6 +487,7 @@ def web_verify(request):
             return HttpResponse("Failed")
 
 
+#called from ajax
 @csrf_exempt
 def web_register_company(request):
     if request.method == "POST":
@@ -498,7 +523,7 @@ def web_register_company(request):
     else:
         return HttpResponse("error")
 
-
+#called from ajax
 @csrf_exempt
 def web_update_company(request):
     if request.method == "POST":

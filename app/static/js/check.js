@@ -1,30 +1,4 @@
-//function signup() {
-//        console.log('signup');
-//        var signupform = $('#' + 'signup');
-//        var csrftoken = getCookie('csrftoken');
-//
-//        $.ajax({
-//            type: "POST",
-//            url: '/signup/',
-//            data:signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
-//            success: function(message) {
-//                if (message =='success') {
-//                    alert('Registered Successfully');
-//                    window.location.href = "/";
-//
-//                }else if(message == 'exists'){
-//                    alert('User Exists.Please Login');
-//                    window.location.href ="/plogin/";
-//                }
-//                else{
-//                    alert('Error Occured');
-//                    }
-//            },
-//            error: function(xhr, errmsg, err) {
-//                alert('Error');
-//            },
-//        });
-//    }
+
 
 function companyRegister() {
         console.log('registerform');
@@ -112,6 +86,72 @@ function notifyCandidate() {
         });
     }
 
+function checkyear(event){
+
+    var year = this.options[this.selectedIndex].text;
+
+
+$.ajax({
+        type: "POST",
+        url: '/year/',
+        data:  {"year":year},
+        success: function(message) {
+            document.open();
+            document.write(message);
+            document.close();
+            $('#year').val(year)
+             // $().html(message);
+         
+        },
+        error: function(xhr, errmsg, err) {
+            alert('Error');
+        },
+    });
+  }
+
+ function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+};
+//function signup() {
+//        console.log('signup');
+//        var signupform = $('#' + 'signup');
+//        var csrftoken = getCookie('csrftoken');
+//
+//        $.ajax({
+//            type: "POST",
+//            url: '/signup/',
+//            data:signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+//            success: function(message) {
+//                if (message =='success') {
+//                    alert('Registered Successfully');
+//                    window.location.href = "/";
+//
+//                }else if(message == 'exists'){
+//                    alert('User Exists.Please Login');
+//                    window.location.href ="/plogin/";
+//                }
+//                else{
+//                    alert('Error Occured');
+//                    }
+//            },
+//            error: function(xhr, errmsg, err) {
+//                alert('Error');
+//            },
+//        });
+//    }
+
 //function uploadResult() {
 //        console.log('resultform');
 //        var resultform = $('#' + 'result');
@@ -141,55 +181,3 @@ function notifyCandidate() {
 //    }
 
 
-
-
-function login()
- {
-        console.log('loginform');
-        var registerform = $('#' + 'log');
-        var csrftoken = getCookie('csrftoken');
-        $.ajax({
-            type: "POST",
-            url: '/login',
-            data: registerform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
-            success: function(message) {
-                if (message == 'Wrong')
-                 {
-                    alert('Enter correct Password');    //wrong pw
-                 } 
-                else if(message=='Success')
-                {
-                 window.location="/first";
-                }
-                else if(message=='Enter')
-                {
-                    alert("Kindly Enter Details");
-                }
-                else if("Exists")
-                {                                              //success
-                    alert(" User doesn't exists.Kindly Signup");
-                }       
-               
-            },
-            error: function(xhr, errmsg, err) {
-                alert('Error');
-            },
-        });
-      }
-
-
- function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie != '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-};
