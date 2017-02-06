@@ -70,7 +70,8 @@ class Verify(models.Model):
 class Message(models.Model):
 	msg_id=models.AutoField(primary_key=True)
 	title=models.CharField(max_length=200,default="")
-	message=models.CharField(max_length=10000,default="")
+	message=models.CharField(max_length=10000,default="",null=True,blank=True)
+	url=models.CharField(max_length=50,null=True,blank=True)
 	
 	def __str__(self):
 		return self.title

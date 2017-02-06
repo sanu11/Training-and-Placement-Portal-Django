@@ -88,7 +88,6 @@
            
           </ul>
         </li>
-    
      </ul>
     </div>
   </div>
@@ -125,11 +124,14 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">{{message.title}}</a>
+          <a data-toggle="collapse" data-parent="#accordion" href=#{{forloop.counter}}>{{message.title}}</a>
         </h4>
       </div>
-      <div id="collapse2" class="panel-collapse collapse">
+      <div id={{forloop.counter}} class="panel-collapse collapse">
         <div class="panel-body">{{message.message}}</div>
+          {% if message.url %}
+          <div class="panel-body"><a href = {{message.url}}> {{message.url}}</a></div>
+          {% endif %}
       </div>
     </div>
 

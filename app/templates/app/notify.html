@@ -119,7 +119,7 @@
 <div class="col-sm-8 text-left"> 
       
       <br>
-<form class="form-horizontal" id="notify"  method="POST">
+<form class="form-horizontal" id="notify"  method="POST" action="/notify/"  enctype="multipart/form-data">
 <fieldset>
 
 <!-- Form Name -->
@@ -143,11 +143,26 @@
   </div>
 </div>
 
+<div class="form-group">
+  <label class="col-md-3 control-label" >File</label>
+  <div class="col-md-7">
+<input  name="file" class="form-control"  id="file" type="file">
+  </div>
+</div>
+<!--<div class="form-group">-->
+  <!--<label class="col-md-4 control-label" >File</label>-->
+  <!--<div class="col-sm-4">-->
+    <!--<div class="input-group">-->
+      <!--<input  name="file" class="form-control"  id="file" type="file">-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
 <!-- Button -->
 <div class="form-group">
   <label class="col-md-3 control-label" ></label>
   <div class="col-md-7" align="center">
-    <button  type="button" onclick = "notifyCandidate()" name="notify" class="btn btn-info">Notify Candidate</button>
+    <button  type="submit" name="notify" class="btn btn-info">Notify Candidate</button>
   </div>
 </div>
 

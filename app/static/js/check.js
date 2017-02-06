@@ -62,29 +62,6 @@ function companyUpdate() {
         });
     }
 
-function notifyCandidate() {
-        console.log('notifyform');
-        var notifyform = $('#' + 'notify');
-        var csrftoken = getCookie('csrftoken');
-
-        $.ajax({
-            type: "POST",
-            url: '/notify/',
-            data:notifyform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
-            success: function(message) {
-                if (message =='success') {
-                    alert('Notification Sent');
-                    window.location.href = "/";
-
-                }else{
-                    alert('Error occured');
-                }
-            },
-            error: function(xhr, errmsg, err) {
-                alert('Error');
-            },
-        });
-    }
 
 function checkyear(event){
 
@@ -124,6 +101,31 @@ $.ajax({
     }
     return cookieValue;
 };
+//function notifyCandidate() {
+//        console.log('notifyform');
+//        var notifyform = $('#' + 'notify');
+//        var csrftoken = getCookie('csrftoken');
+//
+//        $.ajax({
+//            type: "POST",
+//            url: '/notify/',
+//            data:notifyform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+//            success: function(message) {
+//                if (message =='success') {
+//                    alert('Notification Sent');
+//                    window.location.href = "/";
+//
+//                }else{
+//                    alert('Error occured');
+//                }
+//            },
+//            error: function(xhr, errmsg, err) {
+//                alert('Error');
+//            },
+//        });
+//    }
+
+
 //function signup() {
 //        console.log('signup');
 //        var signupform = $('#' + 'signup');

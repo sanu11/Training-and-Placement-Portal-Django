@@ -568,11 +568,38 @@ def web_notify(request):
         obj.title = title
         obj.message = body
         obj.save()
+        if len(request.FILES) != 0 :
+            if request.FILES["file"]:
+                myfile = request.FILES["file"]
+                data = myfile.read()
+                filename = myfile.name
+                extension = filename.split('.')
+                file_to = "/Messages/" + title + '.' + extension[1]
+                print file_to
+                dbx.files_upload(data, file_to)
+
+                url = "https://api.dropboxapi.com/2/sharing/create_shared_link"
+
+                payload = "{\"path\":" + '"' + file_to + '"' + ",\"short_url\": true}"
+                print payload
+                headers = {
+                    'authorization': "Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR",
+                    'content-type': "application/json",
+                    'cache-control': "no-cache",
+                }
+
+                response = requests.request("POST", url, data=payload, headers=headers)
+
+                res = json.loads(response.text)
+                url = res["url"]
+                obj.url = url
+                obj.save()
+
+                body = body + "\n" + url
         Device = get_device_model()
         Device.objects.all().send_message({'type': 'gen_msg', 'title': title, 'body': body})
-
-        name = request.session["name"]
-        return HttpResponse('success')
+        name=request.session["name"]
+        return render(request,'app/home.html',{"name": name, "login":1})
     else:
         return HttpResponse("error")
 
