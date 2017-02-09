@@ -99,3 +99,14 @@ class Year(models.Model):
 
 	def __str__(self):
 		return  self.year
+
+class Average(models.Model):
+	a_id=models.AutoField(primary_key=True)
+	above = models.BooleanField(max_length=40)
+	percent = models.IntegerField()
+
+	def __str__(self):
+		if self.above:
+			return "Above " + str(self.percent)
+		else:
+			return "Below " + str(self.percent)

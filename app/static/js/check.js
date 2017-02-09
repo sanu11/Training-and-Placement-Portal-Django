@@ -62,29 +62,33 @@ function companyUpdate() {
         });
     }
 
+function download() {
+        console.log('studentform');
+        var studentform = $('#' + 'student');
+        var csrftoken = getCookie('csrftoken');
+        var year = document.getElementById("year").value;
+        var branch = document.getElementById("branch").value;
+        var average = document.getElementById("average").value;
+        var json = "{ year : " + year + " , branch : " + branch + ", average : " + average + "}";
+        console.log(json);
+        $.ajax({
+            type: "POST",
+            url: '/downloadstudents/',
+            data:  json + '&csrfmiddlewaretoken=' + csrftoken,
+            success: function(message) {
+                document.open();
+                document.write(message);
+                document.close();
+            },
+            error: function(xhr, errmsg, err) {
+                alert('Error');
+            },
+        });
 
-function checkyear(event){
 
-    var year = this.options[this.selectedIndex].text;
+    }
 
 
-$.ajax({
-        type: "POST",
-        url: '/year/',
-        data:  {"year":year},
-        success: function(message) {
-            document.open();
-            document.write(message);
-            document.close();
-            $('#year').val(year)
-             // $().html(message);
-         
-        },
-        error: function(xhr, errmsg, err) {
-            alert('Error');
-        },
-    });
-  }
 
  function getCookie(name) {
     var cookieValue = null;
@@ -183,3 +187,28 @@ $.ajax({
 //    }
 
 
+//function checkyear(event){
+//
+//    var year = this.options[this.selectedIndex].text;
+//    ddl = document.getElementById("year");
+//    ddl.value=year;
+////     $('#year').val(year);
+//
+//$.ajax({
+//        type: "POST",
+//        url: '/year/',
+//        data:  {"year":year},
+//        success: function(message) {
+//            document.open();
+//            document.write(message);
+//            document.close();
+//
+//             // $().html(message);
+//
+//        },
+//        error: function(xhr, errmsg, err) {
+//            alert('Error');
+//        },
+//    });
+//
+//  }

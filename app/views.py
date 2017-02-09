@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Student, Company, Message, Verify, Result, Admin ,Year
+from .models import Student, Company, Message, Verify, Result, Admin ,Year , Average
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.http import HttpResponse
 from django.conf import settings
@@ -248,10 +248,48 @@ def get_students_page(request):
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
-            name = request.session["name"]
-            students = Student.objects.all()
+            year = "All"
+            branch = "All"
+            a_id = "All"
+            if  "year"  in request.POST:
+                year = request.POST["year"]
+                if year == "All":
+                    students_year = Student.objects.all()
+                else:
+                    students_year = Student.objects.filter(year=year)
+            else:
+                students_year = Student.objects.all()
+
+            if  "branch" in request.POST:
+                branch = request.POST["branch"]
+                if not branch == "All":
+                    students_branch = students_year.filter(branch=branch)
+                else:
+                    students_branch = students_year
+            else:
+                students_branch = students_year
+
+            if "average" in request.POST:
+                a_id = request.POST["average"]
+                print (a_id)
+                if not a_id == "All":
+                    a_id = int(a_id)
+                    average = Average.objects.get(a_id = a_id)
+                    percent = average.percent
+                    if average.above:
+                        students_average = students_branch.filter(average__gte=percent)
+                    else:
+                        students_average =students_branch.filter(average__lte=percent)
+                else:
+                    students_average = students_branch
+            else:
+                students_average = students_branch
+
+            students = students_average
             years = Year.objects.all().order_by('-y_id')
-            return render(request, 'app/students.html', {"students": students, "years":years ,"name": name})
+            averages = Average.objects.all()
+            name = request.session["name"]
+            return render(request, 'app/students.html', {"students": students, "years":years ,"year":year,"branch":branch,"averages":averages,"a_id":a_id,"name": name})
         # student login
         else:
             return HttpResponse("Not permitted to access")
@@ -440,8 +478,6 @@ def web_signup(request):
             c.url = url
             c.save()
 
-        request.session['email'] = email  # send cookie
-        request.session['name'] = name
         return render(request, 'app/login.html', {})
     else:
         return HttpResponse('Error');
@@ -486,80 +522,6 @@ def web_verify(request):
         else:
             return HttpResponse("Failed")
 
-
-#called from ajax
-@csrf_exempt
-def web_register_company(request):
-    if request.method == "POST":
-        name = request.POST["name"]
-        if Company.objects.filter(name=name).exists():
-            return HttpResponse('exists')
-        name = request.POST["name"]
-        salary = request.POST["salary"]
-        criteria = request.POST["criteria"]
-        back = request.POST["back"]
-        ppt_date = request.POST["ppt_date"]
-        ppt_time = request.POST["ppt_time"]
-        other_details = request.POST["other_details"]
-        if other_details == "":
-            other_details = None
-            # add to database
-        obj = Company()
-        obj.name = name
-        obj.criteria = criteria
-        obj.salary = salary
-        obj.other_details = other_details
-        obj.ppt_date = ppt_date + " " + ppt_time
-        obj.back = back
-        obj.save()
-
-        # send notification
-        Device = get_device_model()
-
-        Device.objects.all().send_message({'type': 'company_reg', 'name': name, 'criteria': criteria, 'salary': salary,
-                                           'other_details': other_details, 'ppt_date': ppt_date, 'back': back})
-
-        return HttpResponse("success")
-    else:
-        return HttpResponse("error")
-
-#called from ajax
-@csrf_exempt
-def web_update_company(request):
-    if request.method == "POST":
-        name = request.POST["name"]
-        print name
-        reg_link = request.POST["regLink"]
-        reg_start_date = request.POST["regStartDate"]
-        reg_start_time = request.POST["regStartTime"]
-        reg_end_date = request.POST["regEndDate"]
-        reg_end_time = request.POST["regEndTime"]
-        other_details = request.POST["otherDetails"]
-        obj = Company.objects.get(name=name)
-        if obj.reg_link:
-            return HttpResponse("updated")
-        reg_start = reg_start_date + " " + reg_start_time
-        reg_end = reg_end_date + " " + reg_end_time
-        print reg_start, reg_end
-        obj.reg_start = reg_start
-        obj.reg_end = reg_end
-        obj.reg_link = reg_link
-        if obj.other_details and other_details:
-            obj.other_details = obj.other_details + " " + other_details
-        elif other_details:
-            obj.other_details = other_details
-        obj.save()
-
-        # send notifications
-        Device = get_device_model()
-        Device.objects.all().send_message(
-            {'type': 'company_update', 'name': name, 'reg_link': reg_link, 'reg_start': reg_start, 'reg_end': reg_end,
-             'other_details': other_details})
-
-        return HttpResponse("success")
-    return HttpResponse("error")
-
-
 @csrf_exempt
 def web_notify(request):
     if request.method == "POST":
@@ -569,7 +531,7 @@ def web_notify(request):
         obj.title = title
         obj.message = body
         obj.save()
-        if len(request.FILES) != 0 :
+        if len(request.FILES) != 0:
             if request.FILES["file"]:
                 myfile = request.FILES["file"]
                 data = myfile.read()
@@ -599,11 +561,10 @@ def web_notify(request):
                 body = body + "\n" + url
         Device = get_device_model()
         Device.objects.all().send_message({'type': 'gen_msg', 'title': title, 'body': body})
-        name=request.session["name"]
-        return render(request,'app/home.html',{"name": name, "login":1})
+        name = request.session["name"]
+        return render(request, 'app/home.html', {"name": name, "login": 1})
     else:
         return HttpResponse("error")
-
 
 @csrf_exempt
 def web_upload_result(request):
@@ -660,3 +621,84 @@ def web_upload_result(request):
             HttpResponse('file')
     else:
         HttpResponse('error')
+
+
+#######Download######
+def web_download_students(request):
+    print (request.POST)
+    year = request.POST["year"]
+    students=Student.objects.all()
+    return HttpResponse("HEY")
+
+#########called from ajax######
+@csrf_exempt
+def web_register_company(request):
+    if request.method == "POST":
+        name = request.POST["name"]
+        if Company.objects.filter(name=name).exists():
+            return HttpResponse('exists')
+        name = request.POST["name"]
+        salary = request.POST["salary"]
+        criteria = request.POST["criteria"]
+        back = request.POST["back"]
+        ppt_date = request.POST["ppt_date"]
+        ppt_time = request.POST["ppt_time"]
+        other_details = request.POST["other_details"]
+        if other_details == "":
+            other_details = None
+            # add to database
+        obj = Company()
+        obj.name = name
+        obj.criteria = criteria
+        obj.salary = salary
+        obj.other_details = other_details
+        obj.ppt_date = ppt_date + " " + ppt_time
+        obj.back = back
+        obj.save()
+
+        # send notification
+        Device = get_device_model()
+
+        Device.objects.all().send_message({'type': 'company_reg', 'name': name, 'criteria': criteria, 'salary': salary,
+                                           'other_details': other_details, 'ppt_date': ppt_date, 'back': back})
+
+        return HttpResponse("success")
+    else:
+        return HttpResponse("error")
+
+
+@csrf_exempt
+def web_update_company(request):
+    if request.method == "POST":
+        name = request.POST["name"]
+        print name
+        reg_link = request.POST["regLink"]
+        reg_start_date = request.POST["regStartDate"]
+        reg_start_time = request.POST["regStartTime"]
+        reg_end_date = request.POST["regEndDate"]
+        reg_end_time = request.POST["regEndTime"]
+        other_details = request.POST["otherDetails"]
+        obj = Company.objects.get(name=name)
+        if obj.reg_link:
+            return HttpResponse("updated")
+        reg_start = reg_start_date + " " + reg_start_time
+        reg_end = reg_end_date + " " + reg_end_time
+        print reg_start, reg_end
+        obj.reg_start = reg_start
+        obj.reg_end = reg_end
+        obj.reg_link = reg_link
+        if obj.other_details and other_details:
+            obj.other_details = obj.other_details + " " + other_details
+        elif other_details:
+            obj.other_details = other_details
+        obj.save()
+
+        # send notifications
+        Device = get_device_model()
+        Device.objects.all().send_message(
+            {'type': 'company_update', 'name': name, 'reg_link': reg_link, 'reg_start': reg_start, 'reg_end': reg_end,
+             'other_details': other_details})
+
+        return HttpResponse("success")
+    return HttpResponse("error")
+
