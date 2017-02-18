@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
-  <title>Placement Statistics</title>
+  <title>Students</title>
   <meta charset="utf-8">
   <meta name="description" content="PICT Training and placement online portal">
 <meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
@@ -117,18 +117,26 @@
   
     </div>
 
-    <div id="ajaxreplace" name="ajaxreplace" class="col-sm-8 text-left">
+    <div id="ajaxreplace" name="ajaxreplace" class="col-sm-8 ">
+ <h2 class="text-center">
+      <b>Students</b>  </h2><br>
+   <!-- Division for filters -->
+   <div>
 
-    <div >
-  <h2 class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <b>Students</b>
-  <div class="col-sm-3 text-right" >
+
+<form class="form-horizontal" id="student" method="POST" action ='/students/'>
+  <div class="col-sm-2 text-right">
     <div class="input-group">
       <div class="input-group-btn">
-        <select onchange = "checkyear.call(this,event)" class="form-control" name="year" id="year">
-		<option selected disabled hidden>Select Year</option>
-           {% for year in years %}
-            <option value = {{year.year}} > {{year.year}} </option>
+        <select class="form-control" name="year" id="year">
+		<!--<option selected disabled hidden>Year</option>-->
+            <option value= "All"  selected="selected">All</option>
+           {% for passyear in years %}
+            {% if passyear.year == year %}
+            <option value = {{passyear.year}} selected="selected" > {{passyear.year}} </option>
+            {%  else %}
+            <option value = {{passyear.year}} > {{passyear.year}} </option>
+            {% endif %}
             {% endfor %}
 
       </select>
@@ -136,9 +144,85 @@
       </div>
     </div>
   </div>
-      </h2></div>
 
-<div style="margin-bottom:20px"></div>  
+  <div class="col-sm-2 text-right" >
+    <div class="input-group">
+      <div class="input-group-btn">
+        <select  class="form-control" name="branch" id="branch">
+		<!--<option selected disabled hidden>Branch</option>-->
+            <option value= "All" selected="selected" >All</option>
+
+            {%  if branch == "Comp" %}
+            <option value = "Comp" selected="selected"> Comp </option>
+            {% else %}
+            <option value = "Comp" > Comp </option>
+            {% endif %}
+
+            {%  if branch == "IT" %}
+            <option value = "IT" selected="selected"> IT </option>
+            {% else %}
+            <option value = "IT" > IT </option>
+            {% endif %}
+
+            {% if branch == "EnTC" %}
+            <option value = "EnTC" selected="selected"> Entc </option>
+            {% else %}
+            <option value = "EnTC" > Entc </option>
+            {% endif %}
+      </select>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-sm-2 text-right" >
+    <div class="input-group">
+      <div class="input-group-btn">
+        <select  class="form-control" name="average" id="average">
+		<!--<option selected disabled hidden>Average</option>-->
+            <option value= "All" selected="selected" >All</option>
+
+            {% for average in averages %}
+            {% if average.a_id == a_id %}
+            <option value = {{average.a_id}} selected="selected"  >    {% if average.above %} Above  {% else %} Below  {% endif %} {{average.percent}}  </option>
+            {% else %}
+            <option value = {{average.a_id}} >  {% if average.above %} Above  {% else %} Below  {% endif %} {{average.percent}}  </option>
+           {% endif %}}
+
+            {% endfor %}
+      </select>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!--<div class="col-sm-3 text-right" >-->
+    <!--<div class="input-group">-->
+      <!--<div class="input-group-btn">-->
+        <!--<select  class="form-control" name="company" id="company">-->
+		<!--&lt;!&ndash;<option selected disabled hidden>Company</option>&ndash;&gt;-->
+        <!--<option value="All" selected="selected" >"All</option>-->
+
+           <!--{% for company in companies %}-->
+            <!--<option value = {{company.name}} > {{company.name}} </option>-->
+            <!--{% endfor %}-->
+
+      <!--</select>-->
+
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+&nbsp;&nbsp;&nbsp;
+  <input type="submit" class="btn btn-info" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <button value="Download file" onclick="download()" class="btn btn-info">Download File</button>
+
+    </form>
+  </div>
+
+
+<div style="margin-bottom:20px"></div>
 <!-- <p>Table contains placement statistics for the year 2016-17. </p> -->
   <div class="table-responsive">          
   <table class="table">
