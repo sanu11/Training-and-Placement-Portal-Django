@@ -137,7 +137,7 @@
 				<table class="table">
 				<tr><th class="row">
                 <div class="form-group ">
-                 <label for="firstName" class="col-sm-6" style="width:66%;">Roll Number</label></th>
+                 <label for="firstName" class="col-sm-5" style="width:66%;">Roll No</label></th>
                     <div class="col-sm-9">
                    <td>  <label for="firstName" class="col-sm-3">{{student.roll}}</label></td>
                     </div>
@@ -151,7 +151,18 @@
 
                     </div>
                 </div>
+      </tr><th class="row">
+       <div class="form-group">
+                   <label for="firstName" class="col-sm-3 ">Year</label></th>
+                    <div class="col-sm-9">
+                    <td> <label for="firstName" class="col-sm-5 ">{{student.year}}</label></td>
+
+                    </div>
+                </div>
+
+
 </tr><tr><th class="row">
+
                 <div class="form-group">
                     <label for="firstName" class="col-sm-3 ">Email</label>
 					</th>
@@ -197,10 +208,19 @@
                 <div class="form-group">
                     <label for="firstName" class="col-sm-3 ">Back</label></th>
                     <div class="col-sm-9">
-                  <td>   <label for="firstName" class="col-sm-3 ">{{student.active_back}}</label>
-</td>
+                  <td>   <label for="firstName" class="col-sm-3 ">{{student.active_back}}</label></td>
                     </div>
                 </div>
+
+    <tr><th class="row">
+                <div class="form-group">
+                    <label for="firstName" class="col-sm-3 ">Resume</label></th>
+                    <div class="col-sm-9">
+                        <td> <label for="firstName" class="col-sm-3 "><a href = {{student.url}}>{{student.url}} </a></label></td>
+
+                    </div>
+                </div>
+
 </tr>
 <tr><th class="row"> </th><td></td></tr>
 </table>
