@@ -19,8 +19,8 @@ function companyRegister() {
                 {
                     alert("Already registered.")
                     location.reload();
-                } 
-                else 
+                }
+                else
                 {
                     alert('Error occured');
                 }
@@ -62,7 +62,55 @@ function companyUpdate() {
         });
     }
 
+function download() {
 
+        var csrftoken = getCookie('csrftoken');
+        var year = document.getElementById("year").value;
+        var branch = document.getElementById("branch").value;
+        var average = document.getElementById("average").value;
+        var json =  { year :year , branch :branch , average:average,csrfmiddlewaretoken:csrftoken}; 
+        console.log(json);
+        $.ajax({
+            type: "POST",
+            url: '/downloadstudents/',
+            data:  json ,
+            success: function(message) {
+                console.log("success");
+                var hiddenElement = document.createElement('a');
+                hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(message);
+                hiddenElement.target = '_blank';
+                hiddenElement.download = year + '_' + branch + '_' + average + '.csv';
+                hiddenElement.click();
+                },
+            error: function(xhr, errmsg, err) {
+                alert('Error');
+            },
+        });
+
+
+        // You REALLY want async = true.
+        // Otherwise, it'll block ALL execution waiting for server response.
+        
+   
+    }
+// var async = true;
+
+//         var request = new XMLHttpRequest();
+
+//         request.onload = function () {
+
+//         var status = request.status; // HTTP response status, e.g., 200 for "200 OK"
+//         var data = request.responseText; // Returned data, e.g., an HTML document.
+//  document.open();
+//                 document.write(data);
+//                 document.close();
+//         }
+
+//         request.open(method, url, async);
+
+//         request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+//         request.send(null);
 
  function getCookie(name) {
     var cookieValue = null;
