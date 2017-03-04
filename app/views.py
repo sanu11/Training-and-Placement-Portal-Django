@@ -389,7 +389,6 @@ def get_company_page(request, cid):
         else:
             return HttpResponse("Not Found")
 
-
 @csrf_exempt
 def logout(request):
     if not request.session.get("name"):
