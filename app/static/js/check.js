@@ -62,32 +62,6 @@ function companyUpdate() {
         });
     }
 
-function download() {
-        console.log('studentform');
-        var studentform = $('#' + 'student');
-        var csrftoken = getCookie('csrftoken');
-        var year = document.getElementById("year").value;
-        var branch = document.getElementById("branch").value;
-        var average = document.getElementById("average").value;
-        var json = "{ year : " + year + " , branch : " + branch + ", average : " + average + "}";
-        console.log(json);
-        $.ajax({
-            type: "POST",
-            url: '/downloadstudents/',
-            data:  json + '&csrfmiddlewaretoken=' + csrftoken,
-            success: function(message) {
-                document.open();
-                document.write(message);
-                document.close();
-            },
-            error: function(xhr, errmsg, err) {
-                alert('Error');
-            },
-        });
-
-
-    }
-
 
 
  function getCookie(name) {

@@ -43,7 +43,6 @@ def register_student(request):
     obj.save()
     return HttpResponse(obj.name)
 
-
 @csrf_exempt
 def login_details(request):
     data = json.loads(request.body)
@@ -57,7 +56,6 @@ def login_details(request):
             return HttpResponse("Incorrect Password")
     else:
         return HttpResponse("User not found")
-
 
 @csrf_exempt
 def register_company(request):
