@@ -116,16 +116,36 @@
     {% endif %}
     </div>
 
-    
+
+
     <div class="col-sm-8 text-left">
   
   <h2 class="text-center"><b>Statistics</b></h2> 
-<div style="margin-bottom:20px"></div>  
+<div style="margin-bottom:20px"></div>
 <!-- <p>Table contains placement statistics for the year 2016-17. </p> -->
+
+<!-- Division for filters -->
+<div>
+<p  style="word-spacing:7em;"> Salary  </p>
+
+<form class="form-horizontal" id="student" method="POST" action ='/statistics/'>
+<div class="col-sm-2 ">
+   <div class="form-group">
+ <input type="text" name = "minsalary" value = {{minsalary}} class="form-control" style = "float:left;">
+ <input type="text" name = "maxsalary" value = {{maxsalary}} style = "float:left;" class="form-control">
+
+    </div>
+  </div>
+
+ <input type="submit" class="btn btn-info" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <button value="Download file" onclick="" class="btn btn-info">Download File</button>
+
+        </form>
+    </div>
+
   <div class="table-responsive">          
   <table class="table">
-
-    <thead>
+     <thead>
       <tr>
         <th>ID</th>
         <th>Company</th>

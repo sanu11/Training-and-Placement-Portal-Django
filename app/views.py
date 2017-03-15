@@ -345,9 +345,23 @@ def get_statistics_page(request):
         elif Student.objects.filter(email=get_mail).exists():
             login = 2
             print "Student login"
+        minsalary = 0
+        maxsalary = 50
+        if "minsalary" in request.POST:
+            minsalary = request.POST["minsalary"]
+            companies_min_salary = Company.objects.filter(salary__gte=minsalary)
+        else:
+            companies_min_salary = Company.objects.all().order_by('-c_id')
+
+        if "maxsalary" in request.POST:
+            maxsalary = request.POST["maxsalary"]
+            companies_max_salary = companies_min_salary.filter(salary__lte=maxsalary)
+        else:
+            companies_max_salary = companies_min_salary
+
         name = request.session["name"]
-        companies = Company.objects.all().order_by('-c_id')
-        return render(request, 'app/statistics.html', {"companies": companies, "name": name, "login": login})
+        companies = companies_max_salary
+        return render(request, 'app/statistics.html', {"companies": companies,"minsalary":minsalary ,"maxsalary":maxsalary,"name": name, "login": login})
 
 
 @csrf_exempt
