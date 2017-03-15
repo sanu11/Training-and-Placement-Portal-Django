@@ -49,6 +49,7 @@
       }
       .row.content {height:auto;} 
     }
+	
   </style>
   </head>
 <body>
@@ -123,26 +124,55 @@
   <h2 class="text-center"><b>Statistics</b></h2> 
 <div style="margin-bottom:20px"></div>
 <!-- <p>Table contains placement statistics for the year 2016-17. </p> -->
-
+<hr>
 <!-- Division for filters -->
-<div>
-<p  style="word-spacing:7em;"> Salary  </p>
+<div class="text-left">
+
 
 <form class="form-horizontal" id="student" method="POST" action ='/statistics/'>
-<div class="col-sm-2 ">
+
+ <div class="form-group text-center">
+   <label class="col-sm-1 control-label" ></label>
+ <div class="col-sm-1"> <label class="col-sm-1 control-label" >MIN</label></div>
+ <div class="col-sm-1">
+  <label class="col-sm-1 control-label" >MAX</label></div>
+    
+   <label class="col-sm-2 control-label" ></label>
+ <div class="col-sm-1">
+  <label class="col-sm-1 control-label" >MIN</label>
+ </div>
+ <div class="col-sm-1">
+ <label class="col-sm-1 control-label" >MAX</label>
+ </div>
+   <div class="col-sm-2"></div>
+ <div class="col-sm-2">
+ </div>
+   </div>
+   
+   
    <div class="form-group">
- <input type="text" name = "minsalary" value = {{minsalary}} class="form-control" style = "float:left;">
- <input type="text" name = "maxsalary" value = {{maxsalary}} style = "float:left;" class="form-control">
-
-    </div>
-  </div>
-
- <input type="submit" class="btn btn-info" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <button value="Download file" onclick="" class="btn btn-info">Download File</button>
-
+   <label class="col-sm-1 control-label" >Salary</label>
+ <div class="col-sm-1"><input type="text" name = "minsalary" placeholder="Min" value = {{minsalary}} class="form-control" style = "float:left;"></div>
+ <div class="col-sm-1">
+ <input type="text" name = "maxsalary" placeholder="Max" value = {{maxsalary}} style = "float:left;" class="form-control"></div>
+    
+   <label class="col-sm-2 control-label" >Criteria</label>
+ <div class="col-sm-1">
+ <input type="text" name = "minCriteria" placeholder="Min" value = {{minsalary}} class="form-control" style = "float:left;">
+ </div>
+ <div class="col-sm-1">
+ <input type="text" name = "maxCriteria" placeholder="Max" value = {{maxsalary}} style = "float:left;" class="form-control">
+ </div>
+   <div class="col-sm-2">
+<input type="submit" class="btn btn-info form-control" ></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <div class="col-sm-2"> <button value="Download file" onclick="" class="btn btn-info form-control">Download File</button>
+ </div>
+   </div>
         </form>
-    </div>
-
+</div>
+<hr>
+<!-- Table Content start -->
+<div class="col-sm-12">
   <div class="table-responsive">          
   <table class="table">
      <thead>
@@ -175,7 +205,7 @@
     </tbody>
   </table>
   </div>
-      
+      </div>
     </div>
     <div class="col-sm-2 sidenav">
       
@@ -183,7 +213,7 @@
   </div>
 </div>
 
-<footer class="container-fluid text-center">
+<footer class="container-fluid text-center" >
  <p>Copyrights © 2016-17 by Pune Institute of Computer Technology</p> 
 </footer>
 </body>
