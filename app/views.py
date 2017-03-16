@@ -8,7 +8,7 @@ from django.template.loader import render_to_string
 from django.views.decorators.csrf import *
 from django.core import serializers
 from gcm.models import get_device_model
-import json
+import json,csv
 import dropbox
 import requests
 
@@ -253,10 +253,10 @@ def get_students_page(request):
             a_id = "All"
             if  "year"  in request.POST:
                 year = request.POST["year"]
-                if year == "All":
-                    students_year = Student.objects.all()
-                else:
+                if not year == "All":
                     students_year = Student.objects.filter(year=year)
+                else:
+                    students_year = Student.objects.all()
             else:
                 students_year = Student.objects.all()
 
@@ -295,27 +295,6 @@ def get_students_page(request):
             return HttpResponse("Not permitted to access")
 
 #handled using ajax
-@csrf_exempt
-def get_yearwise_students_page(request):
-    if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
-    else:
-        year=request.POST["year"]
-        print year
-        get_mail = request.session["email"]
-        if Admin.objects.filter(email=get_mail).exists():
-            name = request.session["name"]
-            students = Student.objects.filter(year=year)
-            print students
-            years = Year.objects.all().order_by('-y_id')
-            #render the html and convert it to string which is received by ajax. It then converts it to  html document.
-            html = render_to_string('app/students.html', {"students": students, "years":years ,"name": name})
-            return HttpResponse(html)
-        # student login
-        else:
-            return HttpResponse("Not permitted to access")
-
-
 @csrf_exempt
 def get_student_page(request, roll):
     if not request.session.get("name"):
@@ -366,9 +345,47 @@ def get_statistics_page(request):
         elif Student.objects.filter(email=get_mail).exists():
             login = 2
             print "Student login"
+        minsal = 0
+        maxsal = 50
+        mincri = 0
+        maxcri = 100
+
+        ##min salary
+        if "minsal" in request.POST:
+            minsal = request.POST["minsal"]
+            companies_min_salary = Company.objects.filter(salary__gte=minsal)
+        else:
+            companies_min_salary = Company.objects.all().order_by('-c_id')
+
+
+        ##max salary
+        if "maxsal" in request.POST:
+            maxsal = request.POST["maxsal"]
+            companies_max_salary = companies_min_salary.filter(salary__lte=maxsal)
+        else:
+            companies_max_salary = companies_min_salary
+
+        ##min criteria
+        if "mincri" in request.POST:
+            mincri = request.POST["mincri"]
+            companies_min_criteria = companies_max_salary.filter(criteria__gte=mincri)
+        else:
+            companies_min_criteria = companies_max_salary
+
+        ##max cri
+        if "maxcri" in request.POST:
+            maxcri = request.POST["maxcri"]
+            print maxcri
+            companies_max_criteria = companies_min_criteria.filter(criteria__lte=maxcri)
+            print companies_max_criteria
+        else:
+            companies_max_criteria = companies_min_criteria
+
+        companies = companies_max_criteria.order_by('-c_id')
+
         name = request.session["name"]
-        companies = Company.objects.all().order_by('-c_id')
-        return render(request, 'app/statistics.html', {"companies": companies, "name": name, "login": login})
+        
+        return render(request, 'app/statistics.html', {"companies": companies,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login})
 
 
 @csrf_exempt
@@ -409,7 +426,6 @@ def get_company_page(request, cid):
             return render(request, 'app/company.html', {"company": company, "name": name, "login": login})
         else:
             return HttpResponse("Not Found")
-
 
 @csrf_exempt
 def logout(request):
@@ -623,17 +639,67 @@ def web_upload_result(request):
         HttpResponse('error')
 
 
-#######Download######
+#########called from ajax######
 @csrf_exempt
 def web_download_students(request):
-    data = json.loads(request.body)
+    year = request.POST["year"]
+    branch = request.POST["branch"]
+    average = request.POST["average"]
+    if year == "All":
+        students_year = Student.objects.all()
+    else:
+        students_year = Student.objects.filter(year=year)
 
-    print (data)
-    #year = request.POST["year"]
-    #students=Student.objects.all()
-    return HttpResponse("HEY")
+    if branch == "All":
+        students_branch = students_year
+    else:
+        students_branch = students_year.filter(branch=branch)
 
-#########called from ajax######
+    if average == "All":
+        students_average = students_branch
+    else:
+        avg = Average.objects.get(a_id = average)
+        if avg.above:
+            students_average = students_branch.filter(average__gte = avg.percent)
+        else:
+            students_average = students_branch.filter(average__lte = avg.percent)
+    print students_average
+    students_average = list(students_average)
+    
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="sanika.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['Roll Number', 'Name','Email','Phone','Gender','Branch','SSC','HSC', 'Average','Active back','Resume'])
+    for x in students_average:
+        writer.writerow([x.roll, x.name , x.email , x.phone , x.gender, x.branch ,x.ssc , x.hsc , x.average ,x.active_back , x.url])
+        print writer
+    return response
+
+
+@csrf_exempt
+def web_download_companies(request):
+    HttpResponse("IN downblaod companies")
+
+
+@csrf_exempt
+def web_download_Ccompanies(request):
+    minsal = request.POST["minsal"]
+    maxsal = request.POST["maxsal"]
+    mincri = request.POST["mincri"]
+    maxcri = request.POST["maxcri"]
+
+    
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="sanika.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['Roll Number', 'Name','Email','Phone','Gender','Branch','SSC','HSC', 'Average','Active back','Resume'])
+    for x in students_average:
+        writer.writerow([x.roll, x.name , x.email , x.phone , x.gender, x.branch ,x.ssc , x.hsc , x.average ,x.active_back , x.url])
+        print writer
+    return response
+
+
+
 @csrf_exempt
 def web_register_company(request):
     if request.method == "POST":
@@ -664,7 +730,7 @@ def web_register_company(request):
 
         Device.objects.all().send_message({'type': 'company_reg', 'name': name, 'criteria': criteria, 'salary': salary,
                                            'other_details': other_details, 'ppt_date': ppt_date, 'back': back})
-
+        print ("Success")
         return HttpResponse("success")
     else:
         return HttpResponse("error")
@@ -674,7 +740,7 @@ def web_register_company(request):
 def web_update_company(request):
     if request.method == "POST":
         name = request.POST["name"]
-        print name
+        print (name)
         reg_link = request.POST["regLink"]
         reg_start_date = request.POST["regStartDate"]
         reg_start_time = request.POST["regStartTime"]
@@ -686,7 +752,7 @@ def web_update_company(request):
             return HttpResponse("updated")
         reg_start = reg_start_date + " " + reg_start_time
         reg_end = reg_end_date + " " + reg_end_time
-        print reg_start, reg_end
+        print (reg_start, reg_end)
         obj.reg_start = reg_start
         obj.reg_end = reg_end
         obj.reg_link = reg_link

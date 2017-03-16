@@ -15,31 +15,31 @@ import os
 
 #uncomment this for deploying to heroku
 
-# import dj_database_url
+#import dj_database_url
 # db_from_env = dj_database_url.config(conn_max_age=500)
-
+#
 # # Static files (CSS, JavaScript, Images)
 # # https://docs.djangoproject.com/en/1.9/howto/static-files/
-
+#
 # PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-
-
+#
+#
 # STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 # STATIC_URL = '/static/'
-
-
+#
+#
 # # Extra places for collectstatic to find static files.
 # STATICFILES_DIRS = (
 #     os.path.join(PROJECT_ROOT, 'static'),
 # )
-
+#
 # STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-
-
+#
+#
 # DATABASES={}
 # # Parse database configuration from $DATABASE_URL
 # DATABASES['default'] = dj_database_url.config()
-
+#
 # WSGI_APPLICATION = 'Tnp.wsgi.application'
 
 
@@ -147,7 +147,7 @@ STATIC_URL = '/static/'
 GCM_APIKEY = "AIzaSyBQL45koCxt0zvLugl1lmqfzusDM2HdFJw"
 
 
-# #for local , comment this when deploying to heroku
+#for local , comment this when deploying to heroku
 
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASES = {

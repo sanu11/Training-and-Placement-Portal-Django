@@ -36,10 +36,16 @@
     
     /* Set black background color, white text and some padding */
     footer {
-      background-color: #555;
-      color: white;
+      background-color: #353739;
+	  font-size:15px;
+      color: #b3b3b1;
       padding: 15px;
     }
+	footer a:hover
+	{
+	text-decoration:none;
+	color:white;
+	}
     
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
@@ -49,6 +55,7 @@
       }
       .row.content {height:auto;} 
     }
+	
   </style>
   </head>
 <body>
@@ -72,7 +79,7 @@
       
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav" style="margin-left:17.5%;">
+      <ul class="nav navbar-nav" style="margin-left:15.5%;">
         <li><a href="/home/">Home</a></li>
         
     <li><a href="/statistics/">Statistics</a></li>
@@ -116,20 +123,70 @@
     {% endif %}
     </div>
 
-    
+
+
     <div class="col-sm-8 text-left">
   
   <h2 class="text-center"><b>Statistics</b></h2> 
-<div style="margin-bottom:20px"></div>  
+<div style="margin-bottom:20px"></div>
 <!-- <p>Table contains placement statistics for the year 2016-17. </p> -->
+<hr>
+<!-- Division for filters -->
+<div class="text-left">
+
+
+<form class="form-horizontal" id="student" method="POST" action ='/statistics/'>
+
+ <div class="form-group text-center">
+   <label class="col-sm-1 control-label" ></label>
+ <div class="col-sm-1"> <label class="col-sm-1 control-label" >MIN</label></div>
+ <div class="col-sm-1">
+  <label class="col-sm-1 control-label" >MAX</label></div>
+    
+   <label class="col-sm-2 control-label" ></label>
+ <div class="col-sm-1">
+  <label class="col-sm-1 control-label" >MIN</label>
+ </div>
+ <div class="col-sm-1">
+ <label class="col-sm-1 control-label" >MAX</label>
+ </div>
+   <div class="col-sm-2"></div>
+ <div class="col-sm-2">
+ </div>
+   </div>
+   
+   
+   <div class="form-group">
+   <label class="col-sm-1 control-label" >Salary</label>
+ <div class="col-sm-1"><input type="text" name = "minsal" placeholder="Min" value = {{minsal}} class="form-control" style = "float:left;"></div>
+ <div class="col-sm-1">
+ <input type="text" name = "maxsal" placeholder="Max" value = {{maxsal}} style = "float:left;" class="form-control"></div>
+    
+   <label class="col-sm-2 control-label" >Criteria</label>
+ <div class="col-sm-1"> 
+ <input type="text" name = "mincri" placeholder="Min" value = {{mincri}} class="form-control" style = "float:left;">
+ </div>
+ <div class="col-sm-1">
+ <input type="text" name = "maxcri" placeholder="Max" value = {{maxcri}} style = "float:left;" class="form-control">
+ </div>
+   <div class="col-sm-2">
+<input type="submit" class="btn btn-info form-control" ></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <div class="col-sm-2"> <button value="Download file" onclick="" class="btn btn-info form-control">Download File</button>
+ </div>
+   </div>
+        </form>
+</div>
+<hr>
+<!-- Table Content start -->
+<div class="col-sm-12">
   <div class="table-responsive">          
   <table class="table">
-
-    <thead>
+     <thead>
       <tr>
         <th>ID</th>
         <th>Company</th>
         <th>Salary Lpa</th>
+        <th>Criteria</th>
         <th>Hired</th>
         <th>Placed</th>
         
@@ -142,6 +199,7 @@
         <td> <a href= /company/{{company.c_id}}/ > {{company.name}}</a> </td>
       
         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{company.salary}}</td>
+        <td>{{company.criteria}}</td>
         <td>{{company.hired}}</td>
         {% if company.placed_url %}
         <td><a href={{company.placed_url}}>{{company.placed_url}}</td>
@@ -155,7 +213,7 @@
     </tbody>
   </table>
   </div>
-      
+      </div>
     </div>
     <div class="col-sm-2 sidenav">
       
@@ -163,8 +221,9 @@
   </div>
 </div>
 
-<footer class="container-fluid text-center">
- <p>Copyrights © 2016-17 by Pune Institute of Computer Technology</p> 
+<footer class="container-fluid text-center" >
+ <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
+<p><a href="/developers-page/">Developers</a></p></div>
 </footer>
 </body>
-</html>
+</html> 
