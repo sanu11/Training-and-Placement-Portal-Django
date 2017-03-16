@@ -624,10 +624,13 @@ def web_upload_result(request):
 
 
 #######Download######
+@csrf_exempt
 def web_download_students(request):
-    print (request.POST)
-    year = request.POST["year"]
-    students=Student.objects.all()
+    data = json.loads(request.body)
+
+    print (data)
+    #year = request.POST["year"]
+    #students=Student.objects.all()
     return HttpResponse("HEY")
 
 #########called from ajax######

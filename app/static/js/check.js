@@ -69,12 +69,14 @@ function download() {
         var year = document.getElementById("year").value;
         var branch = document.getElementById("branch").value;
         var average = document.getElementById("average").value;
-        var json = "{ year : " + year + " , branch : " + branch + ", average : " + average + "}";
+        var json = "&year=" + year + " &branch=" + branch + "&average=" + average;
         console.log(json);
+        var json2 = "{ year :" + year + ", branch:"+ branch + ",average:" +average + ",csrfmiddlewaretoken : "+csrftoken + "}";
+        console.log(json2);
         $.ajax({
             type: "POST",
             url: '/downloadstudents/',
-            data:  json + '&csrfmiddlewaretoken=' + csrftoken,
+            data: json2,
             success: function(message) {
                 document.open();
                 document.write(message);
@@ -84,7 +86,6 @@ function download() {
                 alert('Error');
             },
         });
-
 
     }
 
