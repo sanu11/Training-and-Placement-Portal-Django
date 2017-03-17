@@ -67,8 +67,8 @@ function downloadStudents() {
         var csrftoken = getCookie('csrftoken');
         var year = document.getElementById("year").value;
         var branch = document.getElementById("branch").value;
-        var minavg = document.getElementById("minavg").val;
-        var maxavg = document.getElementById("maxavg").val;
+        var minavg = document.getElementById("minavg").value;
+        var maxavg = document.getElementById("maxavg").value;
         var json =  { year :year , branch :branch , minavg:minavg,maxavg:maxavg,csrfmiddlewaretoken:csrftoken};
         console.log(json);
        
@@ -81,7 +81,7 @@ function downloadStudents() {
                 var hiddenElement = document.createElement('a');
                 hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(message);
                 hiddenElement.target = '_blank';
-                hiddenElement.download = year + '_' + branch + '_' + average + '.csv';
+                hiddenElement.download = year + '_' + branch + '_' + minavg + 'to' + maxavg  + '.csv';
                 hiddenElement.click();
                 },
             error: function(xhr, errmsg, err) {
