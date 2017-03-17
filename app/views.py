@@ -660,7 +660,9 @@ def web_upload_result(request):
 def web_download_students(request):
     year = request.POST["year"]
     branch = request.POST["branch"]
-    average = request.POST["average"]
+    minavg = request.POST["minavg"]
+    maxavg = request.POST["maxavg"]
+
     if year == "All":
         students_year = Student.objects.all()
     else:
@@ -671,22 +673,18 @@ def web_download_students(request):
     else:
         students_branch = students_year.filter(branch=branch)
 
-    if average == "All":
-        students_average = students_branch
-    else:
-        avg = Average.objects.get(a_id = average)
-        if avg.above:
-            students_average = students_branch.filter(average__gte = avg.percent)
-        else:
-            students_average = students_branch.filter(average__lte = avg.percent)
-    print students_average
-    students_average = list(students_average)
+    students_min_average = students_branch.filter(average__gte=minavg)
+
+
+    students_max_average = students_min_average.filter(average__lte=maxavg)
+
+    students = students_max_average
     
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="sanika.csv"'
     writer = csv.writer(response)
     writer.writerow(['Roll Number', 'Name','Email','Phone','Gender','Branch','SSC','HSC', 'Average','Active back','Resume'])
-    for x in students_average:
+    for x in students:
         writer.writerow([x.roll, x.name , x.email , x.phone , x.gender, x.branch ,x.ssc , x.hsc , x.average ,x.active_back , x.url])
         print writer
     return response

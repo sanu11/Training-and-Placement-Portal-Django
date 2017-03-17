@@ -67,8 +67,9 @@ function downloadStudents() {
         var csrftoken = getCookie('csrftoken');
         var year = document.getElementById("year").value;
         var branch = document.getElementById("branch").value;
-        var average = document.getElementById("average").value;
-        var json =  { year :year , branch :branch , average:average,csrfmiddlewaretoken:csrftoken}; 
+        var minavg = document.getElementById("minavg").val;
+        var maxavg = document.getElementById("maxavg").val;
+        var json =  { year :year , branch :branch , minavg:minavg,maxavg:maxavg,csrfmiddlewaretoken:csrftoken};
         console.log(json);
        
         $.ajax({
