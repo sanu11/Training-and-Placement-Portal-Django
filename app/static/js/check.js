@@ -62,14 +62,16 @@ function companyUpdate() {
         });
     }
 
-function download() {
+function downloadStudents() {
 
         var csrftoken = getCookie('csrftoken');
         var year = document.getElementById("year").value;
         var branch = document.getElementById("branch").value;
-        var average = document.getElementById("average").value;
-        var json =  { year :year , branch :branch , average:average,csrfmiddlewaretoken:csrftoken}; 
+        var minavg = document.getElementById("minavg").value;
+        var maxavg = document.getElementById("maxavg").value;
+        var json =  { year :year , branch :branch , minavg:minavg,maxavg:maxavg,csrfmiddlewaretoken:csrftoken};
         console.log(json);
+       
         $.ajax({
             type: "POST",
             url: '/downloadstudents/',
@@ -79,7 +81,7 @@ function download() {
                 var hiddenElement = document.createElement('a');
                 hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(message);
                 hiddenElement.target = '_blank';
-                hiddenElement.download = year + '_' + branch + '_' + average + '.csv';
+                hiddenElement.download = year + '_' + branch + '_' + minavg + 'to' + maxavg  + '.csv';
                 hiddenElement.click();
                 },
             error: function(xhr, errmsg, err) {
@@ -87,30 +89,37 @@ function download() {
             },
         });
 
+ }
 
-        // You REALLY want async = true.
-        // Otherwise, it'll block ALL execution waiting for server response.
+function downloadCompanies() {
+
+        var csrftoken = getCookie('csrftoken');
+        var minsal = document.getElementById("minsal").value;
+        var maxsal = document.getElementById("maxsal").value;
+        var mincri = document.getElementById("mincri").value;
+        var maxcri = document.getElementById("maxcri").value;
         
-   
-    }
-// var async = true;
+        var json =  { mincri:mincri,maxcri:maxcri,minsal:minsal,maxsal:maxsal,csrfmiddlewaretoken:csrftoken}; 
+        console.log(json);
+    
+        $.ajax({
+            type: "POST",
+            url: '/downloadcompanies/',
+            data:  json ,
+            success: function(message) {
+                console.log("success");
+                var hiddenElement = document.createElement('a');
+                hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(message);
+                hiddenElement.target = '_blank';
+                hiddenElement.download = minsal  + 'to' + maxsal + 'lpa_' + mincri + 'to' + maxcri +  'per'+ '.csv';
+                hiddenElement.click();
+                },
+            error: function(xhr, errmsg, err) {
+                alert('Error');
+            },
+        });
 
-//         var request = new XMLHttpRequest();
-
-//         request.onload = function () {
-
-//         var status = request.status; // HTTP response status, e.g., 200 for "200 OK"
-//         var data = request.responseText; // Returned data, e.g., an HTML document.
-//  document.open();
-//                 document.write(data);
-//                 document.close();
-//         }
-
-//         request.open(method, url, async);
-
-//         request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-
-//         request.send(null);
+ }
 
  function getCookie(name) {
     var cookieValue = null;

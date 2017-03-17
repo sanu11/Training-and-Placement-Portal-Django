@@ -24,6 +24,8 @@
     .navbar {
       margin-bottom: 0;
       border-radius: 0;
+      background-color:#101B2D;
+      font-family: Georgia, Times, "Times New Roman", serif;
     }
     
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
@@ -38,10 +40,20 @@
     
     /* Set black background color, white text and some padding */
     footer {
-      background-color: #555;
-      color: white;
+      background-color: #353739;
+	  font-size:15px;
+      color: #b3b3b1;
       padding: 15px;
+      font-family: Georgia, Times, "Times New Roman", serif;
     }
+    body {
+    font-family: Georgia, Times, "Times New Roman", serif;
+    }
+	footer a:hover
+	{
+	text-decoration:none;
+	color:white;
+	}
     
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
@@ -119,13 +131,22 @@
 
     <div id="ajaxreplace" name="ajaxreplace" class="col-sm-8 ">
  <h2 class="text-center">
+ 
       <b>Students</b>  </h2><br>
    <!-- Division for filters -->
    <div>
 
-<p  style="word-spacing:7em;">&emsp;&emsp;Year      Branch    Average </p>
+
 
 <form class="form-horizontal" id="student" method="POST" action ='/students/'>
+  <div class="form-group">
+  <div class="col-sm-1"></div>
+  <div class="col-sm-2 text-right"><label class="col-sm-2 control-label" >Year</label></div>
+  <div class="col-sm-2 text-right"><label class="col-sm-2 control-label" >Branch</label></div>
+  <div class="col-sm-2 text-right"><label class="col-sm-2 control-label" >Average</label></div>
+  </div>
+  <div class="form-group">
+  <div class="col-sm-1"></div>
   <div class="col-sm-2 text-right">
     <div class="input-group">
       <div class="input-group-btn">
@@ -139,9 +160,7 @@
             <option value = {{passyear.year}} > {{passyear.year}} </option>
             {% endif %}
             {% endfor %}
-
       </select>
-
       </div>
     </div>
   </div>
@@ -176,28 +195,19 @@
     </div>
   </div>
 
+<div class="col-sm-2 text-right" >
+ 
+    <label class="col-sm-2 control-label" >Average</label>
+     <div class="col-sm-1"> 
+     <input type="number" name = "minavg" placeholder="Min" id = "minavg" value = {{minavg}} class="form-control" style = "float:left;">
+     </div>
 
-  <div class="col-sm-2 text-right" >
-    <div class="input-group">
-      <div class="input-group-btn">
-        <select  class="form-control" name="average" id="average">
-		<!--<option selected disabled hidden>Average</option>-->
-            <option value= "All" selected="selected" >All</option>
+     <div class="col-sm-1">
+     <input type="number" name = "maxavg" placeholder="Max" id= "maxavg" value = {{maxavg}} style = "float:left;" class="form-control">
+     </div>
 
-            {% for average in averages %}
-            {% if average.a_id == a_id %}
-            <option value = {{average.a_id}} selected="selected"  >    {% if average.above %} Above  {% else %} Below  {% endif %} {{average.percent}}  </option>
-            {% else %}
-            <option value = {{average.a_id}} >  {% if average.above %} Above  {% else %} Below  {% endif %} {{average.percent}}  </option>
-           {% endif %}}
-
-            {% endfor %}
-      </select>
-
-      </div>
-    </div>
-  </div>
-
+ 
+</div>
 
   <!--<div class="col-sm-3 text-right" >-->
     <!--<div class="input-group">-->
@@ -216,14 +226,15 @@
     <!--</div>-->
   <!--</div>-->
 &nbsp;&nbsp;&nbsp;
-  <input type="submit" class="btn btn-info" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <button value="Download file" onclick="download()" class="btn btn-info">Download File</button>
-
+  <div class="col-sm-2"> <input type="submit" class="btn btn-info form-control" ></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <div class="col-sm-2"> <button value="Download file" onclick="downloadStudents()" class="btn btn-info form-control">Download File</button>
+</div></div>
     </form>
   </div>
 
 
 <div style="margin-bottom:20px"></div>
+<hr>
 <!-- <p>Table contains placement statistics for the year 2016-17. </p> -->
   <div class="table-responsive">          
   <table class="table">
@@ -265,7 +276,8 @@
 </div>
 
 <footer class="container-fluid text-center">
- <p>Copyrights © 2016-17 by Pune Institute of Computer Technology</p> 
+ <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
+<p><a href="/developers-page/">Developers</a></p></div>
 </footer>
 </body>
 </html>

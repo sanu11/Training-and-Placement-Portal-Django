@@ -22,6 +22,8 @@
     .navbar {
       margin-bottom: 0;
       border-radius: 0;
+      background-color:#101B2D;
+      font-family: Georgia, Times, "Times New Roman", serif;
     }
     
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
@@ -35,12 +37,19 @@
     }
     
     /* Set black background color, white text and some padding */
-    footer {
-      background-color: #555;
-      color: white;
+   footer {
+      background-color: #353739;
+	  font-size:15px;
+      color: #b3b3b1;
       padding: 15px;
+      font-family: Georgia, Times, "Times New Roman", serif;
     }
-    
+	footer a:hover
+	{
+	text-decoration:none;
+	color:white;
+
+	}
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
       .sidenav {
@@ -51,6 +60,7 @@
     }
   body {
     background-color: #eee;
+font-family: Georgia, Times, "Times New Roman", serif;
 }
 
 *[role="form"] {
@@ -130,42 +140,41 @@
     </div>
 
     <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 
-	<h2 class="text-center">{{company.name}}</h2>
+        <h2 class="text-center" ><b>{{company.name}}</b></h2>
       <form class="form-horizontal" role="form" action="/cregister/" method="POST">
           
                 
 				<table class="table">
 				<tr><th class="row">
                 <div class="form-group ">
-                 <label for="firstName" class="col-sm-4" style="width:66%;">Criteria</label></th>
+                 <label  class="col-sm-4" style="font-size:19px">Criteria</label></th>
                     <div class="col-sm-9">
-                   <td>  <label for="firstName" class="col-sm-3">{{company.criteria}}</label></td>
+                   <td>  <label  class="col-sm-3">{{company.criteria}}</label></td>
                     </div>
-                </div>
+
 </tr>
 <tr><th class="row">
                 <div class="form-group">
-                   <label for="firstName" class="col-sm-3 ">Salary</label></th>
+                   <label class="col-sm-3 " style = "font-size:19px;">Salary</label></th>
                     <div class="col-sm-9">
-                    <td> <label for="firstName" class="col-sm-3 ">{{company.salary}}</label></td>
+                    <td> <label  class="col-sm-3 ">{{company.salary}}</label></td>
 
                     </div>
                 </div>
 </tr><tr><th class="row">
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">Back</label>
-					</th>
+                    <label  class="col-sm-3 "  style = "font-size:19px;">Back</label>
 					 
                     <div class="col-sm-9">
-                    <td> <label for="firstName" class="col-sm-10">{{company.back}}</label>
+                    <td> <label class="col-sm-10">{{company.back}}</label>
 </td>
                     </div>
                 </div>
          </tr><tr><th class="row">       
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-8 ">PPT Date</label></th>
+                    <label  class="col-sm-9 "  style = "font-size:19px;">Ppt Date</label></th>
                     <div class="col-sm-9">
-                   <td>  <label for="firstName" class="col-sm-10 ">{{company.ppt_date}}</label></td>
+                   <td>  <label  class="col-sm-10 ">{{company.ppt_date}}</label></td>
 
                     </div>
                 </div>
@@ -173,9 +182,9 @@
                 {% if company.other_details %}
                 </tr><tr><th class="row">
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-8 ">Other Details</label></th>
+                    <label class="col-sm-8 "  style = "font-size:19px;">Other Details</label></th>
                     <div class="col-sm-9">
-                 <td>    <label for="firstName" class="col-sm-10 ">{{company.other_details}}</label></td>
+                 <td>    <label  class="col-sm-10 ">{{company.other_details}}</label></td>
 
                     </div>
                 </div>
@@ -185,18 +194,18 @@
                 {% if company.reg_link %}
                 </tr><tr><th class="row">
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-10 ">Registration Link</label></th>
+                    <label  class="col-sm-10 "  style = "font-size:19px;">Registration Link</label></th>
                     <div class="col-sm-9">
-                     <td><label for="firstName" class="col-sm-10 "> <a href={{company.reg_link}} > {{company.reg_link}} </a> </label></td>
+                     <td><label  class="col-sm-10 "> <a href={{company.reg_link}} > {{company.reg_link}} </a> </label></td>
 
                     </div>
                 </div>
 
                 </tr><tr><th class="row">           
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-10 ">Registration Start </label></th>
+                    <label  class="col-sm-10 "  style = "font-size:19px;">Registration Start </label></th>
                     <div class="col-sm-9">
-                    <td> <label for="firstName" class="col-sm-10 ">{{company.reg_start}}</label></td>
+                    <td> <label class="col-sm-10 ">{{company.reg_start}}</label></td>
 
                     </div>
                 </div>
@@ -204,9 +213,9 @@
 
                 </tr><tr><th class="row">
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-10 ">Registration End</label></th>
+                    <label  class="col-sm-10 "  style = "font-size:19px;" >Registration End</label></th>
                     <div class="col-sm-9">
-                  <td>   <label for="firstName" class="col-sm-10 ">{{company.reg_end}}</label>
+                  <td>   <label class="col-sm-10 ">{{company.reg_end}}</label>
                     </td>
                     </div>
                 </div>
@@ -214,9 +223,9 @@
 
                 </tr><tr><th class="row">
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">Hired</label></th>
+                    <label  class="col-sm-3 "  style = "font-size:19px;" >Hired</label></th>
                     <div class="col-sm-9">
-                  <td>   <label for="firstName" class="col-sm-3 ">{{company.hired_people}}</label>
+                  <td>   <label  class="col-sm-3 ">{{company.hired_people}}</label>
                   </td>
                     </div>
                 </div>
@@ -224,9 +233,9 @@
                 {% if company.placed %}
                 </tr><tr><th class="row">
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-3 ">Placed</label></th>
+                    <label  class="col-sm-3 "  style = "font-size:19px;" >Placed</label></th>
                     <div class="col-sm-9">
-                  <td>   <label for="firstName" class="col-sm-15 "> <a href={{company.placed_url}}>{{company.placed_url}}</label>
+                  <td>   <label class="col-sm-15 "> <a href={{company.placed_url}}>{{company.placed_url}}</label>
                   </td>
                     </div>
                 </div>
@@ -265,7 +274,8 @@
   })
 </script>
 <footer class="container-fluid text-center">
- <p>Copyrights © 2016-17 by Pune Institute of Computer Technology.</p> 
+<div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
+<p><a href="/developers-page/">Developers</a></p></div> 
 </footer>
 </body>
 </html>

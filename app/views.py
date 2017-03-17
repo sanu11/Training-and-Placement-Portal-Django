@@ -163,6 +163,23 @@ def get_main_page(request):
 
 
 @csrf_exempt
+def get_developers_page(request):
+    if not request.session.get("name"):
+            return render(request, 'app/login.html', {})
+    else:
+        get_mail = request.session["email"]
+        if Admin.objects.filter(email=get_mail).exists():
+            login = 1
+            print "Admin login"
+        # student login
+        elif Student.objects.filter(email=get_mail).exists():
+            login = 2
+            print "Student login"
+        
+        name = request.session["name"]
+        return render(request, 'app/developers.html', {"login":login,"name":name})
+
+@csrf_exempt
 def get_signup_page(request):
     years = list(Year.objects.all().order_by('-y_id'))
     print ("hello")
@@ -267,27 +284,26 @@ def get_students_page(request):
             else:
                 students_branch = students_year
 
-            if "average" in request.POST:
-                a_id = request.POST["average"]
-                print (a_id)
-                if not a_id == "All":
-                    a_id = int(a_id)
-                    average = Average.objects.get(a_id = a_id)
-                    percent = average.percent
-                    if average.above:
-                        students_average = students_branch.filter(average__gte=percent)
-                    else:
-                        students_average =students_branch.filter(average__lte=percent)
-                else:
-                    students_average = students_branch
+            minavg = 0
+            maxavg=100
+            
+            if "minavg" in request.POST:
+                minavg = request.POST["minavg"]
+                students_min_average = students_branch.filter(average__gte =minavg)
             else:
-                students_average = students_branch
+                students_min_average = students_branch
 
-            students = students_average
+            if "maxavg" in request.POST:
+                maxavg = request.POST["maxavg"]
+                students_max_average = students_min_average.filter(average__lte= maxavg)
+            else:
+                students_max_average = students_min_average
+
+            students = students_max_average
             years = Year.objects.all().order_by('-y_id')
             averages = Average.objects.all()
             name = request.session["name"]
-            return render(request, 'app/students.html', {"students": students, "years":years ,"year":year,"branch":branch,"averages":averages,"a_id":a_id,"name": name})
+            return render(request, 'app/students.html', {"students": students, "years":years ,"year":year,"branch":branch,"minavg":minavg,"maxavg":maxavg,"name": name})
         # student login
         else:
             return HttpResponse("Not permitted to access")
@@ -343,9 +359,47 @@ def get_statistics_page(request):
         elif Student.objects.filter(email=get_mail).exists():
             login = 2
             print "Student login"
+        minsal = 0
+        maxsal = 50
+        mincri = 0
+        maxcri = 100
+
+        ##min salary
+        if "minsal" in request.POST:
+            minsal = request.POST["minsal"]
+            companies_min_salary = Company.objects.filter(salary__gte=minsal)
+        else:
+            companies_min_salary = Company.objects.all().order_by('-c_id')
+
+
+        ##max salary
+        if "maxsal" in request.POST:
+            maxsal = request.POST["maxsal"]
+            companies_max_salary = companies_min_salary.filter(salary__lte=maxsal)
+        else:
+            companies_max_salary = companies_min_salary
+
+        ##min criteria
+        if "mincri" in request.POST:
+            mincri = request.POST["mincri"]
+            companies_min_criteria = companies_max_salary.filter(criteria__gte=mincri)
+        else:
+            companies_min_criteria = companies_max_salary
+
+        ##max cri
+        if "maxcri" in request.POST:
+            maxcri = request.POST["maxcri"]
+            print maxcri
+            companies_max_criteria = companies_min_criteria.filter(criteria__lte=maxcri)
+            print companies_max_criteria
+        else:
+            companies_max_criteria = companies_min_criteria
+
+        companies = companies_max_criteria.order_by('-c_id')
+
         name = request.session["name"]
-        companies = Company.objects.all().order_by('-c_id')
-        return render(request, 'app/statistics.html', {"companies": companies, "name": name, "login": login})
+        
+        return render(request, 'app/statistics.html', {"companies": companies,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login})
 
 
 @csrf_exempt
@@ -598,12 +652,15 @@ def web_upload_result(request):
     else:
         HttpResponse('error')
 
+
 #########called from ajax######
 @csrf_exempt
 def web_download_students(request):
     year = request.POST["year"]
     branch = request.POST["branch"]
-    average = request.POST["average"]
+    minavg = request.POST["minavg"]
+    maxavg = request.POST["maxavg"]
+
     if year == "All":
         students_year = Student.objects.all()
     else:
@@ -614,26 +671,43 @@ def web_download_students(request):
     else:
         students_branch = students_year.filter(branch=branch)
 
-    if average == "All":
-        students_average = students_branch
-    else:
-        avg = Average.objects.get(a_id = average)
-        if avg.above:
-            students_average = students_branch.filter(average__gte = avg.percent)
-        else:
-            students_average = students_branch.filter(average__lte = avg.percent)
-    print students_average
-    students_average = list(students_average)
+    students_min_average = students_branch.filter(average__gte=minavg)
+
+
+    students_max_average = students_min_average.filter(average__lte=maxavg)
+
+    students = students_max_average
     
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="sanika.csv"'
     writer = csv.writer(response)
     writer.writerow(['Roll Number', 'Name','Email','Phone','Gender','Branch','SSC','HSC', 'Average','Active back','Resume'])
-    for x in students_average:
+    for x in students:
         writer.writerow([x.roll, x.name , x.email , x.phone , x.gender, x.branch ,x.ssc , x.hsc , x.average ,x.active_back , x.url])
         print writer
     return response
 
+@csrf_exempt
+def web_download_companies(request):
+    minsal = request.POST["minsal"]
+    maxsal = request.POST["maxsal"]
+    mincri = request.POST["mincri"]
+    maxcri = request.POST["maxcri"]
+
+    companies_min_salary = Company.objects.filter(salary__gte = minsal)
+    companies_max_salary = companies_min_salary.filter(salary__lte = maxsal)
+    companies_min_criteria = companies_max_salary.filter(criteria__gte = mincri)
+    companies_max_criteria = companies_min_criteria.filter(criteria__lte = maxcri)
+
+    companies = companies_max_criteria
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="sanika.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['Name','Salary','Criteria','Date','Placed_Url','Hired ','Other_Details'])
+    for x in companies:
+        writer.writerow([x.name,x.salary,x.criteria,x.ppt_date,x.placed_url,x.hired_people,x.other_details])
+        print writer
+    return response
 
 @csrf_exempt
 def web_register_company(request):
