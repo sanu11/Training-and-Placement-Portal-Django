@@ -110,7 +110,7 @@ function downloadCompanies() {
                 var hiddenElement = document.createElement('a');
                 hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(message);
                 hiddenElement.target = '_blank';
-                hiddenElement.download = minsal  + 'to' + maxsal + 'lpa_' + mincri + 'to' + maxcri 'per'+ '.csv';
+                hiddenElement.download = minsal  + 'to' + maxsal + 'lpa_' + mincri + 'to' + maxcri +  'per'+ '.csv';
                 hiddenElement.click();
                 },
             error: function(xhr, errmsg, err) {

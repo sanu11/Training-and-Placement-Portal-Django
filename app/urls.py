@@ -44,6 +44,8 @@ urlpatterns = [
 	url(r'home/$',views.get_main_page),
 
 	url(r'^$', views.get_main_page),
+	url(r'^developers-page/$', views.get_developers_page),
+
 
 ]
 

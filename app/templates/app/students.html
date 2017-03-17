@@ -189,27 +189,19 @@
     </div>
   </div>
 
-  <div class="col-sm-2 text-right" >
-    <div class="input-group">
-      <div class="input-group-btn">
-        <select  class="form-control" name="average" id="average">
-		<!--<option selected disabled hidden>Average</option>-->
-            <option value= "All" selected="selected" >All</option>
+<div class="col-sm-2 text-right" >
+ 
+    <label class="col-sm-2 control-label" >Average</label>
+     <div class="col-sm-1"> 
+     <input type="number" name = "minavg" placeholder="Min" id = "minavg" value = {{minavg}} class="form-control" style = "float:left;">
+     </div>
 
-            {% for average in averages %}
-            {% if average.a_id == a_id %}
-            <option value = {{average.a_id}} selected="selected"  >    {% if average.above %} Above  {% else %} Below  {% endif %} {{average.percent}}  </option>
-            {% else %}
-            <option value = {{average.a_id}} >  {% if average.above %} Above  {% else %} Below  {% endif %} {{average.percent}}  </option>
-           {% endif %}}
+     <div class="col-sm-1">
+     <input type="number" name = "maxavg" placeholder="Max" id= "maxavg" value = {{maxavg}} style = "float:left;" class="form-control">
+     </div>
 
-            {% endfor %}
-      </select>
-
-      </div>
-    </div>
-  </div>
-
+ 
+</div>
 
   <!--<div class="col-sm-3 text-right" >-->
     <!--<div class="input-group">-->
