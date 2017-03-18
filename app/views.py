@@ -518,15 +518,17 @@ def web_signup(request):
 @csrf_exempt
 def web_login(request):
     if request.method == "POST":
+        print "in web_login"
         get_mail = request.POST.get("email")
         get_pw = request.POST.get("password")
+        print (get_mail)
         if Admin.objects.filter(email=get_mail).exists():
             obj = Admin.objects.get(email=get_mail)
             if obj.password == get_pw:
                 name = obj.name
                 request.session['email'] = get_mail
                 request.session['name'] = name
-                return render(request, 'app/redirect.html', {})
+                return HttpResponse("Success")
             else:
                 return HttpResponse("Incorrect Password")
 
@@ -537,7 +539,7 @@ def web_login(request):
                 print name, get_mail
                 request.session['email'] = get_mail
                 request.session['name'] = name
-                return render(request, 'app/redirect.html', {})
+                return HttpResponse("Success")
             else:
                 return HttpResponse("Incorrect Password")
 

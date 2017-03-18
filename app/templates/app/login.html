@@ -10,7 +10,8 @@
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
-  
+    <script src="/static/js/check.js"></script>
+
    <!---- BootStrap online Libraries        
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -110,7 +111,8 @@
     <br>
        <h1 class="text-center"><b>Login</b></h1>
       <br>
-      <form action="/login/" method="post" class="form-horizontal">
+      <form  method="post" class="form-horizontal" id="loginform" role = "form">
+          {% csrf_token %}
 <fieldset>
 
 <!-- Form Name -->
@@ -128,7 +130,7 @@
 
 <!-- Password input-->
 <div class="form-group">
-  <label class="col-md-4 control-label">Password </label>
+  <label class="col-md-4 control-label">Password</label>
   <div class="col-md-4">
     <input id="passwordinput" name="password" type="password" class="form-control input-md">
     <br>    
@@ -143,8 +145,8 @@
  
  <div class="form-group">
          
-          <div class="col-md-4" align="center"">
-            <input type="submit" id="login" name="login" value="Login" style="padding-left:15%;padding-right:15%;font-style" class="btn btn-info" />
+          <div class="col-md-4" align="center">
+              <button type="button" onclick= "studentLogin()" id="login" style="padding-left:15%;padding-right:15%;font-style" class="btn btn-info" >Login</button>
           </div>
         </div>
 </div>
