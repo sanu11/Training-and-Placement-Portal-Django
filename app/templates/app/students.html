@@ -144,6 +144,7 @@
 
 
 <form class="form-horizontal" id="student" method="POST" action ='/students/'>
+    {% csrf_token %}
   <div class="form-group">
   <div class="col-sm-1"></div>
   <div class="col-sm-2 text-left"><label class="control-label" >Year</label></div>

@@ -1,5 +1,37 @@
 
 
+function studentLogin() {
+        console.log('loginform');
+        var loginform = $('#' + 'loginform');
+        var csrftoken = getCookie('csrftoken');
+
+        $.ajax({
+            type: "POST",
+            url: '/login/',
+            data: loginform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+            success: function(message) {
+            console.log(message);
+                if (message =='Success') {
+                   window.location.href = "/";
+                }
+                else if(message=='Incorrect Password')
+                {
+                    alert("Incorrect Password");
+                }
+                else if (message == 'User not found')
+                {
+                    alert('User not found');
+                }
+                else
+                {
+                alert('Error');
+                }
+            },
+            error: function(xhr, errmsg, err) {
+                alert('Error');
+            },
+        });
+    }
 
 function companyRegister() {
         console.log('registerform');
