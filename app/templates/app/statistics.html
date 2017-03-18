@@ -27,7 +27,12 @@
       background-color:#101B2D;
       font-family: Georgia, Times, "Times New Roman", serif;
     }
-    
+    .navbar1 {
+      margin-bottom: 0;
+      border-radius: 0;
+
+      font-family: Georgia, Times, "Times New Roman", serif;
+    }
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
     .row.content {height: 450px}
     
@@ -109,14 +114,11 @@
     </div>
   </div>
 </nav>
-  
-  
-
 <div class="container-fluid ">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
     {% if login == 1 %}
- <div class="navbar"  >
+ <div class="navbar1"  >
       <ul class="nav navbar-nav" >
     <br><br>
       <li ><a href="/students/"><b>Students  Info</b></a></li>
@@ -145,18 +147,18 @@
 
 <form class="form-horizontal" id="student" method="POST" action ='/statistics/'>
 
- <div class="form-group text-center">
+ <div class="form-group text-left">
    <label class="col-sm-1 control-label" ></label>
- <div class="col-sm-1"> <label class="col-sm-1 control-label" >MIN</label></div>
- <div class="col-sm-1">
-  <label class="col-sm-1 control-label" >MAX</label></div>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;"> <label class="control-label" >MIN</label></div>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+  <label class="control-label" >MAX</label></div>
     
    <label class="col-sm-2 control-label" ></label>
- <div class="col-sm-1">
-  <label class="col-sm-1 control-label" >MIN</label>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+  <label class="control-label" >MIN</label>
  </div>
- <div class="col-sm-1">
- <label class="col-sm-1 control-label" >MAX</label>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+ <label class="control-label" >MAX</label>
  </div>
    <div class="col-sm-2"></div>
  <div class="col-sm-2">
@@ -165,20 +167,20 @@
    
    
    <div class="form-group">
-   <label class="col-sm-1 control-label" >Salary</label>
- <div class="col-sm-1"><input type="text" name = "minsal" id = "minsal" placeholder="Min" value = {{minsal}} class="form-control" style = "float:left;"></div>
- <div class="col-sm-1">
+   <label class="col-sm-1 control-label"  >Salary</label>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;"><input type="text" name = "minsal" id = "minsal" placeholder="Min" value = {{minsal}} class="form-control" style = "float:left;"></div>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
  <input type="text" name = "maxsal" placeholder="Max"  id= "maxsal" value = {{maxsal}} style = "float:left;" class="form-control"></div>
     
    <label class="col-sm-2 control-label" >Criteria</label>
- <div class="col-sm-1"> 
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
  <input type="text" name = "mincri" placeholder="Min" id = "mincri" value = {{mincri}} class="form-control" style = "float:left;">
  </div>
- <div class="col-sm-1">
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
  <input type="text" name = "maxcri" placeholder="Max" id= "maxcri" value = {{maxcri}} style = "float:left;" class="form-control">
  </div>
    <div class="col-sm-2">
-<input type="submit" class="btn btn-info form-control" ></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="submit" class="btn btn-info form-control" value="Submit" ></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
  <div class="col-sm-2"> <button value="Download file" onclick = "downloadCompanies()" class="btn btn-info form-control">Download File</button>
  </div>
    </div>

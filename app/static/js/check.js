@@ -1,5 +1,6 @@
 
 
+
 function companyRegister() {
         console.log('registerform');
         var registerform = $('#' + 'register');
