@@ -43,6 +43,7 @@ def register_student(request):
     obj.save()
     return HttpResponse(obj.name)
 
+
 @csrf_exempt
 def login_details(request):
     data = json.loads(request.body)
@@ -56,6 +57,7 @@ def login_details(request):
             return HttpResponse("Incorrect Password")
     else:
         return HttpResponse("User not found")
+
 
 @csrf_exempt
 def register_company(request):
@@ -290,7 +292,6 @@ def get_students_page(request):
             if "minavg" in request.POST:
                 minavg = request.POST["minavg"]
                 students_min_average = students_branch.filter(average__gte =minavg)
-<<<<<<< HEAD
             else:
                 students_min_average = students_branch
 
@@ -300,17 +301,6 @@ def get_students_page(request):
             else:
                 students_max_average = students_min_average
 
-=======
-            else:
-                students_min_average = students_branch
-
-            if "maxavg" in request.POST:
-                maxavg = request.POST["maxavg"]
-                students_max_average = students_min_average.filter(average__lte= maxavg)
-            else:
-                students_max_average = students_min_average
-
->>>>>>> 8bffd42039f3b373a6fc35e71c040a526557fb9a
             students = students_max_average
             years = Year.objects.all().order_by('-y_id')
             averages = Average.objects.all()
@@ -493,7 +483,7 @@ def web_signup(request):
         # c.activeBack=request.POST.get("activeBack")
 
         # for entry in dbx.files_list_folder('').entries:
-        # 	print(entry.name)
+        #   print(entry.name)
         if request.FILES["resume"]:
             myfile = request.FILES["resume"]
             data = myfile.read()
