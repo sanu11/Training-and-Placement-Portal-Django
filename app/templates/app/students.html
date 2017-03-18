@@ -27,7 +27,12 @@
       background-color:#101B2D;
       font-family: Georgia, Times, "Times New Roman", serif;
     }
-    
+    .navbar1 {
+      margin-bottom: 0;
+      border-radius: 0;
+
+      font-family: Georgia, Times, "Times New Roman", serif;
+    }
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
     .row.content {height: 450px}
     
@@ -41,7 +46,7 @@
     /* Set black background color, white text and some padding */
     footer {
       background-color: #353739;
-	  font-size:15px;
+    font-size:15px;
       color: #b3b3b1;
       padding: 15px;
       font-family: Georgia, Times, "Times New Roman", serif;
@@ -49,11 +54,11 @@
     body {
     font-family: Georgia, Times, "Times New Roman", serif;
     }
-	footer a:hover
-	{
-	text-decoration:none;
-	color:white;
-	}
+  footer a:hover
+  {
+  text-decoration:none;
+  color:white;
+  }
     
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
@@ -114,7 +119,7 @@
   <div class="row content">
     <div class="col-sm-2 sidenav ">
  
- <div class="navbar"  >
+ <div class="navbar1"  >
       <ul class="nav navbar-nav" >
     <br><br>
       <li ><a href="/students/"><b>Students  Info</b></a></li>
@@ -141,9 +146,9 @@
 <form class="form-horizontal" id="student" method="POST" action ='/students/'>
   <div class="form-group">
   <div class="col-sm-1"></div>
-  <div class="col-sm-2 text-right"><label class="col-sm-2 control-label" >Year</label></div>
-  <div class="col-sm-2 text-right"><label class="col-sm-2 control-label" >Branch</label></div>
-  <div class="col-sm-2 text-right"><label class="col-sm-2 control-label" >Average</label></div>
+  <div class="col-sm-2 text-left"><label class="control-label" >Year</label></div>
+  <div class="col-sm-2 text-left"><label class="control-label" >Branch</label></div>
+  <div class="col-sm-2 text-left" style="padding-left:2px;"><label class="control-label" >Average</label></div>
   </div>
   <div class="form-group">
   <div class="col-sm-1"></div>
@@ -151,7 +156,7 @@
     <div class="input-group">
       <div class="input-group-btn">
         <select class="form-control" name="year" id="year">
-		<!--<option selected disabled hidden>Year</option>-->
+    <!--<option selected disabled hidden>Year</option>-->
             <option value= "All"  selected="selected">All</option>
            {% for passyear in years %}
             {% if passyear.year == year %}
@@ -169,7 +174,7 @@
     <div class="input-group">
       <div class="input-group-btn">
         <select  class="form-control" name="branch" id="branch">
-		<!--<option selected disabled hidden>Branch</option>-->
+    <!--<option selected disabled hidden>Branch</option>-->
             <option value= "All" selected="selected" >All</option>
 
             {%  if branch == "Comp" %}
@@ -195,15 +200,15 @@
     </div>
   </div>
 
-<div class="col-sm-2 text-right" >
+<div >
  
-    <label class="col-sm-2 control-label" >Average</label>
-     <div class="col-sm-1"> 
-     <input type="number" name = "minavg" placeholder="Min" id = "minavg" value = {{minavg}} class="form-control" style = "float:left;">
+
+     <div class="col-sm-1" style="padding-right:2px;padding-left:2px;" >
+     <input type="number" name="minavg" placeholder="Min" id="minavg" value={{minavg}} class="form-control" style = "float:left;">
      </div>
 
-     <div class="col-sm-1">
-     <input type="number" name = "maxavg" placeholder="Max" id= "maxavg" value = {{maxavg}} style = "float:left;" class="form-control">
+     <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+     <input type="number" name="maxavg" placeholder="Max" id="maxavg" value={{maxavg}} style = "float:left;" class="form-control">
      </div>
 
  
@@ -213,7 +218,7 @@
     <!--<div class="input-group">-->
       <!--<div class="input-group-btn">-->
         <!--<select  class="form-control" name="company" id="company">-->
-		<!--&lt;!&ndash;<option selected disabled hidden>Company</option>&ndash;&gt;-->
+    <!--&lt;!&ndash;<option selected disabled hidden>Company</option>&ndash;&gt;-->
         <!--<option value="All" selected="selected" >"All</option>-->
 
            <!--{% for company in companies %}-->

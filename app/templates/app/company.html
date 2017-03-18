@@ -22,7 +22,13 @@
     .navbar {
       margin-bottom: 0;
       border-radius: 0;
-      background-color:#101B2D;
+        background-color:#101B2D;
+
+      font-family: Georgia, Times, "Times New Roman", serif;
+    }
+     .navbar1 {
+      margin-bottom: 0;
+      border-radius: 0;
       font-family: Georgia, Times, "Times New Roman", serif;
     }
     
@@ -39,17 +45,17 @@
     /* Set black background color, white text and some padding */
    footer {
       background-color: #353739;
-	  font-size:15px;
+    font-size:15px;
       color: #b3b3b1;
       padding: 15px;
       font-family: Georgia, Times, "Times New Roman", serif;
     }
-	footer a:hover
-	{
-	text-decoration:none;
-	color:white;
+  footer a:hover
+  {
+  text-decoration:none;
+  color:white;
 
-	}
+  }
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
       .sidenav {
@@ -125,7 +131,7 @@ font-family: Georgia, Times, "Times New Roman", serif;
 <div class="container-fluid ">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
- <div class="navbar"  >
+ <div class="navbar1"  >
       <ul class="nav navbar-nav" >
     <br><br>
       <li ><a href="/students/"><b>Students  Info</b></a></li>
@@ -144,8 +150,8 @@ font-family: Georgia, Times, "Times New Roman", serif;
       <form class="form-horizontal" role="form" action="/cregister/" method="POST">
           
                 
-				<table class="table">
-				<tr><th class="row">
+        <table class="table">
+        <tr><th class="row">
                 <div class="form-group ">
                  <label  class="col-sm-4" style="font-size:19px">Criteria</label></th>
                     <div class="col-sm-9">
@@ -164,7 +170,7 @@ font-family: Georgia, Times, "Times New Roman", serif;
 </tr><tr><th class="row">
                 <div class="form-group">
                     <label  class="col-sm-3 "  style = "font-size:19px;">Back</label>
-					 
+           
                     <div class="col-sm-9">
                     <td> <label class="col-sm-10">{{company.back}}</label>
 </td>

@@ -1,5 +1,6 @@
 
 
+
 function companyRegister() {
         console.log('registerform');
         var registerform = $('#' + 'register');
@@ -118,6 +119,11 @@ function downloadCompanies() {
                 alert('Error');
             },
         });
+<<<<<<< HEAD
+=======
+
+ }
+>>>>>>> 8bffd42039f3b373a6fc35e71c040a526557fb9a
 
  }
 

@@ -25,7 +25,12 @@
       background-color:#101B2D;
       font-family: Georgia, Times, "Times New Roman", serif;
     }
-    
+    .navbar1 {
+      margin-bottom: 0;
+      border-radius: 0;
+
+      font-family: Georgia, Times, "Times New Roman", serif;
+    }
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
     .row.content {height: 450px}
     
@@ -39,7 +44,7 @@
     /* Set black background color, white text and some padding */
     footer {
       background-color: #353739;
-	  font-size:15px;
+    font-size:15px;
       color: #b3b3b1;
       padding: 15px;
       font-family: Georgia, Times, "Times New Roman", serif;
@@ -47,11 +52,11 @@
     body {
     font-family: Georgia, Times, "Times New Roman", serif;
     }
-	footer a:hover
-	{
-	text-decoration:none;
-	color:white;
-	}
+  footer a:hover
+  {
+  text-decoration:none;
+  color:white;
+  }
     
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
@@ -126,7 +131,7 @@
   <div class="row content">
     <div class="col-sm-2 sidenav ">
    
- <div class="navbar"  >
+ <div class="navbar1"  >
       <ul class="nav navbar-nav" >
     <br><br>
       <li ><a href="/students/"><b>Students  Info</b></a></li>
@@ -142,12 +147,12 @@
     </div>
 
     <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 
-	<h2 class="text-center">{{student.name}}</h2>
+  <h2 class="text-center">{{student.name}}</h2>
       <form class="form-horizontal" role="form" action="/cregister/" method="POST">
           
                 
-				<table class="table">
-				<tr><th class="row">
+        <table class="table">
+        <tr><th class="row">
                 <div class="form-group ">
                  <label for="firstName" class="col-sm-5" style="width:66%;">Roll No</label></th>
                     <div class="col-sm-9">
@@ -177,8 +182,8 @@
 
                 <div class="form-group">
                     <label for="firstName" class="col-sm-3 ">Email</label>
-					</th>
-					 
+          </th>
+           
                     <div class="col-sm-9">
                     <td> <label for="firstName" class="col-sm-3">{{student.email}}</label>
 </td>

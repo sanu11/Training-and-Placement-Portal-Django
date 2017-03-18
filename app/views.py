@@ -290,6 +290,7 @@ def get_students_page(request):
             if "minavg" in request.POST:
                 minavg = request.POST["minavg"]
                 students_min_average = students_branch.filter(average__gte =minavg)
+<<<<<<< HEAD
             else:
                 students_min_average = students_branch
 
@@ -299,6 +300,17 @@ def get_students_page(request):
             else:
                 students_max_average = students_min_average
 
+=======
+            else:
+                students_min_average = students_branch
+
+            if "maxavg" in request.POST:
+                maxavg = request.POST["maxavg"]
+                students_max_average = students_min_average.filter(average__lte= maxavg)
+            else:
+                students_max_average = students_min_average
+
+>>>>>>> 8bffd42039f3b373a6fc35e71c040a526557fb9a
             students = students_max_average
             years = Year.objects.all().order_by('-y_id')
             averages = Average.objects.all()
