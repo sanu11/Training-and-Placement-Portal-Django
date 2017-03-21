@@ -119,18 +119,6 @@ def update_company(request):
 
     return HttpResponse("Company Updated")
 
-def upload_result(request):
-    data = json.loads(request.body)
-    print data
-    title = data["title"]
-    url = data["url"]
-    obj = Result()
-    obj.title = title
-    obj.url = url
-    obj.save()
-    Device = get_device_model()
-    Device.objects.all().send_message({'type': 'result', 'title': title, 'url': url})
-    return HttpResponse("Message sent")
 
 @csrf_exempt
 def sync_data(request):
