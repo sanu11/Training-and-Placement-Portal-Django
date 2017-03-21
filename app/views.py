@@ -171,14 +171,19 @@ def get_developers_page(request):
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
-            login = 1
+            login = 1`
             print "Admin login"
+            name = request.session["name"]
+        
         # student login
         elif Student.objects.filter(email=get_mail).exists():
             login = 2
             print "Student login"
+            name = request.session["name"]
         
-        name = request.session["name"]
+        else:
+            login = 0
+            name=""
         return render(request, 'app/developers.html', {"login":login,"name":name})
 
 @csrf_exempt
