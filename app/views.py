@@ -646,9 +646,9 @@ def web_upload_result(request):
                 obj.save()
 
             title = company + " " + choice
-            body = url
+            
             Device = get_device_model()
-            Device.objects.all().send_message({'type': 'gen_msg', 'title': title, 'body': body})
+            Device.objects.all().send_message({'type': 'result', 'title': title, 'url': url})
             name = request.session["name"]
             return render(request, 'app/home.html', {"login": 1, "name": name})
         else:
