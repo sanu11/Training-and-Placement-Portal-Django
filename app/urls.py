@@ -11,6 +11,8 @@ urlpatterns = [
 	url(r'app_login/$',views.login_details),
 	url(r'app_notify/$',views.notify),
 	url(r'app_sync/$',views.sync_data),
+	url(r'upload_result/$',views.upload_result),
+
 
 ##web
 
