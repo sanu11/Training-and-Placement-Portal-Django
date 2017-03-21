@@ -52,9 +52,17 @@ def login_details(request):
     if Student.objects.filter(email=get_mail).exists():
         obj = Student.objects.get(email=get_mail)
         if obj.password == get_pw:
-            return HttpResponse(obj.name)
+            return HttpResponse("Student")
         else:
             return HttpResponse("Incorrect Password")
+    
+    elif Admin.objects.filter(email=get_mail).exists():
+        obj = Admin.objects.get(email=get_mail)
+        if obj.password == get_pw:
+            return HttpResponse("Admin")
+        else:
+            return HttpResponse("Incorrect Password")
+
     else:
         return HttpResponse("User not found")
 
@@ -524,21 +532,22 @@ def web_login(request):
         get_mail = request.POST.get("email")
         get_pw = request.POST.get("password")
         print (get_mail)
-        if Admin.objects.filter(email=get_mail).exists():
-            obj = Admin.objects.get(email=get_mail)
+
+        if Student.objects.filter(email=get_mail).exists():
+            obj = Student.objects.get(email=get_mail)
             if obj.password == get_pw:
                 name = obj.name
+                print name, get_mail
                 request.session['email'] = get_mail
                 request.session['name'] = name
                 return HttpResponse("Success")
             else:
                 return HttpResponse("Incorrect Password")
 
-        elif Student.objects.filter(email=get_mail).exists():
-            obj = Student.objects.get(email=get_mail)
+        elif Admin.objects.filter(email=get_mail).exists():
+            obj = Admin.objects.get(email=get_mail)
             if obj.password == get_pw:
                 name = obj.name
-                print name, get_mail
                 request.session['email'] = get_mail
                 request.session['name'] = name
                 return HttpResponse("Success")
