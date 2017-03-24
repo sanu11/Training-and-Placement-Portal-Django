@@ -153,40 +153,42 @@ font-family: Georgia, Times, "Times New Roman", serif;
         <table class="table">
         <tr><th class="row">
                 <div class="form-group ">
-                 <label  class="col-sm-4" style="font-size:19px">Criteria</label></th>
+                    <label  class="col-sm-4" style="font-size:19px">Criteria</label></div></th>
                     <div class="col-sm-9">
                    <td>  <label  class="col-sm-3">{{company.criteria}}</label></td>
-                    </div>
+                    </div></tr>
 
-</tr>
 <tr><th class="row">
                 <div class="form-group">
-                   <label class="col-sm-3 " style = "font-size:19px;">Salary</label></th>
+                    <label class="col-sm-3 " style = "font-size:19px;">Salary</label></div></th>
                     <div class="col-sm-9">
                     <td> <label  class="col-sm-3 ">{{company.salary}}</label></td>
 
-                    </div>
-                </div>
-</tr><tr><th class="row">
+                    </div></tr>
+
+            <tr><th class="row">
                 <div class="form-group">
                     <label  class="col-sm-3 "  style = "font-size:19px;">Back</label>
            
                     <div class="col-sm-9">
-                    <td> <label class="col-sm-10">{{company.back}}</label>
-</td>
-                    </div>
-                </div>
-         </tr><tr><th class="row">       
+                <td> <label class="col-sm-10">{{company.back}}</label></td>
+            </div>
+  </div>
+
+
+
+
+         <tr><th class="row">
                 <div class="form-group">
                     <label  class="col-sm-9 "  style = "font-size:19px;">Ppt Date</label></th>
                     <div class="col-sm-9">
-                   <td>  <label  class="col-sm-10 ">{{company.ppt_date}}</label></td>
+                   <td>  <label  class="col-sm-11 ">{{company.ppt_date}}</label></td>
 
                     </div>
                 </div>
-
+ </tr>
                 {% if company.other_details %}
-                </tr><tr><th class="row">
+               <tr><th class="row">
                 <div class="form-group">
                     <label class="col-sm-8 "  style = "font-size:19px;">Other Details</label></th>
                     <div class="col-sm-9">
@@ -195,39 +197,39 @@ font-family: Georgia, Times, "Times New Roman", serif;
                     </div>
                 </div>
                 {% endif %}
-
+</tr>
 
                 {% if company.reg_link %}
-                </tr><tr><th class="row">
+                <tr><th class="row">
                 <div class="form-group">
-                    <label  class="col-sm-10 "  style = "font-size:19px;">Registration Link</label></th>
+                    <label  class="col-sm-11 "  style = "font-size:19px;">Registration Link</label></th>
                     <div class="col-sm-9">
                      <td><label  class="col-sm-10 "> <a href={{company.reg_link}} > {{company.reg_link}} </a> </label></td>
 
                     </div>
                 </div>
-
-                </tr><tr><th class="row">           
+</tr>
+                <tr><th class="row">
                 <div class="form-group">
-                    <label  class="col-sm-10 "  style = "font-size:19px;">Registration Start </label></th>
+                    <label  class="col-sm-11 "  style = "font-size:19px;">Registration Start </label></th>
                     <div class="col-sm-9">
-                    <td> <label class="col-sm-10 ">{{company.reg_start}}</label></td>
+                    <td> <label class="col-sm-11 ">{{company.reg_start}}</label></td>
 
                     </div>
                 </div>
+ </tr>
 
-
-                </tr><tr><th class="row">
+               <tr><th class="row">
                 <div class="form-group">
-                    <label  class="col-sm-10 "  style = "font-size:19px;" >Registration End</label></th>
+                    <label  class="col-sm-11 "  style = "font-size:19px;" >Registration End</label></th>
                     <div class="col-sm-9">
-                  <td>   <label class="col-sm-10 ">{{company.reg_end}}</label>
+                  <td>   <label class="col-sm-11 ">{{company.reg_end}}</label>
                     </td>
                     </div>
                 </div>
                 {% endif %}
-
-                </tr><tr><th class="row">
+</tr>
+                <tr><th class="row">
                 <div class="form-group">
                     <label  class="col-sm-3 "  style = "font-size:19px;" >Hired</label></th>
                     <div class="col-sm-9">
@@ -235,9 +237,9 @@ font-family: Georgia, Times, "Times New Roman", serif;
                   </td>
                     </div>
                 </div>
-
+</tr>
                 {% if company.placed %}
-                </tr><tr><th class="row">
+                <tr><th class="row">
                 <div class="form-group">
                     <label  class="col-sm-3 "  style = "font-size:19px;" >Placed</label></th>
                     <div class="col-sm-9">

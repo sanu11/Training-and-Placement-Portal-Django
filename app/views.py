@@ -1,10 +1,7 @@
+import datetime
 from django.shortcuts import render
 from .models import Student, Company, Message, Verify, Result, Admin ,Year , Average
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.http import HttpResponse
-from django.conf import settings
-from datetime import datetime
-from django.template.loader import render_to_string
 from django.views.decorators.csrf import *
 from django.core import serializers
 from gcm.models import get_device_model
@@ -52,14 +49,14 @@ def login_details(request):
     if Student.objects.filter(email=get_mail).exists():
         obj = Student.objects.get(email=get_mail)
         if obj.password == get_pw:
-            return HttpResponse("Student,"+ obj.name )
+            return HttpResponse(obj.name)
         else:
             return HttpResponse("Incorrect Password")
     
     elif Admin.objects.filter(email=get_mail).exists():
         obj = Admin.objects.get(email=get_mail)
         if obj.password == get_pw:
-            return HttpResponse("Admin," + obj.name)
+            return HttpResponse(obj.name)
         else:
             return HttpResponse("Incorrect Password")
 
@@ -408,7 +405,7 @@ def get_statistics_page(request):
             companies_max_criteria = companies_min_criteria
 
         companies = companies_max_criteria.order_by('-c_id')
-
+        print (companies[0].ppt_date)
         name = request.session["name"]
         
         return render(request, 'app/statistics.html', {"companies": companies,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login})
@@ -736,6 +733,10 @@ def web_register_company(request):
         back = request.POST["back"]
         ppt_date = request.POST["ppt_date"]
         ppt_time = request.POST["ppt_time"]
+        ppt_date = str(ppt_date)
+        print (ppt_date)
+        ppt_date = datetime.datetime.strptime(ppt_date, '%m/%d/%Y').strftime('%Y-%m-%d')
+        print (ppt_date)
         other_details = request.POST["other_details"]
         if other_details == "":
             other_details = None
@@ -768,8 +769,11 @@ def web_update_company(request):
         reg_link = request.POST["regLink"]
         reg_start_date = request.POST["regStartDate"]
         reg_start_time = request.POST["regStartTime"]
+        reg_start_date = datetime.datetime.strptime(reg_start_date, '%m/%d/%Y').strftime('%Y-%m-%d')
         reg_end_date = request.POST["regEndDate"]
         reg_end_time = request.POST["regEndTime"]
+        reg_end_date = datetime.datetime.strptime(reg_end_date, '%m/%d/%Y').strftime('%Y-%m-%d')
+
         other_details = request.POST["otherDetails"]
         obj = Company.objects.get(name=name)
         if obj.reg_link:
