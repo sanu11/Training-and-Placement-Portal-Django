@@ -10,7 +10,10 @@
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
+  <script src="/static/js/check.js"></script>
   
+  
+
    <!---- BootStrap online Libraries        
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -169,23 +172,23 @@ input:checked + .slider:before {
     </div>
     <div class="col-sm-8 text-left"> 
     <br>
-       <h1 class="text-center"><b>Registration</b></h1>
+       <h1 class="text-center"><b>Signup</b></h1>
       <br>
-     <form class="form-horizontal" enctype="multipart/form-data" method="POST" action ='/signup/'>
+     <form class="form-horizontal"  method="POST" id="signupform" name="signupform">
 <fieldset>
 <!-- Form Name -->
 <!-- Text input-->
+
 <div class="form-group">
   <label class="col-sm-4 control-label" for="textinput">Name</label>  
   <div class="col-sm-5">
-  <input id="textinput" name="name" type="text" placeholder="Name" class="form-control input-md">
+  <input id="name" name="name" type="text" placeholder="Name" class="form-control input-md">
   </div>
-
-
+</div>
 <div class="form-group">
   <label class="col-sm-4 control-label" for="textinput">Roll Number</label>  
   <div class="col-sm-5">
-  <input id="textinput" name="roll" type="number" placeholder="Roll Number" min="1000" class="form-control input-md">
+  <input id="roll" name="roll" type="number" placeholder="Roll Number" min="1000" class="form-control input-md">
   </div>
 </div>
 
@@ -194,7 +197,7 @@ input:checked + .slider:before {
 <div class="form-group">
   <label class="col-md-4 control-label" for="textinput">Email </label>  
   <div class="col-sm-5">
-  <input id="textinput" name="email" type="text" placeholder="Email" class="form-control input-md">  
+  <input id="email" name="email" type="text" placeholder="Email" class="form-control input-md">  
   </div>
 </div>
 
@@ -202,7 +205,7 @@ input:checked + .slider:before {
 <div class="form-group">
   <label class="col-md-4 control-label" for="passwordinput">Password</label>
   <div class="col-sm-5">
-    <input id="passwordinput" name="password" type="password" placeholder="Password" class="form-control input-md">
+    <input id="password" name="password" type="password" placeholder="Password" class="form-control input-md">
   </div>
 </div>
 
@@ -220,7 +223,7 @@ input:checked + .slider:before {
 <div class="form-group">
   <label class="col-md-4 control-label" for="textinput">Phone</label>  
   <div class="col-sm-5">
-  <input id="textinput" name="phone" type="text" placeholder="Phone" class="form-control input-md">
+  <input id="phone" name="phone" type="text" placeholder="Phone" class="form-control input-md">
 </div>
 </div>
 
@@ -249,20 +252,20 @@ input:checked + .slider:before {
 </div>
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="appendedtext">10th</label>
+  <label class="col-md-4 control-label" for="10th">10th</label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="appendedtext" name="10th" class="form-control" placeholder="Percentage" type="number" min="1" max="100" >
+      <input id="10th" name="10th" class="form-control" placeholder="Percentage" type="number" min="1" max="100" >
       <span class="input-group-addon">%</span>
     </div>
   </div>
 </div>
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="appendedtext">12th</label>
+  <label class="col-md-4 control-label" for="12th">12th</label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="appendedtext" name="12th" class="form-control" placeholder="Percentage" type="number" min="1" max="100" >
+      <input id="12th" name="12th" class="form-control" placeholder="Percentage" type="number" min="1" max="100" >
       <span class="input-group-addon">%</span>
     </div>
   </div>
@@ -270,10 +273,10 @@ input:checked + .slider:before {
 
 <!-- Appended Input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="appendedtext">Average (5 sems) %</label>
+  <label class="col-md-4 control-label" for="average">Average (5 sems) %</label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="appendedtext" name="average" class="form-control" placeholder="Average"  type="number" min="1" max="100">
+      <input id="average" name="average" class="form-control" placeholder="Average"  type="number" min="1" max="100">
       <span class="input-group-addon">%</span>
     </div>
   </div>
@@ -290,7 +293,7 @@ input:checked + .slider:before {
 </label>
   </div>
 </div>
-
+<!-- 
 <div class="form-group">
   <label class="col-md-4 control-label" for="appendedtext">Resume</label>
   <div class="col-sm-4">
@@ -299,13 +302,13 @@ input:checked + .slider:before {
     </div>
   </div>
 </div>
-
+ -->
 <!-- Button -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="singlebutton"></label>
   
   <div class="col-sm-4 text-center" align="center" style="margin-left:-2%;margin-right:4%;">
-    <input type="submit" id="singlebutton" name="singlebutton" class="btn btn-info" value="Register"><b></b>
+  <button type="button" class="btn btn-info" onclick="signup()">Signup</button>
   </div>
 </div>
 </fieldset>
@@ -330,4 +333,3 @@ input:checked + .slider:before {
 </footer>
 </body>
 </html>
-  

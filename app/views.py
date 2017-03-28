@@ -1,6 +1,6 @@
 import datetime
 from django.shortcuts import render
-from .models import Student, Company, Message, Verify, Result, Admin ,Year , Average
+from .models import Student, Company, Message, Verify, Result, Admin ,Year 
 from django.http import HttpResponse
 from django.views.decorators.csrf import *
 from django.core import serializers
@@ -486,40 +486,40 @@ def web_signup(request):
         c.ssc = request.POST["10th"]
         c.hsc = request.POST["12th"]
         c.average = request.POST["average"]
+        if request.POST.get("activeBack",False):
+            c.activeBack = False
+        else:
+            c.activeBack = True
+        c.save()
+        # if request.FILES["resume"]:
+        #     myfile = request.FILES["resume"]
+        #     data = myfile.read()
+        #     filename = myfile.name
+        #     extension = filename.split('.')
+        #     file_to = "/students/" + roll + '.' + extension[1]
+        #     print file_to
+        #     dbx.files_upload(data, file_to)
 
-        # c.activeBack=request.POST.get("activeBack")
+        #     url = "https://api.dropboxapi.com/2/sharing/create_shared_link"
 
-        # for entry in dbx.files_list_folder('').entries:
-        #   print(entry.name)
-        if request.FILES["resume"]:
-            myfile = request.FILES["resume"]
-            data = myfile.read()
-            filename = myfile.name
-            extension = filename.split('.')
-            file_to = "/students/" + roll + '.' + extension[1]
-            print file_to
-            dbx.files_upload(data, file_to)
+        #     payload = "{\"path\":" + '"' + file_to + '"' + ",\"short_url\": true}"
+        #     print payload
+        #     headers = {
+        #         'authorization': "Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR",
+        #         'content-type': "application/json",
+        #         'cache-control': "no-cache",
+        #     }
 
-            url = "https://api.dropboxapi.com/2/sharing/create_shared_link"
+        #     response = requests.request("POST", url, data=payload, headers=headers)
 
-            payload = "{\"path\":" + '"' + file_to + '"' + ",\"short_url\": true}"
-            print payload
-            headers = {
-                'authorization': "Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR",
-                'content-type': "application/json",
-                'cache-control': "no-cache",
-            }
+        #     res = json.loads(response.text)
+        #     url = res["url"]
+        #     c.url = url
+        #     c.save()
 
-            response = requests.request("POST", url, data=payload, headers=headers)
-
-            res = json.loads(response.text)
-            url = res["url"]
-            c.url = url
-            c.save()
-
-        return render(request, 'app/login.html', {})
+        return HttpResponse('success')
     else:
-        return HttpResponse('Error');
+        return HttpResponse('error');
 
 
 @csrf_exempt

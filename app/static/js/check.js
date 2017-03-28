@@ -1,36 +1,61 @@
 
 function signup() {
-        console.log('loginform');
-        var loginform = $('#' + 'loginform');
+        console.log('signupform');
+        var signupform = $('#' + 'signupform');
         var csrftoken = getCookie('csrftoken');
-
-        $.ajax({
-            type: "POST",
-            url: '/login/',
-            data: loginform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
-            success: function(message) {
-            console.log(message);
-                if (message =='Success') {
-                   window.location.href = "/";
-                }
-                else if(message=='Incorrect Password')
-                {
-                    alert("Incorrect Password");
-                }
-                else if (message == 'User not found')
-                {
-                    alert('User not found');
-                }
-                else
-                {
-                alert('Error');
-                }
-            },
-            error: function(xhr, errmsg, err) {
-                alert('Error');
-            },
-        });
-    }
+        var name = document.getElementById('name').value;
+        var roll = document.getElementById('roll').value;
+        var email = document.getElementById('email').value;
+        var password  =document.getElementById('password').value;
+        var phone = document.getElementById('phone').value;
+        var ssc = document.getElementById('10th').value;
+        var hsc = document.getElementById('12th').value;
+        var avg = document.getElementById('average').value;
+        var atpos = email.indexOf("@");
+        var dotpos = email.lastIndexOf(".");
+        
+        console.log(name+ " " + roll + " " + email + " " + password + " " + phone + " " + ssc + " " + hsc + " " + avg);
+        if(name .length==0 || roll.length==0 || email.length == 0 || password.length == 0 || phone.length == 0 || ssc.length == 0 || hsc.length == 0 || avg.length ==0)
+            alert("Enter all Details"); 
+        else if (roll.length !=4)
+            alert("Enter valid Roll number");
+        else if(password.length<6)
+            alert("Password  should be greater than 6 digits");
+        else if (atpos<1 || dotpos<atpos+2 || dotpos+2>=email.length) {
+            alert("Not a valid e-mail address");
+        
+        }
+        else if(password.length<6)
+            alert("Password  should be greater than 6 digits")
+        else if(phone.length!=10)
+            alert ("Enter Valid mobile number");
+        
+        else
+        {
+            $.ajax({
+                type: "POST",
+                url: '/signup/',
+                data: signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                console.log(message);
+                    if (message =='success') {
+                       window.location.href = "/plogin/";
+                    }
+                    else if(message=='exists')
+                    {
+                        alert("User Exists.Please Login");
+                    }
+                    else
+                    {
+                    alert('Error');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+        }
+    }   
 
 function studentLogin() {
         console.log('loginform');
@@ -75,7 +100,7 @@ function companyRegister() {
         var back = document.getElementById("back");
         var ppt_date = document.getElementById("ppt_date");
         var ppt_time = document.getElementById("ppt_time");
-        if(salary)
+    
 
         console.log('registerform');
         $.ajax({
