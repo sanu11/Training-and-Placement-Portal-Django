@@ -1,10 +1,7 @@
+import datetime
 from django.shortcuts import render
 from .models import Student, Company, Message, Verify, Result, Admin ,Year , Average
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.http import HttpResponse
-from django.conf import settings
-from datetime import datetime
-from django.template.loader import render_to_string
 from django.views.decorators.csrf import *
 from django.core import serializers
 from gcm.models import get_device_model
@@ -55,6 +52,14 @@ def login_details(request):
             return HttpResponse(obj.name)
         else:
             return HttpResponse("Incorrect Password")
+    
+    elif Admin.objects.filter(email=get_mail).exists():
+        obj = Admin.objects.get(email=get_mail)
+        if obj.password == get_pw:
+            return HttpResponse(obj.name)
+        else:
+            return HttpResponse("Incorrect Password")
+
     else:
         return HttpResponse("User not found")
 
@@ -166,20 +171,22 @@ def get_main_page(request):
 
 @csrf_exempt
 def get_developers_page(request):
-    if not request.session.get("name"):
-            return render(request, 'app/login.html', {})
-    else:
+    if  request.session.get("name"):
+        name = request.session["name"]
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
             login = 1
             print "Admin login"
+            name = request.session["name"]
+        
         # student login
         elif Student.objects.filter(email=get_mail).exists():
             login = 2
             print "Student login"
-        
-        name = request.session["name"]
-        return render(request, 'app/developers.html', {"login":login,"name":name})
+    else:
+        login = 0
+        name=""
+    return render(request, 'app/developers.html', {"login":login,"name":name})
 
 @csrf_exempt
 def get_signup_page(request):
@@ -398,7 +405,7 @@ def get_statistics_page(request):
             companies_max_criteria = companies_min_criteria
 
         companies = companies_max_criteria.order_by('-c_id')
-
+        print (companies[0].ppt_date)
         name = request.session["name"]
         
         return render(request, 'app/statistics.html', {"companies": companies,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login})
@@ -483,7 +490,7 @@ def web_signup(request):
         # c.activeBack=request.POST.get("activeBack")
 
         # for entry in dbx.files_list_folder('').entries:
-        # 	print(entry.name)
+        #   print(entry.name)
         if request.FILES["resume"]:
             myfile = request.FILES["resume"]
             data = myfile.read()
@@ -518,26 +525,29 @@ def web_signup(request):
 @csrf_exempt
 def web_login(request):
     if request.method == "POST":
+        print "in web_login"
         get_mail = request.POST.get("email")
         get_pw = request.POST.get("password")
-        if Admin.objects.filter(email=get_mail).exists():
-            obj = Admin.objects.get(email=get_mail)
-            if obj.password == get_pw:
-                name = obj.name
-                request.session['email'] = get_mail
-                request.session['name'] = name
-                return render(request, 'app/redirect.html', {})
-            else:
-                return HttpResponse("Incorrect Password")
+        print (get_mail)
 
-        elif Student.objects.filter(email=get_mail).exists():
+        if Student.objects.filter(email=get_mail).exists():
             obj = Student.objects.get(email=get_mail)
             if obj.password == get_pw:
                 name = obj.name
                 print name, get_mail
                 request.session['email'] = get_mail
                 request.session['name'] = name
-                return render(request, 'app/redirect.html', {})
+                return HttpResponse("Success")
+            else:
+                return HttpResponse("Incorrect Password")
+
+        elif Admin.objects.filter(email=get_mail).exists():
+            obj = Admin.objects.get(email=get_mail)
+            if obj.password == get_pw:
+                name = obj.name
+                request.session['email'] = get_mail
+                request.session['name'] = name
+                return HttpResponse("Success")
             else:
                 return HttpResponse("Incorrect Password")
 
@@ -644,9 +654,9 @@ def web_upload_result(request):
                 obj.save()
 
             title = company + " " + choice
-            body = url
+            
             Device = get_device_model()
-            Device.objects.all().send_message({'type': 'gen_msg', 'title': title, 'body': body})
+            Device.objects.all().send_message({'type': 'result', 'title': title, 'url': url})
             name = request.session["name"]
             return render(request, 'app/home.html', {"login": 1, "name": name})
         else:
@@ -660,7 +670,9 @@ def web_upload_result(request):
 def web_download_students(request):
     year = request.POST["year"]
     branch = request.POST["branch"]
-    average = request.POST["average"]
+    minavg = request.POST["minavg"]
+    maxavg = request.POST["maxavg"]
+
     if year == "All":
         students_year = Student.objects.all()
     else:
@@ -671,22 +683,18 @@ def web_download_students(request):
     else:
         students_branch = students_year.filter(branch=branch)
 
-    if average == "All":
-        students_average = students_branch
-    else:
-        avg = Average.objects.get(a_id = average)
-        if avg.above:
-            students_average = students_branch.filter(average__gte = avg.percent)
-        else:
-            students_average = students_branch.filter(average__lte = avg.percent)
-    print students_average
-    students_average = list(students_average)
+    students_min_average = students_branch.filter(average__gte=minavg)
+
+
+    students_max_average = students_min_average.filter(average__lte=maxavg)
+
+    students = students_max_average
     
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="sanika.csv"'
     writer = csv.writer(response)
     writer.writerow(['Roll Number', 'Name','Email','Phone','Gender','Branch','SSC','HSC', 'Average','Active back','Resume'])
-    for x in students_average:
+    for x in students:
         writer.writerow([x.roll, x.name , x.email , x.phone , x.gender, x.branch ,x.ssc , x.hsc , x.average ,x.active_back , x.url])
         print writer
     return response
@@ -725,6 +733,10 @@ def web_register_company(request):
         back = request.POST["back"]
         ppt_date = request.POST["ppt_date"]
         ppt_time = request.POST["ppt_time"]
+        ppt_date = str(ppt_date)
+        print (ppt_date)
+        ppt_date = datetime.datetime.strptime(ppt_date, '%m/%d/%Y').strftime('%Y-%m-%d')
+        print (ppt_date)
         other_details = request.POST["other_details"]
         if other_details == "":
             other_details = None
@@ -757,8 +769,11 @@ def web_update_company(request):
         reg_link = request.POST["regLink"]
         reg_start_date = request.POST["regStartDate"]
         reg_start_time = request.POST["regStartTime"]
+        reg_start_date = datetime.datetime.strptime(reg_start_date, '%m/%d/%Y').strftime('%Y-%m-%d')
         reg_end_date = request.POST["regEndDate"]
         reg_end_time = request.POST["regEndTime"]
+        reg_end_date = datetime.datetime.strptime(reg_end_date, '%m/%d/%Y').strftime('%Y-%m-%d')
+
         other_details = request.POST["otherDetails"]
         obj = Company.objects.get(name=name)
         if obj.reg_link:

@@ -23,8 +23,15 @@
     .navbar {
       margin-bottom: 0;
       border-radius: 0;
+      background-color:#101B2D;
+      font-family: Georgia, Times, "Times New Roman", serif;
     }
-    
+    .navbar1 {
+      margin-bottom: 0;
+      border-radius: 0;
+
+      font-family: Georgia, Times, "Times New Roman", serif;
+    }
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
     .row.content {height: 450px}
     
@@ -32,21 +39,26 @@
     .sidenav {
       padding-top: 20px;
       background-color: #f1f1f1;
-      height: 110%;
+      height: 130%;
     }
     
     /* Set black background color, white text and some padding */
     footer {
       background-color: #353739;
-	  font-size:15px;
+    font-size:15px;
       color: #b3b3b1;
       padding: 15px;
+      font-family: Georgia, Times, "Times New Roman", serif;
     }
-	footer a:hover
-	{
-	text-decoration:none;
-	color:white;
-	}
+  footer a:hover
+  {
+  text-decoration:none;
+  color:white;
+  }
+
+  h3,body {
+  font-family: Georgia, Times, "Times New Roman", serif;
+  }
     
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
@@ -56,7 +68,7 @@
       }
       .row.content {height:auto;} 
     }
-	body {
+  body {
     background-color: #eee;
 }
 
@@ -77,12 +89,10 @@
   
   </head>
 <body>
-
-
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
 <h1 class="text-center"> 
-<a class="pull-left" href="/home/"> 
+<a class="pull-left" href="/"> 
 <img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
 </a><span style="margin-left: -20%; color: rgb(222, 222, 222);">Training and Placement</span></h1>  
 
@@ -97,7 +107,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav" style="margin-left:15.5%;">
-        <li><a href="/home/">Home</a></li>
+        <li><a href="/">Home</a></li>
         
     <li><a href="/statistics/">Statistics</a></li>
     <li><a href="/notifications/">Notifications</a></li>
@@ -118,13 +128,11 @@
     </div>
   </div>
 </nav>
-  
-  
-<<div class="container-fluid ">    
+<div class="container-fluid">
   <div class="row content">
     <div class="col-sm-2 sidenav ">
    
- <div class="navbar"  >
+ <div class="navbar1">
       <ul class="nav navbar-nav" >
     <br><br>
       <li ><a href="/students/"><b>Students  Info</b></a></li>
@@ -141,7 +149,7 @@
 
 
     <div class="col-sm-8 text-left" style="background-color:#FFFFFF">
-<form class="form-horizontal" id="update" autocomplete="off" method="POST"  enctype="multipart/form-data">
+<form class="form-horizontal" id="update" autocomplete="off" method="POST" role="form"  enctype="multipart/form-data">
 
 <fieldset>
 
@@ -150,18 +158,16 @@
 
 <!-- Button Drop Down -->
 <div class="form-group">
-<br>
 <h2 align="center" class="text-center" style="margin-left:11%;"> <b>Company Update</b></h2>
-  <br>
-  <label class="col-sm-4 control-label">Company</label>
-  <div class="col-sm-6">
+  <label class="col-sm-3 control-label">Company</label>
+  <div class="col-sm-9">
     <div class="input-group">
       
       <div class="input-group-btn">
         <select class="form-control" name="name" id="company">
-		<option selected disabled hidden>Select Company</option>
+    <option selected disabled hidden>Select Company</option>
            {% for company in companies %}
-            <option value = {{company.name}} > {{company.name}} </option>
+            <option value = "{{  company.name }}" > {{company.name}} </option>
             {% endfor %}
                            
       </select>
@@ -174,8 +180,8 @@
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-sm-4 control-label" for="registrationLink">Registration Link</label>  
-  <div class="col-sm-6">
+  <label class="col-sm-3 control-label" for="registrationLink">Registration Link</label>
+  <div class="col-sm-9">
   <input id="registrationLink" name="regLink" type="url" placeholder="Registration Link" class="form-control input-md" required="">
     
   </div>
@@ -183,23 +189,23 @@
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-sm-4 control-label" for="registrationStartDate">Registration Start</label>
-  <div class="col-sm-3">
-  <input class="form-control" id="registrationStartDate" name="regStartDate" min="2016-06-01" placeholder="MM/DD/YYYY" type="date" required/>
+  <label class="col-sm-3 control-label" for="registrationStartDate">Registration Start</label>
+  <div class="col-sm-5">
+  <input class="form-control" id="registrationStartDate" name="regStartDate" min="2016-06-01" placeholder="MM/DD/YYYY" type="text" required/>
   </div>
-  <div class="col-sm-3">
+  <div class="col-sm-4">
   <input id="registrationStartTime" name="regStartTime" type="time" placeholder="HH:MM" class="form-control input-md" required="">
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-sm-4 control-label" for="registrationEndDate">Registration End </label>
-  <div class="col-sm-3">
-  <input class="form-control" id="registrationEndDate" name="regEndDate" min="2016-06-01" placeholder="MM/DD/YYYY" type="date" required/>
+  <label class="col-sm-3 control-label" for="registrationEndDate">Registration End </label>
+  <div class="col-sm-5">
+  <input class="form-control" id="registrationEndDate" name="regEndDate" min="2016-06-01" placeholder="MM/DD/YYYY" type="text" required/>
     
   </div>
-  <div class="col-sm-3">
+  <div class="col-sm-4">
   <input id="registrationEndTime" name="regEndTime" type="time" placeholder="HH:MM" class="form-control input-md" required="">
     </div>
 </div>
@@ -207,16 +213,16 @@
 
 <!-- Textarea -->
 <div class="form-group">
-  <label class="col-sm-4 control-label" for="otherDetails">Other Details</label>
-  <div class="col-sm-6">                     
+  <label class="col-sm-3 control-label" for="otherDetails">Other Details</label>
+  <div class="col-sm-9">
     <textarea class="form-control" id="otherDetails" name="otherDetails" maxlength="550"></textarea>
   </div>
 </div>
 
 <!-- Button -->
 <div class="form-group">
-  <label class="col-sm-4 control-label" ></label>
-  <div class="col-sm-6" align="center">
+  <label class="col-sm-3 control-label" ></label>
+  <div class="col-sm-9" align="center">
     <button type="button" name="update" onclick="companyUpdate()" class="btn btn-info">Update</button>
 
   </div>
@@ -237,28 +243,28 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
 <script>
-	$(document).ready(function(){
-		var date_input=$('input[name="regStartDate"]'); //our date input has the name "date"
-		var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-		date_input.datepicker({
-			format: 'mm/dd/yyyy',
-			container: container,
-			todayHighlight: true,
-			autoclose: true,
-		})
-	})
+  $(document).ready(function(){
+    var date_input=$('input[name="regStartDate"]'); //our date input has the name "date"
+    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+    date_input.datepicker({
+      format: 'mm/dd/yyyy',
+      container: container,
+      todayHighlight: true,
+      autoclose: true,
+    })
+  })
 </script>
 <script>
-	$(document).ready(function(){
-		var date_input=$('input[name="regEndDate"]'); //our date input has the name "date"
-		var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-		date_input.datepicker({
-			format: 'mm/dd/yyyy',
-			container: container,
-			todayHighlight: true,
-			autoclose: true,
-		})
-	})
+  $(document).ready(function(){
+    var date_input=$('input[name="regEndDate"]'); //our date input has the name "date"
+    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+    date_input.datepicker({
+      format: 'mm/dd/yyyy',
+      container: container,
+      todayHighlight: true,
+      autoclose: true,
+    })
+  })
 </script>
 <footer class="container-fluid text-center">
  <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>

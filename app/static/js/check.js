@@ -1,9 +1,82 @@
 
+function signup() {
+        console.log('loginform');
+        var loginform = $('#' + 'loginform');
+        var csrftoken = getCookie('csrftoken');
+
+        $.ajax({
+            type: "POST",
+            url: '/login/',
+            data: loginform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+            success: function(message) {
+            console.log(message);
+                if (message =='Success') {
+                   window.location.href = "/";
+                }
+                else if(message=='Incorrect Password')
+                {
+                    alert("Incorrect Password");
+                }
+                else if (message == 'User not found')
+                {
+                    alert('User not found');
+                }
+                else
+                {
+                alert('Error');
+                }
+            },
+            error: function(xhr, errmsg, err) {
+                alert('Error');
+            },
+        });
+    }
+
+function studentLogin() {
+        console.log('loginform');
+        var loginform = $('#' + 'loginform');
+        var csrftoken = getCookie('csrftoken');
+
+        $.ajax({
+            type: "POST",
+            url: '/login/',
+            data: loginform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+            success: function(message) {
+            console.log(message);
+                if (message =='Success') {
+                   window.location.href = "/";
+                }
+                else if(message=='Incorrect Password')
+                {
+                    alert("Incorrect Password");
+                }
+                else if (message == 'User not found')
+                {
+                    alert('User not found');
+                }
+                else
+                {
+                alert('Error');
+                }
+            },
+            error: function(xhr, errmsg, err) {
+                alert('Error');
+            },
+        });
+    }
 
 function companyRegister() {
         console.log('registerform');
         var registerform = $('#' + 'register');
         var csrftoken = getCookie('csrftoken');
+        var name  = document.getElementById("name");
+        var salary = document.getElementById("salary");
+        var criteria = document.getElementById("criteria");
+        var back = document.getElementById("back");
+        var ppt_date = document.getElementById("ppt_date");
+        var ppt_time = document.getElementById("ppt_time");
+        if(salary)
+
         console.log('registerform');
         $.ajax({
             type: "POST",
@@ -67,8 +140,9 @@ function downloadStudents() {
         var csrftoken = getCookie('csrftoken');
         var year = document.getElementById("year").value;
         var branch = document.getElementById("branch").value;
-        var average = document.getElementById("average").value;
-        var json =  { year :year , branch :branch , average:average,csrfmiddlewaretoken:csrftoken}; 
+        var minavg = document.getElementById("minavg").value;
+        var maxavg = document.getElementById("maxavg").value;
+        var json =  { year :year , branch :branch , minavg:minavg,maxavg:maxavg,csrfmiddlewaretoken:csrftoken};
         console.log(json);
        
         $.ajax({
@@ -80,7 +154,7 @@ function downloadStudents() {
                 var hiddenElement = document.createElement('a');
                 hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(message);
                 hiddenElement.target = '_blank';
-                hiddenElement.download = year + '_' + branch + '_' + average + '.csv';
+                hiddenElement.download = year + '_' + branch + '_' + minavg + 'to' + maxavg  + '.csv';
                 hiddenElement.click();
                 },
             error: function(xhr, errmsg, err) {

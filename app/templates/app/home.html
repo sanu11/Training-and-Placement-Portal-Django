@@ -22,9 +22,17 @@
     .navbar {
       margin-bottom: 0;
       border-radius: 0;
+   background-color:#101B2D;
+      font-family: Georgia, Times, "Times New Roman", serif;
     
     }
-    
+
+     .navbar1 {
+      margin-bottom: 0;
+      border-radius: 0;
+
+      font-family: Georgia, Times, "Times New Roman", serif;
+    }
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
     .row.content {height: 450px}
     
@@ -32,21 +40,23 @@
     .sidenav {
       padding-top: 20px;
       background-color: #f1f1f1;
-      height: 110%;
+      height: 130%;
+
     }
     
     /* Set black background color, white text and some padding */
     footer {
-      background-color: #353739;
-	  font-size:15px;
+      background-color: #3b3b3b;
+    font-size:15px;
       color: #b3b3b1;
       padding: 15px;
+    font-family: Georgia, Times, "Times New Roman", serif;
     }
-	footer a:hover
-	{
-	text-decoration:none;
-	color:white;
-	}
+  footer a:hover
+  {
+  text-decoration:none;
+  color:white;
+  }
     
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
@@ -56,14 +66,17 @@
       }
       .row.content {height:auto;} 
     }
-	.intropara
-	{
-	font-size:16px;
-	text-indent:30px;
-	text-align:justify;
-	}
-	
-   
+  .intropara
+  {
+  font-size:16px;
+
+  text-align:justify;
+  }
+  
+ body{
+    font-family: Georgia, Times, "Times New Roman", serif;
+
+   }
 }
   </style>
   </head>
@@ -72,7 +85,7 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
 <h1 class="text-center"> 
-<a class="pull-left" href="/home/"> 
+<a class="pull-left" href="/"> 
 <img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
 </a><span style="margin-left: -20%; color: rgb(222, 222, 222);">Training and Placement</span></h1>  
 
@@ -88,7 +101,7 @@
      {% if login %}
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav" style="margin-left:15.5%;">
-        <li><a href="/home/">Home</a></li>
+        <li><a href="/">Home</a></li>
         
     <li><a href="/statistics/">Statistics</a></li>
     <li><a href="/notifications/">Notifications</a></li>
@@ -122,7 +135,7 @@
   <div class="row content">
     <div class="col-sm-2 sidenav ">
     {% if login == 1 %}
- <div class="navbar"  >
+ <div class="navbar1"  >
       <ul class="nav navbar-nav" >
     <br><br>
       <li ><a href="/students/"><b>Students  Info</b></a></li>
@@ -137,7 +150,7 @@
     {% endif %}
     </div>
 
-    <div class="col-sm-8 text-left"> 
+    <div class="col-sm-8 text-left" style="padding-left:40px;padding-right:40px;">
       <h1 class="text-center"><b>Welcome</b></h1>
       <br>
       <p class="intropara">The Training and Placement cell is headed by Mr. Satish  Narkhede (TPO)
