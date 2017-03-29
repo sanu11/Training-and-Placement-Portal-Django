@@ -11,6 +11,7 @@ function signup() {
         var ssc = document.getElementById('10th').value;
         var hsc = document.getElementById('12th').value;
         var avg = document.getElementById('average').value;
+
         var atpos = email.indexOf("@");
         var dotpos = email.lastIndexOf(".");
         
@@ -94,70 +95,80 @@ function companyRegister() {
         console.log('registerform');
         var registerform = $('#' + 'register');
         var csrftoken = getCookie('csrftoken');
-        var name  = document.getElementById("name");
-        var salary = document.getElementById("salary");
-        var criteria = document.getElementById("criteria");
-        var back = document.getElementById("back");
-        var ppt_date = document.getElementById("ppt_date");
-        var ppt_time = document.getElementById("ppt_time");
+        var name  = document.getElementById("name").value;
+        var ppt_date = document.getElementById("ppt_date").value;
+        var ppt_time = document.getElementById("ppt_time").value;
+        
+        if(name.length==0)
+            alert('Enter name');
+        
+        else if(ppt_date.length==0 && ppt_time.length>0)
+            alert("Enter date");
     
+        else 
+        {
+            $.ajax({
+                type: "POST",
+                url: '/cregister/',
+                data: registerform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                    if (message =='success') {
+                        alert('Registered Successfully');
+                         window.location.href = "/";
 
-        console.log('registerform');
-        $.ajax({
-            type: "POST",
-            url: '/cregister/',
-            data: registerform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
-            success: function(message) {
-                if (message =='success') {
-                    alert('Registered Successfully');
-                     window.location.href = "/";
-
-                }
-                else if(message=='exists')
-                {
-                    alert("Already registered.")
-                    location.reload();
-                }
-                else
-                {
-                    alert('Error occured');
-                }
-            },
-            error: function(xhr, errmsg, err) {
-                alert('Error');
-            },
-        });
+                    }
+                    else if(message=='exists')
+                    {
+                        alert("Already registered.")
+                        location.reload();
+                    }
+                    else
+                    {
+                        alert('Error occured');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+        }
     }
 
 function companyUpdate() {
         console.log('updateform');
         var updateform = $('#' + 'update');
         var csrftoken = getCookie('csrftoken');
+        var name = document.getElementById("company");
+        var selectedvalue = name.options[name.selectedIndex].value;
+        console.log(selectedvalue);
+        if(selectedvalue == "Select Company")
+            alert("Select Company");
+        else {
+            $.ajax({
+                type: "POST",
+                url: '/update/',
+                data:updateform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                    if (message =='success') {
+                        alert('Updated Successfully');
+                        window.location.href = "/";
 
-        $.ajax({
-            type: "POST",
-            url: '/update/',
-            data:updateform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
-            success: function(message) {
-                if (message =='success') {
-                    alert('Updated Successfully');
-                    window.location.href = "/";
-
-                }
-                else if(message=='updated')
-                {
-                    alert("Already Updated.")
-                    location.reload();
-                }
-                else
-                {
-                    alert('Error occured');
-                }
-            },
-            error: function(xhr, errmsg, err) {
-                alert('Error');
-            },
-        });
+                    }
+                    else if(message=='updated')
+                    {
+                        alert("Already Updated.")
+                        location.reload();
+                    }
+                    else
+                    {
+                        alert('Error occured');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+        }
     }
 
 function downloadStudents() {

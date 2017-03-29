@@ -733,21 +733,31 @@ def web_register_company(request):
         back = request.POST["back"]
         ppt_date = request.POST["ppt_date"]
         ppt_time = request.POST["ppt_time"]
-        ppt_date = str(ppt_date)
-        print (ppt_date)
-        ppt_date = datetime.datetime.strptime(ppt_date, '%m/%d/%Y').strftime('%Y-%m-%d')
-        print (ppt_date)
         other_details = request.POST["other_details"]
+    
+        if ppt_date:
+            ppt_date = str(ppt_date)
+            print (ppt_date)
+
+            ppt_date = datetime.datetime.strptime(ppt_date, '%m/%d/%Y').strftime('%Y-%m-%d')
+            print (ppt_date)
+        
         if other_details == "":
             other_details = None
             # add to database
+
         obj = Company()
         obj.name = name
-        obj.criteria = criteria
-        obj.salary = salary
-        obj.other_details = other_details
-        obj.ppt_date = ppt_date + " " + ppt_time
-        obj.back = back
+        if criteria:
+            obj.criteria = criteria
+        if salary:
+            obj.salary = salary
+        if other_details:
+            obj.other_details = other_details
+        if ppt_date:
+            obj.ppt_date = ppt_date + " " + ppt_time
+        if back:
+            obj.back = back
         obj.save()
 
         # send notification
