@@ -17,16 +17,15 @@ function signup() {
         console.log(name+ " " + roll + " " + email + " " + password + " " + phone + " " + ssc + " " + hsc + " " + avg);
         if(name .length==0 || roll.length==0 || email.length == 0 || password.length == 0 || phone.length == 0 || ssc.length == 0 || hsc.length == 0 || avg.length ==0)
             alert("Enter all Details"); 
-        else if (roll.length !=4)
-            alert("Enter valid Roll number");
-        else if(password.length<6)
-            alert("Password  should be greater than 6 digits");
+        else if (roll.length !=4) 
+            alert("Enter  valid 4 digit Roll number ");
+    
         else if (atpos<1 || dotpos<atpos+2 || dotpos+2>=email.length) {
-            alert("Not a valid e-mail address");
+            alert("Enter valid e-mail address");
         
         }
         else if(password.length<6)
-            alert("Password  should be greater than 6 digits")
+            alert("Password  should be greater than 5 digits")
         else if(phone.length!=10)
             alert ("Enter Valid mobile number");
         
