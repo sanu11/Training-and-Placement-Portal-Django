@@ -27,7 +27,7 @@ function signup() {
         else if(password.length<6)
             alert("Password  should be greater than 5 digits")
         else if(phone.length!=10)
-            alert ("Enter Valid mobile number");
+            alert ("Enter valid mobile number");
         
         else
         {
