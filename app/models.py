@@ -21,7 +21,7 @@ class Student(models.Model):
 	average=models.FloatField()
 	placed=models.CharField(max_length=4,default="No")
 	active_back=models.CharField(max_length=4,default="No")
-	url=models.CharField(max_length=500)
+	url=models.CharField(max_length=500,null=True,blank=True)
 	company_id=models.IntegerField(default=-1)
 #	resume=models.FileField()
 
@@ -63,7 +63,7 @@ class Company(models.Model):
 class Verify(models.Model):
 	v_id=models.AutoField(primary_key=True)
 	prn=models.CharField(max_length=50)
-
+	
 	def __str__(self):
 		return self.prn
 
@@ -99,14 +99,3 @@ class Year(models.Model):
 
 	def __str__(self):
 		return  self.year
-
-class Average(models.Model):
-	a_id=models.AutoField(primary_key=True)
-	above = models.BooleanField(max_length=40)
-	percent = models.IntegerField()
-
-	def __str__(self):
-		if self.above:
-			return "Above " + str(self.percent)
-		else:
-			return "Below " + str(self.percent)
