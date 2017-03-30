@@ -405,7 +405,7 @@ def get_statistics_page(request):
             companies_max_criteria = companies_min_criteria
 
         companies = companies_max_criteria.order_by('-c_id')
-        print (companies[0].ppt_date)
+       
         name = request.session["name"]
         
         return render(request, 'app/statistics.html', {"companies": companies,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login})
