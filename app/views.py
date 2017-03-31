@@ -8,8 +8,11 @@ from gcm.models import get_device_model
 import json,csv
 import dropbox
 import requests
+# sanika account
+# Lae_eeDcmDgAAAAAAAACpAf6K4pN2cMT9Pa3UcARF6HVT5kbljzzyo7DazeUtE9D
 
-dbx = dropbox.Dropbox('Lae_eeDcmDgAAAAAAAACpAf6K4pN2cMT9Pa3UcARF6HVT5kbljzzyo7DazeUtE9D')
+# Sirs account
+dbx = dropbox.Dropbox('39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi')
 st = dbx.users_get_current_account()
 
 
@@ -504,8 +507,11 @@ def web_signup(request):
 
         #     payload = "{\"path\":" + '"' + file_to + '"' + ",\"short_url\": true}"
         #     print payload
+        # Sanika account
+        # Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR
+        # Sirs account
         #     headers = {
-        #         'authorization': "Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR",
+        #         'authorization': "Bearer 39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi",
         #         'content-type': "application/json",
         #         'cache-control': "no-cache",
         #     }
@@ -579,7 +585,7 @@ def web_notify(request):
                 data = myfile.read()
                 filename = myfile.name
                 extension = filename.split('.')
-                file_to = "/Messages/" + title + '.' + extension[1]
+                file_to = "/messages/" + title + '.' + extension[1]
                 print file_to
                 dbx.files_upload(data, file_to)
 
@@ -587,8 +593,11 @@ def web_notify(request):
 
                 payload = "{\"path\":" + '"' + file_to + '"' + ",\"short_url\": true}"
                 print payload
+                # sanika account
+                # Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR
+                #Sirs account
                 headers = {
-                    'authorization': "Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR",
+                    'authorization': "Bearer 39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi",
                     'content-type': "application/json",
                     'cache-control': "no-cache",
                 }
@@ -628,8 +637,11 @@ def web_upload_result(request):
 
             payload = "{\"path\":" + '"' + file_to + '"' + ",\"short_url\": true}"
             print payload
+            # Sanikas account
+            # Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR
+            # Sirs account
             headers = {
-                'authorization': "Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR",
+                'authorization': "Bearer 39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi",
                 'content-type': "application/json",
                 'cache-control': "no-cache",
             }
