@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Training and Placement</title>
+  <title>Settings </title>
   <meta charset="utf-8">
   <meta name="description" content="PICT Training and placement online portal">
 <meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
@@ -22,12 +22,10 @@
     .navbar {
       margin-bottom: 0;
       border-radius: 0;
-   background-color:#101B2D;
-      font-family: Georgia, Times, "Times New Roman", serif;
-    
+      background-color:#101B2D;
+        font-family: Georgia, Times, "Times New Roman", serif;
     }
-
-     .navbar1 {
+    .navbar1 {
       margin-bottom: 0;
       border-radius: 0;
 
@@ -41,23 +39,24 @@
       padding-top: 20px;
       background-color: #f1f1f1;
       height: 130%;
-
     }
     
     /* Set black background color, white text and some padding */
-    footer {
-      background-color: #3b3b3b;
+   footer {
+      background-color: #353739;
     font-size:15px;
       color: #b3b3b1;
       padding: 15px;
-    font-family: Georgia, Times, "Times New Roman", serif;
     }
   footer a:hover
   {
   text-decoration:none;
   color:white;
+    font-family: Georgia, Times, "Times New Roman", serif;
   }
-    
+    body {
+      font-family: Georgia, Times, "Times New Roman", serif;
+      }
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
       .sidenav {
@@ -66,21 +65,10 @@
       }
       .row.content {height:auto;} 
     }
-  .intropara
-  {
-  font-size:16px;
-
-  text-align:justify;
-  }
-  
- body{
-    font-family: Georgia, Times, "Times New Roman", serif;
-
-   }
-}
   </style>
   </head>
 <body>
+
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -98,17 +86,15 @@
       </button>
       
     </div>
-     {% if login %}
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav" style="margin-left:15.5%;">
         <li><a href="/">Home</a></li>
         
     <li><a href="/statistics/">Statistics</a></li>
     <li><a href="/notifications/">Notifications</a></li>
-    <li><a href="/results/">Results</a></li>
-    
+     <li><a href="/results/">Results</a></li>
+
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
       
     <li class="dropdown">
@@ -117,66 +103,77 @@
             <li><a href="/logout/">Logout</a></li>
             {% if login == 2 %}
             <li><a href="/psettings/">Settings</a></li>
-             {% endif %}
+              {% endif %}           
+
            
           </ul>
         </li>
-    
      </ul>
-      {% else %}
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="/psignup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="/plogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
-     {% endif %}
     </div>
   </div>
 </nav>
-
+  
   
 <div class="container-fluid ">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
-    {% if login == 1 %}
- <div class="navbar1"  >
-      <ul class="nav navbar-nav" >
-    <br><br>
-      <li ><a href="/students/"><b>Students  Info</b></a></li>
-      <li><a href="/pregister/"><b>Register  Company</b></a></li>
-      <li><a href="/pupdate/"><b>Update  Company</b></a> </li>
-      <li><a href="/pnotify/"><b>Notify  Candidate</b></a> </li>
-      <li><a href="/presult/"><b>Upload Result</b></a> </li>
-
-
-    </ul>
     </div>
-    {% endif %}
-    </div>
+  <!----Main Body  -->
+    <div class="col-sm-8 text-left"> 
+      <h2 class="text-center" style="margin-bottom:20px;"><b>Settings</b></h2>
+    <div style="margin-bottom:10px;"></div>
+    <div class="panel-group" id="accordion">
 
-    <div class="col-sm-8 text-left" style="padding-left:40px;padding-right:40px;">
-      <h1 class="text-center"><b>Welcome</b></h1>
-      <br>
-      <p class="intropara">The Training and Placement cell is headed by Mr. Satish  Narkhede (TPO)
-    who is keen in encouraging students to prefer jobs that better suit their profile.
-    The placement season commences in the first month of every academic year and continues
-    till the end of the academic year.
-    Pre-Placement Talks are conducted for the final year students prior to the placement session every year.</p>
-      <hr>
+
+
+    <div>
+    <h4>Resume &nbsp;&nbsp;    {% if resume %}
+    <a href = {{resume}}>{{resume}}</a>
+    
+    {% else %}
+    Not Uploaded 
+    {% endif %}</h4>
+    </div>
+<form class="form-horizontal" id="result" enctype="multipart/form-data" action="/resume/" method="POST" >
+{% csrf_token %}
+<fieldset>
+    <div class="panel">
+        <h4 >
+         <input type="checkbox" name= "upload resume"  data-toggle="collapse"  href=#expand >&nbsp;&nbsp;   {% if resume %} Update Resume {% else %} Upload Resume 
+        {% endif %}</h4>
+      </div>
+      <div id="expand" class="panel-collapse collapse">
+      <div class="col-sm-4">
+       <div class="input-group">
+          <input  name="resume" class="form-control"  id="resume" type="file">
+       </div>
+    
+  </div>
+      <input type="submit" id="singlebutton"  name="singlebutton" class="btn btn-info " value="Submit" ></input>
+          
+      </div>
+      <!-- Button -->
+
+ 
+    
+</div>
+</fieldset>
+</form>  
+    
+         
+
+    </div> 
+    
     </div>
     <div class="col-sm-2 sidenav">
-      <!-- <div class="well">
-        <p>ADS</p>
-      </div>
-      <div class="well">
-        <p>ADS</p>
-      </div> -->
+      
     </div>
   </div>
 </div>
 
 <footer class="container-fluid text-center">
 <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
-<p><a href="/developers-page/">Developers</a></p></div> 
+<p><a href="/developers-page/">Developers</a></p></div>
 </footer>
 </body>
 </html>

@@ -24,12 +24,14 @@ urlpatterns = [
 	url(r'pupdate/$',views.get_update_page),
 	url(r'pnotify/$',views.get_notify_page),
 	url(r'presult/$',views.get_result_upload_page),
+	url(r'presume/$',views.get_resume_upload_page),
 
 	url(r'cregister/$',views.web_register_company),
 	url(r'update/$',views.web_update_company),
 	url(r'notify/$',views.web_notify),
 	url(r'signup/$',views.web_signup),
 	url(r'login/$',views.web_login),
+	url(r'resume/$',views.web_upload_resume),
 	url(r'result/$',views.web_upload_result),
 	url(r'downloadstudents/$', views.web_download_students),
 	url(r'downloadcompanies/$', views.web_download_companies),
@@ -42,6 +44,7 @@ urlpatterns = [
 
 	url(r'logout/$',views.logout),
 	url(r'home/$',views.get_main_page),
+	url(r'psettings/$',views.get_settings_page),
 
 	url(r'^$', views.get_main_page),
 	url(r'^developers-page/$', views.get_developers_page),

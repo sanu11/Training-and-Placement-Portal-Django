@@ -40,7 +40,7 @@ function signup() {
                 success: function(message) {
                 console.log(message);
                     if (message =='success') {
-                       window.location.href = "/plogin/";
+                       window.location.href = "/presume/";
                     }
                     else if(message=='exists')
                     {
@@ -263,35 +263,6 @@ function downloadCompanies() {
 //                }else{
 //                    alert('Error occured');
 //                }
-//            },
-//            error: function(xhr, errmsg, err) {
-//                alert('Error');
-//            },
-//        });
-//    }
-
-
-//function signup() {
-//        console.log('signup');
-//        var signupform = $('#' + 'signup');
-//        var csrftoken = getCookie('csrftoken');
-//
-//        $.ajax({
-//            type: "POST",
-//            url: '/signup/',
-//            data:signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
-//            success: function(message) {
-//                if (message =='success') {
-//                    alert('Registered Successfully');
-//                    window.location.href = "/";
-//
-//                }else if(message == 'exists'){
-//                    alert('User Exists.Please Login');
-//                    window.location.href ="/plogin/";
-//                }
-//                else{
-//                    alert('Error Occured');
-//                    }
 //            },
 //            error: function(xhr, errmsg, err) {
 //                alert('Error');

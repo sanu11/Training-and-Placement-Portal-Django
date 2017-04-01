@@ -203,6 +203,23 @@ def get_login_page(request):
     print "in login page"
     return render(request, 'app/login.html', {})
 
+@csrf_exempt
+def get_resume_upload_page(request):
+    name = request.session["name"]
+    return render(request, 'app/resumeUpload.html',{"login":2,"name":name})
+
+
+
+def get_settings_page(request):
+    name = request.session["name"]
+    email = request.session["email"]
+    student = Student.objects.get(email=email)
+    resume = None
+    if student.url:
+        resume = student.url
+
+    return render(request, 'app/settings.html',{"login":2,"name":name,"resume":resume})
+
 
 #####UPLOAD pages
 @csrf_exempt
@@ -267,6 +284,7 @@ def get_result_upload_page(request):
 
 
 #######DISPLAY Pages######
+
 
 @csrf_exempt
 def get_students_page(request):
@@ -494,39 +512,50 @@ def web_signup(request):
         else:
             c.activeBack = True
         c.save()
-        # if request.FILES["resume"]:
-        #     myfile = request.FILES["resume"]
-        #     data = myfile.read()
-        #     filename = myfile.name
-        #     extension = filename.split('.')
-        #     file_to = "/students/" + roll + '.' + extension[1]
-        #     print file_to
-        #     dbx.files_upload(data, file_to)
-
-        #     url = "https://api.dropboxapi.com/2/sharing/create_shared_link"
-
-        #     payload = "{\"path\":" + '"' + file_to + '"' + ",\"short_url\": true}"
-        #     print payload
-        # Sanika account
-        # Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR
-        # Sirs account
-        #     headers = {
-        #         'authorization': "Bearer 39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi",
-        #         'content-type': "application/json",
-        #         'cache-control': "no-cache",
-        #     }
-
-        #     response = requests.request("POST", url, data=payload, headers=headers)
-
-        #     res = json.loads(response.text)
-        #     url = res["url"]
-        #     c.url = url
-        #     c.save()
-
+        request.session["name"]=name
+        request.session["email"]=email
         return HttpResponse('success')
     else:
         return HttpResponse('error');
 
+
+def web_upload_resume(request):
+    email = request.session['email']
+    print email
+    student = Student.objects.get(email=email)
+    roll = student.roll
+    if request.FILES["resume"]:
+        myfile = request.FILES["resume"]
+        data = myfile.read()
+        filename = myfile.name
+        extension = filename.split('.')
+        file_to = "/students/" + str(roll) + '.' + extension[1]
+        print file_to
+        dbx.files_upload(data, file_to)
+
+        url = "https://api.dropboxapi.com/2/sharing/create_shared_link"
+
+        payload = "{\"path\":" + '"' + file_to + '"' + ",\"short_url\": true}"
+        print payload
+    # Sanika account
+    # Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR
+    # Sirs account
+        headers = {
+            'authorization': "Bearer 39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi",
+            'content-type': "application/json",
+            'cache-control': "no-cache",
+        }
+
+        response = requests.request("POST", url, data=payload, headers=headers)
+
+        res = json.loads(response.text)
+        url = res["url"]
+        student.url = url
+        student.save()
+        name = request.session["name"]
+        return render(request, 'app/home.html', {"login": 2, "name": name})
+    else:
+        HttpResponse("Error")
 
 @csrf_exempt
 def web_login(request):
