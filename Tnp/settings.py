@@ -41,7 +41,7 @@ DATABASES={}
 DATABASES['default'] = dj_database_url.config()
 
 WSGI_APPLICATION = 'Tnp.wsgi.application'
-#
+# #
 
 ALLOWED_HOSTS =['*'] 
 

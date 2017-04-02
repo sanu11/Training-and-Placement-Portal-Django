@@ -148,31 +148,25 @@
     {% endif %}
     </div>
 
-            
-     
-    <div class="col-sm-8 text-left"> 
-      <h2 class="text-center" style="margin-bottom:20px;"><b>Notifications</b></h2>
-    <div style="margin-bottom:10px;"></div>
-    <div class="panel-group" id="accordion">
-
-
-  
-  {% for result in results %}
-    <div class="panel panel-default">
-      <div class="form-group">
+    <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 
+      <form class="form-horizontal" role="form">
+          
+                <h2><b>Results</b></h2>
+                {% for result in results %}
+              
+                
+                <div class="form-group">
                     <label for="firstName" class="col-sm-20 control-label"> {{forloop.counter}} &nbsp;&nbsp; {{result.company }} {{result.shortlist}}</label>
                 </div>
                 
                 <div class="form-group">
                     <label for="firstName" class="col-sm-20 control-label"><a href= {{result.url}} > {{result.url}}</a></label>
                 </div>
+                {% endfor %}
+        
+            </form> <!-- /form -->
     </div>
-
-          {% endfor %}
-
-    </div> 
     
-    </div>
   </div>
 </div>
 <!-- Extra JavaScript/CSS added manually in "Settings" tab -->
