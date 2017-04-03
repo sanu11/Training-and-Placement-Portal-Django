@@ -331,7 +331,7 @@ def get_students_page(request):
 
             students = students_max_average
             years = Year.objects.all().order_by('-y_id')
-            averages = Average.objects.all()
+           
             name = request.session["name"]
             return render(request, 'app/students.html', {"students": students, "years":years ,"year":year,"branch":branch,"minavg":minavg,"maxavg":maxavg,"name": name})
         # student login
@@ -377,7 +377,7 @@ def get_notifications_page(request):
 
 
 @csrf_exempt
-def get_statistics_page(request):
+def get_companies_page(request):
     if not request.session.get("name"):
         return render(request, 'app/login.html', {})
     else:
@@ -429,7 +429,7 @@ def get_statistics_page(request):
         print (companies[0].ppt_date)
         name = request.session["name"]
         
-        return render(request, 'app/statistics.html', {"companies": companies,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login})
+        return render(request, 'app/companies.html', {"companies": companies,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login})
 
 
 @csrf_exempt

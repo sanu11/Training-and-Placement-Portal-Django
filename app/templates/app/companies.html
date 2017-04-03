@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Training and Placement</title>
+  <title>Placement Statistics</title>
   <meta charset="utf-8">
   <meta name="description" content="PICT Training and placement online portal">
 <meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/check.js"></script>
+
   
    <!---- BootStrap online Libraries        
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -22,12 +24,10 @@
     .navbar {
       margin-bottom: 0;
       border-radius: 0;
-   background-color:#101B2D;
+      background-color:#101B2D;
       font-family: Georgia, Times, "Times New Roman", serif;
-    
     }
-
-     .navbar1 {
+    .navbar1 {
       margin-bottom: 0;
       border-radius: 0;
 
@@ -40,22 +40,24 @@
     .sidenav {
       padding-top: 20px;
       background-color: #f1f1f1;
-      height: 130%;
-
+      height: 150%;
     }
     
     /* Set black background color, white text and some padding */
     footer {
-      background-color: #3b3b3b;
+      background-color: #353739;
     font-size:15px;
       color: #b3b3b1;
       padding: 15px;
-    font-family: Georgia, Times, "Times New Roman", serif;
+      font-family: Georgia, Times, "Times New Roman", serif;
     }
   footer a:hover
   {
   text-decoration:none;
   color:white;
+  }
+  body {
+  font-family: Georgia, Times, "Times New Roman", serif;
   }
     
     /* On small screens, set height to 'auto' for sidenav and grid */
@@ -66,21 +68,12 @@
       }
       .row.content {height:auto;} 
     }
-  .intropara
-  {
-  font-size:16px;
-
-  text-align:justify;
-  }
   
- body{
-    font-family: Georgia, Times, "Times New Roman", serif;
-
-   }
-}
   </style>
   </head>
 <body>
+
+
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -98,17 +91,15 @@
       </button>
       
     </div>
-     {% if login %}
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav" style="margin-left:15.5%;">
         <li><a href="/">Home</a></li>
         
     <li><a href="/companies/">Companies</a></li>
     <li><a href="/notifications/">Notifications</a></li>
-    <li><a href="/results/">Results</a></li>
-    
+     <li><a href="/results/">Results</a></li>
+
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
       
     <li class="dropdown">
@@ -117,23 +108,15 @@
             <li><a href="/logout/">Logout</a></li>
             {% if login == 2 %}
             <li><a href="/psettings/">Settings</a></li>
-             {% endif %}
+              {% endif %}           
            
           </ul>
         </li>
     
      </ul>
-      {% else %}
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="/psignup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="/plogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
-     {% endif %}
     </div>
   </div>
 </nav>
-
-  
 <div class="container-fluid ">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
@@ -153,30 +136,107 @@
     {% endif %}
     </div>
 
-    <div class="col-sm-8 text-left" style="padding-left:40px;padding-right:40px;">
-      <h1 class="text-center"><b>Welcome</b></h1>
-      <br>
-      <p class="intropara">The Training and Placement cell is headed by Mr. Satish  Narkhede (TPO)
-    who is keen in encouraging students to prefer jobs that better suit their profile.
-    The placement season commences in the first month of every academic year and continues
-    till the end of the academic year.
-    Pre-Placement Talks are conducted for the final year students prior to the placement session every year.</p>
-      <hr>
+
+
+    <div class="col-sm-8 text-left">
+  
+  <h2 class="text-center"><b>Statistics</b></h2> 
+<div style="margin-bottom:20px"></div>
+<!-- <p>Table contains placement statistics for the year 2016-17. </p> -->
+<hr>
+<!-- Division for filters -->
+<div class="text-left">
+
+
+<form class="form-horizontal" id="student" method="POST" action ='/statistics/'>
+{% csrf_token %}
+ <div class="form-group text-left">
+   <label class="col-sm-1 control-label" ></label>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;"> <label class="control-label" >MIN</label></div>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+  <label class="control-label" >MAX</label></div>
+    
+   <label class="col-sm-2 control-label" ></label>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+  <label class="control-label" >MIN</label>
+ </div>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+ <label class="control-label" >MAX</label>
+ </div>
+   <div class="col-sm-2"></div>
+ <div class="col-sm-2">
+ </div>
+   </div>
+   
+   
+   <div class="form-group">
+   <label class="col-sm-1 control-label"  >Salary</label>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;"><input type="text" name = "minsal" id = "minsal" placeholder="Min" value = {{minsal}} class="form-control" style = "float:left;"></div>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+ <input type="text" name = "maxsal" placeholder="Max"  id= "maxsal" value = {{maxsal}} style = "float:left;" class="form-control"></div>
+    
+   <label class="col-sm-2 control-label" >Criteria</label>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+ <input type="text" name = "mincri" placeholder="Min" id = "mincri" value = {{mincri}} class="form-control" style = "float:left;">
+ </div>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+ <input type="text" name = "maxcri" placeholder="Max" id= "maxcri" value = {{maxcri}} style = "float:left;" class="form-control">
+ </div>
+   <div class="col-sm-2">
+<input type="submit" class="btn btn-info form-control" value="Submit" ></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <div class="col-sm-2"> <button value="Download file" onclick = "downloadCompanies()" class="btn btn-info form-control">Download</button>
+ </div>
+   </div>
+        </form>
+</div>
+<hr>
+<!-- Table Content start -->
+<div class="col-sm-12">
+  <div class="table-responsive">          
+  <table class="table">
+     <thead>
+      <tr>
+        <th>ID</th>
+        <th>Company</th>
+        <th>Salary Lpa</th>
+        <th>Criteria</th>
+        <th>Hired</th>
+        <th>Placed</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+{% for company in companies %}
+      <tr>
+        <td>{{forloop.counter}}</td>
+        <td> <a href= /company/{{company.c_id}}/ > {{company.name}}</a> </td>
+      
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{company.salary}}</td>
+        <td>{{company.criteria}}</td>
+        <td>{{company.hired}}</td>
+        {% if company.placed_url %}
+        <td><a href={{company.placed_url}}>{{company.placed_url}}</td>
+        {% else %}
+        <td></td>
+        
+        {% endif %}
+        
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+      </div>
     </div>
     <div class="col-sm-2 sidenav">
-      <!-- <div class="well">
-        <p>ADS</p>
-      </div>
-      <div class="well">
-        <p>ADS</p>
-      </div> -->
+      
     </div>
   </div>
 </div>
 
-<footer class="container-fluid text-center">
-<div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
-<p><a href="/developers-page/">Developers</a></p></div> 
+<footer class="container-fluid text-center" >
+ <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
+<p><a href="/developers-page/">Developers</a></p></div>
 </footer>
 </body>
-</html>
+</html> 

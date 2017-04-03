@@ -38,7 +38,7 @@ urlpatterns = [
 
 
 	url(r'results/$',views.get_results_page),	 
-	url(r'statistics/$',views.get_statistics_page),	 
+	url(r'companies/$',views.get_companies_page),	 
 	url(r'notifications/$',views.get_notifications_page),
 	url(r'students/$',views.get_students_page),
 
