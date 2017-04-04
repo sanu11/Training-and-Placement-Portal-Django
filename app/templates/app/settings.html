@@ -65,6 +65,19 @@
       }
       .row.content {height:auto;} 
     }
+	*[role="form"] {
+    max-width: 530px;
+    padding: 15px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 0.3em;
+}
+
+
+*[role="form"] h2 {
+    margin-left: 5em;
+    margin-bottom: 1em;
+}
   </style>
   </head>
 <body>
@@ -90,7 +103,7 @@
       <ul class="nav navbar-nav" style="margin-left:15.5%;">
         <li><a href="/">Home</a></li>
         
-    <li><a href="/companies/">Companies</a></li>
+    <li><a href="/statistics/">Statistics</a></li>
     <li><a href="/notifications/">Notifications</a></li>
      <li><a href="/results/">Results</a></li>
 
@@ -122,30 +135,33 @@
     <div class="col-sm-8 text-left"> 
       <h2 class="text-center" style="margin-bottom:20px;"><b>Settings</b></h2>
     <div style="margin-bottom:10px;"></div>
-    <div class="panel-group" id="accordion">
+   
 
 
 
-    <div>
-    <h4>Resume &nbsp;&nbsp;    {% if resume %}
+   
+<form class="form-horizontal" id="result" role="form" enctype="multipart/form-data" action="/resume/" method="POST" >
+{% csrf_token %}
+<fieldset>
+ <div class="panel-group" id="accordion">
+ <div>
+    <h4><b>Resume :</b> &nbsp;&nbsp;    {% if resume %}
     <a href = {{resume}}>{{resume}}</a>
     
     {% else %}
     Not Uploaded 
     {% endif %}</h4>
     </div>
-<form class="form-horizontal" id="result" enctype="multipart/form-data" action="/resume/" method="POST" >
-{% csrf_token %}
-<fieldset>
     <div class="panel">
         <h4 >
-         <input type="checkbox" name= "upload resume"  data-toggle="collapse"  href=#expand >&nbsp;&nbsp;   {% if resume %} Update Resume {% else %} Upload Resume 
-        {% endif %}</h4>
-      </div>
+        <input type="checkbox"  name= "upload resume"  data-toggle="collapse"  href=#expand />&nbsp;&nbsp;   {% if resume %} Update Resume {% else %} Upload Resume 
+        {% endif %}
+		</h4>
+      
       <div id="expand" class="panel-collapse collapse">
-      <div class="col-sm-4">
+      <div class="col-sm-8">
        <div class="input-group">
-          <input  name="resume" class="form-control"  id="resume" type="file">
+          <input  name="resume" class="form-control"  id="resume" type="file" />
        </div>
     
   </div>
@@ -163,11 +179,11 @@
          
 
     </div> 
-    
-    </div>
     <div class="col-sm-2 sidenav">
       
     </div>
+    </div>
+    
   </div>
 </div>
 
