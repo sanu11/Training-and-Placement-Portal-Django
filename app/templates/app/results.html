@@ -66,9 +66,6 @@
       }
       .row.content {height:auto;} 
     }
-  body {
-    background-color: #eee;
-}
 
 *[role="form"] {
     max-width: 530px;
@@ -108,7 +105,7 @@
       <ul class="nav navbar-nav" style="margin-left:15.5%;">
         <li><a href="/">Home</a></li>
         
-    <li><a href="/companies/">Companies</a></li>
+    <li><a href="/statistics/">Statistics</a></li>
     <li><a href="/notifications/">Notifications</a></li>
     <li><a href="/results/">Results</a></li>
 
@@ -152,10 +149,11 @@
     {% endif %}
     </div>
 
-    <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 
-      <form class="form-horizontal" role="form">
+    <div class="col-sm-8 text-left conte" style="background-color:#FFFFFF"> 
+            <h2 class="text-center" style="margin-bottom:20px;"><b>Results</b></h2>
+	  <form class="form-horizontal" role="form">
           
-                <h2><b>Results</b></h2>
+              
                 {% for result in results %}
               
                 
@@ -170,7 +168,7 @@
         
             </form> <!-- /form -->
     </div>
-    
+    <div class="col-sm-2 sidenav "> </div>
   </div>
 </div>
 <!-- Extra JavaScript/CSS added manually in "Settings" tab -->
