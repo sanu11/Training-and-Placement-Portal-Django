@@ -1,4 +1,62 @@
 
+function signup() {
+        console.log('signupform');
+        var signupform = $('#' + 'signupform');
+        var csrftoken = getCookie('csrftoken');
+        var name = document.getElementById('name').value;
+        var roll = document.getElementById('roll').value;
+        var email = document.getElementById('email').value;
+        var password  =document.getElementById('password').value;
+        var phone = document.getElementById('phone').value;
+        var ssc = document.getElementById('10th').value;
+        var hsc = document.getElementById('12th').value;
+        var avg = document.getElementById('average').value;
+
+        var atpos = email.indexOf("@");
+        var dotpos = email.lastIndexOf(".");
+        
+        console.log(name+ " " + roll + " " + email + " " + password + " " + phone + " " + ssc + " " + hsc + " " + avg);
+        if(name .length==0 || roll.length==0 || email.length == 0 || password.length == 0 || phone.length == 0 || ssc.length == 0 || hsc.length == 0 || avg.length ==0)
+            alert("Enter all Details"); 
+        else if (roll.length !=4)
+            alert("Enter valid Roll number");
+        else if(password.length<6)
+            alert("Password  should be greater than 6 digits");
+        else if (atpos<1 || dotpos<atpos+2 || dotpos+2>=email.length) {
+            alert("Not a valid e-mail address");
+        
+        }
+        else if(password.length<6)
+            alert("Password  should be greater than 6 digits")
+        else if(phone.length!=10)
+            alert ("Enter Valid mobile number");
+        
+        else
+        {
+            $.ajax({
+                type: "POST",
+                url: '/signup/',
+                data: signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                console.log(message);
+                    if (message =='success') {
+                       window.location.href = "/presume/";
+                    }
+                    else if(message=='exists')
+                    {
+                        alert("User Exists.Please Login");
+                    }
+                    else
+                    {
+                    alert('Error');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+        }
+    }   
 
 function studentLogin() {
         console.log('loginform');
@@ -37,62 +95,80 @@ function companyRegister() {
         console.log('registerform');
         var registerform = $('#' + 'register');
         var csrftoken = getCookie('csrftoken');
-        console.log('registerform');
-        $.ajax({
-            type: "POST",
-            url: '/cregister/',
-            data: registerform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
-            success: function(message) {
-                if (message =='success') {
-                    alert('Registered Successfully');
-                     window.location.href = "/";
+        var name  = document.getElementById("name").value;
+        var ppt_date = document.getElementById("ppt_date").value;
+        var ppt_time = document.getElementById("ppt_time").value;
+        
+        if(name.length==0)
+            alert('Enter name');
+        
+        else if(ppt_date.length==0 && ppt_time.length>0)
+            alert("Enter date");
+    
+        else 
+        {
+            $.ajax({
+                type: "POST",
+                url: '/cregister/',
+                data: registerform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                    if (message =='success') {
+                        alert('Registered Successfully');
+                         window.location.href = "/";
 
-                }
-                else if(message=='exists')
-                {
-                    alert("Already registered.")
-                    location.reload();
-                }
-                else
-                {
-                    alert('Error occured');
-                }
-            },
-            error: function(xhr, errmsg, err) {
-                alert('Error');
-            },
-        });
+                    }
+                    else if(message=='exists')
+                    {
+                        alert("Already registered.")
+                        location.reload();
+                    }
+                    else
+                    {
+                        alert('Error occured');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+        }
     }
 
 function companyUpdate() {
         console.log('updateform');
         var updateform = $('#' + 'update');
         var csrftoken = getCookie('csrftoken');
+        var name = document.getElementById("company");
+        var selectedvalue = name.options[name.selectedIndex].value;
+        console.log(selectedvalue);
+        if(selectedvalue == "Select Company")
+            alert("Select Company");
+        else {
+            $.ajax({
+                type: "POST",
+                url: '/update/',
+                data:updateform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                    if (message =='success') {
+                        alert('Updated Successfully');
+                        window.location.href = "/";
 
-        $.ajax({
-            type: "POST",
-            url: '/update/',
-            data:updateform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
-            success: function(message) {
-                if (message =='success') {
-                    alert('Updated Successfully');
-                    window.location.href = "/";
-
-                }
-                else if(message=='updated')
-                {
-                    alert("Already Updated.")
-                    location.reload();
-                }
-                else
-                {
-                    alert('Error occured');
-                }
-            },
-            error: function(xhr, errmsg, err) {
-                alert('Error');
-            },
-        });
+                    }
+                    else if(message=='updated')
+                    {
+                        alert("Already Updated.")
+                        location.reload();
+                    }
+                    else
+                    {
+                        alert('Error occured');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+        }
     }
 
 function downloadStudents() {
@@ -187,35 +263,6 @@ function downloadCompanies() {
 //                }else{
 //                    alert('Error occured');
 //                }
-//            },
-//            error: function(xhr, errmsg, err) {
-//                alert('Error');
-//            },
-//        });
-//    }
-
-
-//function signup() {
-//        console.log('signup');
-//        var signupform = $('#' + 'signup');
-//        var csrftoken = getCookie('csrftoken');
-//
-//        $.ajax({
-//            type: "POST",
-//            url: '/signup/',
-//            data:signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
-//            success: function(message) {
-//                if (message =='success') {
-//                    alert('Registered Successfully');
-//                    window.location.href = "/";
-//
-//                }else if(message == 'exists'){
-//                    alert('User Exists.Please Login');
-//                    window.location.href ="/plogin/";
-//                }
-//                else{
-//                    alert('Error Occured');
-//                    }
 //            },
 //            error: function(xhr, errmsg, err) {
 //                alert('Error');

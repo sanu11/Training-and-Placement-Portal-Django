@@ -1,6 +1,6 @@
 import datetime
 from django.shortcuts import render
-from .models import Student, Company, Message, Verify, Result, Admin ,Year , Average
+from .models import Student, Company, Message, Verify, Result, Admin ,Year 
 from django.http import HttpResponse
 from django.views.decorators.csrf import *
 from django.core import serializers
@@ -8,8 +8,11 @@ from gcm.models import get_device_model
 import json,csv
 import dropbox
 import requests
+# sanika account
+# Lae_eeDcmDgAAAAAAAACpAf6K4pN2cMT9Pa3UcARF6HVT5kbljzzyo7DazeUtE9D
 
-dbx = dropbox.Dropbox('Lae_eeDcmDgAAAAAAAACpAf6K4pN2cMT9Pa3UcARF6HVT5kbljzzyo7DazeUtE9D')
+# Sirs account
+dbx = dropbox.Dropbox('39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi')
 st = dbx.users_get_current_account()
 
 
@@ -200,6 +203,23 @@ def get_login_page(request):
     print "in login page"
     return render(request, 'app/login.html', {})
 
+@csrf_exempt
+def get_resume_upload_page(request):
+    name = request.session["name"]
+    return render(request, 'app/resumeUpload.html',{"login":2,"name":name})
+
+
+
+def get_settings_page(request):
+    name = request.session["name"]
+    email = request.session["email"]
+    student = Student.objects.get(email=email)
+    resume = None
+    if student.url:
+        resume = student.url
+
+    return render(request, 'app/settings.html',{"login":2,"name":name,"resume":resume})
+
 
 #####UPLOAD pages
 @csrf_exempt
@@ -265,6 +285,7 @@ def get_result_upload_page(request):
 
 #######DISPLAY Pages######
 
+
 @csrf_exempt
 def get_students_page(request):
     if not request.session.get("name"):
@@ -310,7 +331,7 @@ def get_students_page(request):
 
             students = students_max_average
             years = Year.objects.all().order_by('-y_id')
-            averages = Average.objects.all()
+           
             name = request.session["name"]
             return render(request, 'app/students.html', {"students": students, "years":years ,"year":year,"branch":branch,"minavg":minavg,"maxavg":maxavg,"name": name})
         # student login
@@ -356,7 +377,7 @@ def get_notifications_page(request):
 
 
 @csrf_exempt
-def get_statistics_page(request):
+def get_companies_page(request):
     if not request.session.get("name"):
         return render(request, 'app/login.html', {})
     else:
@@ -408,7 +429,7 @@ def get_statistics_page(request):
         print (companies[0].ppt_date)
         name = request.session["name"]
         
-        return render(request, 'app/statistics.html', {"companies": companies,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login})
+        return render(request, 'app/companies.html', {"companies": companies,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login})
 
 
 @csrf_exempt
@@ -486,41 +507,55 @@ def web_signup(request):
         c.ssc = request.POST["10th"]
         c.hsc = request.POST["12th"]
         c.average = request.POST["average"]
-
-        # c.activeBack=request.POST.get("activeBack")
-
-        # for entry in dbx.files_list_folder('').entries:
-        #   print(entry.name)
-        if request.FILES["resume"]:
-            myfile = request.FILES["resume"]
-            data = myfile.read()
-            filename = myfile.name
-            extension = filename.split('.')
-            file_to = "/students/" + roll + '.' + extension[1]
-            print file_to
-            dbx.files_upload(data, file_to)
-
-            url = "https://api.dropboxapi.com/2/sharing/create_shared_link"
-
-            payload = "{\"path\":" + '"' + file_to + '"' + ",\"short_url\": true}"
-            print payload
-            headers = {
-                'authorization': "Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR",
-                'content-type': "application/json",
-                'cache-control': "no-cache",
-            }
-
-            response = requests.request("POST", url, data=payload, headers=headers)
-
-            res = json.loads(response.text)
-            url = res["url"]
-            c.url = url
-            c.save()
-
-        return render(request, 'app/login.html', {})
+        if request.POST.get("activeBack",False):
+            c.activeBack = False
+        else:
+            c.activeBack = True
+        c.save()
+        request.session["name"]=name
+        request.session["email"]=email
+        return HttpResponse('success')
     else:
-        return HttpResponse('Error');
+        return HttpResponse('error');
 
+
+def web_upload_resume(request):
+    email = request.session['email']
+    print email
+    student = Student.objects.get(email=email)
+    roll = student.roll
+    if request.FILES["resume"]:
+        myfile = request.FILES["resume"]
+        data = myfile.read()
+        filename = myfile.name
+        extension = filename.split('.')
+        file_to = "/students/" + str(roll) + '.' + extension[1]
+        print file_to
+        dbx.files_upload(data, file_to)
+
+        url = "https://api.dropboxapi.com/2/sharing/create_shared_link"
+
+        payload = "{\"path\":" + '"' + file_to + '"' + ",\"short_url\": true}"
+        print payload
+    # Sanika account
+    # Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR
+    # Sirs account
+        headers = {
+            'authorization': "Bearer 39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi",
+            'content-type': "application/json",
+            'cache-control': "no-cache",
+        }
+
+        response = requests.request("POST", url, data=payload, headers=headers)
+
+        res = json.loads(response.text)
+        url = res["url"]
+        student.url = url
+        student.save()
+        name = request.session["name"]
+        return render(request, 'app/home.html', {"login": 2, "name": name})
+    else:
+        HttpResponse("Error")
 
 @csrf_exempt
 def web_login(request):
@@ -579,7 +614,7 @@ def web_notify(request):
                 data = myfile.read()
                 filename = myfile.name
                 extension = filename.split('.')
-                file_to = "/Messages/" + title + '.' + extension[1]
+                file_to = "/messages/" + title + '.' + extension[1]
                 print file_to
                 dbx.files_upload(data, file_to)
 
@@ -587,8 +622,11 @@ def web_notify(request):
 
                 payload = "{\"path\":" + '"' + file_to + '"' + ",\"short_url\": true}"
                 print payload
+                # sanika account
+                # Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR
+                #Sirs account
                 headers = {
-                    'authorization': "Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR",
+                    'authorization': "Bearer 39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi",
                     'content-type': "application/json",
                     'cache-control': "no-cache",
                 }
@@ -628,8 +666,11 @@ def web_upload_result(request):
 
             payload = "{\"path\":" + '"' + file_to + '"' + ",\"short_url\": true}"
             print payload
+            # Sanikas account
+            # Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR
+            # Sirs account
             headers = {
-                'authorization': "Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR",
+                'authorization': "Bearer 39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi",
                 'content-type': "application/json",
                 'cache-control': "no-cache",
             }
@@ -733,21 +774,31 @@ def web_register_company(request):
         back = request.POST["back"]
         ppt_date = request.POST["ppt_date"]
         ppt_time = request.POST["ppt_time"]
-        ppt_date = str(ppt_date)
-        print (ppt_date)
-        ppt_date = datetime.datetime.strptime(ppt_date, '%m/%d/%Y').strftime('%Y-%m-%d')
-        print (ppt_date)
         other_details = request.POST["other_details"]
+    
+        if ppt_date:
+            ppt_date = str(ppt_date)
+            print (ppt_date)
+
+            ppt_date = datetime.datetime.strptime(ppt_date, '%m/%d/%Y').strftime('%Y-%m-%d')
+            print (ppt_date)
+        
         if other_details == "":
             other_details = None
             # add to database
+
         obj = Company()
         obj.name = name
-        obj.criteria = criteria
-        obj.salary = salary
-        obj.other_details = other_details
-        obj.ppt_date = ppt_date + " " + ppt_time
-        obj.back = back
+        if criteria:
+            obj.criteria = criteria
+        if salary:
+            obj.salary = salary
+        if other_details:
+            obj.other_details = other_details
+        if ppt_date:
+            obj.ppt_date = ppt_date + " " + ppt_time
+        if back:
+            obj.back = back
         obj.save()
 
         # send notification

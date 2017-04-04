@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Company Upload</title>
+  <title>Company Update</title>
   <meta charset="utf-8">
   <meta name="description" content="PICT Training and placement online portal">
 <meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
@@ -68,9 +68,7 @@
       }
       .row.content {height:auto;} 
     }
-  body {
-    background-color: #eee;
-}
+ 
 
 *[role="form"] {
     max-width: 530px;
@@ -120,6 +118,9 @@
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="/logout/">Logout</a></li>
+            {% if login == 2 %}
+            <li><a href="/psettings/">Settings</a></li>
+              {% endif %}           
            
           </ul>
         </li>
@@ -191,7 +192,7 @@
 <div class="form-group">
   <label class="col-sm-3 control-label" for="registrationStartDate">Registration Start</label>
   <div class="col-sm-5">
-  <input class="form-control" id="registrationStartDate" name="regStartDate" min="2016-06-01" placeholder="MM/DD/YYYY" type="datetime" required/>
+  <input class="form-control" id="registrationStartDate" name="regStartDate" min="2016-06-01" placeholder="MM/DD/YYYY" type="text" required/>
   </div>
   <div class="col-sm-4">
   <input id="registrationStartTime" name="regStartTime" type="time" placeholder="HH:MM" class="form-control input-md" required="">
@@ -202,7 +203,7 @@
 <div class="form-group">
   <label class="col-sm-3 control-label" for="registrationEndDate">Registration End </label>
   <div class="col-sm-5">
-  <input class="form-control" id="registrationEndDate" name="regEndDate" min="2016-06-01" placeholder="MM/DD/YYYY" type="datetime" required/>
+  <input class="form-control" id="registrationEndDate" name="regEndDate" min="2016-06-01" placeholder="MM/DD/YYYY" type="text" required/>
     
   </div>
   <div class="col-sm-4">
@@ -231,7 +232,7 @@
 </fieldset>
 </form>
     </div>
-    
+     <div class="col-sm-2 sidenav "> </div>
   </div>
 </div>
 <!-- Extra JavaScript/CSS added manually in "Settings" tab -->

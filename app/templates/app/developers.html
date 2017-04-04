@@ -104,7 +104,7 @@ background-color:#101B2D;
       <ul class="nav navbar-nav" style="margin-left:15.5%;">
         <li><a href="/">Home</a></li>
         
-    <li><a href="/statistics/">Statistics</a></li>
+    <li><a href="/companies/">Companies</a></li>
     <li><a href="/notifications/">Notifications</a></li>
     <li><a href="/results/">Results</a></li>
     
@@ -116,7 +116,10 @@ background-color:#101B2D;
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="/logout/">Logout</a></li>
-           
+           {% if login == 2 %}
+            <li><a href="/psettings/">Settings</a></li>
+              {% endif %}           
+
           </ul>
         </li>
     

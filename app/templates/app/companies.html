@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Results</title>
+  <title>Companies</title>
   <meta charset="utf-8">
   <meta name="description" content="PICT Training and placement online portal">
 <meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!---- BootStrap Libraries         -->
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-  <script src="/static/js/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/check.js"></script>
+
   
    <!---- BootStrap online Libraries        
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -38,7 +40,7 @@
     .sidenav {
       padding-top: 20px;
       background-color: #f1f1f1;
-      height: 110%;
+      height: 150%;
     }
     
     /* Set black background color, white text and some padding */
@@ -54,7 +56,7 @@
   text-decoration:none;
   color:white;
   }
-  body{
+  body {
   font-family: Georgia, Times, "Times New Roman", serif;
   }
     
@@ -66,24 +68,12 @@
       }
       .row.content {height:auto;} 
     }
-
-*[role="form"] {
-    max-width: 530px;
-    padding: 15px;
-    margin: 0 auto;
-    background-color: #fff;
-    border-radius: 0.3em;
-}
-
-*[role="form"] h2 {
-    margin-left: 5em;
-    margin-bottom: 1em;
-}
-
-  </style>
   
+  </style>
   </head>
 <body>
+
+
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -105,9 +95,9 @@
       <ul class="nav navbar-nav" style="margin-left:15.5%;">
         <li><a href="/">Home</a></li>
         
-    <li><a href="/statistics/">Statistics</a></li>
+    <li><a href="/companies/">Companies</a></li>
     <li><a href="/notifications/">Notifications</a></li>
-    <li><a href="/results/">Results</a></li>
+     <li><a href="/results/">Results</a></li>
 
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -116,10 +106,9 @@
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="/logout/">Logout</a></li>
-             {% if login == 2 %}
-          <li><a href="/psettings/">Settings</a></li>
-            {% endif %}           
-
+            {% if login == 2 %}
+            <li><a href="/psettings/">Settings</a></li>
+              {% endif %}           
            
           </ul>
         </li>
@@ -128,8 +117,6 @@
     </div>
   </div>
 </nav>
-  
-  
 <div class="container-fluid ">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
@@ -149,51 +136,107 @@
     {% endif %}
     </div>
 
-    <div class="col-sm-8 text-left conte" style="background-color:#FFFFFF"> 
-            <h2 class="text-center" style="margin-bottom:20px;"><b>Results</b></h2>
-	  <form class="form-horizontal" role="form">
-          
-              
-                {% for result in results %}
-              
-                
-                <div class="form-group">
-                    <label for="firstName" class="col-sm-20 control-label"> {{forloop.counter}} &nbsp;&nbsp; {{result.company }} {{result.shortlist}}</label>
-                </div>
-                
-                <div class="form-group">
-                    <label for="firstName" class="col-sm-20 control-label"><a href= {{result.url}} > {{result.url}}</a></label>
-                </div>
-                {% endfor %}
+
+
+    <div class="col-sm-8 text-left">
+  
+  <h2 class="text-center"><b>Companies</b></h2> 
+<div style="margin-bottom:20px"></div>
+<!-- <p>Table contains placement statistics for the year 2016-17. </p> -->
+<hr>
+<!-- Division for filters -->
+<div class="text-left">
+
+
+<form class="form-horizontal" id="student" method="POST" action ='/statistics/'>
+{% csrf_token %}
+ <div class="form-group text-left">
+   <label class="col-sm-1 control-label" ></label>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;"> <label class="control-label" >MIN</label></div>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+  <label class="control-label" >MAX</label></div>
+    
+   <label class="col-sm-2 control-label" ></label>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+  <label class="control-label" >MIN</label>
+ </div>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+ <label class="control-label" >MAX</label>
+ </div>
+   <div class="col-sm-2"></div>
+ <div class="col-sm-2">
+ </div>
+   </div>
+   
+   
+   <div class="form-group">
+   <label class="col-sm-1 control-label"  >Salary</label>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;"><input type="text" name = "minsal" id = "minsal" placeholder="Min" value = {{minsal}} class="form-control" style = "float:left;"></div>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+ <input type="text" name = "maxsal" placeholder="Max"  id= "maxsal" value = {{maxsal}} style = "float:left;" class="form-control"></div>
+    
+   <label class="col-sm-2 control-label" >Criteria</label>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+ <input type="text" name = "mincri" placeholder="Min" id = "mincri" value = {{mincri}} class="form-control" style = "float:left;">
+ </div>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+ <input type="text" name = "maxcri" placeholder="Max" id= "maxcri" value = {{maxcri}} style = "float:left;" class="form-control">
+ </div>
+   <div class="col-sm-2">
+<input type="submit" class="btn btn-info form-control" value="Submit" ></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <div class="col-sm-2"> <button value="Download file" onclick = "downloadCompanies()" class="btn btn-info form-control">Download</button>
+ </div>
+   </div>
+        </form>
+</div>
+<hr>
+<!-- Table Content start -->
+<div class="col-sm-12">
+  <div class="table-responsive">          
+  <table class="table">
+     <thead>
+      <tr>
+        <th>ID</th>
+        <th>Company</th>
+        <th>Salary Lpa</th>
+        <th>Criteria</th>
+        <th>Hired</th>
+        <th>Placed</th>
         
-            </form> <!-- /form -->
+      </tr>
+    </thead>
+    <tbody>
+{% for company in companies %}
+      <tr>
+        <td>{{forloop.counter}}</td>
+        <td> <a href= /company/{{company.c_id}}/ > {{company.name}}</a> </td>
+      
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{company.salary}}</td>
+        <td>{{company.criteria}}</td>
+        <td>{{company.hired}}</td>
+        {% if company.placed_url %}
+        <td><a href={{company.placed_url}}>{{company.placed_url}}</td>
+        {% else %}
+        <td></td>
+        
+        {% endif %}
+        
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+      </div>
     </div>
-    <div class="col-sm-2 sidenav "> </div>
+    <div class="col-sm-2 sidenav">
+      
+    </div>
   </div>
 </div>
-<!-- Extra JavaScript/CSS added manually in "Settings" tab -->
-<!-- Include jQuery -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
-<!-- Include Date Range Picker -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
-
-<script>
-  $(document).ready(function(){
-    var date_input=$('input[name="ppt_date"]'); //our date input has the name "date"
-    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-    date_input.datepicker({
-      format: 'mm/dd/yyyy',
-      container: container,
-      todayHighlight: true,
-      autoclose: true,
-    })
-  })
-</script>
-<footer class="container-fluid text-center">
+<footer class="container-fluid text-center" >
  <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
 <p><a href="/developers-page/">Developers</a></p></div>
 </footer>
 </body>
-</html>
+</html> 
