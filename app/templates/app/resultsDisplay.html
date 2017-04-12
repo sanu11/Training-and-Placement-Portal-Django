@@ -66,9 +66,6 @@
       }
       .row.content {height:auto;} 
     }
-  body {
-    background-color: #eee;
-}
 
 *[role="form"] {
     max-width: 530px;
@@ -108,7 +105,7 @@
       <ul class="nav navbar-nav" style="margin-left:15.5%;">
         <li><a href="/">Home</a></li>
         
-    <li><a href="/statistics/">Statistics</a></li>
+    <li><a href="/companies/">Companies</a></li>
     <li><a href="/notifications/">Notifications</a></li>
     <li><a href="/results/">Results</a></li>
 
@@ -119,6 +116,10 @@
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="/logout/">Logout</a></li>
+             {% if login == 2 %}
+          <li><a href="/psettings/">Settings</a></li>
+            {% endif %}           
+
            
           </ul>
         </li>
@@ -139,6 +140,7 @@
       <li ><a href="/students/"><b>Students  Info</b></a></li>
       <li><a href="/pregister/"><b>Register  Company</b></a></li>
       <li><a href="/pupdate/"><b>Update  Company</b></a> </li>
+      <li><a href="/pedit/"><b>Edit Company</b></a> </li>
       <li><a href="/pnotify/"><b>Notify  Candidate</b></a> </li>
       <li><a href="/presult/"><b>Upload Result</b></a> </li>
 
@@ -148,25 +150,32 @@
     {% endif %}
     </div>
 
-    <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 
-      <form class="form-horizontal" role="form">
+    <div class="col-sm-8 text-left conte" style="background-color:#FFFFFF"> 
+            <h2 class="text-center" style="margin-bottom:20px;"><b>Results</b></h2>
+	  <form class="form-horizontal" role="form">
           
-                <h2><b>Results</b></h2>
+              
                 {% for result in results %}
               
                 
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-20 control-label"> {{forloop.counter}} &nbsp;&nbsp; {{result.company }} {{result.shortlist}}</label>
+                    <label  class="col-sm-20 control-label"> <b>{{forloop.counter}} </b>&nbsp;&nbsp; {{result.c_id }} {{result.shortlist}}</label>
                 </div>
                 
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-20 control-label"><a href= {{result.url}} > {{result.url}}</a></label>
+                    <label class="col-sm-20 control-label"><a href= {{result.url}} > {{result.url}}</a></label>
                 </div>
+            {% if result.other_details %}
+                <div class="form-group">
+                    <label class="col-sm-20 control-label">{{result.other_details}}</label>
+                </div>
+            {% endif %}
+
                 {% endfor %}
         
             </form> <!-- /form -->
     </div>
-    
+    <div class="col-sm-2 sidenav "> </div>
   </div>
 </div>
 <!-- Extra JavaScript/CSS added manually in "Settings" tab -->

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Company Upload</title>
+  <title>Company Update</title>
   <meta charset="utf-8">
   <meta name="description" content="PICT Training and placement online portal">
 <meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
@@ -68,9 +68,7 @@
       }
       .row.content {height:auto;} 
     }
-  body {
-    background-color: #eee;
-}
+ 
 
 *[role="form"] {
     max-width: 530px;
@@ -109,7 +107,7 @@
       <ul class="nav navbar-nav" style="margin-left:15.5%;">
         <li><a href="/">Home</a></li>
         
-    <li><a href="/statistics/">Statistics</a></li>
+    <li><a href="/companies/">Companies</a></li>
     <li><a href="/notifications/">Notifications</a></li>
      <li><a href="/results/">Results</a></li>
 
@@ -120,6 +118,9 @@
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="/logout/">Logout</a></li>
+            {% if login == 2 %}
+            <li><a href="/psettings/">Settings</a></li>
+              {% endif %}           
            
           </ul>
         </li>
@@ -138,6 +139,7 @@
       <li ><a href="/students/"><b>Students  Info</b></a></li>
       <li><a href="/pregister/"><b>Register  Company</b></a></li>
       <li><a href="/pupdate/"><b>Update  Company</b></a> </li>
+      <li><a href="/pedit/"><b>Edit Company</b></a> </li>
       <li><a href="/pnotify/"><b>Notify  Candidate</b></a> </li>
       <li><a href="/presult/"><b>Upload Result</b></a> </li>
 
@@ -162,17 +164,17 @@
   <label class="col-sm-3 control-label">Company</label>
   <div class="col-sm-9">
     <div class="input-group">
-      
+
       <div class="input-group-btn">
         <select class="form-control" name="name" id="company">
     <option selected disabled hidden>Select Company</option>
            {% for company in companies %}
             <option value = "{{  company.name }}" > {{company.name}} </option>
             {% endfor %}
-                           
+
       </select>
-     
-                    
+
+
       </div>
     </div>
   </div>
@@ -180,42 +182,42 @@
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-sm-3 control-label" for="registrationLink">Registration Link</label>
+  <label class="col-sm-3 control-label" for="reg_link">Registration Link</label>
   <div class="col-sm-9">
-  <input id="registrationLink" name="regLink" type="url" placeholder="Registration Link" class="form-control input-md" required="">
+  <input id="reg_link" name="reg_link" type="url" placeholder="Registration Link" class="form-control input-md" required="">
     
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-sm-3 control-label" for="registrationStartDate">Registration Start</label>
+  <label class="col-sm-3 control-label" for="reg_start_date">Registration Start</label>
   <div class="col-sm-5">
-  <input class="form-control" id="registrationStartDate" name="regStartDate" min="2016-06-01" placeholder="MM/DD/YYYY" type="text" required/>
+  <input class="form-control" id="reg_start_date" name="reg_start_date" min="2016-06-01" placeholder="MM/DD/YYYY" type="text" required/>
   </div>
   <div class="col-sm-4">
-  <input id="registrationStartTime" name="regStartTime" type="time" placeholder="HH:MM" class="form-control input-md" required="">
+  <input id="reg_start_time" name="reg_start_time" type="time" placeholder="HH:MM" class="form-control input-md" required="">
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-sm-3 control-label" for="registrationEndDate">Registration End </label>
+  <label class="col-sm-3 control-label" for="reg_end_date">Registration End </label>
   <div class="col-sm-5">
-  <input class="form-control" id="registrationEndDate" name="regEndDate" min="2016-06-01" placeholder="MM/DD/YYYY" type="text" required/>
+  <input class="form-control" id="reg_end_date" name="reg_end_date" min="2016-06-01" placeholder="MM/DD/YYYY" type="text" required/>
     
   </div>
   <div class="col-sm-4">
-  <input id="registrationEndTime" name="regEndTime" type="time" placeholder="HH:MM" class="form-control input-md" required="">
+  <input id="reg_end_time" name="reg_end_time" type="time" placeholder="HH:MM" class="form-control input-md" required="">
     </div>
 </div>
 
 
 <!-- Textarea -->
 <div class="form-group">
-  <label class="col-sm-3 control-label" for="otherDetails">Other Details</label>
+  <label class="col-sm-3 control-label" for="other_details">Other Details</label>
   <div class="col-sm-9">
-    <textarea class="form-control" id="otherDetails" name="otherDetails" maxlength="550"></textarea>
+    <textarea class="form-control" id="other_details" name="other_details" maxlength="550"></textarea>
   </div>
 </div>
 
@@ -231,7 +233,7 @@
 </fieldset>
 </form>
     </div>
-    
+     <div class="col-sm-2 sidenav "> </div>
   </div>
 </div>
 <!-- Extra JavaScript/CSS added manually in "Settings" tab -->

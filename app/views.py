@@ -1,6 +1,6 @@
 import datetime
 from django.shortcuts import render
-from .models import Student, Company, Message, Verify, Result, Admin ,Year 
+from .models import Student, Company, Message, Verify, Result, Admin ,Year
 from django.http import HttpResponse
 from django.views.decorators.csrf import *
 from django.core import serializers
@@ -8,8 +8,11 @@ from gcm.models import get_device_model
 import json,csv
 import dropbox
 import requests
+# sanika account
+# Lae_eeDcmDgAAAAAAAACpAf6K4pN2cMT9Pa3UcARF6HVT5kbljzzyo7DazeUtE9D
 
-dbx = dropbox.Dropbox('Lae_eeDcmDgAAAAAAAACpAf6K4pN2cMT9Pa3UcARF6HVT5kbljzzyo7DazeUtE9D')
+# Sirs account
+dbx = dropbox.Dropbox('39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi')
 st = dbx.users_get_current_account()
 
 
@@ -21,7 +24,6 @@ def verify(request):
         return HttpResponse("Success")
     else:
         return HttpResponse("Failed")
-
 
 @csrf_exempt
 def register_student(request):
@@ -68,9 +70,10 @@ def login_details(request):
 def register_company(request):
     data = json.loads(request.body)
     name = data["name"]
-    if (Company.objects.filter(name=name).exists()):
-        return HttpResponse("Already Registered")
-
+    if "position" in data:
+        position = data["position"]
+    else:
+        position = "NA"
     criteria = data["criteria"]
     salary = data["salary"]
     other_details = data["other_details"]
@@ -80,8 +83,7 @@ def register_company(request):
     # add to database
     obj = Company()
     obj.name = name
-    obj.criteria = criteria
-    obj.salary = salary
+    obj.position = position
     obj.other_details = other_details
     obj.ppt_date = ppt_date
     obj.back = back
@@ -105,8 +107,6 @@ def update_company(request):
     other_details = data["other_details"]
 
     obj = Company.objects.get(name=name)
-    if obj.reg_link:
-        return HttpResponse("Already Updated")
     obj.reg_start = reg_start
     obj.reg_end = reg_end
     obj.reg_link = reg_link
@@ -200,6 +200,23 @@ def get_login_page(request):
     print "in login page"
     return render(request, 'app/login.html', {})
 
+@csrf_exempt
+def get_resume_upload_page(request):
+    name = request.session["name"]
+    return render(request, 'app/resumeUpload.html',{"login":2,"name":name})
+
+
+
+def get_settings_page(request):
+    name = request.session["name"]
+    email = request.session["email"]
+    student = Student.objects.get(email=email)
+    resume = None
+    if student.url:
+        resume = student.url
+
+    return render(request, 'app/settings.html',{"login":2,"name":name,"resume":resume})
+
 
 #####UPLOAD pages
 @csrf_exempt
@@ -210,7 +227,9 @@ def get_register_page(request):
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
             name = request.session["name"]
-            return render(request, 'app/companyRegister.html', {"name": name})
+            years = Year.objects.all()
+            curr_year = Year.objects.order_by('-y_id')[0]
+            return render(request, 'app/companyRegister.html',{"name":name,"years":years,"curr_year":curr_year})
 
         # student login
         else:
@@ -224,13 +243,29 @@ def get_update_page(request):
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
             name = request.session["name"]
-            companies = list(Company.objects.all().order_by('-c_id'))
-            return render(request, 'app/update.html', {"companies": companies, "name": name})
+            year = Year.objects.order_by('-y_id')[0]
+            companies = Company.objects.filter(y_id=year).order_by('-c_id')
+            return render(request, 'app/companyUpdate.html', {"companies": companies, "name": name})
 
         # student login
         else:
             return HttpResponse("Not permitted to access")
 
+def get_company_edit_page(request):
+    if not request.session.get("name"):
+        return render(request, 'app/login.html', {})
+    else:
+        get_mail = request.session["email"]
+        if Admin.objects.filter(email=get_mail).exists():
+            name = request.session["name"]
+
+            year = Year.objects.order_by('-y_id')[0]
+            companies = Company.objects.filter(y_id=year).order_by('-c_id')
+            return render(request, 'app/companyEdit.html', {"companies": companies, "name": name,"year":year})
+
+        # student login
+        else:
+            return HttpResponse("Not permitted to access")
 
 @csrf_exempt
 def get_notify_page(request):
@@ -262,8 +297,27 @@ def get_result_upload_page(request):
         else:
             return HttpResponse("Not permitted to access")
 
+def get_company_details(request):
+    if not request.session.get("name"):
+        return render(request, 'app/login.html', {})
+    else:
+        get_mail = request.session["email"]
+        if Admin.objects.filter(email=get_mail).exists():
+            name = request.session["name"]
+            company = request.POST["company"]
+            print company
+            year = Year.objects.order_by('-y_id')[0]
+            obj = Company.objects.get(name=company,y_id=year)
+            data = serializers.serialize("json", [obj,])
+            return HttpResponse(data)
+
+        # student login
+        else:
+            return HttpResponse("Not permitted to access")
+
 
 #######DISPLAY Pages######
+
 
 @csrf_exempt
 def get_students_page(request):
@@ -310,7 +364,7 @@ def get_students_page(request):
 
             students = students_max_average
             years = Year.objects.all().order_by('-y_id')
-            averages = Average.objects.all()
+           
             name = request.session["name"]
             return render(request, 'app/students.html', {"students": students, "years":years ,"year":year,"branch":branch,"minavg":minavg,"maxavg":maxavg,"name": name})
         # student login
@@ -356,7 +410,7 @@ def get_notifications_page(request):
 
 
 @csrf_exempt
-def get_statistics_page(request):
+def get_companies_page(request):
     if not request.session.get("name"):
         return render(request, 'app/login.html', {})
     else:
@@ -373,13 +427,21 @@ def get_statistics_page(request):
         mincri = 0
         maxcri = 100
 
+        #year
+        if "year" in request.POST:
+            year = request.POST["year"]
+            year_obj = Year.objects.get(year=year)
+        else:
+            year_obj = Year.objects.order_by('-y_id')[0]
+
+        companies_year = Company.objects.filter(y_id=year_obj)
+
         ##min salary
         if "minsal" in request.POST:
             minsal = request.POST["minsal"]
-            companies_min_salary = Company.objects.filter(salary__gte=minsal)
+            companies_min_salary =companies_year.filter(salary__gte=minsal)
         else:
-            companies_min_salary = Company.objects.all().order_by('-c_id')
-
+            companies_min_salary = companies_year
 
         ##max salary
         if "maxsal" in request.POST:
@@ -405,10 +467,10 @@ def get_statistics_page(request):
             companies_max_criteria = companies_min_criteria
 
         companies = companies_max_criteria.order_by('-c_id')
-       
+        years = Year.objects.all()
         name = request.session["name"]
-        
-        return render(request, 'app/statistics.html', {"companies": companies,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login})
+        curr_year = Year.objects.order_by('-y_id')[0]
+        return render(request, 'app/companies.html', {"companies": companies,"years":years,"curr_year":curr_year,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login})
 
 
 @csrf_exempt
@@ -427,7 +489,7 @@ def get_results_page(request):
         name = request.session["name"]
         results = Result.objects.all().order_by('-r_id')
         print results
-        return render(request, 'app/results.html', {"results": results, "name": name, "login": login})
+        return render(request, 'app/resultsDisplay.html', {"results": results, "name": name, "login": login})
 
 
 @csrf_exempt
@@ -446,7 +508,7 @@ def get_company_page(request, cid):
         name = request.session["name"]
         if Company.objects.filter(c_id=cid).exists():
             company = Company.objects.get(c_id=cid)
-            return render(request, 'app/company.html', {"company": company, "name": name, "login": login})
+            return render(request, 'app/companyDisplay.html', {"company": company, "name": name, "login": login})
         else:
             return HttpResponse("Not Found")
 
@@ -464,7 +526,9 @@ def logout(request):
 
 
 
-#####upload#####
+#####upload STUDENTS#####
+########################################
+########################################
 @csrf_exempt
 def web_signup(request):
     if request.method == "POST":
@@ -481,7 +545,6 @@ def web_signup(request):
         c.gender = request.POST["gender"]
         c.roll = roll
         c.phone = request.POST["phone"]
-        c.year = request.POST["year"]
         c.branch = request.POST["branch"]
         c.ssc = request.POST["10th"]
         c.hsc = request.POST["12th"]
@@ -490,37 +553,55 @@ def web_signup(request):
             c.activeBack = False
         else:
             c.activeBack = True
+
+        year = request.POST["year"]
+        year_obj = Year.objects.get(year=year)
+        c.y_id = year_obj
         c.save()
-        # if request.FILES["resume"]:
-        #     myfile = request.FILES["resume"]
-        #     data = myfile.read()
-        #     filename = myfile.name
-        #     extension = filename.split('.')
-        #     file_to = "/students/" + roll + '.' + extension[1]
-        #     print file_to
-        #     dbx.files_upload(data, file_to)
-
-        #     url = "https://api.dropboxapi.com/2/sharing/create_shared_link"
-
-        #     payload = "{\"path\":" + '"' + file_to + '"' + ",\"short_url\": true}"
-        #     print payload
-        #     headers = {
-        #         'authorization': "Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR",
-        #         'content-type': "application/json",
-        #         'cache-control': "no-cache",
-        #     }
-
-        #     response = requests.request("POST", url, data=payload, headers=headers)
-
-        #     res = json.loads(response.text)
-        #     url = res["url"]
-        #     c.url = url
-        #     c.save()
-
+        request.session["name"]=name
+        request.session["email"]=email
         return HttpResponse('success')
     else:
         return HttpResponse('error');
 
+
+def web_upload_resume(request):
+    email = request.session['email']
+    print email
+    student = Student.objects.get(email=email)
+    roll = student.roll
+    if request.FILES["resume"]:
+        myfile = request.FILES["resume"]
+        data = myfile.read()
+        filename = myfile.name
+        extension = filename.split('.')
+        file_to = "/students/" + str(roll) + '.' + extension[1]
+        print file_to
+        dbx.files_upload(data, file_to)
+
+        url = "https://api.dropboxapi.com/2/sharing/create_shared_link"
+
+        payload = "{\"path\":" + '"' + file_to + '"' + ",\"short_url\": true}"
+        print payload
+    # Sanika account
+    # Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR
+    # Sirs account
+        headers = {
+            'authorization': "Bearer 39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi",
+            'content-type': "application/json",
+            'cache-control': "no-cache",
+        }
+
+        response = requests.request("POST", url, data=payload, headers=headers)
+
+        res = json.loads(response.text)
+        url = res["url"]
+        student.url = url
+        student.save()
+        name = request.session["name"]
+        return render(request, 'app/home.html', {"login": 2, "name": name})
+    else:
+        HttpResponse("Error")
 
 @csrf_exempt
 def web_login(request):
@@ -555,6 +636,9 @@ def web_login(request):
             return HttpResponse("User not found")
 
 
+#######UPLOAD ADMIN  ###################
+########################################
+########################################
 @csrf_exempt
 def web_verify(request):
     if request.method == "POST":
@@ -563,6 +647,169 @@ def web_verify(request):
             return HttpResponse("Success")
         else:
             return HttpResponse("Failed")
+
+
+
+@csrf_exempt
+def web_register_company(request):
+    if request.method == "POST":
+        year = request.POST["year"]
+        name = request.POST["name"]
+        salary = request.POST["salary"]
+        criteria = request.POST["criteria"]
+        back = request.POST["back"]
+        ppt_date = request.POST["ppt_date"]
+        ppt_time = request.POST["ppt_time"]
+        other_details = request.POST["other_details"]
+
+        if ppt_date:
+            ppt_date = str(ppt_date)
+            print (ppt_date)
+
+            ppt_date = datetime.datetime.strptime(ppt_date, '%m/%d/%Y').strftime('%Y-%m-%d')
+            print (ppt_date)
+
+        if other_details == "":
+            other_details = None
+            # add to database
+
+        year_obj = Year.objects.get(year=year)
+
+        obj = Company()
+        obj.name = name
+        obj.y_id = year_obj
+
+        if criteria:
+            obj.criteria = criteria
+        if salary:
+            obj.salary = salary
+        if other_details:
+            obj.other_details = other_details
+        if ppt_date:
+            obj.ppt_date = ppt_date + " " + ppt_time
+        if back:
+            obj.back = back
+        obj.save()
+
+        # send notification
+        Device = get_device_model()
+
+        Device.objects.all().send_message({'type': 'company_reg', 'name': name, 'criteria': criteria, 'salary': salary,
+                                           'other_details': other_details, 'ppt_date': ppt_date, 'back': back})
+        print ("Success")
+        return HttpResponse("success")
+    else:
+        return HttpResponse("error")
+
+
+@csrf_exempt
+def web_update_company(request):
+    if request.method == "POST":
+        name = request.POST["name"]
+        print (name)
+        reg_link = request.POST["regLink"]
+        reg_start_date = request.POST["regStartDate"]
+        reg_start_time = request.POST["regStartTime"]
+        # convert date format
+        reg_start_date = datetime.datetime.strptime(reg_start_date, '%m/%d/%Y').strftime('%Y-%m-%d')
+        reg_end_date = request.POST["regEndDate"]
+        reg_end_time = request.POST["regEndTime"]
+        # convert dateformat
+        reg_end_date = datetime.datetime.strptime(reg_end_date, '%m/%d/%Y').strftime('%Y-%m-%d')
+
+        other_details = request.POST["otherDetails"]
+        year = Year.objects.order_by('-y_id')[0]
+        obj = Company.objects.get(name=name, y_id=year)
+        reg_start = reg_start_date + " " + reg_start_time
+        reg_end = reg_end_date + " " + reg_end_time
+        print (reg_start, reg_end)
+        obj.reg_start = reg_start
+        obj.reg_end = reg_end
+        obj.reg_link = reg_link
+        if obj.other_details and other_details:
+            obj.other_details = obj.other_details + " " + other_details
+        elif other_details:
+            obj.other_details = other_details
+        obj.save()
+
+        # send notifications
+        Device = get_device_model()
+        Device.objects.all().send_message(
+            {'type': 'company_update', 'name': name, 'reg_link': reg_link, 'reg_start': reg_start, 'reg_end': reg_end,
+             'other_details': other_details})
+
+        return HttpResponse("success")
+    return HttpResponse("error")
+
+
+@csrf_exempt
+def web_edit_company(request):
+    if request.method == "POST":
+        name = request.POST["name"]
+        year = Year.objects.order_by('-y_id')[0]
+        obj = Company.objects.get(name=name, y_id=year)
+
+        salary = request.POST["salary"]
+        criteria = request.POST["criteria"]
+        back = request.POST["back"]
+        ppt_date = request.POST["ppt_date"]
+        ppt_time = request.POST["ppt_time"]
+
+        if criteria:
+            obj.criteria = criteria
+        if salary:
+            obj.salary = salary
+        if ppt_date:
+            obj.ppt_date = ppt_date + " " + ppt_time
+        if back:
+            obj.back = back
+
+
+        if ppt_date:
+            ppt_date = str(ppt_date)
+
+            obj.ppt_date = datetime.datetime.strptime(ppt_date, '%m/%d/%Y').strftime('%Y-%m-%d')
+
+        reg_link = request.POST["reg_link"]
+        reg_start_date = request.POST["reg_start_date"]
+        reg_start_time = request.POST["reg_start_time"]
+        # convert date format
+        reg_start_date = datetime.datetime.strptime(reg_start_date, '%m/%d/%Y').strftime('%Y-%m-%d')
+        reg_end_date = request.POST["reg_end_date"]
+        reg_end_time = request.POST["reg_end_time"]
+        # convert dateformat
+        reg_end_date = datetime.datetime.strptime(reg_end_date, '%m/%d/%Y').strftime('%Y-%m-%d')
+
+        other_details = request.POST["other_details"]
+
+        reg_start = reg_start_date + " " + reg_start_time
+        reg_end = reg_end_date + " " + reg_end_time
+
+        print (reg_start, reg_end)
+        obj.reg_start = reg_start
+        obj.reg_end = reg_end
+        obj.reg_link = reg_link
+
+        if obj.other_details and other_details:
+            obj.other_details = obj.other_details + " " + other_details
+        elif other_details:
+            obj.other_details = other_details
+        obj.save()
+
+
+        # send notification
+        # Device = get_device_model()
+        #
+        # Device.objects.all().send_message({'type': 'company_reg', 'name': name, 'criteria': criteria, 'salary': salary,
+        #                                    'other_details': other_details, 'ppt_date': ppt_date, 'back': back})
+        # print ("Success")
+        return HttpResponse("success")
+    else:
+        return HttpResponse("error")
+
+
+
+
 
 @csrf_exempt
 def web_notify(request):
@@ -579,7 +826,7 @@ def web_notify(request):
                 data = myfile.read()
                 filename = myfile.name
                 extension = filename.split('.')
-                file_to = "/Messages/" + title + '.' + extension[1]
+                file_to = "/messages/" + title + '.' + extension[1]
                 print file_to
                 dbx.files_upload(data, file_to)
 
@@ -587,8 +834,11 @@ def web_notify(request):
 
                 payload = "{\"path\":" + '"' + file_to + '"' + ",\"short_url\": true}"
                 print payload
+                # sanika account
+                # Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR
+                #Sirs account
                 headers = {
-                    'authorization': "Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR",
+                    'authorization': "Bearer 39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi",
                     'content-type': "application/json",
                     'cache-control': "no-cache",
                 }
@@ -608,11 +858,13 @@ def web_notify(request):
     else:
         return HttpResponse("error")
 
+
 @csrf_exempt
 def web_upload_result(request):
     if request.method == "POST":
         choice = request.POST["choice"]
         company = request.POST["company"]
+
         print choice
         if request.FILES["resultfile"]:
             myfile = request.FILES["resultfile"]
@@ -628,8 +880,11 @@ def web_upload_result(request):
 
             payload = "{\"path\":" + '"' + file_to + '"' + ",\"short_url\": true}"
             print payload
+            # Sanikas account
+            # Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR
+            # Sirs account
             headers = {
-                'authorization': "Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR",
+                'authorization': "Bearer 39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi",
                 'content-type': "application/json",
                 'cache-control': "no-cache",
             }
@@ -641,10 +896,14 @@ def web_upload_result(request):
 
             # store in table
             obj = Result()
-            obj.company = company
+
+            obj.c_id = Company.objects.get(name=company)
             obj.shortlist = choice
             obj.filename = filename
             obj.url = url
+
+            if "other_details" in request.POST:
+                obj.other_details = request.POST["other_details"]
             obj.save()
 
             # save the url in company table
@@ -654,7 +913,7 @@ def web_upload_result(request):
                 obj.save()
 
             title = company + " " + choice
-            
+
             Device = get_device_model()
             Device.objects.all().send_message({'type': 'result', 'title': title, 'url': url})
             name = request.session["name"]
@@ -720,82 +979,3 @@ def web_download_companies(request):
         writer.writerow([x.name,x.salary,x.criteria,x.ppt_date,x.placed_url,x.hired_people,x.other_details])
         print writer
     return response
-
-@csrf_exempt
-def web_register_company(request):
-    if request.method == "POST":
-        name = request.POST["name"]
-        if Company.objects.filter(name=name).exists():
-            return HttpResponse('exists')
-        name = request.POST["name"]
-        salary = request.POST["salary"]
-        criteria = request.POST["criteria"]
-        back = request.POST["back"]
-        ppt_date = request.POST["ppt_date"]
-        ppt_time = request.POST["ppt_time"]
-        ppt_date = str(ppt_date)
-        print (ppt_date)
-        ppt_date = datetime.datetime.strptime(ppt_date, '%m/%d/%Y').strftime('%Y-%m-%d')
-        print (ppt_date)
-        other_details = request.POST["other_details"]
-        if other_details == "":
-            other_details = None
-            # add to database
-        obj = Company()
-        obj.name = name
-        obj.criteria = criteria
-        obj.salary = salary
-        obj.other_details = other_details
-        obj.ppt_date = ppt_date + " " + ppt_time
-        obj.back = back
-        obj.save()
-
-        # send notification
-        Device = get_device_model()
-
-        Device.objects.all().send_message({'type': 'company_reg', 'name': name, 'criteria': criteria, 'salary': salary,
-                                           'other_details': other_details, 'ppt_date': ppt_date, 'back': back})
-        print ("Success")
-        return HttpResponse("success")
-    else:
-        return HttpResponse("error")
-
-
-@csrf_exempt
-def web_update_company(request):
-    if request.method == "POST":
-        name = request.POST["name"]
-        print (name)
-        reg_link = request.POST["regLink"]
-        reg_start_date = request.POST["regStartDate"]
-        reg_start_time = request.POST["regStartTime"]
-        reg_start_date = datetime.datetime.strptime(reg_start_date, '%m/%d/%Y').strftime('%Y-%m-%d')
-        reg_end_date = request.POST["regEndDate"]
-        reg_end_time = request.POST["regEndTime"]
-        reg_end_date = datetime.datetime.strptime(reg_end_date, '%m/%d/%Y').strftime('%Y-%m-%d')
-
-        other_details = request.POST["otherDetails"]
-        obj = Company.objects.get(name=name)
-        if obj.reg_link:
-            return HttpResponse("updated")
-        reg_start = reg_start_date + " " + reg_start_time
-        reg_end = reg_end_date + " " + reg_end_time
-        print (reg_start, reg_end)
-        obj.reg_start = reg_start
-        obj.reg_end = reg_end
-        obj.reg_link = reg_link
-        if obj.other_details and other_details:
-            obj.other_details = obj.other_details + " " + other_details
-        elif other_details:
-            obj.other_details = other_details
-        obj.save()
-
-        # send notifications
-        Device = get_device_model()
-        Device.objects.all().send_message(
-            {'type': 'company_update', 'name': name, 'reg_link': reg_link, 'reg_start': reg_start, 'reg_end': reg_end,
-             'other_details': other_details})
-
-        return HttpResponse("success")
-    return HttpResponse("error")
-

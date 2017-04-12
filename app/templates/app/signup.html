@@ -180,13 +180,13 @@ input:checked + .slider:before {
 <!-- Text input-->
 
 <div class="form-group">
-  <label class="col-sm-4 control-label" for="textinput">Name</label>  
+  <label class="col-sm-4 control-label" >Name</label>
   <div class="col-sm-5">
   <input id="name" name="name" type="text" placeholder="Name" class="form-control input-md">
   </div>
 </div>
 <div class="form-group">
-  <label class="col-sm-4 control-label" for="textinput">Roll Number</label>  
+  <label class="col-sm-4 control-label">Roll Number</label>
   <div class="col-sm-5">
   <input id="roll" name="roll" type="number" placeholder="Roll Number" min="1000" class="form-control input-md">
   </div>
@@ -195,7 +195,7 @@ input:checked + .slider:before {
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Email </label>  
+  <label class="col-md-4 control-label" >Email </label>
   <div class="col-sm-5">
   <input id="email" name="email" type="text" placeholder="Email" class="form-control input-md">  
   </div>
@@ -203,7 +203,7 @@ input:checked + .slider:before {
 
 <!-- Password input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="passwordinput">Password</label>
+  <label class="col-md-4 control-label" >Password</label>
   <div class="col-sm-5">
     <input id="password" name="password" type="password" placeholder="Password" class="form-control input-md">
   </div>
@@ -221,7 +221,7 @@ input:checked + .slider:before {
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Phone</label>  
+  <label class="col-md-4 control-label" >Phone</label>
   <div class="col-sm-5">
   <input id="phone" name="phone" type="text" placeholder="Phone" class="form-control input-md">
 </div>
@@ -230,7 +230,7 @@ input:checked + .slider:before {
 <div class="form-group">
   <label class="col-md-4 control-label" for="selectbasic">Passing year</label>
   <div class="col-sm-5">
-    <select id="selectbasic" name="year" class="form-control">
+    <select  name="year" class="form-control">
       {% for passyear in years %}
       <option value= {{passyear.year}} > {{passyear.year}} </option>
       {% endfor %}
@@ -273,7 +273,7 @@ input:checked + .slider:before {
 
 <!-- Appended Input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="average">Average (5 sems) %</label>
+  <label class="col-md-4 control-label" for="average">Average  %</label>
   <div class="col-sm-5">
     <div class="input-group">
       <input id="average" name="average" class="form-control" placeholder="Average"  type="number" min="1" max="100">
@@ -308,7 +308,7 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" for="singlebutton"></label>
   
   <div class="col-sm-4 text-center" align="center" style="margin-left:-2%;margin-right:4%;">
-  <button type="button" class="btn btn-info" onclick="signup()">Signup</button>
+  <button type="button" class="btn btn-info" onclick="signup()">Next</button>
   </div>
 </div>
 </fieldset>

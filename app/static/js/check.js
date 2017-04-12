@@ -11,6 +11,7 @@ function signup() {
         var ssc = document.getElementById('10th').value;
         var hsc = document.getElementById('12th').value;
         var avg = document.getElementById('average').value;
+
         var atpos = email.indexOf("@");
         var dotpos = email.lastIndexOf(".");
         
@@ -38,7 +39,7 @@ function signup() {
                 success: function(message) {
                 console.log(message);
                     if (message =='success') {
-                       window.location.href = "/plogin/";
+                       window.location.href = "/presume/";
                     }
                     else if(message=='exists')
                     {
@@ -93,70 +94,253 @@ function companyRegister() {
         console.log('registerform');
         var registerform = $('#' + 'register');
         var csrftoken = getCookie('csrftoken');
-        var name  = document.getElementById("name");
-        var salary = document.getElementById("salary");
-        var criteria = document.getElementById("criteria");
-        var back = document.getElementById("back");
-        var ppt_date = document.getElementById("ppt_date");
-        var ppt_time = document.getElementById("ppt_time");
-    
+        var name  = document.getElementById("name").value;
+        var ppt_date = document.getElementById("ppt_date").value;
+        var ppt_time = document.getElementById("ppt_time").value;
 
-        console.log('registerform');
-        $.ajax({
-            type: "POST",
-            url: '/cregister/',
-            data: registerform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
-            success: function(message) {
-                if (message =='success') {
-                    alert('Registered Successfully');
-                     window.location.href = "/";
+        if(name.length==0)
+            alert('Enter name');
 
-                }
-                else if(message=='exists')
-                {
-                    alert("Already registered.")
-                    location.reload();
-                }
-                else
-                {
-                    alert('Error occured');
-                }
-            },
-            error: function(xhr, errmsg, err) {
-                alert('Error');
-            },
-        });
+        else if(ppt_date.length==0 && ppt_time.length>0)
+            alert("Enter date");
+
+        else
+        {
+            $.ajax({
+                type: "POST",
+                url: '/cregister/',
+                data: registerform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                    if (message =='success') {
+                         window.location.href = "/";
+                        alert('Registered Successfully');
+                    }
+
+                    else
+                    {
+                        alert('Error occured');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+        }
     }
+
 
 function companyUpdate() {
         console.log('updateform');
         var updateform = $('#' + 'update');
         var csrftoken = getCookie('csrftoken');
+        var name = document.getElementById("company");
+        var selectedvalue = name.options[name.selectedIndex].value;
+        console.log(selectedvalue);
+        if(selectedvalue == "Select Company")
+            alert("Select Company");
+        else {
+            $.ajax({
+                type: "POST",
+                url: '/update/',
+                data:updateform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                    if (message =='success') {
+                        alert('Updated Successfully');
+                        window.location.href = "/";
 
-        $.ajax({
-            type: "POST",
-            url: '/update/',
-            data:updateform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
-            success: function(message) {
-                if (message =='success') {
-                    alert('Updated Successfully');
-                    window.location.href = "/";
+                    }
 
-                }
-                else if(message=='updated')
-                {
-                    alert("Already Updated.")
-                    location.reload();
-                }
-                else
-                {
-                    alert('Error occured');
-                }
-            },
-            error: function(xhr, errmsg, err) {
-                alert('Error');
-            },
-        });
+                    else
+                    {
+                        alert('Error occured');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+        }
+    }
+
+
+    function loadDetails() {
+
+        var csrftoken = getCookie('csrftoken');
+        var company = document.getElementById("name").value;
+
+            $.ajax({
+                type: "POST",
+                url: '/getCompanyDetails/',
+                data: {company:company,csrfmiddlewaretoken:csrftoken},
+                success: function(message) {
+                console.log(message);
+                    str  = jQuery.parseJSON(message);
+                    data = str[0]["fields"];
+
+                    criteria = data["criteria"];
+                    salary = data["salary"];
+                    position = data["position"];
+                    back = data["back"];
+                    reg_link = data["reg_link"];
+                    other_details = data["other_details"];
+
+
+                    document.getElementById("criteria").value = criteria;
+                    document.getElementById("salary").value = salary;
+                    document.getElementById("position").value = position;
+                    document.getElementById("back").value = back;
+                    document.getElementById("reg_link").value = reg_link;
+                    document.getElementById("other_details").value = other_details;
+
+
+                    ppt = data["ppt_date"];
+                    if(ppt!=null){
+                    var arr = ppt.split('T');
+                    ppt_date = arr[0];
+                    ppt_time = arr[1];
+
+                    var date = ppt_date.split('-');
+                    var year = date[0];
+                    var month = date[1];
+                    var dt = date[2];
+                    ppt_date = month + "/"+dt + "/" + year;
+                    ppt_time = ppt_time.slice(0,5);
+
+                    document.getElementById("ppt_date").value =ppt_date;
+                    document.getElementById("ppt_time").value = ppt_time;
+
+
+                    }
+
+                    reg_start = data["reg_start"];
+                    if(reg_start != null){
+                    arr = reg_start.split('T');
+                    reg_start_date = arr[0];
+                    reg_start_time = arr[1];
+                    date = reg_start_date.split('-');
+                    year = date[0];
+                    month = date[1];
+                    dt = date[2];
+                    reg_start_date = month + "/"+dt + "/" + year;
+                    reg_start_time = reg_start_time.slice(0,5);
+
+
+                    document.getElementById("reg_start_date").value = reg_start_date;
+                    document.getElementById("reg_start_time").value = reg_start_time;
+
+                    }
+
+                    reg_end = data["reg_end"]
+                    if(reg_end != null){
+                    arr = reg_end.split('T');
+                    reg_end_date = arr[0];
+                    reg_end_time = arr[1].slice(0,5);
+
+
+                    date = reg_end_date.split('-');
+                    year = date[0];
+                    month = date[1];
+                    dt = date[2];
+                    reg_end_date = month + "/"+dt + "/" + year;
+
+                    document.getElementById("reg_end_date").value = reg_end_date;
+                    document.getElementById("reg_end_time").value = reg_end_time;
+
+                    }
+
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+
+    }
+
+    function isValidDate(date) {
+        var valid = true;
+        var arr = date.split("/");
+        var month = parseInt(arr[0]);
+        var day   = parseInt(arr[1]);
+        var year  = parseInt(arr[2]);
+        console.log(month +" " +  day  +" "+ year);
+        if(isNaN(month) || isNaN(day) || isNaN(year)) return false;
+
+        if((month < 1) || (month > 12)) valid = false;
+        else if((day < 1) || (day > 31)) valid = false;
+        else if(((month == 4) || (month == 6) || (month == 9) || (month == 11)) && (day > 30)) valid = false;
+        else if((month == 2) && (((year % 400) == 0) || ((year % 4) == 0)) && ((year % 100) != 0) && (day > 29)) valid = false;
+        else if((month == 2) && ((year % 100) == 0) && (day > 29)) valid = false;
+        else if((month == 2) && (day > 28)) valid = false;
+        console.log(valid);
+    return valid;
+}
+
+    function isValidTime(time) {
+        var valid = true;
+        var arr = time.split(":");
+        var hr = arr[0];
+        var min = arr[1];
+        if(isNaN(hr) || isNaN(min)) return false;
+
+        if((hr < 0) || (hr >= 24)) valid = false;
+        else if((min < 0) || (min > 60)) valid = false;
+
+        console.log(valid);
+    return valid;
+}
+
+
+    function companyEdit() {
+        console.log('editform');
+        var registerform = $('#' + 'edit');
+        var csrftoken = getCookie('csrftoken');
+        var name = document.getElementById("name").value;
+        var ppt_date = document.getElementById("ppt_date").value;
+        var reg_start_date = document.getElementById("reg_start_date").value;
+        var reg_end_date = document.getElementById("reg_end_date").value;
+        var ppt_time  = document.getElementById("ppt_time").value;
+        var reg_start_time = document.getElementById("reg_start_time").value;
+        var reg_end_time = document.getElementById("reg_end_time").value;
+
+        if(name == "Select Company")
+            alert('Enter name');
+        else if(! isValidDate(ppt_date))
+        alert("Invalid Ppt Date");
+        else if( !isValidDate(reg_start_date))
+        alert("Invalid Reg start date");
+        else if(! isValidDate(reg_end_date))
+        alert("Invalid Reg end date");
+
+        else if(!isValidTime(ppt_time))
+        alert("Invalid Ppt time");
+        else if(!isValidTime(reg_start_time))
+        alert("Invalid Reg start time");
+        else if(!isValidTime(reg_end_time))
+        alert("Invalid Reg end time");
+
+        else
+        {
+            $.ajax({
+                type: "POST",
+                url: '/edit/',
+                data: registerform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                    if (message =='success') {
+                        alert('Edited Successfully');
+                         window.location.href = "/";
+
+                    }
+
+                    else
+                    {
+                        alert('Error occured');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+        }
     }
 
 function downloadStudents() {
@@ -251,35 +435,6 @@ function downloadCompanies() {
 //                }else{
 //                    alert('Error occured');
 //                }
-//            },
-//            error: function(xhr, errmsg, err) {
-//                alert('Error');
-//            },
-//        });
-//    }
-
-
-//function signup() {
-//        console.log('signup');
-//        var signupform = $('#' + 'signup');
-//        var csrftoken = getCookie('csrftoken');
-//
-//        $.ajax({
-//            type: "POST",
-//            url: '/signup/',
-//            data:signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
-//            success: function(message) {
-//                if (message =='success') {
-//                    alert('Registered Successfully');
-//                    window.location.href = "/";
-//
-//                }else if(message == 'exists'){
-//                    alert('User Exists.Please Login');
-//                    window.location.href ="/plogin/";
-//                }
-//                else{
-//                    alert('Error Occured');
-//                    }
 //            },
 //            error: function(xhr, errmsg, err) {
 //                alert('Error');
