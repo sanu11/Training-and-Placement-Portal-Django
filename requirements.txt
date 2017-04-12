@@ -12,4 +12,5 @@ python-mimeparse==1.5.2
 requests==2.11.1
 six==1.10.0
 dropbox
+django-import-export
 
