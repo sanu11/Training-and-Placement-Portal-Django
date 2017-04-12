@@ -115,7 +115,6 @@ function companyRegister() {
                     if (message =='success') {
                          window.location.href = "/";
                         alert('Registered Successfully');
-
                     }
 
                     else
@@ -238,6 +237,13 @@ function companyUpdate() {
                     reg_end_date = arr[0];
                     reg_end_time = arr[1].slice(0,5);
 
+
+                    date = reg_end_date.split('-');
+                    year = date[0];
+                    month = date[1];
+                    dt = date[2];
+                    reg_end_date = month + "/"+dt + "/" + year;
+
                     document.getElementById("reg_end_date").value = reg_end_date;
                     document.getElementById("reg_end_time").value = reg_end_time;
 
@@ -251,14 +257,68 @@ function companyUpdate() {
 
     }
 
+    function isValidDate(date) {
+        var valid = true;
+        var arr = date.split("/");
+        var month = parseInt(arr[0]);
+        var day   = parseInt(arr[1]);
+        var year  = parseInt(arr[2]);
+        console.log(month +" " +  day  +" "+ year);
+        if(isNaN(month) || isNaN(day) || isNaN(year)) return false;
+
+        if((month < 1) || (month > 12)) valid = false;
+        else if((day < 1) || (day > 31)) valid = false;
+        else if(((month == 4) || (month == 6) || (month == 9) || (month == 11)) && (day > 30)) valid = false;
+        else if((month == 2) && (((year % 400) == 0) || ((year % 4) == 0)) && ((year % 100) != 0) && (day > 29)) valid = false;
+        else if((month == 2) && ((year % 100) == 0) && (day > 29)) valid = false;
+        else if((month == 2) && (day > 28)) valid = false;
+        console.log(valid);
+    return valid;
+}
+
+    function isValidTime(time) {
+        var valid = true;
+        var arr = time.split(":");
+        var hr = arr[0];
+        var min = arr[1];
+        if(isNaN(hr) || isNaN(min)) return false;
+
+        if((hr < 0) || (hr >= 24)) valid = false;
+        else if((min < 0) || (min > 60)) valid = false;
+
+        console.log(valid);
+    return valid;
+}
+
+
     function companyEdit() {
         console.log('editform');
         var registerform = $('#' + 'edit');
         var csrftoken = getCookie('csrftoken');
         var name = document.getElementById("name").value;
+        var ppt_date = document.getElementById("ppt_date").value;
+        var reg_start_date = document.getElementById("reg_start_date").value;
+        var reg_end_date = document.getElementById("reg_end_date").value;
+        var ppt_time  = document.getElementById("ppt_time").value;
+        var reg_start_time = document.getElementById("reg_start_time").value;
+        var reg_end_time = document.getElementById("reg_end_time").value;
 
         if(name == "Select Company")
             alert('Enter name');
+        else if(! isValidDate(ppt_date))
+        alert("Invalid Ppt Date");
+        else if( !isValidDate(reg_start_date))
+        alert("Invalid Reg start date");
+        else if(! isValidDate(reg_end_date))
+        alert("Invalid Reg end date");
+
+        else if(!isValidTime(ppt_time))
+        alert("Invalid Ppt time");
+        else if(!isValidTime(reg_start_time))
+        alert("Invalid Reg start time");
+        else if(!isValidTime(reg_end_time))
+        alert("Invalid Reg end time");
+
         else
         {
             $.ajax({
