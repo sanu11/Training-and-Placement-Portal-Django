@@ -20,6 +20,26 @@ class Year(models.Model):
 	def __str__(self):
 		return  self.year
 
+class Company(models.Model):
+
+	c_id		=	models.AutoField(primary_key=True)
+	name		=	models.CharField(max_length=40)
+	criteria	=	models.FloatField(blank=True,null=True)
+	back		=	models.CharField(max_length=100,blank=True,null=True)
+	position    =   models.CharField(max_length=30,null=True,blank=True)
+	salary      =   models.FloatField(blank=True, null=True)
+	ppt_date	=	models.DateTimeField(null=True,blank=True)
+	hired_count = 	models.IntegerField(null=True,blank=True)
+	other_details=	models.CharField(max_length=1000,null=True,blank=True)
+	placed_url =	models.CharField(max_length=500, null=True, blank=True)
+	reg_start	=	models.DateTimeField(null=True,blank=True)
+	reg_end		=	models.DateTimeField(null=True,blank=True)
+	reg_link	=	models.CharField(max_length=1000,null=True,blank=True)
+	y_id		=	models.ForeignKey(Year)															 #foreign key to year table
+
+	def __str__(self):
+		return  self.name
+
 class Student(models.Model):
 
 	s_id		=	models.AutoField(primary_key=True)
@@ -32,14 +52,14 @@ class Student(models.Model):
 	phone       =	models.CharField(max_length=10)
 	gender      =	models.CharField(max_length=10)
 	address     =	models.CharField(max_length=1000,null=True,blank=True)
-	y_id        =	models.ForeignKey(Year,models.SET_NULL)            									 #foreign key to year table
+	y_id        =	models.ForeignKey(Year)            												 #foreign key to year table
 	branch		=	models.CharField(max_length=6)
 	ssc			=	models.FloatField()
 	hsc			=	models.FloatField()
 	average		=	models.FloatField()
 	placed		=	models.BooleanField(default=False)
 	active_back	=	models.BooleanField(default=False)
-	url			=	models.CharField(max_length=500)
+	url			=	models.CharField(max_length=500,null=True,blank=True)
 	c_id		=	models.ForeignKey(Company,on_delete=models.CASCADE,null=True,blank=True)			#foreign key o company table
 
 	def __str__(self):
@@ -54,37 +74,22 @@ class Admin(models.Model):
 	def __str__(self):
 		return  self.name
 
-class Company(models.Model):
 
-	c_id		=	models.AutoField(primary_key=True)
-	name		=	models.CharField(max_length=40)
-	criteria	=	models.FloatField(blank=True,null=True)
-	back		=	models.CharField(max_length=100,blank=True,null=True)
-	ppt_date	=	models.DateTimeField(null=True,blank=True)
-	hired_count = 	models.IntegerField(null=True,blank=True)
-	other_details=	models.CharField(max_length=1000,null=True,blank=True)
-	placed_url =	models.CharField(max_length=500, null=True, blank=True)
-	reg_start	=	models.DateTimeField(null=True,blank=True)
-	reg_end		=	models.DateTimeField(null=True,blank=True)
-	reg_link	=	models.CharField(max_length=1000,null=True,blank=True)
-
-	def __str__(self):
-		return  self.name
-
-class Profile(models.Model):
-
-	p_id		=	models.AutoField(primary_key=True)
-	position	=	models.CharField(max_length=50,null=True,blank=True)
-	salary		=	models.FloatField(blank=True, null=True)
-	hired_count	=	models.IntegerField(default=0)
-	c_id		=	models.ForeignKey(Company,on_delete=models.CASCADE)			#Foreign key on company
-
-	def __str__(self):
-		return	Company.name + " " + self.position
+# class Profile(models.Model):
+#
+# 	p_id		=	models.AutoField(primary_key=True)
+# 	position	=	models.CharField(max_length=50,null=True,blank=True)
+# 	salary		=	models.FloatField(blank=True, null=True)
+# 	hired_count	=	models.IntegerField(default=0)
+# 	c_id		=	models.ForeignKey(Company,on_delete=models.CASCADE)			#Foreign key on company
+#
+# 	def __str__(self):
+# 		return	Company.name + " " + self.position
 
 class Verify(models.Model):
 	v_id		=	models.AutoField(primary_key=True)
 	prn			=	models.CharField(max_length=50)
+	college_id  =   models.CharField(max_length=20)
 
 	def __str__(self):
 		return self.prn
@@ -94,7 +99,7 @@ class Message(models.Model):
 	title		=	models.CharField(max_length=200,default="")
 	message		=	models.CharField(max_length=10000,default="",null=True,blank=True)
 	url			=	models.CharField(max_length=50,null=True,blank=True)
-	
+
 	def __str__(self):
 		return self.title
 
@@ -102,10 +107,10 @@ class Message(models.Model):
 class Result(models.Model):
 	r_id		=	models.AutoField(primary_key=True)
 	c_id		=	models.ForeignKey(Company,on_delete=models.CASCADE)			#foreign key o company table
-	company		= 	models.CharField(max_length=200)
 	shortlist 	=	models.CharField(max_length=100)
 	filename	=	models.CharField(max_length=100)
 	url 		=	models.CharField(max_length=100)
+	other_details= models.CharField(max_length=1000)
 
 	def __str__(self):
 		return self.filename

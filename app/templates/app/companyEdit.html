@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Company Registration</title>
+    <title>Company Edit</title>
     <meta charset="utf-8">
     <meta name="description" content="PICT Training and placement online portal">
     <meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
@@ -17,8 +17,8 @@
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     -->
     <style>
- 
-    /* Remove the navbar's default margin-bottom and rounded borders */ 
+
+    /* Remove the navbar's default margin-bottom and rounded borders */
     .navbar {
       margin-bottom: 0;
       border-radius: 0;
@@ -33,14 +33,14 @@
     }
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
     .row.content {height: 450px}
-    
+
     /* Set gray background color and 100% height */
     .sidenav {
       padding-top: 20px;
       background-color: #f1f1f1;
       height: 130%;
     }
-    
+
     /* Set black background color, white text and some padding */
    footer {
       background-color: #353739;
@@ -60,7 +60,7 @@
         height: auto;
         padding: 15px;
       }
-      .row.content {height:auto;} 
+      .row.content {height:auto;}
     }
   body {
 
@@ -103,7 +103,7 @@
 }
 
 @-webkit-keyframes fadein {
-    from {bottom: 0; opacity: 0;} 
+    from {bottom: 0; opacity: 0;}
     to {bottom: 30px; opacity: 1;}
 }
 
@@ -117,7 +117,7 @@ input::-webkit-calendar-picker-indicator{
 }
 
 @-webkit-keyframes fadeout {
-    from {bottom: 30px; opacity: 1;} 
+    from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
 }
 
@@ -125,6 +125,7 @@ input::-webkit-calendar-picker-indicator{
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
 }
+
 
 
     </style>
@@ -197,99 +198,140 @@ input::-webkit-calendar-picker-indicator{
         </div>
 
         <div class="col-sm-8 text-left" style="background-color:#FFFFFF">
-            <form class="form-horizontal" role="form" id="register" method="POST">
+            <form class="form-horizontal" role="form" id="edit" method="POST">
                 {% csrf_token %}
 
-                <h2><b>Company Registration</b></h2>
+                <h2><b>Company Edit</b></h2>
                 <div class="form-group">
-                    <label class="col-md-3 control-label" >Year</label>
+                    <label class="col-md-3 control-label">Year</label>
+                    <label class="col-md-2  control-label">{{year}}</label>
 
-                    <div class="col-sm-5">
-                        <select name="year" class="form-control">
-                            {% for passyear in years %}
-                            {% if passyear.y_id == curr_year.y_id %}
-                            <option value={{passyear.year}} selected="selected"> {{passyear.year}}</option>
-                            {% else %}
-                            <option value={{passyear.year}}> {{passyear.year}}</option>
-                            {% endif %}
-                            {% endfor %}
-                        </select>
+                </div>
+     <div class="form-group">
+                <label class="col-sm-3 control-label">Company</label>
+                <div class="col-sm-9">
+                    <div class="input-group">
+
+                        <div class="input-group-btn">
+                            <select class="form-control" name="name" id="name" onchange="loadDetails()">
+                                <option selected disabled hidden>Select Company</option>
+                                {% for company in companies %}
+                                <option value="{{  company.name }}"> {{company.name}}</option>
+                                {% endfor %}
+
+                            </select>
+
+
+                        </div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">Company</label>
-                    <div class="col-sm-9">
-                        <input type="text" id="name" name="name" placeholder="Company Name" class="form-control"
-                               required autofocus>
-
-                    </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">Profile</label>
-                    <div class="col-sm-9">
-                        <input type="text" id="position" name="position" placeholder="Software Developer"
-                               class="form-control" required autofocus>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Profile</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="position" name="position" placeholder="Software Developer"
+                                   class="form-control" required autofocus>
 
+                        </div>
                     </div>
-                </div>
 
 
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">Salary</label>
-                    <div class="col-sm-9">
-                        <input type="number" step="0.01" min=0 id="salary" name="salary" placeholder="Salary"
-                               class="form-control" required>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Salary</label>
+                        <div class="col-sm-9">
+                            <input type="number" step="0.01" min=0 id="salary" name="salary" placeholder="Salary"
+                                   class="form-control" required>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">Criteria</label>
-                    <div class="col-sm-9">
-                        <input type="number" step="0.01" min=0 id="criteria" name="criteria" placeholder="Criteria"
-                               class="form-control" required>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Criteria</label>
+                        <div class="col-sm-9">
+                            <input type="number" step="0.01" min=0 id="criteria" name="criteria" placeholder="Criteria"
+                                   class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">Ppt/Apti</label>
-                    <div class="col-sm-5">
-                        <input class="form-control" id="ppt_date" name="ppt_date" placeholder="MM/DD/YYYY" type="text"
-                               required/>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Ppt/Apti</label>
+                        <div class="col-sm-5">
+                            <input class="form-control" id="ppt_date" name="ppt_date" placeholder="MM/DD/YYYY"
+                                   type="text"
+                                   required/>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="time" class="form-control" name="ppt_time" id="ppt_time" placeholder="HH:MM"
+                                   required>
+                        </div>
                     </div>
-                    <div class="col-sm-4">
-                        <input type="time" class="form-control" name="ppt_time" id="ppt_time" placeholder="HH:MM"
-                               required>
-                    </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">Backlog</label>
-                    <div class="col-sm-9">
-                        <select id="back" name="back" class="form-control">
-                            <option value="No Criteria">No Criteria</option>
-                            <option value="Active not Allowed">Active not Allowed</option>
-                            <option value="Passive not Allowed">Passive not Allowed</option>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Backlog</label>
+                        <div class="col-sm-9">
+                            <select id="back" name="back" class="form-control">
+                                <option value="No Criteria">No Criteria</option>
+                                <option value="Active not Allowed">Active not Allowed</option>
+                                <option value="Passive not Allowed">Passive not Allowed</option>
 
-                        </select>
-                    </div>
-                </div> <!-- /.form-group -->
+                            </select>
+                        </div>
+                    </div> <!-- /.form-group -->
 
-                <div class="form-group">
-                    <label class="control-label col-sm-3" for="other_details">Other Details</label>
-                    <div class="col-sm-9">
-                        <textarea class="form-control" id="other_details" name="other_details"
-                                  maxlength="550"></textarea>
-                    </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="cregister"></label>
-                    <div class="col-md-7" align="center">
-                        <button type="button" id="cregister" name="register" onclick="companyRegister()"
-                                class="btn btn-info">Register
-                        </button>
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="reg_link">Registration Link</label>
+                        <div class="col-sm-9">
+                            <input id="reg_link" name="reg_link" type="url" placeholder="Registration Link"
+                                   class="form-control input-md" required="">
+
+                        </div>
                     </div>
-                </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Registration Start</label>
+                        <div class="col-sm-5">
+                            <input class="form-control" id="reg_start_date" name="reg_start_date" placeholder="MM/DD/YYYY"
+                                   type="text"
+                                   required/>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="time" class="form-control" name="reg_start_time" id="reg_start_time" placeholder="HH:MM"
+                                   required>
+                        </div>
+                    </div>
+
+                   <div class="form-group">
+                        <label class="col-sm-3 control-label">Registration End</label>
+                        <div class="col-sm-5">
+                            <input class="form-control" id="reg_end_date" name="reg_end_date" placeholder="MM/DD/YYYY"
+                                   type="text"
+                                   required/>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="time" class="form-control" name="reg_end_time" id="reg_end_time" placeholder="HH:MM"
+                                   required>
+                        </div>
+                    </div>
+
+
+                    <!-- Textarea -->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="other_details">Other Details</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" id="other_details" name="other_details"
+                                      maxlength="550"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="cregister"></label>
+                        <div class="col-md-7" align="center">
+                            <button type="button" id="cregister" name="register" onclick="companyEdit()"
+                                    class="btn btn-info">Submit
+                            </button>
+                        </div>
+                    </div>
             </form> <!-- /form -->
         </div>
         <div class="col-sm-2 sidenav "></div>
@@ -316,6 +358,7 @@ input::-webkit-calendar-picker-indicator{
       autoclose: true,
     })
   })
+
 
 </script>
 <footer class="container-fluid text-center">

@@ -127,6 +127,8 @@
       <li ><a href="/students/"><b>Students  Info</b></a></li>
       <li><a href="/pregister/"><b>Register  Company</b></a></li>
       <li><a href="/pupdate/"><b>Update  Company</b></a> </li>
+      <li><a href="/pedit/"><b>Edit Company</b></a> </li>
+
       <li><a href="/pnotify/"><b>Notify  Candidate</b></a> </li>
       <li><a href="/presult/"><b>Upload Result</b></a> </li>
 
@@ -148,15 +150,15 @@
 <div class="text-left">
 
 
-<form class="form-horizontal" id="student" method="POST" action ='/statistics/'>
+<form class="form-horizontal" id="student" method="POST" action ='/companies/'>
 {% csrf_token %}
  <div class="form-group text-left">
-   <label class="col-sm-1 control-label" ></label>
+   <label class="col-sm-4 control-label" ></label>
  <div class="col-sm-1" style="padding-right:2px;padding-left:2px;"> <label class="control-label" >MIN</label></div>
  <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
   <label class="control-label" >MAX</label></div>
     
-   <label class="col-sm-2 control-label" ></label>
+   <label class="col-sm-1 control-label" ></label>
  <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
   <label class="control-label" >MIN</label>
  </div>
@@ -169,24 +171,54 @@
    </div>
    
    
-   <div class="form-group">
-   <label class="col-sm-1 control-label"  >Salary</label>
- <div class="col-sm-1" style="padding-right:2px;padding-left:2px;"><input type="text" name = "minsal" id = "minsal" placeholder="Min" value = {{minsal}} class="form-control" style = "float:left;"></div>
- <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
- <input type="text" name = "maxsal" placeholder="Max"  id= "maxsal" value = {{maxsal}} style = "float:left;" class="form-control"></div>
+<div class="form-group">
+   <label class="col-sm-1 control-label"  >Year</label>
+     <div class="col-sm-2">
+        <select class="form-control" name="year" id="year">
+    <!--<option selected disabled hidden>Year</option>-->
+
+           {% for passyear in years %}
+            {% if passyear == curr_year %}
+            <option value = {{passyear.year}} selected="selected" > {{passyear.year}} </option>
+            {%  else %}
+            <option value = {{passyear.year}} > {{passyear.year}} </option>
+            {% endif %}
+            {% endfor %}
+      </select>
+      </div>
+
+
+    <label class="col-sm-1 control-label"  >Salary</label>
+
+<div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+     <input type="text" name = "minsal" id = "minsal" placeholder="Min" value = {{minsal}} class="form-control" style = "float:left;">
+ </div>
+
+<div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+    <input type="text" name = "maxsal" placeholder="Max"  id= "maxsal" value = {{maxsal}} style = "float:left;" class="form-control">
+</div>
     
-   <label class="col-sm-2 control-label" >Criteria</label>
- <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+    <label class="col-sm-1 control-label" >Criteria</label>
+
+<div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
  <input type="text" name = "mincri" placeholder="Min" id = "mincri" value = {{mincri}} class="form-control" style = "float:left;">
  </div>
+
  <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
  <input type="text" name = "maxcri" placeholder="Max" id= "maxcri" value = {{maxcri}} style = "float:left;" class="form-control">
  </div>
+
    <div class="col-sm-2">
-<input type="submit" class="btn btn-info form-control" value="Submit" ></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- <div class="col-sm-2"> <button value="Download file" onclick = "downloadCompanies()" class="btn btn-info form-control">Download</button>
- </div>
-   </div>
+<input type="submit" class="btn btn-info form-control" value="Submit" >
+   </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+    <!--DOWNLOAD COMPANIES -->
+ <!--<div class="col-sm-2">-->
+     <!--<button value="Download file" onclick = "downloadCompanies()" class="btn btn-info form-control">Download</button>-->
+ <!--</div>-->
+
+</div>
         </form>
 </div>
 <hr>

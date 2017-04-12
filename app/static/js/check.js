@@ -98,14 +98,14 @@ function companyRegister() {
         var name  = document.getElementById("name").value;
         var ppt_date = document.getElementById("ppt_date").value;
         var ppt_time = document.getElementById("ppt_time").value;
-        
+
         if(name.length==0)
             alert('Enter name');
-        
+
         else if(ppt_date.length==0 && ppt_time.length>0)
             alert("Enter date");
-    
-        else 
+
+        else
         {
             $.ajax({
                 type: "POST",
@@ -113,15 +113,11 @@ function companyRegister() {
                 data: registerform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
                 success: function(message) {
                     if (message =='success') {
-                        alert('Registered Successfully');
                          window.location.href = "/";
+                        alert('Registered Successfully');
 
                     }
-                    else if(message=='exists')
-                    {
-                        alert("Already registered.")
-                        location.reload();
-                    }
+
                     else
                     {
                         alert('Error occured');
@@ -133,6 +129,7 @@ function companyRegister() {
             });
         }
     }
+
 
 function companyUpdate() {
         console.log('updateform');
@@ -154,11 +151,127 @@ function companyUpdate() {
                         window.location.href = "/";
 
                     }
-                    else if(message=='updated')
+
+                    else
                     {
-                        alert("Already Updated.")
-                        location.reload();
+                        alert('Error occured');
                     }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+        }
+    }
+
+
+    function loadDetails() {
+
+        var csrftoken = getCookie('csrftoken');
+        var company = document.getElementById("name").value;
+
+            $.ajax({
+                type: "POST",
+                url: '/getCompanyDetails/',
+                data: {company:company,csrfmiddlewaretoken:csrftoken},
+                success: function(message) {
+                console.log(message);
+                    str  = jQuery.parseJSON(message);
+                    data = str[0]["fields"];
+
+                    criteria = data["criteria"];
+                    salary = data["salary"];
+                    position = data["position"];
+                    back = data["back"];
+                    reg_link = data["reg_link"];
+                    other_details = data["other_details"];
+
+
+                    document.getElementById("criteria").value = criteria;
+                    document.getElementById("salary").value = salary;
+                    document.getElementById("position").value = position;
+                    document.getElementById("back").value = back;
+                    document.getElementById("reg_link").value = reg_link;
+                    document.getElementById("other_details").value = other_details;
+
+
+                    ppt = data["ppt_date"];
+                    if(ppt!=null){
+                    var arr = ppt.split('T');
+                    ppt_date = arr[0];
+                    ppt_time = arr[1];
+
+                    var date = ppt_date.split('-');
+                    var year = date[0];
+                    var month = date[1];
+                    var dt = date[2];
+                    ppt_date = month + "/"+dt + "/" + year;
+                    ppt_time = ppt_time.slice(0,5);
+
+                    document.getElementById("ppt_date").value =ppt_date;
+                    document.getElementById("ppt_time").value = ppt_time;
+
+
+                    }
+
+                    reg_start = data["reg_start"];
+                    if(reg_start != null){
+                    arr = reg_start.split('T');
+                    reg_start_date = arr[0];
+                    reg_start_time = arr[1];
+                    date = reg_start_date.split('-');
+                    year = date[0];
+                    month = date[1];
+                    dt = date[2];
+                    reg_start_date = month + "/"+dt + "/" + year;
+                    reg_start_time = reg_start_time.slice(0,5);
+
+
+                    document.getElementById("reg_start_date").value = reg_start_date;
+                    document.getElementById("reg_start_time").value = reg_start_time;
+
+                    }
+
+                    reg_end = data["reg_end"]
+                    if(reg_end != null){
+                    arr = reg_end.split('T');
+                    reg_end_date = arr[0];
+                    reg_end_time = arr[1].slice(0,5);
+
+                    document.getElementById("reg_end_date").value = reg_end_date;
+                    document.getElementById("reg_end_time").value = reg_end_time;
+
+                    }
+
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+
+    }
+
+    function companyEdit() {
+        console.log('editform');
+        var registerform = $('#' + 'edit');
+        var csrftoken = getCookie('csrftoken');
+        var name = document.getElementById("name").value;
+
+        if(name == "Select Company")
+            alert('Enter name');
+        else
+        {
+            $.ajax({
+                type: "POST",
+                url: '/edit/',
+                data: registerform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                    if (message =='success') {
+                        alert('Edited Successfully');
+                         window.location.href = "/";
+
+                    }
+
                     else
                     {
                         alert('Error occured');

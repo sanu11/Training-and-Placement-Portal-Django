@@ -105,7 +105,7 @@
       <ul class="nav navbar-nav" style="margin-left:15.5%;">
         <li><a href="/">Home</a></li>
         
-    <li><a href="/statistics/">Statistics</a></li>
+    <li><a href="/companies/">Companies</a></li>
     <li><a href="/notifications/">Notifications</a></li>
     <li><a href="/results/">Results</a></li>
 
@@ -140,6 +140,7 @@
       <li ><a href="/students/"><b>Students  Info</b></a></li>
       <li><a href="/pregister/"><b>Register  Company</b></a></li>
       <li><a href="/pupdate/"><b>Update  Company</b></a> </li>
+      <li><a href="/pedit/"><b>Edit Company</b></a> </li>
       <li><a href="/pnotify/"><b>Notify  Candidate</b></a> </li>
       <li><a href="/presult/"><b>Upload Result</b></a> </li>
 
@@ -158,12 +159,18 @@
               
                 
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-20 control-label"> {{forloop.counter}} &nbsp;&nbsp; {{result.company }} {{result.shortlist}}</label>
+                    <label  class="col-sm-20 control-label"> <b>{{forloop.counter}} </b>&nbsp;&nbsp; {{result.c_id }} {{result.shortlist}}</label>
                 </div>
                 
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-20 control-label"><a href= {{result.url}} > {{result.url}}</a></label>
+                    <label class="col-sm-20 control-label"><a href= {{result.url}} > {{result.url}}</a></label>
                 </div>
+            {% if result.other_details %}
+                <div class="form-group">
+                    <label class="col-sm-20 control-label">{{result.other_details}}</label>
+                </div>
+            {% endif %}
+
                 {% endfor %}
         
             </form> <!-- /form -->

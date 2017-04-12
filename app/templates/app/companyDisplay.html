@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Company Registration</title>
+  <title>{{company.name}}</title>
   <meta charset="utf-8">
   <meta name="description" content="PICT Training and placement online portal">
 <meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
@@ -140,6 +140,7 @@ font-family: Georgia, Times, "Times New Roman", serif;
       <li ><a href="/students/"><b>Students  Info</b></a></li>
       <li><a href="/pregister/"><b>Register  Company</b></a></li>
       <li><a href="/pupdate/"><b>Update  Company</b></a> </li>
+      <li><a href="/pedit/"><b>Edit Company</b></a> </li>
       <li><a href="/pnotify/"><b>Notify  Candidate</b></a> </li>
       <li><a href="/presult/"><b>Upload Result</b></a> </li>
 
@@ -236,7 +237,7 @@ font-family: Georgia, Times, "Times New Roman", serif;
                 <div class="form-group">
                     <label  class="col-sm-3 "  style = "font-size:19px;" >Hired</label></th>
                     <div class="col-sm-9">
-                  <td>   <label  class="col-sm-3 ">{{company.hired_people}}</label>
+                  <td>   <label  class="col-sm-3 "> {% if company.hired_people %} {{company.hired_people}} {% else %} -- {% endif %}</label>
                   </td>
                     </div>
                 </div>
