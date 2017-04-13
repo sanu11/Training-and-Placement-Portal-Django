@@ -544,6 +544,8 @@ def web_signup(request):
         c.password = request.POST["password"]
         c.gender = request.POST["gender"]
         c.roll = roll
+        c.college_id = request.POST["college_id"]
+        c.prn  = request.POST["prn"]
         c.phone = request.POST["phone"]
         c.branch = request.POST["branch"]
         c.ssc = request.POST["10th"]
