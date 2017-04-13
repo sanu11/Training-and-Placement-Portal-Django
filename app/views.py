@@ -783,23 +783,25 @@ def web_edit_company(request):
         if back:
             obj.back = back
 
-
-        if ppt_date:
+        if len(str(ppt_date))>1:
             ppt_date = str(ppt_date)
 
-            obj.ppt_date = datetime.datetime.strptime(ppt_date, '%m/%d/%Y').strftime('%Y-%m-%d')
-
+            obj.ppt_date = datetime.datetime.strptime(ppt_date, '%m/%d/%Y').strftime('%Y-%m-%d') +" " + ppt_time
+            print  obj.ppt_date
+        else:
+            ppt_date = None
+        print ppt_date
         reg_link = request.POST["reg_link"]
         reg_start_date = request.POST["reg_start_date"]
         reg_start_time = request.POST["reg_start_time"]
         # convert date format
-        if(reg_start_date ):
+        if reg_start_date :
             reg_start_date = datetime.datetime.strptime(reg_start_date, '%m/%d/%Y').strftime('%Y-%m-%d')
 
         reg_end_date = request.POST["reg_end_date"]
         reg_end_time = request.POST["reg_end_time"]
         # convert dateformat
-        if(reg_end_date):
+        if reg_end_date:
             reg_end_date = datetime.datetime.strptime(reg_end_date, '%m/%d/%Y').strftime('%Y-%m-%d')
 
         other_details = request.POST["other_details"]
@@ -808,16 +810,27 @@ def web_edit_company(request):
         reg_start = reg_start_date + " " + reg_start_time
         reg_end = reg_end_date + " " + reg_end_time
 
-        print len(str(reg_start))
+
         if len(str(reg_start))>1:
             obj.reg_start = reg_start
+        else:
+            reg_start = None
+
         if len(str(reg_end))>1:
             obj.reg_end = reg_end
-        obj.reg_link = reg_link
-        if(hired_count):
+        else:
+            reg_end = None
+
+        if len(str(reg_link)) > 1:
+            obj.reg_link = reg_link
+        else:
+            reg_link = None
+
+        if hired_count:
             obj.hired_count = hired_count
         else:
             hired_count=0
+
         if obj.other_details and other_details:
             obj.other_details = obj.other_details + " " + other_details
         elif other_details:
