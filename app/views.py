@@ -835,6 +835,8 @@ def web_edit_company(request):
             obj.other_details = obj.other_details + " " + other_details
         elif other_details:
             obj.other_details = other_details
+        else:
+            other_details= None
 
         obj.save()
         # c_id = obj.c_id
