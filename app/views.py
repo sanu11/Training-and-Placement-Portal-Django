@@ -787,7 +787,7 @@ def web_edit_company(request):
             ppt_date = str(ppt_date)
 
             obj.ppt_date = datetime.datetime.strptime(ppt_date, '%m/%d/%Y').strftime('%Y-%m-%d') +" " + ppt_time
-            print  obj.ppt_date
+            print  obj.ppt_date + "in if"
         else:
             ppt_date = None
         print ppt_date
@@ -836,6 +836,7 @@ def web_edit_company(request):
         elif other_details:
             obj.other_details = other_details
 
+        obj.save()
         # c_id = obj.c_id
         # send notification
         Device = get_device_model()
