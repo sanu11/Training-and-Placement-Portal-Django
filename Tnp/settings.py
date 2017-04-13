@@ -15,6 +15,7 @@ import os
 #
 # #uncomment this for deploying to heroku
 #
+
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 
@@ -66,6 +67,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'import_export',
     'app',
     'gcm'
 ]
@@ -148,6 +150,7 @@ GCM_APIKEY = "AIzaSyBQL45koCxt0zvLugl1lmqfzusDM2HdFJw"
 
 
 # for local , comment this when deploying to heroku
+
 
 # PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 # DATABASES = {
