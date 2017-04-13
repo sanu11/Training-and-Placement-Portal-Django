@@ -784,6 +784,7 @@ def web_edit_company(request):
         reg_end_date = datetime.datetime.strptime(reg_end_date, '%m/%d/%Y').strftime('%Y-%m-%d')
 
         other_details = request.POST["other_details"]
+        hired_count = request.POST["hied_count"]
 
         reg_start = reg_start_date + " " + reg_start_time
         reg_end = reg_end_date + " " + reg_end_time
@@ -792,6 +793,7 @@ def web_edit_company(request):
         obj.reg_start = reg_start
         obj.reg_end = reg_end
         obj.reg_link = reg_link
+        obj.hired_count = hired_count
 
         if obj.other_details and other_details:
             obj.other_details = obj.other_details + " " + other_details
@@ -799,13 +801,16 @@ def web_edit_company(request):
             obj.other_details = other_details
         obj.save()
 
-
+        c_id = obj.c_id
         # send notification
-        # Device = get_device_model()
-        #
-        # Device.objects.all().send_message({'type': 'company_reg', 'name': name, 'criteria': criteria, 'salary': salary,
-        #                                    'other_details': other_details, 'ppt_date': ppt_date, 'back': back})
-        # print ("Success")
+        Device = get_device_model()
+
+        Device.objects.all().send_message(
+            {'type': 'company_edit', 'c_id': c_id, 'name': name, 'criteria': criteria, 'salary': salary,
+             'other_details': other_details, 'ppt_date': ppt_date, 'back': back, 'reg_start':reg_start,
+             'reg_end': reg_end, 'reg_link': reg_link, 'hired_count': hired_count})
+
+        print ("Success")
         return HttpResponse("success")
     else:
         return HttpResponse("error")
