@@ -710,25 +710,39 @@ def web_update_company(request):
     if request.method == "POST":
         name = request.POST["name"]
         print (name)
-        reg_link = request.POST["regLink"]
-        reg_start_date = request.POST["regStartDate"]
-        reg_start_time = request.POST["regStartTime"]
-        # convert date format
-        reg_start_date = datetime.datetime.strptime(reg_start_date, '%m/%d/%Y').strftime('%Y-%m-%d')
-        reg_end_date = request.POST["regEndDate"]
-        reg_end_time = request.POST["regEndTime"]
-        # convert dateformat
-        reg_end_date = datetime.datetime.strptime(reg_end_date, '%m/%d/%Y').strftime('%Y-%m-%d')
 
-        other_details = request.POST["otherDetails"]
         year = Year.objects.order_by('-y_id')[0]
         obj = Company.objects.get(name=name, y_id=year)
-        reg_start = reg_start_date + " " + reg_start_time
-        reg_end = reg_end_date + " " + reg_end_time
-        print (reg_start, reg_end)
-        obj.reg_start = reg_start
-        obj.reg_end = reg_end
+
+        reg_link = request.POST["reg_link"]
         obj.reg_link = reg_link
+
+        reg_start_date = request.POST["reg_start_date"]
+        reg_start_time = request.POST["reg_start_time"]
+
+        reg_end_date = request.POST["reg_end_date"]
+        reg_end_time = request.POST["reg_end_time"]
+
+
+        # convert dateformat
+
+        if reg_start_date:
+            reg_start_date = datetime.datetime.strptime(reg_start_date, '%m/%d/%Y').strftime('%Y-%m-%d')
+            reg_start = reg_start_date + " " + reg_start_time
+            obj.reg_start = reg_start
+
+        else:
+            reg_start = None
+
+        if reg_end_date:
+            reg_end_date = datetime.datetime.strptime(reg_end_date, '%m/%d/%Y').strftime('%Y-%m-%d')
+            reg_end = reg_end_date + " " + reg_end_time
+            obj.reg_end = reg_end
+        else:
+            reg_end = None
+
+        other_details = request.POST["other_details"]
+
         if obj.other_details and other_details:
             obj.other_details = obj.other_details + " " + other_details
         elif other_details:
@@ -743,7 +757,6 @@ def web_update_company(request):
 
         return HttpResponse("success")
     return HttpResponse("error")
-
 
 @csrf_exempt
 def web_edit_company(request):
@@ -771,7 +784,7 @@ def web_edit_company(request):
             obj.back = back
 
 
-        if len(str(ppt_date))>1:
+        if ppt_date:
             ppt_date = str(ppt_date)
 
             obj.ppt_date = datetime.datetime.strptime(ppt_date, '%m/%d/%Y').strftime('%Y-%m-%d')
