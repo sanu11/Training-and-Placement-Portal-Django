@@ -1,9 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from datetime import datetime
-
-# Create your models here.
+#Create your models here.
 
 class Year(models.Model):
 	y_id		=	models.AutoField(primary_key=True)
@@ -35,10 +33,13 @@ class Company(models.Model):
 	reg_start	=	models.DateTimeField(null=True,blank=True)
 	reg_end		=	models.DateTimeField(null=True,blank=True)
 	reg_link	=	models.CharField(max_length=1000,null=True,blank=True)
-	y_id		=	models.ForeignKey(Year)															 #foreign key to year table
+	y_id		=	models.ForeignKey(Year,null=True,blank=True)															 #foreign key to year table
 
 	def __str__(self):
-		return  self.name
+		if self.position:
+			return  self.name + "("+ self.position + ")"
+		else:
+			return  self.name
 
 class Student(models.Model):
 

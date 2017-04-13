@@ -41,6 +41,7 @@ import os
 # DATABASES['default'] = dj_database_url.config()
 #
 # WSGI_APPLICATION = 'Tnp.wsgi.application'
+
 #
 
 ALLOWED_HOSTS =['*'] 
@@ -66,6 +67,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'import_export',
     'app',
     'gcm'
 ]
@@ -150,6 +152,7 @@ GCM_APIKEY = "AIzaSyBQL45koCxt0zvLugl1lmqfzusDM2HdFJw"
 #for local , comment this when deploying to heroku
 
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

@@ -233,7 +233,9 @@
         <th>Salary Lpa</th>
         <th>Criteria</th>
         <th>Hired</th>
+        <th>Date</th>
         <th>Placed</th>
+
         
       </tr>
     </thead>
@@ -241,11 +243,14 @@
 {% for company in companies %}
       <tr>
         <td>{{forloop.counter}}</td>
-        <td> <a href= /company/{{company.c_id}}/ > {{company.name}}</a> </td>
-      
+       
+        <td> <a href= /company/{{company.c_id}}/ > {{company.name }}</a> </td>
+
         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{company.salary}}</td>
         <td>{{company.criteria}}</td>
-        <td>{{company.hired}}</td>
+        <td>{{company.hired_count}}</td>
+        <td>{{company.ppt_date}}</td>
+        
         {% if company.placed_url %}
         <td><a href={{company.placed_url}}>{{company.placed_url}}</td>
         {% else %}

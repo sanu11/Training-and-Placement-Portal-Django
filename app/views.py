@@ -467,7 +467,7 @@ def get_companies_page(request):
         else:
             companies_max_criteria = companies_min_criteria
 
-        companies = companies_max_criteria.order_by('-c_id')
+        companies = companies_max_criteria.order_by('ppt_date')
         years = Year.objects.all()
         name = request.session["name"]
         curr_year = Year.objects.order_by('-y_id')[0]
