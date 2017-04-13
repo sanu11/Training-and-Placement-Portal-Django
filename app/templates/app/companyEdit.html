@@ -216,7 +216,7 @@ input::-webkit-calendar-picker-indicator{
                             <select class="form-control" name="name" id="name" onchange="loadDetails()">
                                 <option selected disabled hidden>Select Company</option>
                                 {% for company in companies %}
-                                <option value="{{  company.name }}"> {{company.name}}</option>
+                                <option value="{{  company.c_id }}"> {{company.name}}</option>
                                 {% endfor %}
 
                             </select>
