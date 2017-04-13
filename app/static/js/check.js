@@ -294,7 +294,7 @@ function companyUpdate() {
         console.log('editform');
         var registerform = $('#' + 'edit');
         var csrftoken = getCookie('csrftoken');
-        var name = document.getElementById("name").value;
+        var c_id = document.getElementById("name").value; //actually c_id is value
         var ppt_date = document.getElementById("ppt_date").value;
         var reg_start_date = document.getElementById("reg_start_date").value;
         var reg_end_date = document.getElementById("reg_end_date").value;
@@ -304,18 +304,18 @@ function companyUpdate() {
 
         if(name == "Select Company")
             alert('Enter name');
-        else if(! isValidDate(ppt_date))
+        else if(ppt_date && ! isValidDate(ppt_date))
         alert("Invalid Ppt Date");
-        else if( !isValidDate(reg_start_date))
+        else if( reg_start_date && !isValidDate(reg_start_date))
         alert("Invalid Reg start date");
-        else if(! isValidDate(reg_end_date))
+        else if(reg_end_date &&! isValidDate(reg_end_date))
         alert("Invalid Reg end date");
 
-        else if(!isValidTime(ppt_time))
+        else if(ppt_time && !isValidTime(ppt_time))
         alert("Invalid Ppt time");
-        else if(!isValidTime(reg_start_time))
+        else if(reg_start_time && !isValidTime(reg_start_time))
         alert("Invalid Reg start time");
-        else if(!isValidTime(reg_end_time))
+        else if(reg_end_time && !isValidTime(reg_end_time))
         alert("Invalid Reg end time");
 
         else
