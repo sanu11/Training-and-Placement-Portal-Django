@@ -783,11 +783,14 @@ def web_edit_company(request):
         if back:
             obj.back = back
 
-        if ppt_date:
+        if len(str(ppt_date))>1:
             ppt_date = str(ppt_date)
 
-            obj.ppt_date = datetime.datetime.strptime(ppt_date, '%m/%d/%Y').strftime('%Y-%m-%d')
-
+            obj.ppt_date = datetime.datetime.strptime(ppt_date, '%m/%d/%Y').strftime('%Y-%m-%d') +" " + ppt_time
+            print  obj.ppt_date
+        else:
+            ppt_date = None
+        print ppt_date
         reg_link = request.POST["reg_link"]
         reg_start_date = request.POST["reg_start_date"]
         reg_start_time = request.POST["reg_start_time"]
@@ -817,6 +820,7 @@ def web_edit_company(request):
             obj.reg_end = reg_end
         else:
             reg_end = None
+
         if len(str(reg_link)) > 1:
             obj.reg_link = reg_link
         else:
