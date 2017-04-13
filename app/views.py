@@ -750,11 +750,14 @@ def web_edit_company(request):
     if request.method == "POST":
         name = request.POST["name"]
         year = Year.objects.order_by('-y_id')[0]
-        obj = Company.objects.get(name=name, y_id=year)
+        obj = Company.objects.get(c_id=name, y_id=year)
 
         salary = request.POST["salary"]
         criteria = request.POST["criteria"]
-        back = request.POST["back"]
+        if "back" in request.POST:
+            back = request.POST["back"]
+        else:
+            back = None
         ppt_date = request.POST["ppt_date"]
         ppt_time = request.POST["ppt_time"]
 
@@ -768,7 +771,7 @@ def web_edit_company(request):
             obj.back = back
 
 
-        if ppt_date:
+        if len(str(ppt_date))>1:
             ppt_date = str(ppt_date)
 
             obj.ppt_date = datetime.datetime.strptime(ppt_date, '%m/%d/%Y').strftime('%Y-%m-%d')
@@ -777,31 +780,38 @@ def web_edit_company(request):
         reg_start_date = request.POST["reg_start_date"]
         reg_start_time = request.POST["reg_start_time"]
         # convert date format
-        reg_start_date = datetime.datetime.strptime(reg_start_date, '%m/%d/%Y').strftime('%Y-%m-%d')
+        if(reg_start_date ):
+            reg_start_date = datetime.datetime.strptime(reg_start_date, '%m/%d/%Y').strftime('%Y-%m-%d')
+
         reg_end_date = request.POST["reg_end_date"]
         reg_end_time = request.POST["reg_end_time"]
         # convert dateformat
-        reg_end_date = datetime.datetime.strptime(reg_end_date, '%m/%d/%Y').strftime('%Y-%m-%d')
+        if(reg_end_date):
+            reg_end_date = datetime.datetime.strptime(reg_end_date, '%m/%d/%Y').strftime('%Y-%m-%d')
 
         other_details = request.POST["other_details"]
-        hired_count = request.POST["hied_count"]
+        hired_count = request.POST["hired_count"]
 
         reg_start = reg_start_date + " " + reg_start_time
         reg_end = reg_end_date + " " + reg_end_time
 
-        print (reg_start, reg_end)
-        obj.reg_start = reg_start
-        obj.reg_end = reg_end
+        print len(str(reg_start))
+        if len(str(reg_start))>1:
+            obj.reg_start = reg_start
+        if len(str(reg_end))>1:
+            obj.reg_end = reg_end
         obj.reg_link = reg_link
-        obj.hired_count = hired_count
-
+        if(hired_count):
+            obj.hired_count = hired_count
+        else:
+            hired_count=0
         if obj.other_details and other_details:
             obj.other_details = obj.other_details + " " + other_details
         elif other_details:
             obj.other_details = other_details
-        obj.save()
-
-        c_id = obj.c_id
+        c_id = obj.save()
+        print c_id
+        # c_id = obj.c_id
         # send notification
         Device = get_device_model()
 
