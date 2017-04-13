@@ -764,7 +764,7 @@ def web_edit_company(request):
         name = request.POST["name"]
         year = Year.objects.order_by('-y_id')[0]
         obj = Company.objects.get(c_id=name, y_id=year)
-
+        c_id = obj.c_id
         salary = request.POST["salary"]
         criteria = request.POST["criteria"]
         if "back" in request.POST:
@@ -822,8 +822,7 @@ def web_edit_company(request):
             obj.other_details = obj.other_details + " " + other_details
         elif other_details:
             obj.other_details = other_details
-        c_id = obj.save()
-        print c_id
+
         # c_id = obj.c_id
         # send notification
         Device = get_device_model()
