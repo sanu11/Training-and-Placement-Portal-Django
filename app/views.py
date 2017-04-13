@@ -51,14 +51,14 @@ def login_details(request):
     if Student.objects.filter(email=get_mail).exists():
         obj = Student.objects.get(email=get_mail)
         if obj.password == get_pw:
-            return HttpResponse(obj.name+ "," + Student)
+            return HttpResponse(obj.name+ ",Student")
         else:
             return HttpResponse("Incorrect Password")
     
     elif Admin.objects.filter(email=get_mail).exists():
         obj = Admin.objects.get(email=get_mail)
         if obj.password == get_pw:
-            return HttpResponse(obj.name+","+Admin)
+            return HttpResponse(obj.name+",Admin")
         else:
             return HttpResponse("Incorrect Password")
 
@@ -304,10 +304,10 @@ def get_company_details(request):
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
             name = request.session["name"]
-            company = request.POST["company"]
-            print company
+            c_id = request.POST["company"]
+            print c_id
             year = Year.objects.order_by('-y_id')[0]
-            obj = Company.objects.get(name=company,y_id=year)
+            obj = Company.objects.get(c_id=c_id,y_id=year)
             data = serializers.serialize("json", [obj,])
             return HttpResponse(data)
 
