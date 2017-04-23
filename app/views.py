@@ -696,8 +696,8 @@ def web_register_company(request):
 
         # send notification
         Device = get_device_model()
-
-        Device.objects.all().send_message({'type': 'company_reg', 'name': name, 'criteria': criteria, 'salary': salary,
+        c_id = obj.c_id;
+        Device.objects.all().send_message({'type': 'company_reg', 'c_id':c_id,'name': name, 'criteria': criteria, 'salary': salary,
                                            'other_details': other_details, 'ppt_date': ppt_date, 'back': back})
         print ("Success")
         return HttpResponse("success")
@@ -748,11 +748,11 @@ def web_update_company(request):
         elif other_details:
             obj.other_details = other_details
         obj.save()
-
+        c_id = obj.c_id;
         # send notifications
         Device = get_device_model()
         Device.objects.all().send_message(
-            {'type': 'company_update', 'name': name, 'reg_link': reg_link, 'reg_start': reg_start, 'reg_end': reg_end,
+            {'type': 'company_update', 'c_id':c_id,'name': name, 'reg_link': reg_link, 'reg_start': reg_start, 'reg_end': reg_end,
              'other_details': other_details})
 
         return HttpResponse("success")
@@ -761,9 +761,9 @@ def web_update_company(request):
 @csrf_exempt
 def web_edit_company(request):
     if request.method == "POST":
-        name = request.POST["name"]
+        name = request.POST["name"] #gives id
         year = Year.objects.order_by('-y_id')[0]
-        obj = Company.objects.get(c_id=name, y_id=year)
+        obj = Company.objects.get(c_id=name, y_id=year) #name contains id
         c_id = obj.c_id
         salary = request.POST["salary"]
         criteria = request.POST["criteria"]
