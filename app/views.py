@@ -658,6 +658,7 @@ def web_register_company(request):
         year = request.POST["year"]
         name = request.POST["name"]
         salary = request.POST["salary"]
+        position = request.POST["position"]
         criteria = request.POST["criteria"]
         back = request.POST["back"]
         ppt_date = request.POST["ppt_date"]
@@ -685,6 +686,8 @@ def web_register_company(request):
             obj.criteria = criteria
         if salary:
             obj.salary = salary
+        if position:
+            obj.position = position
         if other_details:
             obj.other_details = other_details
         if ppt_date:
@@ -696,7 +699,7 @@ def web_register_company(request):
         # send notification
         Device = get_device_model()
         c_id = obj.c_id;
-        Device.objects.all().send_message({'type': 'company_reg', 'c_id':c_id,'name': name, 'criteria': criteria, 'salary': salary,
+        Device.objects.all().send_message({'type': 'company_reg', 'c_id':c_id,'name': name, 'criteria': criteria,'position':position, 'salary': salary,
                                            'other_details': other_details, 'ppt_date': ppt_date, 'back': back})
         print ("Success")
         return HttpResponse("success")
@@ -766,6 +769,7 @@ def web_edit_company(request):
         c_id = obj.c_id
         salary = request.POST["salary"]
         criteria = request.POST["criteria"]
+        position = request.POST["position"]
         if "back" in request.POST:
             back = request.POST["back"]
         else:
@@ -777,6 +781,8 @@ def web_edit_company(request):
             obj.criteria = criteria
         if salary:
             obj.salary = salary
+        if position:
+            obj.position=position
         if ppt_date:
             obj.ppt_date = ppt_date + " " + ppt_time
         if back:
@@ -844,8 +850,8 @@ def web_edit_company(request):
 
         Device.objects.all().send_message(
             {'type': 'company_edit', 'c_id': c_id, 'name': name, 'criteria': criteria, 'salary': salary,
-             'other_details': other_details, 'ppt_date': ppt_date, 'back': back, 'reg_start':reg_start,
-             'reg_end': reg_end, 'reg_link': reg_link, 'hired_count': hired_count})
+             'position':position,'other_details': other_details, 'ppt_date': ppt_date, 'back': back,
+             'reg_start':reg_start,'reg_end': reg_end, 'reg_link': reg_link, 'hired_count': hired_count})
 
         print ("Success")
         return HttpResponse("success")
