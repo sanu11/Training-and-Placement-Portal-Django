@@ -168,8 +168,7 @@ input:checked + .slider:before {
             <li><a href="/logout/">Logout</a></li>
             {% if login == 2 %}
             <li><a href="/peditprofile/">Update Profile</a></li>
-            <li><a href="/psettings/">Settings</a></li>
-            
+             <li><a href="/psettings/">Settings</a></li>
               {% endif %}           
            
           </ul>
@@ -200,10 +199,8 @@ input:checked + .slider:before {
     {% endif %}
     </div>
 
-
     <div class="col-sm-8 text-left"> 
-    <br>
-       <h1 class="text-center"><b>Profile</b></h1>
+  <br>
       <br>
      <form class="form-horizontal"  method="POST" id="signupform" name="signupform">
 <fieldset>
@@ -211,111 +208,86 @@ input:checked + .slider:before {
 <!-- Text input-->
 
 <div class="form-group">
-  <label class="col-sm-4 control-label" >Name</label>
+  <label class="col-sm-4 control-label">Birth date</label>
   <div class="col-sm-5">
-  <input id="name" name="name" type="text" value = {{student.name}} placeholder="Name" class="form-control input-md">
+  {% if student.birth_date %}
+  <input id="birth_date" name="birth_date" type="date"  placeholder="01/01/1995"   class="form-control input-md"  value = {{student.birth_date}}>
+  {% else %}
+  <input id="birth_date" name="birth_date" type="date"  placeholder="01/01/1995"   class="form-control input-md"  >
+  {% endif %}
   </div>
 </div>
 
-<div class="form-group">
-  <label class="col-sm-4 control-label">Roll Number</label>
-  <div class="col-sm-5">
-  <input id="roll" name="roll" type="number" value = {{student.roll}} placeholder="4263" min="1000" class="form-control input-md">
-  </div>
-</div>
-<div class="form-group">
-  <label class="col-sm-4 control-label">College ID</label>
-  <div class="col-sm-5">
-  <input id="college_id" name="college_id" type="text" value = {{student.college_id}} placeholder="C2K13104366"  class="form-control input-md">
-  </div>
-
-</div>
 
 
-<!-- Text input-->
+
 <div class="form-group">
-  <label class="col-md-4 control-label" >Email </label>
+  <label class="col-sm-4 control-label">Aadhar card number</label>
   <div class="col-sm-5">
-  <input id="email" name="email" type="text"  value = {{student.email}} placeholder="Email" class="form-control input-md">  
+  {% if student.aadhar_number %}
+  <input id="aadhar_number" name="aadhar_number" type="text"  placeholder="6048 1136 9599"   class="form-control input-md"  value = {{student.aadhar_number}}>
+  {% else %}
+  <input id="aadhar_number" name="aadhar_number" type="text"  placeholder="6048 1136 9599"   class="form-control input-md"  >
+  {% endif %}
   </div>
 </div>
 
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="selectbasic">Gender</label>
+  <label class="col-sm-4 control-label">Pan card number</label>
   <div class="col-sm-5">
-    <select id="selectbasic" name="gender" class="form-control">
-    {% if student.gender == "Female" %}
-      <option value="Female" selected="selected">Female</option>
-      <option value="Male">Male</option>
-      {% else %}
-      <option value="Female" >Female</option>
-      <option value="Male" selected="selected">Male</option>
-      {% endif %}
-    </select>
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" >Phone</label>
-  <div class="col-sm-5">
-  <input id="phone" name="phone" type="text"  value = {{student.phone}} placeholder="Phone" class="form-control input-md">
-</div>
-</div>
-
-<div class="form-group">
-  <label class="col-md-4 control-label" for="selectbasic">Passing year</label>
-  <div class="col-sm-5">
-    <select  name="year" class="form-control">
-      {% for passyear in years %}
-      {% if passyear.y_id == student.year %}
-      <option value= {{passyear.year}} selected="selected" > {{passyear.year}} </option>
-      {% else %}
-      <option value= {{passyear.year}}  > {{passyear.year}} </option>
-      {% endif %}
-      {% endfor %}
-    </select>
+  {% if student.pan_number %}
+  <input id="pan_number" name="pan_number" type="text"  placeholder="PSFWG3008K"   class="form-control input-md"  value = {{student.pan_number}}>
+  {% else %}
+  <input id="pan_number" name="pan_number" type="text"  placeholder="PSFWG3008K"   class="form-control input-md"  >
+  {% endif %}
   </div>
 </div>
 
 
-<!-- Select Basic -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="selectbasic">Branch</label>
+  <label class="col-sm-4 control-label">Passport number</label>
   <div class="col-sm-5">
-    <select id="selectbasic" name="branch" class="form-control">
-      
-      {% if student.branch == "Comp" %}
-      <option value="Comp" selected="=selected">COMP</option>
-      {% else %}
-      <option value="Comp">COMP</option>
-      {% endif %}
-      
-      {% if student.branch  == "EnTC" %}
-      <option value="EnTC" selected="selected">ENTC</option>
-      {% else %}
-       <option value="EnTC" >ENTC</option>
-      {% endif %}
+  {% if student.passport_number %}
+  <input id="pan_number" name="passport_number" type="text"  placeholder="340008765"  class="form-control input-md"  value = {{student.passport_number}}>
+  {% else %}
+  <input id="passport_number" name="passport_number" type="text"  placeholder="340008765"  class="form-control input-md"  >
+  {% endif %}
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-sm-4 control-label">Current Address</label>
+  <div class="col-sm-5">
+  {% if student.cur_address %}
+  <input id="cur_address" name="cur_address" type="text"  placeholder="Katraj ,Pune"   class="form-control input-md"  value = {{student.cur_address}}>
+  {% else %}
+  <input id="cur_address" name="cur_address" type="text"  placeholder="Katraj ,Pune"   class="form-control input-md"  >
+  {% endif %}
+  </div>
+</div>
 
-      {% if student.branch == "IT" %}
-      <option value="IT" selected="=selected">IT </option>
-      {% else %}
-      <option value="IT">IT </option>
-      {% endif %}
 
-    </select>
+<div class="form-group">
+  <label class="col-sm-4 control-label">Permanent Address</label>
+  <div class="col-sm-5">
+  {% if student.per_address %}
+  <input id="per_address" name="per_address" type="text"  placeholder="Mumbai"   class="form-control input-md"  value = {{student.per_address}}>
+  {% else %}
+  <input id="per_address" name="per_address" type="text"  placeholder="Mumbai"   class="form-control input-md"  >
+  {% endif %}
   </div>
 </div>
 
 <div class="form-group">
-  <label class="col-sm-4 control-label">PRN</label>
+  <label class="col-sm-4 control-label">City</label>
   <div class="col-sm-5">
-  <input id="prn" name="prn" type="text"  placeholder="71401159C"   class="form-control input-md"  value = {{student.prn}}>
+  {% if student.city %}
+  <input id="per_address" name="city" type="text"  placeholder="Mumbai"   class="form-control input-md"  value = {{student.city}}>
+  {% else %}
+  <input id="city" name="city" type="text"  placeholder="Mumbai"   class="form-control input-md"  >
+  {% endif %}
   </div>
 </div>
-
-<!-- Button toggle -->
 
 
 <!-- Button -->
@@ -323,7 +295,8 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" for="singlebutton"></label>
   
   <div class="col-sm-4 text-center" align="center" style="margin-left:-2%;margin-right:4%;">
-  <button type="button" class="btn btn-info" onclick="editProfile()">Next</button>
+  <button type="button" class="btn btn-info" onclick="editBeMarksPage()">Back</button>
+  <button type="button" class="btn btn-info" onclick="editOtherDetails()">Next</button>
   </div>
 </div>
 </fieldset>

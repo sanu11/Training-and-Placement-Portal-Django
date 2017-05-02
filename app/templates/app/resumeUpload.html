@@ -118,25 +118,39 @@
 <!-- Text input-->
 <!-- Select Basic -->
 
-
-<div class="form-group">
-  <label class="col-md-4 control-label" >Resume Upload</label>
-  <div class="col-sm-4">
-    <div class="input-group">
-      <input  name="resume" class="form-control"  id="resume" type="file">
-    </div>
+<div class="panel-group" id="accordion">
+ <div >
+    <h4 ><b>Resume :</b> &nbsp;&nbsp;    {% if resume %}
+    <a href = {{resume}}>{{resume}}</a>
     
-  </div>
-</div>
+    {% else %}
+    Not Uploaded 
+    {% endif %}</h4>
+    </div>
+    <div class="panel">
+        <h4 >
+        <input type="checkbox"  name= "upload resume"  data-toggle="collapse"  href=#expand />&nbsp;&nbsp;   {% if resume %} Update Resume {% else %} Upload Resume 
+        {% endif %}
+    </h4>
+      
+      <div id="expand" class="panel-collapse collapse">
+      <div class="col-sm-8">
+       <div class="input-group">
+          <input  name="resume" class="form-control"  id="resume" type="file" />
+       </div></div></div>
+    
 
 <!-- Button -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="singlebutton"></label>
   
   <div class="col-sm-4 text-center" align="center" style="margin-left:-2%;margin-right:4%;">
-    <label  ><a href = "/"><u>skip</u></a></label>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <button type="button" class="btn btn-info" onclick="editOtherDetailsPage()">Back</button>
+  
+
       <input type="submit" id="singlebutton"  name="singlebutton" class="btn btn-info " value="Upload Resume" ></input>
+<br> <br>
+<label class="col-sm-4"><a href = "/"><u>skip</u></a></label>
     
   </div>
 </div>

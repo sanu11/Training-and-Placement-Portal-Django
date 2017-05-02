@@ -59,6 +59,10 @@ class Student(models.Model):
 	per_address =		models.CharField(max_length=1000,null=True,blank=True)
 	cur_address =		models.CharField(max_length=1000,null=True,blank=True)
 	city		=		models.CharField(max_length=30,null=True,blank=True)
+	aadhar_number=		models.CharField(max_length=20,null=True,blank=True)
+	pan_number	 =		models.CharField(max_length=20,null=True,blank=True)
+	passport_number=	models.CharField(max_length=50,null=True,blank=True)
+	
 
 	tenth_board =		models.CharField(max_length=20,null=True,blank=True)
 	tenth_marks	=		models.FloatField(null=True,blank=True)
@@ -91,14 +95,10 @@ class Student(models.Model):
 	total_marks   = 	models.IntegerField(null=True,blank=True)
 	total_outof	  = 	models.IntegerField(null=True,blank=True)
 	average		  =		models.FloatField(null=True,blank=True)
-
+	be_yeargap	  =		models.BooleanField(default=False)
 	active_back	 =		models.IntegerField(default=0)
 	passive_back = 		models.BooleanField(default=False)
-	
-	aadhar_number=		models.CharField(max_length=20,null=True,blank=True)
-	pan_number	 =		models.CharField(max_length=20,null=True,blank=True)
-	passport_number=	models.CharField(max_length=50,null=True,blank=True)
-	
+
 	placed		=		models.BooleanField(default=False)
 	url			=		models.CharField(max_length=500,null=True,blank=True)
 	c_id		=		models.ForeignKey(Company,on_delete=models.CASCADE,null=True,blank=True)			#foreign key o company table

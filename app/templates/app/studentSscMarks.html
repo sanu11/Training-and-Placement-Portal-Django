@@ -134,6 +134,7 @@ input:checked + .slider:before {
 <body>
 
 
+
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
 <h1 class="text-center"> 
@@ -151,25 +152,53 @@ input:checked + .slider:before {
       
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav" style="margin-left:15.5%;">
+        <li><a href="/">Home</a></li>
+        
+    <li><a href="/companies/">Companies</a></li>
+    <li><a href="/notifications/">Notifications</a></li>
+     <li><a href="/results/">Results</a></li>
+
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+      
+    <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/logout/">Logout</a></li>
+            {% if login == 2 %}
+            <li><a href="/peditprofile/">Update Profile</a></li>
+             <li><a href="/psettings/">Settings</a></li>
+              {% endif %}           
+           
+          </ul>
+        </li>
     
+     </ul>
     </div>
-    <br>
   </div>
 </nav>
-  
 <div class="container-fluid ">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
-  <!-- <div class="navbar1">
-  <div class="navbar-header">
-      <h4> &nbsp; &nbsp;Menu </h4></div>
-        <ul class="nav navbar-nav" style="margin-left:10%;">
-    <li><a href="http://pict.edu">PICT Main Site</a></li>
-      <li><a href="#">Students Info</a></li>
-      <li><a href="#">Teachers Info</a></li>
+    {% if login == 1 %}
+ <div class="navbar1"  >
+      <ul class="nav navbar-nav" >
+    <br><br>
+      <li ><a href="/students/"><b>Students  Info</b></a></li>
+      <li><a href="/pregister/"><b>Register  Company</b></a></li>
+      <li><a href="/pupdate/"><b>Update  Company</b></a> </li>
+      <li><a href="/pedit/"><b>Edit Company</b></a> </li>
+
+      <li><a href="/pnotify/"><b>Notify  Candidate</b></a> </li>
+      <li><a href="/presult/"><b>Upload Result</b></a> </li>
+
+
     </ul>
-    </div> -->{% csrf_token %}
     </div>
+    {% endif %}
+    </div>
+
     <div class="col-sm-8 text-left"> 
   <br>
       <br>
@@ -232,7 +261,11 @@ input:checked + .slider:before {
   
   <div class="col-md-8"> 
  <label class="switch">
-  <input type="checkbox" name="tenth_yeargap" value={{tenth_yeargap}}>
+ {% if student.tenth_yeargap %}
+  <input type="checkbox" name="tenth_yeargap" value="tenth_yeargap" checked>
+  {% else %}
+  <input type="checkbox" name="tenth_yeargap" value="tenth_yeargap" >
+  {% endif %}
   <div class="slider round"></div>
 </label>
 </label>
@@ -250,91 +283,21 @@ input:checked + .slider:before {
   </div>
 </div>
 
-
 <div class="form-group">
-  <label class="col-sm-4 control-label"><h3>12th</h3></label>
-</div>
-
-
-<div class="form-group">
-  <label class="col-sm-4 control-label">Board</label>
-  <div class="col-sm-5">
-  {% if student.twelveth_board %}
-  <input id="twelveth_board" name="twelveth_board" type="text"  placeholder="cbse"   class="form-control input-md"  value = {{student.twelveth_board}}>
-  {% else %}
-  <input id="twelveth_board" name="twelveth_board" type="text"  placeholder="cbse"   class="form-control input-md"  >
-  {% endif %}
-  </div>
-</div>
-
-
-<div class="form-group">
-  <label class="col-sm-4 control-label">Passing Year</label>
-  <div class="col-sm-5">
-  {% if student.twelveth_year %}
-  <input id="twelveth_year" name="twelveth_year" type="text"  placeholder="2013"   class="form-control input-md"  value = {{student.twelveth_year}}>
-  {% else %}
-  <input id="twelveth_year" name="twelveth_year" type="text"  placeholder="2013"   class="form-control input-md"  >
-  {% endif %}
-  </div>
-</div>
-
-
-<div class="form-group">
-  <label class="col-md-4 control-label" ">Marks</label>
-  <div class="col-sm-5">
-    <div class="input-group">
-      <input id="twelveth_marks" name="twelveth_marks" class="form-control" placeholder="Percentage/cgpa" type="number"  value={{student.twelveth_marks}} >
-      <span class="input-group-addon"></span>
-    </div>
-  </div>
-</div>
-
-<div class="form-group">
-  <label class="col-sm-4 control-label">School Name</label>
-  <div class="col-sm-5">
-  {% if student.twelveth_schoolname %}
-  <input id="twelveth_schoolname" name="twelveth_schoolname" type="text"  placeholder="Kendriya Vidyalaya"   class="form-control input-md"  value = {{student.twelveth_schoolname}}>
-  {% else %}
-  <input id="twelveth_schoolname" name="twelveth_schoolname" type="text"  placeholder="Kendriya Vidyalaya"   class="form-control input-md"  >
-  {% endif %}
-  </div>
-</div>
-
-<div class="form-group">
-  <label class="col-sm-4 control-label">City</label>
-  <div class="col-sm-5">
-  {% if student.twelveth_city %}
-  <input id="twelveth_city" name="twelveth_city" type="text"  placeholder="Pune"   class="form-control input-md"  value = {{student.twelveth_city}}>
-  {% else %}
-  <input id="twelveth_city" name="twelveth_city" type="text"  placeholder="Pune"   class="form-control input-md"  >
-  {% endif %}
-  </div>
-</div>
-
-<div class="form-group">
-  <label class="col-md-4 control-label" for="button1id">Year gap</label>
+  <label class="col-md-4 control-label" for="button1id">Diploma</label>
   
   <div class="col-md-8"> 
  <label class="switch">
-  <input type="checkbox" name="twelveth_yeargap" value={{twelveth_yeargap}>
+ {% if student.is_diploma %}
+  <input type="checkbox" name="is_diploma" value="is_diploma" checked>
+  {% else %}
+  <input type="checkbox" name="is_diploma" value="is_diploma" >
+  {% endif %}
   <div class="slider round"></div>
 </label>
 </label>
   </div>
 </div>
-
-<div class="form-group">
-  <label class="col-sm-4 control-label">Year gap reason</label>
-  <div class="col-sm-5">
-  {% if student.twelveth_yeargap_reason %}
-  <input id="twelveth_city" name="twelveth_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md"  value = {{student.twelveth_yeargap_reason}}>
-  {% else %}
-  <input id="twelveth_city" name="twelveth_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md"  >
-  {% endif %}
-  </div>
-</div>
-
 
 <!-- Button -->
 <div class="form-group">
@@ -342,7 +305,7 @@ input:checked + .slider:before {
   
   <div class="col-sm-4 text-center" align="center" style="margin-left:-2%;margin-right:4%;">
   <button type="button" class="btn btn-info" onclick="editProfilePage()">Back</button>
-  <button type="button" class="btn btn-info" onclick="editMarks()">Next</button>
+  <button type="button" class="btn btn-info" onclick="editSscMarks()">Next</button>
   </div>
 </div>
 </fieldset>

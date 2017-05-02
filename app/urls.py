@@ -26,11 +26,12 @@ urlpatterns = [
 	url(r'pnotify/$',views.get_notify_page),
 	url(r'presult/$',views.get_result_upload_page),
 	url(r'presume/$',views.get_resume_upload_page),
-	url(r'peditProfile/$',views.get_edit_profile_page),
-	url(r'pmarks/$',views.get_edit_marks_page),
-	url(r'pbemarks/$',views.get_edit_be_marks_page),
-
-
+	url(r'peditprofile/$',views.get_edit_profile_page),
+	url(r'peditsscmarks/$',views.get_edit_ssc_marks_page),
+	url(r'pedithscmarks/$',views.get_edit_hsc_marks_page),
+	url(r'peditbemarks/$',views.get_edit_be_marks_page),
+	url(r'peditotherdetails/$',views.get_edit_other_details_page),
+	url(r'psettings/$',views.get_settings_page),
 
 	url(r'getCompanyDetails/$',views.get_company_details),
 
@@ -44,8 +45,13 @@ urlpatterns = [
 	url(r'result/$',views.web_upload_result),
 	url(r'downloadstudents/$', views.web_download_students),
 	url(r'downloadcompanies/$', views.web_download_companies),
-	url(r'editProfile/$', views.web_edit_profile),
-	url(r'editMarks/$', views.web_edit_marks),
+
+	url(r'editprofile/$', views.web_edit_profile),
+	url(r'editsscmarks/$', views.web_edit_ssc_marks),
+	url(r'edithscmarks/$', views.web_edit_hsc_marks),
+	url(r'editbemarks/$', views.web_edit_be_marks),
+	url(r'editotherdetails/$', views.web_edit_other_details),
+
 
 
 

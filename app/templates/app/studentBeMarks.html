@@ -1,5 +1,3 @@
- 
- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -136,6 +134,7 @@ input:checked + .slider:before {
 <body>
 
 
+
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
 <h1 class="text-center"> 
@@ -153,25 +152,54 @@ input:checked + .slider:before {
       
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav" style="margin-left:15.5%;">
+        <li><a href="/">Home</a></li>
+        
+    <li><a href="/companies/">Companies</a></li>
+    <li><a href="/notifications/">Notifications</a></li>
+     <li><a href="/results/">Results</a></li>
+
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+      
+    <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/logout/">Logout</a></li>
+            {% if login == 2 %}
+            <li><a href="/peditprofile/">Update Profile</a></li>
+             <li><a href="/psettings/">Settings</a></li>
+
+              {% endif %}           
+           
+          </ul>
+        </li>
     
+     </ul>
     </div>
-    <br>
   </div>
 </nav>
-  
 <div class="container-fluid ">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
-  <!-- <div class="navbar1">
-  <div class="navbar-header">
-      <h4> &nbsp; &nbsp;Menu </h4></div>
-        <ul class="nav navbar-nav" style="margin-left:10%;">
-    <li><a href="http://pict.edu">PICT Main Site</a></li>
-      <li><a href="#">Students Info</a></li>
-      <li><a href="#">Teachers Info</a></li>
+    {% if login == 1 %}
+ <div class="navbar1"  >
+      <ul class="nav navbar-nav" >
+    <br><br>
+      <li ><a href="/students/"><b>Students  Info</b></a></li>
+      <li><a href="/pregister/"><b>Register  Company</b></a></li>
+      <li><a href="/pupdate/"><b>Update  Company</b></a> </li>
+      <li><a href="/pedit/"><b>Edit Company</b></a> </li>
+
+      <li><a href="/pnotify/"><b>Notify  Candidate</b></a> </li>
+      <li><a href="/presult/"><b>Upload Result</b></a> </li>
+
+
     </ul>
-    </div> -->{% csrf_token %}
     </div>
+    {% endif %}
+    </div>
+
     <div class="col-sm-8 text-left"> 
   <br>
       <br>
@@ -179,163 +207,143 @@ input:checked + .slider:before {
 <fieldset>
 <!-- Form Name -->
 <!-- Text input-->
-
 <div class="form-group">
-  <label class="col-sm-4 control-label"><h3>10th</h3></label>
+  <label class="col-sm-4 control-label"><h3>BE</h3></label>
 </div>
 
 
+{% if not  student.is_diploma %}
 <div class="form-group">
-  <label class="col-sm-4 control-label">Board</label>
-  <div class="col-sm-5">
-  {% if student.tenth_board %}
-  <input id="tenth_board" name="tenth_board" type="text"  placeholder="cbse"   class="form-control input-md"  value = {{student.tenth_board}}>
-  {% else %}
-  <input id="tenth_board" name="tenth_board" type="text"  placeholder="cbse"   class="form-control input-md"  >
-  {% endif %}
-  </div>
-</div>
-
-
-<div class="form-group">
-  <label class="col-md-4 control-label" for="10th">Marks</label>
+  <label class="col-md-4 control-label" >FE marks obtained</label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="tenth_marks" name="tenth_marks" class="form-control" placeholder="Percentage/cgpa" type="number"  value={{student.tenth_marks}} >
+      <input id="fe_marks" name="fe_marks" class="form-control" placeholder="1100" type="number"  value={{student.fe_marks}} >
       <span class="input-group-addon"></span>
     </div>
   </div>
 </div>
 
 <div class="form-group">
-  <label class="col-sm-4 control-label">School Name</label>
-  <div class="col-sm-5">
-  {% if student.tenth_schoolname %}
-  <input id="tenth_schoolname" name="tenth_schoolname" type="text"  placeholder="Kendriya Vidyalaya"   class="form-control input-md"  value = {{student.tenth_schoolname}}>
-  {% else %}
-  <input id="tenth_schoolname" name="tenth_schoolname" type="text"  placeholder="Kendriya Vidyalaya"   class="form-control input-md"  >
-  {% endif %}
-  </div>
-</div>
-
-<div class="form-group">
-  <label class="col-sm-4 control-label">City</label>
-  <div class="col-sm-5">
-  {% if student.tenth_city %}
-  <input id="tenth_city" name="tenth_city" type="text"  placeholder="Pune"   class="form-control input-md"  value = {{student.tenth_city}}>
-  {% else %}
-  <input id="tenth_city" name="tenth_city" type="text"  placeholder="Pune"   class="form-control input-md"  >
-  {% endif %}
-  </div>
-</div>
-
-<div class="form-group">
-  <label class="col-md-4 control-label" for="button1id">Year gap</label>
-  
-  <div class="col-md-8"> 
- <label class="switch">
-  <input type="checkbox" name="tenth_yeargap" value={{tenth_yeargap}>
-  <div class="slider round"></div>
-</label>
-</label>
-  </div>
-</div>
-
-<div class="form-group">
-  <label class="col-sm-4 control-label">Year gap reason</label>
-  <div class="col-sm-5">
-  {% if student.tenth_yeargap_reason %}
-  <input id="tenth_city" name="tenth_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md"  value = {{student.tenth_yeargap_reason}}>
-  {% else %}
-  <input id="tenth_city" name="tenth_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md"  >
-  {% endif %}
-  </div>
-</div>
-
-
-<div class="form-group">
-  <label class="col-sm-4 control-label"><h3>12th</h3></label>
-</div>
-
-
-<div class="form-group">
-  <label class="col-sm-4 control-label">Board</label>
-  <div class="col-sm-5">
-  {% if student.twelveth_board %}
-  <input id="twelveth_board" name="twelveth_board" type="text"  placeholder="cbse"   class="form-control input-md"  value = {{student.twelveth_board}}>
-  {% else %}
-  <input id="twelveth_board" name="twelveth_board" type="text"  placeholder="cbse"   class="form-control input-md"  >
-  {% endif %}
-  </div>
-</div>
-
-
-<div class="form-group">
-  <label class="col-sm-4 control-label">Passing Year</label>
-  <div class="col-sm-5">
-  {% if student.twelveth_year %}
-  <input id="twelveth_year" name="twelveth_year" type="text"  placeholder="2013"   class="form-control input-md"  value = {{student.twelveth_year}}>
-  {% else %}
-  <input id="twelveth_year" name="twelveth_year" type="text"  placeholder="2013"   class="form-control input-md"  >
-  {% endif %}
-  </div>
-</div>
-
-
-<div class="form-group">
-  <label class="col-md-4 control-label" ">Marks</label>
+  <label class="col-md-4 control-label"">FE marks out of</label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="twelveth_marks" name="twelveth_marks" class="form-control" placeholder="Percentage/cgpa" type="number"  value={{student.twelveth_marks}} >
+      <input id="fe_outof" name="fe_outof" class="form-control" placeholder="1500" type="number"  value={{student.fe_outof}} >
+      <span class="input-group-addon"></span>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class="form-group">
+  <label class="col-md-4 control-label" >SE marks obtained</label>
+  <div class="col-sm-5">
+    <div class="input-group">
+      <input id="se_marks" name="se_marks" class="form-control" placeholder="1000" type="number"  value={{student.se_marks}} >
       <span class="input-group-addon"></span>
     </div>
   </div>
 </div>
 
 <div class="form-group">
-  <label class="col-sm-4 control-label">School Name</label>
+  <label class="col-md-4 control-label"">SE marks out of</label>
   <div class="col-sm-5">
-  {% if student.twelveth_schoolname %}
-  <input id="twelveth_schoolname" name="twelveth_schoolname" type="text"  placeholder="Kendriya Vidyalaya"   class="form-control input-md"  value = {{student.twelveth_schoolname}}>
-  {% else %}
-  <input id="twelveth_schoolname" name="twelveth_schoolname" type="text"  placeholder="Kendriya Vidyalaya"   class="form-control input-md"  >
-  {% endif %}
+    <div class="input-group">
+      <input id="se_outof" name="se_outof" class="form-control" placeholder="1400" type="number"  value={{student.se_outof}} >
+      <span class="input-group-addon"></span>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="form-group">
+  <label class="col-md-4 control-label" >TE marks obtained</label>
+  <div class="col-sm-5">
+    <div class="input-group">
+      <input id="te_marks" name="te_marks" class="form-control" placeholder="1000" type="number"  value={{student.te_marks}} >
+      <span class="input-group-addon"></span>
+    </div>
   </div>
 </div>
 
 <div class="form-group">
-  <label class="col-sm-4 control-label">City</label>
+  <label class="col-md-4 control-label"">TE marks out of</label>
   <div class="col-sm-5">
-  {% if student.twelveth_city %}
-  <input id="twelveth_city" name="twelveth_city" type="text"  placeholder="Pune"   class="form-control input-md"  value = {{student.twelveth_city}}>
-  {% else %}
-  <input id="twelveth_city" name="twelveth_city" type="text"  placeholder="Pune"   class="form-control input-md"  >
-  {% endif %}
+    <div class="input-group">
+      <input id="te_outof" name="te_outof" class="form-control" placeholder="1400" type="number"  value={{student.te_outof}} >
+      <span class="input-group-addon"></span>
+    </div>
   </div>
 </div>
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="button1id">Year gap</label>
+  <label class="col-md-4 control-label" >Total marks obtained</label>
+  <div class="col-sm-5">
+    <div class="input-group">
+      <input id="total_marks" name="total_marks" class="form-control" placeholder="3100" type="number"  value={{student.total_marks}} >
+      <span class="input-group-addon"></span>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label"">Total marks out of</label>
+  <div class="col-sm-5">
+    <div class="input-group">
+      <input id="total_outof" name="total_outof" class="form-control" placeholder="4300" type="number"  value={{student.total_outof}} >
+      <span class="input-group-addon"></span>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label"">Average</label>
+  <div class="col-sm-5">
+    <div class="input-group">
+      <input id="average" name="average" class="form-control" placeholder="72" type="number"  value={{student.average}} >
+      <span class="input-group-addon"></span>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label"">Active Back</label>
+  <div class="col-sm-5">
+    <div class="input-group">
+      <input id="active_back" name="active_back" class="form-control" placeholder="0" type="number"  value={{student.active_back}} >
+      <span class="input-group-addon"></span>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="button1id">Passive Back</label>
   
   <div class="col-md-8"> 
  <label class="switch">
-  <input type="checkbox" name="twelveth_yeargap" value={{twelveth_yeargap}>
+  <input type="checkbox" name="passive_back" value="passive_back">
   <div class="slider round"></div>
 </label>
 </label>
   </div>
 </div>
 
+
 <div class="form-group">
-  <label class="col-sm-4 control-label">Year gap reason</label>
-  <div class="col-sm-5">
-  {% if student.twelveth_yeargap_reason %}
-  <input id="twelveth_city" name="twelveth_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md"  value = {{student.twelveth_yeargap_reason}}>
-  {% else %}
-  <input id="twelveth_city" name="twelveth_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md"  >
-  {% endif %}
+  <label class="col-md-4 control-label" for="button1id">Year gap</label>
+  
+  <div class="col-md-8"> 
+ <label class="switch">
+  <input type="checkbox" name="be_yeargap" value="be_yeargap">
+  <div class="slider round"></div>
+</label>
+</label>
   </div>
 </div>
+
 
 
 <!-- Button -->
@@ -343,12 +351,13 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" for="singlebutton"></label>
   
   <div class="col-sm-4 text-center" align="center" style="margin-left:-2%;margin-right:4%;">
-  <button type="button" class="btn btn-info" onclick="editProfilePage()">Back</button>
-  <button type="button" class="btn btn-info" onclick="editMarks()">Next</button>
+  <button type="button" class="btn btn-info" onclick="editHscMarksPage()">Back</button>
+  <button type="button" class="btn btn-info" onclick="editBeMarks()">Next</button>
   </div>
 </div>
 </fieldset>
 </form>
+
 
  </div>
 

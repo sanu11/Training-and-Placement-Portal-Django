@@ -48,7 +48,7 @@ def login_details(request):
     data = json.loads(request.body)
     get_mail = data["email"]
     get_pw = data["password"]
-    if Student.objects.filter(email=get_mail).exists():
+    if Student.oeeebjects.filter(email=get_mail).exists():
         obj = Student.objects.get(email=get_mail)
         if obj.password == get_pw:
             return HttpResponse("Student,"+obj.name)
@@ -188,6 +188,16 @@ def get_developers_page(request):
     return render(request, 'app/developers.html', {"login":login,"name":name})
 
 @csrf_exempt
+def get_settings_page(request):
+    if  request.session.get("name"):
+        name = request.session["name"]
+        email = request.session["email"]
+        student = Student.objects.get(email=email)
+        resume = student.url
+        login = 2
+        return render(request, 'app/settings.html', {"login":login,"name":name,"resume":resume})
+
+@csrf_exempt
 def get_signup_page(request):
     years = list(Year.objects.all().order_by('-y_id'))
     print ("hello")
@@ -202,31 +212,68 @@ def get_login_page(request):
 @csrf_exempt
 def get_resume_upload_page(request):
     name = request.session["name"]
-    return render(request, 'app/resumeUpload.html',{"login":2,"name":name})
+    email = request.session["email"]
+    student = Student.objects.get(email=email)
+    if len(str(student.url))>1:
+        resume = student.url
+    else:
+        resume = None
+    return render(request, 'app/resumeUpload.html',{"login":2,"name":name,"resume":resume})
+
+
+######### student profile pages#####
 
 @csrf_exempt
 def get_edit_profile_page(request):
-    name = request.session["name"]
-    email = request.session["email"]
-    student = Student.objects.get(email=email)
-    years = Year.objects.all()
-    return render(request, 'app/editProfile.html',{"login":2,"name":name,"student":student,"years":years})
+    if not request.session.get("name"):
+        return render(request, 'app/login.html', {})
+    else:
+        name = request.session["name"]
+        email = request.session["email"]
+        student = Student.objects.get(email=email)
+        years = Year.objects.all()
+        return render(request, 'app/editProfile.html',{"login":2,"name":name,"student":student,"years":years})
 
 @csrf_exempt
-def get_edit_marks_page(request):
-    name = request.session["name"]
-    email = request.session["email"]
-    student = Student.objects.get(email=email)
-    return render(request, 'app/studentMarks.html',{"login":2,"name":name,"student":student})
+def get_edit_ssc_marks_page(request):
+    if not request.session.get("name"):
+        return render(request, 'app/login.html', {})
+    else:
+        name = request.session["name"]
+        email = request.session["email"]
+        student = Student.objects.get(email=email)
+        return render(request, 'app/studentSscMarks.html',{"login":2,"name":name,"student":student})
+
+
+@csrf_exempt
+def get_edit_hsc_marks_page(request):
+    if not request.session.get("name"):
+        return render(request, 'app/login.html', {})
+    else:
+        name = request.session["name"]
+        email = request.session["email"]
+        student = Student.objects.get(email=email)
+        return render(request, 'app/studentHscMarks.html',{"login":2,"name":name,"student":student})
 
 @csrf_exempt
 def get_edit_be_marks_page(request):
-    name = request.session["name"]
-    email = request.session["email"]
-    student = Student.objects.get(email=email)
-    return render(request, 'app/studentBeMarks.html',{"login":2,"name":name,"student":student})
+    if not request.session.get("name"):
+        return render(request, 'app/login.html', {})
+    else:
+        name = request.session["name"]
+        email = request.session["email"]
+        student = Student.objects.get(email=email)
+        return render(request, 'app/studentBeMarks.html',{"login":2,"name":name,"student":student})
 
-
+@csrf_exempt
+def get_edit_other_details_page(request):
+    if not request.session.get("name"):
+        return render(request, 'app/login.html', {})
+    else:
+        name = request.session["name"]
+        email = request.session["email"]
+        student = Student.objects.get(email=email)
+        return render(request, 'app/studentOtherdetails.html',{"login":2,"name":name,"student":student})
 
 
 
@@ -326,6 +373,9 @@ def get_company_details(request):
         # student login
         else:
             return HttpResponse("Not permitted to access")
+
+
+
 
 
 #######DISPLAY Pages######
@@ -669,29 +719,134 @@ def web_edit_profile(request):
 
 
 @csrf_exempt
-def web_edit_marks(request):
+def web_edit_ssc_marks(request):
     if request.method == "POST":
         email = request.session["email"]
         obj  =Student.objects.get(email=email)
         obj.tenth_board  = request.POST["tenth_board"]
-        obj.tenth_marks = request.POST["tenth_marks"]
+
+        tenth_marks = request.POST["tenth_marks"]
+        if tenth_marks:
+            obj.tenth_marks = tenth_marks
         obj.tenth_schoolname  = request.POST["tenth_schoolname"]
         obj.tenth_city  = request.POST["tenth_city"]
-        # obj.tenth_yeargap  = request.POST["tenth_yeargap"]
-        obj.tenth_yeargap_reason  = request.POST["tenth_yeargap_reason"]
+        
+        list_checked = request.POST.getlist("tenth_yeargap")
+        list_checked = list(list_checked)
+        print list_checked
+        if "tenth_yeargap" in list_checked:
+            obj.tenth_yeargap = True
+            obj.tenth_yeargap_reason  = request.POST["tenth_yeargap_reason"]
+        else:
+            obj.tenth_yeargap = False
 
-        obj.twelveth_board  = request.POST["twelveth_board"]
-        obj.twelveth_year  = request.POST["twelveth_year"]
-        obj.twelveth_marks = request.POST["twelveth_marks"]
-        obj.twelveth_schoolname  = request.POST["twelveth_schoolname"]
-        obj.twelveth_city  = request.POST["twelveth_city"]
-        # obj.twelveth_yeargap  = request.POST["twelveth_yeargap"]
-        obj.twelveth_yeargap_reason  = request.POST["twelveth_yeargap_reason"]
+        list_checked = request.POST.getlist("is_diploma")
+        list_checked = list(list_checked)
+        print list_checked
+        if "is_diploma" in list_checked:
+            obj.is_diploma = True
+           
+        else:
+            obj.is_diploma= False
 
+        
+    
         obj.save()        
         return HttpResponse('success');
 
+@csrf_exempt
+def web_edit_hsc_marks(request):
+    if request.method == "POST":
+        email = request.session["email"]
+        obj  =Student.objects.get(email=email)
 
+        if not obj.is_diploma:
+            obj.twelveth_board  = request.POST["twelveth_board"]
+            obj.twelveth_year  = request.POST["twelveth_year"]
+
+            twelveth_marks = request.POST["twelveth_marks"]
+            if twelveth_marks:
+                obj.twelveth_marks = twelveth_marks
+
+            obj.twelveth_schoolname  = request.POST["twelveth_schoolname"]
+            obj.twelveth_city  = request.POST["twelveth_city"]
+
+            list_checked = request.POST.getlist("twelveth_yeargap")
+            list_checked = list(list_checked)
+          
+            if "twelveth_yeargap" in list_checked:
+                obj.twelveth_yeargap = True
+                obj.twelveth_yeargap_reason  = request.POST["twelveth_yeargap_reason"]
+            else:
+                obj.twelveth_yeargap = False
+        else:
+            obj.diploma_board = request.POST["diploma_board"]
+            obj.diploma_marks = request.POST["diploma_marks"]
+            obj.diploma_outof  = request.POST["diploma_outof"]
+            obj.diploma_year  =  request.POST["diploma_year"]
+
+        return HttpResponse("success")
+
+@csrf_exempt
+def web_edit_be_marks(request):
+    if request.method == "POST":
+        email = request.session["email"]
+        obj  =  Student.objects.get(email=email)
+
+        if not obj.is_diploma:
+            obj.fe_marks = request.POST["fe_marks"]
+            obj.fe_outof = request.POST["fe_outof"]
+        
+        obj.se_marks = request.POST["se_marks"]
+        obj.se_outof = request.POST["se_outof"]
+        
+        obj.te_marks = request.POST["te_marks"]
+        obj.te_outof = request.POST["te_outof"]
+        
+        obj.total_marks = request.POST["total_marks"]
+        obj.total_outof = request.POST["total_outof"]
+        
+        obj.average = request.POST["average"]
+        obj.active_back = request.POST["active_back"]
+
+        list_checked = request.POST.getlist("passive_back")
+        list_checked = list(list_checked)
+       
+        if "passive_back" in list_checked:
+            obj.passive_back = True
+        else:
+            obj.passive_back = False
+
+        list_checked = request.POST.getlist("be_yeargap")
+        list_checked = list(list_checked)
+       
+        if "be_yeargap" in list_checked:
+            obj.be_yeargap = True
+        else:
+            obj.be_yeargap = False
+
+        obj.save()
+        return HttpResponse("success")
+
+
+@csrf_exempt
+def web_edit_other_details(request):
+    if request.method == "POST":
+        email = request.session["email"]
+        obj  =  Student.objects.get(email=email)
+        obj.birth_date  = request.POST["birth_date"]
+
+        obj.aadhar_number = request.POST["aadhar_number"]
+        obj.pan_number = request.POST["pan_number"]
+        obj.passport_number = request.POST["passport_number"]
+        obj.cur_address = request.POST["cur_address"]
+        obj.per_address = request.POST["per_address"]
+        obj.city = request.POST["city"]  
+        obj.save()
+      
+        return HttpResponse("success")
+
+            
 #######UPLOAD ADMIN  ###################
 ########################################
 ########################################

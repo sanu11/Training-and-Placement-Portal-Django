@@ -13,7 +13,7 @@ function signup() {
         var atpos = email.indexOf("@");
         var dotpos = email.lastIndexOf(".");
         
-        if(name .length==0 || roll.length==0 || email.length == 0 || password.length == 0 || phone.length == 0 )
+        if(name.length==0 || roll.length==0 || email.length == 0 || password.length == 0 || phone.length == 0 )
             alert("Enter all Details"); 
         else if (roll.length !=4)
             alert("Enter valid Roll number");
@@ -89,9 +89,29 @@ function studentLogin() {
     }
 
 function editProfilePage(argument) {
-    window.location.href = "/peditProfile";
+    window.location.href = "/peditprofile";
     // body...
 }
+
+function editSscMarksPage(argument) {
+    window.location.href = "/peditsscmarks";
+    // body...
+}
+function editHscMarksPage(argument) {
+    window.location.href = "/pedithscmarks";
+    // body...
+}
+
+function editBeMarksPage(argument) {
+    window.location.href = "/peditbemarks";
+    // body...
+}
+
+function editOtherDetailsPage(argument) {
+    window.location.href = "/peditotherdetails";
+    // body...
+}
+
 function editProfile() {
         console.log('signupform');
         var signupform = $('#' + 'signupform');
@@ -117,12 +137,12 @@ function editProfile() {
         {
             $.ajax({
                 type: "POST",
-                url: '/editProfile/',
+                url: '/editprofile/',
                 data: signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
                 success: function(message) {
                 console.log(message);
                     if (message =='success') {
-                       window.location.href = "/pmarks/";
+                       window.location.href = "/peditsscmarks/";
                     }
                     else
                     {
@@ -136,7 +156,7 @@ function editProfile() {
         }
     }   
 
-function editMarks() {
+function editSscMarks() {
         console.log('signupform');
         var signupform = $('#' + 'signupform');
         var csrftoken = getCookie('csrftoken');
@@ -144,12 +164,12 @@ function editMarks() {
         
             $.ajax({
                 type: "POST",
-                url: '/editMarks/',
+                url: '/editsscmarks/',
                 data: signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
                 success: function(message) {
                 console.log(message);
                     if (message =='success') {
-                       window.location.href = "/pbemarks/";
+                       window.location.href = "/pedithscmarks/";
                     }
                     else
                     {
@@ -163,6 +183,87 @@ function editMarks() {
         
     }   
 
+
+function editHscMarks() {
+        console.log('signupform');
+        var signupform = $('#' + 'signupform');
+        var csrftoken = getCookie('csrftoken');
+       
+        
+            $.ajax({
+                type: "POST",
+                url: '/edithscmarks/',
+                data: signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                console.log(message);
+                    if (message =='success') {
+                       window.location.href = "/peditbemarks/";
+                    }
+                    else
+                    {
+                    alert('Error');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+        
+    }   
+    
+function editBeMarks() {
+        console.log('signupform');
+        var signupform = $('#' + 'signupform');
+        var csrftoken = getCookie('csrftoken');
+       
+        
+            $.ajax({
+                type: "POST",
+                url: '/editbemarks/',
+                data: signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                console.log(message);
+                    if (message =='success') {
+                       window.location.href = "/peditotherdetails/";
+                    }
+                    else
+                    {
+                    alert('Error');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+        
+    }   
+
+function editOtherDetails() {
+        console.log('signupform');
+        var signupform = $('#' + 'signupform');
+        var csrftoken = getCookie('csrftoken');
+       
+        
+            $.ajax({
+                type: "POST",
+                url: '/editotherdetails/',
+                data: signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                console.log(message);
+                    if (message =='success') {
+                       window.location.href = "/presume/";
+                    }
+                    else
+                    {
+                    alert('Error');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+        
+    }   
 
 function companyRegister() {
         console.log('registerform');
