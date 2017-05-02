@@ -8,15 +8,12 @@ function signup() {
         var email = document.getElementById('email').value;
         var password  =document.getElementById('password').value;
         var phone = document.getElementById('phone').value;
-        var ssc = document.getElementById('10th').value;
-        var hsc = document.getElementById('12th').value;
-        var avg = document.getElementById('average').value;
+       
 
         var atpos = email.indexOf("@");
         var dotpos = email.lastIndexOf(".");
         
-        console.log(name+ " " + roll + " " + email + " " + password + " " + phone + " " + ssc + " " + hsc + " " + avg);
-        if(name .length==0 || roll.length==0 || email.length == 0 || password.length == 0 || phone.length == 0 || ssc.length == 0 || hsc.length == 0 || avg.length ==0)
+        if(name .length==0 || roll.length==0 || email.length == 0 || password.length == 0 || phone.length == 0 )
             alert("Enter all Details"); 
         else if (roll.length !=4)
             alert("Enter valid Roll number");
@@ -90,6 +87,82 @@ function studentLogin() {
             },
         });
     }
+
+function editProfilePage(argument) {
+    window.location.href = "/peditProfile";
+    // body...
+}
+function editProfile() {
+        console.log('signupform');
+        var signupform = $('#' + 'signupform');
+        var csrftoken = getCookie('csrftoken');
+        var name = document.getElementById('name').value;
+        var roll = document.getElementById('roll').value;
+        var email = document.getElementById('email').value;
+        var phone = document.getElementById('phone').value;
+       
+
+        var atpos = email.indexOf("@");
+        var dotpos = email.lastIndexOf(".");
+        
+        if (roll.length !=4)
+            alert("Enter valid Roll number");
+        else if (atpos<1 || dotpos<atpos+2 || dotpos+2>=email.length) {
+            alert("Not a valid e-mail address");
+        }
+        else if(phone.length!=10)
+            alert ("Enter Valid mobile number");
+        
+        else
+        {
+            $.ajax({
+                type: "POST",
+                url: '/editProfile/',
+                data: signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                console.log(message);
+                    if (message =='success') {
+                       window.location.href = "/pmarks/";
+                    }
+                    else
+                    {
+                    alert('Error');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+        }
+    }   
+
+function editMarks() {
+        console.log('signupform');
+        var signupform = $('#' + 'signupform');
+        var csrftoken = getCookie('csrftoken');
+       
+        
+            $.ajax({
+                type: "POST",
+                url: '/editMarks/',
+                data: signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                console.log(message);
+                    if (message =='success') {
+                       window.location.href = "/pbemarks/";
+                    }
+                    else
+                    {
+                    alert('Error');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+        
+    }   
+
 
 function companyRegister() {
         console.log('registerform');
@@ -323,7 +396,7 @@ function companyUpdate() {
         {
             $.ajax({
                 type: "POST",
-                url: '/edit/',
+                url: '/editCompany/',
                 data: registerform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
                 success: function(message) {
                     if (message =='success') {

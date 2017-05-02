@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Update Profile</title>
+  <meta charset="utf-8">
+  <meta name="description" content="PICT Training and placement online portal">
+<meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!---- BootStrap Libraries         -->
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="/static/js/bootstrap.min.js"></script>
+  <script src="/static/js/check.js"></script>
+  
+  
+
+   <!---- BootStrap online Libraries        
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   -->
+ <style>
+ 
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      background-color:#101B2D;
+      font-family: Georgia, Times, "Times New Roman", serif;
+    }
+.navbar1 {
+      margin-bottom: 0;
+      border-radius: 0;
+
+      font-family: Georgia, Times, "Times New Roman", serif;
+    }
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 650px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 110%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #353739;
+    font-size:15px;
+      color: #b3b3b1;
+      padding: 15px;
+      font-family: Georgia, Times, "Times New Roman", serif;
+    }
+  footer a:hover
+  {
+  text-decoration:none;
+  color:white;
+  }
+  body {
+  font-family: Georgia, Times, "Times New Roman", serif;}
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+  
+  textarea.form-control
+  {
+    height: 30%;
+  }
+  
+  .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+  </style>
+  </head>
+<body>
+
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+<h1 class="text-center"> 
+<a class="pull-left" href="/"> 
+<img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
+</a><span style="margin-left: -20%; color: rgb(222, 222, 222);">Training and Placement</span></h1>  
+
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+    
+    </div>
+    <br>
+  </div>
+</nav>
+  
+<div class="container-fluid ">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav ">
+  <!-- <div class="navbar1">
+  <div class="navbar-header">
+      <h4> &nbsp; &nbsp;Menu </h4></div>
+        <ul class="nav navbar-nav" style="margin-left:10%;">
+    <li><a href="http://pict.edu">PICT Main Site</a></li>
+      <li><a href="#">Students Info</a></li>
+      <li><a href="#">Teachers Info</a></li>
+    </ul>
+    </div> -->{% csrf_token %}
+    </div>
+    <div class="col-sm-8 text-left"> 
+    <br>
+       <h1 class="text-center"><b>Profile</b></h1>
+      <br>
+     <form class="form-horizontal"  method="POST" id="signupform" name="signupform">
+<fieldset>
+<!-- Form Name -->
+<!-- Text input-->
+
+<div class="form-group">
+  <label class="col-sm-4 control-label" >Name</label>
+  <div class="col-sm-5">
+  <input id="name" name="name" type="text" value = {{student.name}} placeholder="Name" class="form-control input-md">
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-sm-4 control-label">Roll Number</label>
+  <div class="col-sm-5">
+  <input id="roll" name="roll" type="number" value = {{student.roll}} placeholder="4263" min="1000" class="form-control input-md">
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-sm-4 control-label">College ID</label>
+  <div class="col-sm-5">
+  <input id="college_id" name="college_id" type="text" value = {{student.college_id}} placeholder="C2K13104366"  class="form-control input-md">
+  </div>
+
+</div>
+
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" >Email </label>
+  <div class="col-sm-5">
+  <input id="email" name="email" type="text"  value = {{student.email}} placeholder="Email" class="form-control input-md">  
+  </div>
+</div>
+
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="selectbasic">Gender</label>
+  <div class="col-sm-5">
+    <select id="selectbasic" name="gender" class="form-control">
+    {% if student.gender == "Female" %}
+      <option value="Female" selected="selected">Female</option>
+      <option value="Male">Male</option>
+      {% else %}
+      <option value="Female" >Female</option>
+      <option value="Male" selected="selected">Male</option>
+      {% endif %}
+    </select>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" >Phone</label>
+  <div class="col-sm-5">
+  <input id="phone" name="phone" type="text"  value = {{student.phone}} placeholder="Phone" class="form-control input-md">
+</div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="selectbasic">Passing year</label>
+  <div class="col-sm-5">
+    <select  name="year" class="form-control">
+      {% for passyear in years %}
+      {% if passyear.y_id == student.year %}
+      <option value= {{passyear.year}} selected="selected" > {{passyear.year}} </option>
+      {% else %}
+      <option value= {{passyear.year}}  > {{passyear.year}} </option>
+      {% endif %}
+      {% endfor %}
+    </select>
+  </div>
+</div>
+
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="selectbasic">Branch</label>
+  <div class="col-sm-5">
+    <select id="selectbasic" name="branch" class="form-control">
+      
+      {% if student.branch == "Comp" %}
+      <option value="Comp" selected="=selected">COMP</option>
+      {% else %}
+      <option value="Comp">COMP</option>
+      {% endif %}
+      
+      {% if student.branch  == "EnTC" %}
+      <option value="EnTC" selected="selected">ENTC</option>
+      {% else %}
+       <option value="EnTC" >ENTC</option>
+      {% endif %}
+
+      {% if student.branch == "IT" %}
+      <option value="IT" selected="=selected">IT </option>
+      {% else %}
+      <option value="IT">IT </option>
+      {% endif %}
+
+    </select>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-sm-4 control-label">PRN</label>
+  <div class="col-sm-5">
+  <input id="prn" name="prn" type="text"  placeholder="71401159C"   class="form-control input-md"  value = {{student.prn}}>
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="singlebutton"></label>
+  
+  <div class="col-sm-4 text-center" align="center" style="margin-left:-2%;margin-right:4%;">
+  <button type="button" class="btn btn-info" onclick="editProfile()">Next</button>
+  </div>
+</div>
+</fieldset>
+</form>
+
+ </div>
+
+
+ <div class="col-sm-2 sidenav">
+<!--- Side navigation data paste here-->
+<a href ="/"><button id="singlebutton" name="singlebutton" class="btn btn-primary btn-block"><b>Home</b></button></a>
+</div>
+
+
+</div>
+</div>
+
+
+<footer class="container-fluid text-center">
+ <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
+<p><a href="/developers-page/">Developers</a></p></div>
+</footer>
+</body>
+</html>

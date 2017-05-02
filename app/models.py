@@ -45,7 +45,6 @@ class Student(models.Model):
 
 	s_id		=		models.AutoField(primary_key=True)
 	college_id	=		models.CharField(max_length=20,unique=True)
-	prn			=		models.CharField(max_length=20,unique=True)
 	roll		= 		models.IntegerField()
 	name        =		models.CharField(max_length=50)
 	email       =		models.EmailField(max_length=60,unique=True)
@@ -55,6 +54,7 @@ class Student(models.Model):
 	y_id        =		models.ForeignKey(Year)            												 #foreign key to year table
 	branch		=		models.CharField(max_length=6)
 
+	prn			=		models.CharField(max_length=20,unique=True)
 	birth_date	=		models.DateField(null=True,blank=True)
 	per_address =		models.CharField(max_length=1000,null=True,blank=True)
 	cur_address =		models.CharField(max_length=1000,null=True,blank=True)
@@ -64,17 +64,17 @@ class Student(models.Model):
 	tenth_marks	=		models.FloatField(null=True,blank=True)
 	tenth_schoolname=	models.CharField(max_length=100,null=True,blank=True)
 	tenth_city	=		models.CharField(max_length=30,null=True,blank=True)
-	tenth_yeargap =  	models.BooleanField(null=True,blank=True)
+	tenth_yeargap =  	models.BooleanField(default=False)
 	tenth_yeargap_reason=models.CharField(max_length=50,null=True,blank=True)
 
-	is_diploma	  =		models.BooleanField(null=True,blank=True)
+	is_diploma	  =		models.BooleanField(default=False)
 	
 	twelveth_board= 	models.CharField(max_length=20,null=True,blank=True)
 	twelveth_year = 	models.CharField(max_length=20,null=True,blank=True)
 	twelveth_marks=		models.FloatField(null=True,blank=True)
 	twelveth_schoolname=models.CharField(max_length=50,null=True,blank=True)
 	twelveth_city	=	models.CharField(max_length=50,null=True,blank=True)
-	twelveth_yeargap=	models.BooleanField(null=True,blank=True)
+	twelveth_yeargap=	models.BooleanField(default=False)
 	twelveth_yeargap_reason=models.CharField(max_length=50,null=True,blank=True)
 
 	diploma_board = 	models.CharField(max_length=30,null=True,blank=True)
@@ -90,8 +90,8 @@ class Student(models.Model):
 	te_outof	  = 	models.IntegerField(null=True,blank=True)
 	total_marks   = 	models.IntegerField(null=True,blank=True)
 	total_outof	  = 	models.IntegerField(null=True,blank=True)
-	average		 =		models.FloatField(null=True,blank=True)
-	
+	average		  =		models.FloatField(null=True,blank=True)
+
 	active_back	 =		models.IntegerField(default=0)
 	passive_back = 		models.BooleanField(default=False)
 	
@@ -115,16 +115,6 @@ class Admin(models.Model):
 	def __str__(self):
 		return  self.name
 
-# class Profile(models.Model):
-#
-# 	p_id		=	models.AutoField(primary_key=True)
-# 	position	=	models.CharField(max_length=50,null=True,blank=True)
-# 	salary		=	models.FloatField(blank=True, null=True)
-# 	hired_count	=	models.IntegerField(default=0)
-# 	c_id		=	models.ForeignKey(Company,on_delete=models.CASCADE)			#Foreign key on company
-#
-# 	def __str__(self):
-# 		return	Company.name + " " + self.position
 
 class Verify(models.Model):
 	v_id		=	models.AutoField(primary_key=True)
@@ -154,4 +144,3 @@ class Result(models.Model):
 
 	def __str__(self):
 		return self.filename
-

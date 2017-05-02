@@ -26,12 +26,17 @@ urlpatterns = [
 	url(r'pnotify/$',views.get_notify_page),
 	url(r'presult/$',views.get_result_upload_page),
 	url(r'presume/$',views.get_resume_upload_page),
+	url(r'peditProfile/$',views.get_edit_profile_page),
+	url(r'pmarks/$',views.get_edit_marks_page),
+	url(r'pbemarks/$',views.get_edit_be_marks_page),
+
+
 
 	url(r'getCompanyDetails/$',views.get_company_details),
 
 	url(r'cregister/$',views.web_register_company),
 	url(r'update/$',views.web_update_company),
-	url(r'edit/$', views.web_edit_company),
+	url(r'editCompany/$', views.web_edit_company),
 	url(r'notify/$',views.web_notify),
 	url(r'signup/$',views.web_signup),
 	url(r'login/$',views.web_login),
@@ -39,6 +44,9 @@ urlpatterns = [
 	url(r'result/$',views.web_upload_result),
 	url(r'downloadstudents/$', views.web_download_students),
 	url(r'downloadcompanies/$', views.web_download_companies),
+	url(r'editProfile/$', views.web_edit_profile),
+	url(r'editMarks/$', views.web_edit_marks),
+
 
 
 	url(r'results/$',views.get_results_page),	 
@@ -48,7 +56,7 @@ urlpatterns = [
 
 	url(r'logout/$',views.logout),
 	url(r'home/$',views.get_main_page),
-	url(r'psettings/$',views.get_settings_page),
+	
 
 	url(r'^$', views.get_main_page),
 	url(r'^developers-page/$', views.get_developers_page),

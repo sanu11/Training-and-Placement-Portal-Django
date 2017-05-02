@@ -204,17 +204,30 @@ def get_resume_upload_page(request):
     name = request.session["name"]
     return render(request, 'app/resumeUpload.html',{"login":2,"name":name})
 
-
-
-def get_settings_page(request):
+@csrf_exempt
+def get_edit_profile_page(request):
     name = request.session["name"]
     email = request.session["email"]
     student = Student.objects.get(email=email)
-    resume = None
-    if student.url:
-        resume = student.url
+    years = Year.objects.all()
+    return render(request, 'app/editProfile.html',{"login":2,"name":name,"student":student,"years":years})
 
-    return render(request, 'app/settings.html',{"login":2,"name":name,"resume":resume})
+@csrf_exempt
+def get_edit_marks_page(request):
+    name = request.session["name"]
+    email = request.session["email"]
+    student = Student.objects.get(email=email)
+    return render(request, 'app/studentMarks.html',{"login":2,"name":name,"student":student})
+
+@csrf_exempt
+def get_edit_be_marks_page(request):
+    name = request.session["name"]
+    email = request.session["email"]
+    student = Student.objects.get(email=email)
+    return render(request, 'app/studentBeMarks.html',{"login":2,"name":name,"student":student})
+
+
+
 
 
 #####UPLOAD pages
@@ -545,17 +558,8 @@ def web_signup(request):
         c.gender = request.POST["gender"]
         c.roll = roll
         c.college_id = request.POST["college_id"]
-        c.prn  = request.POST["prn"]
         c.phone = request.POST["phone"]
         c.branch = request.POST["branch"]
-        c.ssc = request.POST["10th"]
-        c.hsc = request.POST["12th"]
-        c.average = request.POST["average"]
-        if request.POST.get("activeBack",False):
-            c.activeBack = False
-        else:
-            c.activeBack = True
-
         year = request.POST["year"]
         year_obj = Year.objects.get(year=year)
         c.y_id = year_obj
@@ -636,6 +640,56 @@ def web_login(request):
 
         else:
             return HttpResponse("User not found")
+
+
+@csrf_exempt
+def web_edit_profile(request):
+    if request.method == "POST":
+        email = request.POST["email"]
+        name = request.POST["name"]
+        roll = request.POST["roll"]
+        print name, email
+        c = Student.objects.get(email=email)
+        c.name = name
+        c.email = email
+        c.gender = request.POST["gender"]
+        c.roll = roll
+        c.college_id = request.POST["college_id"]
+        c.phone = request.POST["phone"]
+        c.branch = request.POST["branch"]
+        year = request.POST["year"]
+        year_obj = Year.objects.get(year=year)
+        c.y_id = year_obj
+        c.save()
+        request.session["name"]=name
+        request.session["email"]=email
+        return HttpResponse('success')
+    else:
+        return HttpResponse('error');
+
+
+@csrf_exempt
+def web_edit_marks(request):
+    if request.method == "POST":
+        email = request.session["email"]
+        obj  =Student.objects.get(email=email)
+        obj.tenth_board  = request.POST["tenth_board"]
+        obj.tenth_marks = request.POST["tenth_marks"]
+        obj.tenth_schoolname  = request.POST["tenth_schoolname"]
+        obj.tenth_city  = request.POST["tenth_city"]
+        # obj.tenth_yeargap  = request.POST["tenth_yeargap"]
+        obj.tenth_yeargap_reason  = request.POST["tenth_yeargap_reason"]
+
+        obj.twelveth_board  = request.POST["twelveth_board"]
+        obj.twelveth_year  = request.POST["twelveth_year"]
+        obj.twelveth_marks = request.POST["twelveth_marks"]
+        obj.twelveth_schoolname  = request.POST["twelveth_schoolname"]
+        obj.twelveth_city  = request.POST["twelveth_city"]
+        # obj.twelveth_yeargap  = request.POST["twelveth_yeargap"]
+        obj.twelveth_yeargap_reason  = request.POST["twelveth_yeargap_reason"]
+
+        obj.save()        
+        return HttpResponse('success');
 
 
 #######UPLOAD ADMIN  ###################
