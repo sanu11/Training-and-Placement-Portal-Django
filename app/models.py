@@ -43,35 +43,65 @@ class Company(models.Model):
 
 class Student(models.Model):
 
-	s_id		=	models.AutoField(primary_key=True)
-	college_id	=	models.CharField(max_length=20,unique=True)
-	prn			=	models.CharField(max_length=20,unique=True)
-	roll		= 	models.IntegerField()
-	name        =	models.CharField(max_length=50)
-	email       =	models.EmailField(max_length=60,unique=True)
-	password    =	models.CharField(max_length=12)
-	phone       =	models.CharField(max_length=10)
-	gender      =	models.CharField(max_length=10)
-	per_address =	models.CharField(max_length=1000,null=True,blank=True)
-	cur_address =	models.CharField(max_length=1000,null=True,blank=True)
-	y_id        =	models.ForeignKey(Year)            												 #foreign key to year table
-	branch		=	models.CharField(max_length=6)
-	tenth_board =	models.CharField(max_length=20)
-	tenth_marks	=	models.FloatField()
-	tenth_yeargap=  models.BooleanField()
-	tenth_yeargap_reason=models.CharField(max_length=50)
-	is_diploma	=	models.BooleanField()
-	twelveth_board= models.CharField(max_length=20,null=True,blank=True)
-	twelveth_marks=	models.FloatField(null=True,blank=True)
-	twelveth_yeargap=models.BooleanField()
-	twelveth_yeargap_reason=models.CharField(max_length=50)
-	diploma_marks=	models.FloatField(null=True,blank=True)
-	average		=	models.FloatField()
-	aadhar_number=	models.CharField(max_length=20)
-	placed		=	models.BooleanField(default=False)
-	active_back	=	models.BooleanField(default=False)
-	url			=	models.CharField(max_length=500,null=True,blank=True)
-	c_id		=	models.ForeignKey(Company,on_delete=models.CASCADE,null=True,blank=True)			#foreign key o company table
+	s_id		=		models.AutoField(primary_key=True)
+	college_id	=		models.CharField(max_length=20,unique=True)
+	prn			=		models.CharField(max_length=20,unique=True)
+	roll		= 		models.IntegerField()
+	name        =		models.CharField(max_length=50)
+	email       =		models.EmailField(max_length=60,unique=True)
+	password    =		models.CharField(max_length=12)
+	phone       =		models.CharField(max_length=10)
+	gender      =		models.CharField(max_length=10)
+	y_id        =		models.ForeignKey(Year)            												 #foreign key to year table
+	branch		=		models.CharField(max_length=6)
+
+	birth_date	=		models.DateField(null=True,blank=True)
+	per_address =		models.CharField(max_length=1000,null=True,blank=True)
+	cur_address =		models.CharField(max_length=1000,null=True,blank=True)
+	city		=		models.CharField(max_length=30,null=True,blank=True)
+
+	tenth_board =		models.CharField(max_length=20,null=True,blank=True)
+	tenth_marks	=		models.FloatField(null=True,blank=True)
+	tenth_schoolname=	models.CharField(max_length=100,null=True,blank=True)
+	tenth_city	=		models.CharField(max_length=30,null=True,blank=True)
+	tenth_yeargap =  	models.BooleanField(null=True,blank=True)
+	tenth_yeargap_reason=models.CharField(max_length=50,null=True,blank=True)
+
+	is_diploma	  =		models.BooleanField(null=True,blank=True)
+	
+	twelveth_board= 	models.CharField(max_length=20,null=True,blank=True)
+	twelveth_year = 	models.CharField(max_length=20,null=True,blank=True)
+	twelveth_marks=		models.FloatField(null=True,blank=True)
+	twelveth_schoolname=models.CharField(max_length=50,null=True,blank=True)
+	twelveth_city	=	models.CharField(max_length=50,null=True,blank=True)
+	twelveth_yeargap=	models.BooleanField(null=True,blank=True)
+	twelveth_yeargap_reason=models.CharField(max_length=50,null=True,blank=True)
+
+	diploma_board = 	models.CharField(max_length=30,null=True,blank=True)
+	diploma_marks =		models.FloatField(null=True,blank=True)
+	diploma_outof =		models.FloatField(null=True,blank=True)
+	diploma_year  = 	models.CharField(max_length=20,null=True,blank=True)
+
+	fe_marks	  =		models.IntegerField(null=True,blank=True)
+	fe_outof	  =		models.IntegerField(null=True,blank=True)
+	se_marks	  = 	models.IntegerField(null=True,blank=True)
+	se_outof	  = 	models.IntegerField(null=True,blank=True)
+	te_marks 	  = 	models.IntegerField(null=True,blank=True)
+	te_outof	  = 	models.IntegerField(null=True,blank=True)
+	total_marks   = 	models.IntegerField(null=True,blank=True)
+	total_outof	  = 	models.IntegerField(null=True,blank=True)
+	average		 =		models.FloatField(null=True,blank=True)
+	
+	active_back	 =		models.IntegerField(default=0)
+	passive_back = 		models.BooleanField(default=False)
+	
+	aadhar_number=		models.CharField(max_length=20,null=True,blank=True)
+	pan_number	 =		models.CharField(max_length=20,null=True,blank=True)
+	passport_number=	models.CharField(max_length=50,null=True,blank=True)
+	
+	placed		=		models.BooleanField(default=False)
+	url			=		models.CharField(max_length=500,null=True,blank=True)
+	c_id		=		models.ForeignKey(Company,on_delete=models.CASCADE,null=True,blank=True)			#foreign key o company table
 
 	def __str__(self):
 		return  self.name
@@ -84,7 +114,6 @@ class Admin(models.Model):
 
 	def __str__(self):
 		return  self.name
-
 
 # class Profile(models.Model):
 #
