@@ -301,6 +301,12 @@ def get_register_page(request):
             return HttpResponse("Not permitted to access")
 
 @csrf_exempt
+def get_student_download_page(request):
+    email = request.session["email"]
+    student = Student.objects.get(email=email)
+    return render(request,'app/studentDownload.html',{"student":student})
+
+@csrf_exempt
 def get_update_page(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})

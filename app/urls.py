@@ -32,6 +32,7 @@ urlpatterns = [
 	url(r'peditbemarks/$',views.get_edit_be_marks_page),
 	url(r'peditotherdetails/$',views.get_edit_other_details_page),
 	url(r'psettings/$',views.get_settings_page),
+	url(r'pstudentdownload/$',views.get_student_download_page),
 
 	url(r'getCompanyDetails/$',views.get_company_details),
 

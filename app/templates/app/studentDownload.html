@@ -1,0 +1,221 @@
+<html>
+<head>
+<title> Download </title>
+</head>
+<body>
+
+<h3>PERSONAL DETAILS</h3>
+<label> Name : </label>
+<label> {{student.name}}</label>
+<br><br>
+
+<label> Email : </label>
+<label> {{student.email}}</label>
+<br><br>
+
+<label> College_id : </label>
+<label> {{student.college_id}}</label>
+<br><br>
+
+<label> PRN : </label>
+<label> {{student.prn}}</label>
+<br><br>
+
+<label> Roll number : </label>
+<label> {{student.roll}}</label>
+<br><br>
+
+<label> Phone : </label>
+<label> {{student.phone}}</label>
+<br><br>
+
+<label> Gender : </label>
+<label> {{student.gender}}</label>
+<br><br>
+
+<label> Branch : </label>
+<label> {{student.branch}}</label>
+<br><br>
+
+<label> Gender : </label>
+<label> {{student.gender}}</label>
+<br><br>
+
+<label> Birth Date : </label>
+<label> {{student.birth_date}}</label>
+<br><br>
+
+<label> Current Address : </label>
+<label> {{student.cur_address}}</label>
+<br><br>
+
+<label> Permanent Address : </label>
+<label> {{student.per_address}}</label>
+<br><br>
+
+<label> City : </label>
+<label> {{student.city}}</label>
+<br><br>
+
+<label> Aadhar Number : </label>
+<label> {{student.aadhar_number}}</label>
+<br><br>
+
+<label> PAN Number : </label>
+<label> {{student.pan_number}}</label>
+<br><br>
+
+<label> Passport Number : </label>
+<label> {{student.passport_number}}</label>
+<br><br>
+
+<label> Gender : </label>
+<label> {{student.gender}}</label>
+<br><br>
+
+
+<h3>EDUCATION DETAILS</h3>
+<h4>10th</h4>
+<label> Board : </label>
+<label> {{student.tenth_board}}</label>
+<br><br>
+
+<label> Marks : </label>
+<label> {{student.tenth_marks}}</label>
+<br><br>
+
+<label> School : </label>
+<label> {{student.tenth_schoolname}}</label>
+<br><br>
+
+<label> City : </label>
+<label> {{student.tenth_city}}</label>
+<br><br>
+
+
+<label> Yeargap : </label>
+<label> {% if not student.tenth_yeargap %} No {% else %} Yes {% endif %}</label>
+<br><br>
+
+{% if student.tenth_yeargap %}
+<label> Year gap reason : </label>
+<label> {{student.tenth_yeargap_reason}}</label>
+<br><br>
+{% endif %}
+
+<!-- 12th -->
+{% if not student.is_diploma %}
+<h4>12th</h4>
+<label> Board : </label>
+<label> {{student.twelveth_board}}</label>
+<br><br>
+
+<label> Marks : </label>
+<label> {{student.twelveth_marks}}</label>
+<br><br>
+
+<label> Year : </label>
+<label> {{student.twelveth_year}}</label>
+<br><br>
+
+<label> School : </label>
+<label> {{student.twelveth_schoolname}}</label>
+<br><br>
+
+<label> City : </label>
+<label> {{student.twelveth_city}}</label>
+<br><br>
+
+
+<label> Yeargap : </label>
+<label> {% if not student.twelveth_yeargap %} No {% else %} Yes {% endif %}</label>
+<br><br>
+
+{% if student.twelveth_yeargap %}
+<label> Year gap reason : </label>
+<label> {{student.twelveth_yeargap_reason}}</label>
+<br><br>
+{% endif %}
+
+
+<!-- DIPLOMA -->
+{% else %}
+<h4>Diploma</h4>
+<label> Board : </label>
+<label> {{student.diploma_board}}</label>
+<br><br>
+
+<label> Marks obtained: </label>
+<label> {{student.diploma_marks}}</label>
+<br><br>
+
+<label> Marks out of : </label>
+<label> {{student.diploma_outof}}</label>
+<br><br>
+
+<label> Year : </label>
+<label> {{student.diploma_year}}</label>
+<br><br>
+
+{% endif %}
+<h4>BE</h4>
+<label> FE  marks: </label>
+<label> {{student.fe_marks}}</label>
+<br><br>
+
+<label> FE  marks outof: </label>
+<label> {{student.fe_outof}}</label>
+<br><br>
+
+<label> SE  marks: </label>
+<label> {{student.se_marks}}</label>
+<br><br>
+
+<label> SE  marks outof: </label>
+<label> {{student.se_outof}}</label>
+<br><br>
+
+<label> TE  marks: </label>
+<label> {{student.te_marks}}</label>
+<br><br>
+
+<label> TE  marks outof: </label>
+<label> {{student.te_outof}}</label>
+<br><br>
+
+<label> Total  marks: </label>
+<label> {{student.total_marks}}</label>
+<br><br>
+
+<label> Total  marks out of: </label>
+<label> {{student.total_outof}}</label>
+<br><br>
+
+<label> Average: </label>
+<label> {{student.average}}</label>
+<br><br>
+
+<label> Yeargap : </label>
+<label> {% if not student.be_yeargap %} No {% else %} Yes {% endif %}</label>
+<br><br>
+
+<label> Active Back: </label>
+<label> {{student.active_back}}</label>
+<br><br>
+
+<label> Passive Back : </label>
+<label> {% if not student.passive_back %} No {% else %} Yes {% endif %}</label>
+<br><br>
+
+<!-- label> Placed : </label>
+<label> {% if not student.placed %} No {% else %} Yes {% endif %}</label>
+<br><br>
+ -->
+
+ ----------------****--------------
+
+
+
+</body>
+
+</html>
