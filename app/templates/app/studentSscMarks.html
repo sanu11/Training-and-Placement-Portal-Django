@@ -201,7 +201,7 @@ input:checked + .slider:before {
   <label class="col-sm-4 control-label">Board</label>
   <div class="col-sm-5">
   {% if student.tenth_board %}
-  <input id="tenth_board" name="tenth_board" type="text"  placeholder="cbse"   class="form-control input-md"  value = {{student.tenth_board}}>
+  <input id="tenth_board" name="tenth_board" type="text"  placeholder="cbse"   class="form-control input-md"  value = "{{student.tenth_board}}">
   {% else %}
   <input id="tenth_board" name="tenth_board" type="text"  placeholder="cbse"   class="form-control input-md"  >
   {% endif %}
@@ -223,7 +223,7 @@ input:checked + .slider:before {
   <label class="col-sm-4 control-label">School Name</label>
   <div class="col-sm-5">
   {% if student.tenth_schoolname %}
-  <input id="tenth_schoolname" name="tenth_schoolname" type="text"  placeholder="Kendriya Vidyalaya"   class="form-control input-md"  value = {{student.tenth_schoolname}}>
+  <input id="tenth_schoolname" name="tenth_schoolname" type="text"  placeholder="Kendriya Vidyalaya"   class="form-control input-md"  value = "{{student.tenth_schoolname}}">
   {% else %}
   <input id="tenth_schoolname" name="tenth_schoolname" type="text"  placeholder="Kendriya Vidyalaya"   class="form-control input-md"  >
   {% endif %}
@@ -234,7 +234,7 @@ input:checked + .slider:before {
   <label class="col-sm-4 control-label">City</label>
   <div class="col-sm-5">
   {% if student.tenth_city %}
-  <input id="tenth_city" name="tenth_city" type="text"  placeholder="Pune"   class="form-control input-md"  value = {{student.tenth_city}}>
+  <input id="tenth_city" name="tenth_city" type="text"  placeholder="Pune"   class="form-control input-md"  value = "{{student.tenth_city}}">
   {% else %}
   <input id="tenth_city" name="tenth_city" type="text"  placeholder="Pune"   class="form-control input-md"  >
   {% endif %}
@@ -261,7 +261,7 @@ input:checked + .slider:before {
   <label class="col-sm-4 control-label">Year gap reason</label>
   <div class="col-sm-5">
   {% if student.tenth_yeargap_reason %}
-  <input id="tenth_city" name="tenth_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md"  value = {{student.tenth_yeargap_reason}}>
+  <input id="tenth_city" name="tenth_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md"  value = "{{student.tenth_yeargap_reason}}">
   {% else %}
   <input id="tenth_city" name="tenth_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md"  >
   {% endif %}

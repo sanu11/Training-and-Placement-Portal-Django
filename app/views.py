@@ -715,6 +715,7 @@ def web_edit_profile(request):
         c.phone = request.POST["phone"]
         c.branch = request.POST["branch"]
         year = request.POST["year"]
+        c.prn = request.POST["prn"]
         year_obj = Year.objects.get(year=year)
         c.y_id = year_obj
         c.save()
@@ -791,6 +792,7 @@ def web_edit_hsc_marks(request):
             obj.diploma_marks = request.POST["diploma_marks"]
             obj.diploma_outof  = request.POST["diploma_outof"]
             obj.diploma_year  =  request.POST["diploma_year"]
+        obj.save()
 
         return HttpResponse("success")
 
@@ -867,7 +869,7 @@ def web_change_password(request):
             student.password = request.POST["new_password"]
         student.save()
         return HttpResponse("success")
-        
+
 #######UPLOAD ADMIN  ###################
 ########################################
 ########################################
