@@ -31,7 +31,6 @@
 .navbar1 {
       margin-bottom: 0;
       border-radius: 0;
-
       font-family: Georgia, Times, "Times New Roman", serif;
     }
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
@@ -80,9 +79,7 @@
   width: 60px;
   height: 34px;
 }
-
 .switch input {display:none;}
-
 .slider {
   position: absolute;
   cursor: pointer;
@@ -94,7 +91,6 @@
   -webkit-transition: .4s;
   transition: .4s;
 }
-
 .slider:before {
   position: absolute;
   content: "";
@@ -106,26 +102,21 @@
   -webkit-transition: .4s;
   transition: .4s;
 }
-
 input:checked + .slider {
   background-color: #2196F3;
 }
-
 input:focus + .slider {
   box-shadow: 0 0 1px #2196F3;
 }
-
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
-
 /* Rounded sliders */
 .slider.round {
   border-radius: 34px;
 }
-
 .slider.round:before {
   border-radius: 50%;
 }
@@ -165,11 +156,12 @@ input:checked + .slider:before {
     <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="/logout/">Logout</a></li>
+          
             {% if login == 2 %}
             <li><a href="/peditprofile/">Update Profile</a></li>
              <li><a href="/psettings/">Settings</a></li>
               {% endif %}           
+                <li><a href="/logout/">Logout</a></li>
            
           </ul>
         </li>
@@ -181,22 +173,7 @@ input:checked + .slider:before {
 <div class="container-fluid ">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
-    {% if login == 1 %}
- <div class="navbar1"  >
-      <ul class="nav navbar-nav" >
-    <br><br>
-      <li ><a href="/students/"><b>Students  Info</b></a></li>
-      <li><a href="/pregister/"><b>Register  Company</b></a></li>
-      <li><a href="/pupdate/"><b>Update  Company</b></a> </li>
-      <li><a href="/pedit/"><b>Edit Company</b></a> </li>
-
-      <li><a href="/pnotify/"><b>Notify  Candidate</b></a> </li>
-      <li><a href="/presult/"><b>Upload Result</b></a> </li>
-
-
-    </ul>
-    </div>
-    {% endif %}
+   
     </div>
 
     <div class="col-sm-8 text-left"> 
@@ -244,7 +221,6 @@ input:checked + .slider:before {
     </div>
   </div>
 </div>
-
 <div class="form-group">
   <label class="col-md-4 control-label" ">Marks out of</label>
   <div class="col-sm-5">
@@ -294,7 +270,6 @@ input:checked + .slider:before {
     </div>
   </div>
 </div>
-
 <div class="form-group">
   <label class="col-sm-4 control-label">School Name</label>
   <div class="col-sm-5">
@@ -305,7 +280,6 @@ input:checked + .slider:before {
   {% endif %}
   </div>
 </div>
-
 <div class="form-group">
   <label class="col-sm-4 control-label">City</label>
   <div class="col-sm-5">
@@ -316,7 +290,6 @@ input:checked + .slider:before {
   {% endif %}
   </div>
 </div>
-
 <div class="form-group">
   <label class="col-md-4 control-label" for="button1id">Year gap</label>
   
@@ -332,7 +305,6 @@ input:checked + .slider:before {
 </label>
   </div>
 </div>
-
 <div class="form-group">
   <label class="col-sm-4 control-label">Year gap reason</label>
   <div class="col-sm-5">
@@ -344,7 +316,6 @@ input:checked + .slider:before {
   </div>
 </div>
 {% endif %}
-
 <!-- Button -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="singlebutton"></label>
@@ -356,22 +327,16 @@ input:checked + .slider:before {
 </div>
 </fieldset>
 </form>
-
  </div>
-
-
  <div class="col-sm-2 sidenav">
 <!--- Side navigation data paste here-->
 </div>
-
-
 </div>
 </div>
-
-
 <footer class="container-fluid text-center">
  <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
 <p><a href="/developers-page/">Developers</a></p></div>
 </footer>
 </body>
 </html>
+Contact GitHub 
