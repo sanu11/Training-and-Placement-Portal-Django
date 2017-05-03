@@ -146,8 +146,10 @@ def notify(request):
     Device.objects.all().send_message({'type': 'gen_msg', 'title': title, 'body': body})
     return HttpResponse("Message sent")
 
+####################
+########WEB########
+###################
 
-###WEB###
 @csrf_exempt
 def get_main_page(request):
     if not request.session.get("name"):
@@ -196,6 +198,8 @@ def get_settings_page(request):
         resume = student.url
         login = 2
         return render(request, 'app/settings.html', {"login":login,"name":name,"resume":resume})
+    else:
+        return render(request,'app/redirect2.html',{})
 
 @csrf_exempt
 def get_signup_page(request):
@@ -226,7 +230,7 @@ def get_resume_upload_page(request):
 @csrf_exempt
 def get_edit_profile_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         name = request.session["name"]
         email = request.session["email"]
@@ -237,7 +241,7 @@ def get_edit_profile_page(request):
 @csrf_exempt
 def get_edit_ssc_marks_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         name = request.session["name"]
         email = request.session["email"]
@@ -248,7 +252,7 @@ def get_edit_ssc_marks_page(request):
 @csrf_exempt
 def get_edit_hsc_marks_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         name = request.session["name"]
         email = request.session["email"]
@@ -258,7 +262,7 @@ def get_edit_hsc_marks_page(request):
 @csrf_exempt
 def get_edit_be_marks_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         name = request.session["name"]
         email = request.session["email"]
@@ -268,7 +272,7 @@ def get_edit_be_marks_page(request):
 @csrf_exempt
 def get_edit_other_details_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         name = request.session["name"]
         email = request.session["email"]
@@ -283,7 +287,7 @@ def get_edit_other_details_page(request):
 @csrf_exempt
 def get_register_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -299,7 +303,7 @@ def get_register_page(request):
 @csrf_exempt
 def get_update_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -314,7 +318,7 @@ def get_update_page(request):
 
 def get_company_edit_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -331,7 +335,7 @@ def get_company_edit_page(request):
 @csrf_exempt
 def get_notify_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -346,7 +350,7 @@ def get_notify_page(request):
 @csrf_exempt
 def get_result_upload_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -360,7 +364,7 @@ def get_result_upload_page(request):
 
 def get_company_details(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -386,7 +390,7 @@ def get_company_details(request):
 @csrf_exempt
 def get_students_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -439,7 +443,7 @@ def get_students_page(request):
 @csrf_exempt
 def get_student_page(request, roll):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -458,7 +462,7 @@ def get_student_page(request, roll):
 @csrf_exempt
 def get_notifications_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -476,7 +480,7 @@ def get_notifications_page(request):
 @csrf_exempt
 def get_companies_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -541,7 +545,7 @@ def get_companies_page(request):
 @csrf_exempt
 def get_results_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -560,7 +564,7 @@ def get_results_page(request):
 @csrf_exempt
 def get_company_page(request, cid):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -580,7 +584,7 @@ def get_company_page(request, cid):
 @csrf_exempt
 def logout(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
 
         del request.session['email']
@@ -594,6 +598,7 @@ def logout(request):
 #####upload STUDENTS#####
 ########################################
 ########################################
+
 @csrf_exempt
 def web_signup(request):
     if request.method == "POST":
@@ -848,7 +853,21 @@ def web_edit_other_details(request):
       
         return HttpResponse("success")
 
-            
+
+@csrf_exempt
+def web_change_password(request):
+    if request.method == "POST":
+        email  =request.session["email"]
+        student = Student.objects.get(email=email)
+        password = student.password
+        old_password = request.POST["old_password"]
+        if old_password != password:
+            return HttpResponse("wrong")
+        else:
+            student.password = request.POST["new_password"]
+        student.save()
+        return HttpResponse("success")
+        
 #######UPLOAD ADMIN  ###################
 ########################################
 ########################################

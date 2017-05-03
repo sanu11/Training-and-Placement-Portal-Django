@@ -46,6 +46,8 @@ urlpatterns = [
 	url(r'downloadstudents/$', views.web_download_students),
 	url(r'downloadcompanies/$', views.web_download_companies),
 
+	url(r'changepassword/$', views.web_change_password),
+
 	url(r'editprofile/$', views.web_edit_profile),
 	url(r'editsscmarks/$', views.web_edit_ssc_marks),
 	url(r'edithscmarks/$', views.web_edit_hsc_marks),
