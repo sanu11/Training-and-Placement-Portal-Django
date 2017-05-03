@@ -103,6 +103,7 @@ class Student(models.Model):
 	url			=		models.CharField(max_length=500,null=True,blank=True)
 	c_id		=		models.ForeignKey(Company,on_delete=models.CASCADE,null=True,blank=True)			#foreign key o company table
 
+	lock		=		models.BooleanField(default=False)
 	def __str__(self):
 		return  self.name
 
