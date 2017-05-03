@@ -211,7 +211,7 @@ input:checked + .slider:before {
   <label class="col-sm-4 control-label">Birth date</label>
   <div class="col-sm-5">
   {% if student.birth_date %}
-  <input id="birth_date" name="birth_date" type="date"  placeholder="01/01/1995"   class="form-control input-md"  value = {{student.birth_date}}>
+  <input id="birth_date" name="birth_date" type="date"  placeholder="01/01/1995"   class="form-control input-md"  value = "{{birth_date}}">
   {% else %}
   <input id="birth_date" name="birth_date" type="date"  placeholder="01/01/1995"   class="form-control input-md"  >
   {% endif %}

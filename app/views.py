@@ -273,8 +273,10 @@ def get_edit_other_details_page(request):
         name = request.session["name"]
         email = request.session["email"]
         student = Student.objects.get(email=email)
-        return render(request, 'app/studentOtherdetails.html',{"login":2,"name":name,"student":student})
-
+        birth_date = str(student.birth_date)
+        print birth_date
+       
+        return render(request, 'app/studentOtherdetails.html',{"login":2,"name":name,"student":student,"birth_date":birth_date})
 
 
 #####UPLOAD pages

@@ -324,8 +324,13 @@ input:checked + .slider:before {
   
   <div class="col-md-8"> 
  <label class="switch">
+ {% if student.passive_back %}
+  <input type="checkbox" name="passive_back" value="passive_back" checked>
+  {% else %}
   <input type="checkbox" name="passive_back" value="passive_back">
+  {% endif %}
   <div class="slider round"></div>
+  
 </label>
 </label>
   </div>
@@ -337,7 +342,11 @@ input:checked + .slider:before {
   
   <div class="col-md-8"> 
  <label class="switch">
+  {% if student.be_yeargap %}
+  <input type="checkbox" name="be_yeargap" value="be_yeargap" checked>
+  {% else %}
   <input type="checkbox" name="be_yeargap" value="be_yeargap">
+  {% endif %}
   <div class="slider round"></div>
 </label>
 </label>
