@@ -370,6 +370,32 @@ function companyUpdate() {
         }
     }
 
+function applyCompany(c_id){
+        var checked  = document.getElementById(c_id).checked;
+        var csrftoken = getCookie('csrftoken');
+        
+            $.ajax({
+                type: "POST",
+                url: '/applycompany/',
+
+                data:{c_id:c_id , csrfmiddlewaretoken : csrftoken,applied:checked} ,
+                success: function(message) {
+                    if (message =='nothing') {
+                       
+
+                    }
+                    else{
+                        alert(message);
+                    }
+                    
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+        
+}
+
 
     function loadDetails() {
 
@@ -574,7 +600,7 @@ function downloadStudents() {
                 hiddenElement.click();
                 },
             error: function(xhr, errmsg, err) {
-                alert('Error');
+                alert('Error'+errmsg + xhr);
             },
         });
 
@@ -628,7 +654,7 @@ function downloadCompanies() {
 };
 //function notifyCandidate() {
 //        console.log('notifyform');
-//        var notifyform = $('#' + 'notify');
+//        var notifyform = $('# b' + 'notify');
 //        var csrftoken = getCookie('csrftoken');
 //
 //        $.ajax({

@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import *
 from django.core import serializers
 from gcm.models import get_device_model
+from django.http import StreamingHttpResponse
 import json,csv
 import dropbox
 import requests
@@ -548,6 +549,20 @@ def get_companies_page(request):
         return render(request, 'app/companies.html', {"companies": companies,"years":years,"curr_year":curr_year,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login})
 
 
+def get_opportunities_page(request):
+    if not request.session.get("name"):
+        return render(request,'app/redirect2.html',{})
+    else:
+        name     = request.session["name"]
+        email = request.session["email"]
+        student = Student.objects.get(email=email)
+        curr_year = Year.objects.order_by('-y_id')[0]
+        companies = Company.objects.filter(y_id=curr_year)
+        arr  =   str(student.applied_companies)
+        arr_list = arr.split(",")
+        arr_list = map(int,arr_list)
+        return render(request,'app/opportunities.html',{"name":name,"companies":companies,"arr_list":arr_list})
+    
 @csrf_exempt
 def get_results_page(request):
     if not request.session.get("name"):
@@ -705,6 +720,51 @@ def web_login(request):
             return HttpResponse("User not found")
 
 
+@csrf_exempt
+def web_apply_company(request):
+    print "in apply"
+    email = request.session["email"]
+    student =  Student.objects.get(email=email)
+    c_id = int(request.POST["c_id"])
+    applied = request.POST["applied"]
+    arr  =   str(student.applied_companies)
+    print applied,"checkbox"
+    
+    if arr:
+        arr_list = arr.split(",")
+        arr_list = map(int,arr_list)
+        print "old array " , arr_list    
+   
+    if applied == "true":
+        print "checked"
+        if arr and c_id in arr_list:
+            print "true"
+            return HttpResponse("Already applied")
+        if arr:
+            arr = arr + "," + str(c_id)
+        else:
+            arr = str(c_id)
+        
+        student.applied_companies=arr
+        print student.applied_companies
+        student.save()
+        return HttpResponse("Applied successfully")
+    
+    else:
+        print "unchecked"
+        if arr and c_id in arr_list:
+            print "true"
+            arr_list.remove(c_id)
+            print arr_list
+            arr_list = map(str,arr_list)
+            arr = ','.join(arr_list)
+            print arr
+            student.applied_companies = arr 
+            student.save()
+            return HttpResponse("Unapplied Successfully")
+        else:
+            return HttpResponse("nothing")
+    
 @csrf_exempt
 def web_edit_profile(request):
     if request.method == "POST":
@@ -1233,18 +1293,18 @@ def web_download_students(request):
 
     students_min_average = students_branch.filter(average__gte=minavg)
 
-
     students_max_average = students_min_average.filter(average__lte=maxavg)
-
+    print students_max_average
     students = students_max_average
     
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="sanika.csv"'
     writer = csv.writer(response)
-    writer.writerow(['Roll Number', 'Name','Email','Phone','Gender','Branch','SSC','HSC', 'Average','Active back','Resume'])
+
+    writer.writerow(['Roll Number', 'Name','Email','Phone','Gender','Branch', 'Average','Active back','Resume'])
     for x in students:
-        writer.writerow([x.roll, x.name , x.email , x.phone , x.gender, x.branch ,x.ssc , x.hsc , x.average ,x.active_back , x.url])
-        print writer
+        writer.writerow([x.roll, x.name , x.email , x.phone , x.gender, x.branch , x.average ,x.active_back , x.url])
+
     return response
 
 @csrf_exempt

@@ -46,6 +46,8 @@ urlpatterns = [
 	url(r'result/$',views.web_upload_result),
 	url(r'downloadstudents/$', views.web_download_students),
 	url(r'downloadcompanies/$', views.web_download_companies),
+	url(r'applycompany/$',views.web_apply_company),
+	
 
 	url(r'changepassword/$', views.web_change_password),
 
@@ -59,7 +61,8 @@ urlpatterns = [
 
 
 	url(r'results/$',views.get_results_page),	 
-	url(r'companies/$',views.get_companies_page),	 
+	url(r'companies/$',views.get_companies_page),
+	url(r'opportunities/$',views.get_opportunities_page),	 
 	url(r'notifications/$',views.get_notifications_page),
 	url(r'students/$',views.get_students_page),
 

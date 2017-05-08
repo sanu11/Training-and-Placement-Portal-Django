@@ -102,8 +102,9 @@ class Student(models.Model):
 	placed		=		models.BooleanField(default=False)
 	url			=		models.CharField(max_length=500,null=True,blank=True)
 	c_id		=		models.ForeignKey(Company,on_delete=models.CASCADE,null=True,blank=True)			#foreign key o company table
+	applied_companies=	models.CharField(max_length=1000,null=True,blank=True)								#list of cids of companies applied
+	lock		=		models.BooleanField(default=False)		
 
-	lock		=		models.BooleanField(default=False)
 	def __str__(self):
 		return  self.name
 
