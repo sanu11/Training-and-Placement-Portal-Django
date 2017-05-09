@@ -381,7 +381,7 @@ function applyCompany(c_id){
                 success: function(message) {
                   if(message == "can't"){
                     alert("Can't apply. Deadline crossed.");
-                    document.getElementById(c_id).checked.value = false;
+                    document.getElementById(c_id).value = false;
                   }
                   else if (message == "applied"){
                     alert("Applied Successfully");
