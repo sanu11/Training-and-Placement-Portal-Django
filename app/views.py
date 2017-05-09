@@ -587,7 +587,8 @@ def get_opportunities_page(request):
         curr_year = Year.objects.order_by('-y_id')[0]
         companies = Company.objects.filter(y_id=curr_year)
         arr_list = student.company_set.all()
-        return render(request,'app/opportunities.html',{"name":name,"companies":companies,"arr_list":arr_list})
+        login = 2
+        return render(request,'app/opportunities.html',{"name":name,"companies":companies,"arr_list":arr_list,"login":login})
     
 @csrf_exempt
 def get_results_page(request):

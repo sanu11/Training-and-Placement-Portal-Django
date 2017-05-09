@@ -152,7 +152,9 @@ input::-webkit-calendar-picker-indicator{
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav" style="margin-left:15.5%;">
                 <li><a href="/">Home</a></li>
-
+                {% if login == 2 %}
+                         <li><a href="/opportunities/">Opportunities</a></li>
+                {% endif %}
                 <li><a href="/companies/">Companies</a></li>
                 <li><a href="/notifications/">Notifications</a></li>
                 <li><a href="/results/">Results</a></li>
@@ -181,12 +183,13 @@ input::-webkit-calendar-picker-indicator{
             <div class="navbar1">
                 <ul class="nav navbar-nav">
                     <br><br>
-                    <li><a href="/students/"><b>Students Info</b></a></li>
+                    <li><a href="/students/"><b>Students</b></a></li>
                     <li><a href="/pregister/"><b>Register Company</b></a></li>
-                    <li><a href="/pupdate/"><b>Update Company</b></a></li>
                     <li><a href="/pedit/"><b>Edit Company</b></a> </li>
                     <li><a href="/pnotify/"><b>Notify Candidate</b></a></li>
                     <li><a href="/presult/"><b>Upload Result</b></a></li>
+                    <li><a href="/appliedstudents/"><b>Applied Students</b></a> </li>
+
 
 
                 </ul>

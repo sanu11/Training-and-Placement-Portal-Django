@@ -154,7 +154,10 @@ input:checked + .slider:before {
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav" style="margin-left:15.5%;">
         <li><a href="/">Home</a></li>
-        
+             {% if login == 2 %}
+               <li><a href="/opportunities/">Opportunities</a></li>
+        {% endif %}        
+    
     <li><a href="/companies/">Companies</a></li>
     <li><a href="/notifications/">Notifications</a></li>
      <li><a href="/results/">Results</a></li>
