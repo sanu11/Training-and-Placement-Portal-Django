@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Opportunities</title>
+  <title>Applied Students</title>
   <meta charset="utf-8">
   <meta name="description" content="PICT Training and placement online portal">
 <meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
@@ -146,8 +146,7 @@
 
     <div class="col-sm-8 text-left">
   
-  <h2 class="text-center"><b>Companies</b></h2> 
-<div style="margin-bottom:20px"></div>
+<br><br><div style="margin-bottom:20px"></div>
 <!-- <p>Table contains placement statistics for the year 2016-17. </p> -->
 <!-- Table Content start -->
 <div class="col-sm-12">
@@ -157,9 +156,7 @@
       <tr>
         <th>ID</th>
         <th>Company</th>
-        <th>Salary Lpa</th>
         <th>Deadline</th>
-        <th>Willing</th>
 
         <th></th>
         
@@ -171,15 +168,9 @@
         <td>{{forloop.counter}}</td>
        
         <td> <a href= /company/{{company.c_id}}/ > {{company.name }}</a> </td>
-
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{company.salary}}</td>
         <td>{{company.reg_end}}</td>
-        {% if company in arr_list %}
-        <td> <input type="checkbox"  id ="{{company.c_id}}"  name="" checked=""></td>
-        {% else %}
-        <td> <input type="checkbox"  id ="{{company.c_id}}"  name=""></td>
-        {% endif %}
-        <td><button type="button"  class="btn btn-info" onclick="applyCompany({{company.c_id}})">Submit</td>
+        
+        <td><a href = /{{company.c_id}}/viewstudents/><button type="button"  class="btn btn-info" >View</button></a></td>
         
       </tr>
       {% endfor %}

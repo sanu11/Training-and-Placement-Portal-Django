@@ -1,5 +1,6 @@
 import datetime
-from django.shortcuts import render
+from django.shortcuts import render 
+from django.template.loader import render_to_string 
 from .models import Student, Company, Message, Verify, Result, Admin ,Year
 from django.http import HttpResponse
 from django.views.decorators.csrf import *
@@ -9,13 +10,6 @@ from django.http import StreamingHttpResponse
 import json,csv
 import dropbox
 import requests
-# sanika account
-# Lae_eeDcmDgAAAAAAAACpAf6K4pN2cMT9Pa3UcARF6HVT5kbljzzyo7DazeUtE9D
-
-# Sirs account
-dbx = dropbox.Dropbox('39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi')
-st = dbx.users_get_current_account()
-
 
 @csrf_exempt
 def verify(request):
@@ -548,6 +542,39 @@ def get_companies_page(request):
         curr_year = Year.objects.order_by('-y_id')[0]
         return render(request, 'app/companies.html', {"companies": companies,"years":years,"curr_year":curr_year,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login})
 
+@csrf_exempt
+def get_applied_students_page(request):
+    if not request.session.get("name"):
+        return render(request,'app/redirect2.html',{})
+    email = request.session["email"]
+    if Admin.objects.filter(email=email).exists():
+        name = request.session["name"]
+        year = Year.objects.all().order_by('-y_id')[0]
+        companies = Company.objects.filter(y_id=year)
+        login = 1
+        return render(request,'app/appliedStudents.html',{"companies":companies,"login":login,"name":name})
+    else:
+        return HttpResponse("Not permitted to access")
+
+@csrf_exempt
+def web_view_students(request,c_id):
+    if not request.session.get("name"):
+        return render(request,'app/redirect2.html',{})
+    email = request.session["email"]
+    if Admin.objects.filter(email=email).exists():
+        name = request.session["name"]
+        company = Company.objects.get(c_id=c_id)
+        students = company.applied_students.all()
+        name = company.name
+        login = 1
+        print students
+        return render(request,'app/viewStudents.html',{"students":students,"login":login,"name":name,"company":name})
+    else:
+        return HttpResponse("Not permitted to access")
+
+@csrf_exempt
+def web_download_applied_students(request):
+    return HttpResponse("success")
 
 def get_opportunities_page(request):
     if not request.session.get("name"):
@@ -558,9 +585,7 @@ def get_opportunities_page(request):
         student = Student.objects.get(email=email)
         curr_year = Year.objects.order_by('-y_id')[0]
         companies = Company.objects.filter(y_id=curr_year)
-        arr  =   str(student.applied_companies)
-        arr_list = arr.split(",")
-        arr_list = map(int,arr_list)
+        arr_list = student.company_set.all()
         return render(request,'app/opportunities.html',{"name":name,"companies":companies,"arr_list":arr_list})
     
 @csrf_exempt
@@ -650,6 +675,14 @@ def web_signup(request):
 
 
 def web_upload_resume(request):
+    # sanika account
+    # Lae_eeDcmDgAAAAAAAACpAf6K4pN2cMT9Pa3UcARF6HVT5kbljzzyo7DazeUtE9D
+
+    # Sirs account
+    dbx = dropbox.Dropbox('39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi')
+    st = dbx.users_get_current_account()
+
+
     email = request.session['email']
     print email
     student = Student.objects.get(email=email)
@@ -719,52 +752,22 @@ def web_login(request):
         else:
             return HttpResponse("User not found")
 
-
 @csrf_exempt
 def web_apply_company(request):
-    print "in apply"
     email = request.session["email"]
     student =  Student.objects.get(email=email)
     c_id = int(request.POST["c_id"])
+    company = Company.objects.get(c_id=c_id)
     applied = request.POST["applied"]
-    arr  =   str(student.applied_companies)
-    print applied,"checkbox"
-    
-    if arr:
-        arr_list = arr.split(",")
-        arr_list = map(int,arr_list)
-        print "old array " , arr_list    
-   
     if applied == "true":
-        print "checked"
-        if arr and c_id in arr_list:
-            print "true"
-            return HttpResponse("Already applied")
-        if arr:
-            arr = arr + "," + str(c_id)
-        else:
-            arr = str(c_id)
-        
-        student.applied_companies=arr
-        print student.applied_companies
-        student.save()
-        return HttpResponse("Applied successfully")
-    
+        company.applied_students.add(student)
+        print company.applied_students.all()
+        return HttpResponse("Applied Successfully")
     else:
-        print "unchecked"
-        if arr and c_id in arr_list:
-            print "true"
-            arr_list.remove(c_id)
-            print arr_list
-            arr_list = map(str,arr_list)
-            arr = ','.join(arr_list)
-            print arr
-            student.applied_companies = arr 
-            student.save()
-            return HttpResponse("Unapplied Successfully")
-        else:
-            return HttpResponse("nothing")
+        company.applied_students.remove(student)
+        return HttpResponse("Unapplied successfully")
     
+
 @csrf_exempt
 def web_edit_profile(request):
     if request.method == "POST":
@@ -1171,6 +1174,14 @@ def web_notify(request):
         obj.save()
         if len(request.FILES) != 0:
             if request.FILES["file"]:
+                # sanika account
+                # Lae_eeDcmDgAAAAAAAACpAf6K4pN2cMT9Pa3UcARF6HVT5kbljzzyo7DazeUtE9D
+
+                # Sirs account
+                dbx = dropbox.Dropbox('39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi')
+                st = dbx.users_get_current_account()
+
+
                 myfile = request.FILES["file"]
                 data = myfile.read()
                 filename = myfile.name
@@ -1216,6 +1227,14 @@ def web_upload_result(request):
 
         print choice
         if request.FILES["resultfile"]:
+            # sanika account
+            # Lae_eeDcmDgAAAAAAAACpAf6K4pN2cMT9Pa3UcARF6HVT5kbljzzyo7DazeUtE9D
+
+            # Sirs account
+            dbx = dropbox.Dropbox('39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi')
+            st = dbx.users_get_current_account()
+
+
             myfile = request.FILES["resultfile"]
             data = myfile.read()
             filename = myfile.name

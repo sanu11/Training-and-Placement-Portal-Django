@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
-  <title>Opportunities</title>
+  <title>{{name}}</title>
   <meta charset="utf-8">
   <meta name="description" content="PICT Training and placement online portal">
 <meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
@@ -10,8 +10,8 @@
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
-    <script src="/static/js/check.js"></script>
-
+  <script src="/static/js/check.js"></script>
+  
   
    <!---- BootStrap online Libraries        
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -51,13 +51,13 @@
       padding: 15px;
       font-family: Georgia, Times, "Times New Roman", serif;
     }
+    body {
+    font-family: Georgia, Times, "Times New Roman", serif;
+    }
   footer a:hover
   {
   text-decoration:none;
   color:white;
-  }
-  body {
-  font-family: Georgia, Times, "Times New Roman", serif;
   }
     
     /* On small screens, set height to 'auto' for sidenav and grid */
@@ -68,11 +68,9 @@
       }
       .row.content {height:auto;} 
     }
-  
   </style>
   </head>
 <body>
-
 
 
 <nav class="navbar navbar-inverse">
@@ -105,14 +103,15 @@
     <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
-           
+            
             {% if login == 2 %}
             <li><a href="/peditprofile/">Update Profile</a></li>
             <li><a href="/pstudentdownload/">Download Profile</a></li>
             <li><a href="/psettings/">Settings</a></li>
 
-              {% endif %}           
-               <li><a href="/logout/">Logout</a></li>
+            
+             {% endif %}
+             <li><a href="/logout/">Logout</a></li>
            
           </ul>
         </li>
@@ -121,10 +120,11 @@
     </div>
   </div>
 </nav>
+  
+  
 <div class="container-fluid ">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
-    {% if login == 1 %}
  <div class="navbar1"  >
       <ul class="nav navbar-nav" >
     <br><br>
@@ -132,71 +132,69 @@
       <li><a href="/pregister/"><b>Register  Company</b></a></li>
       <li><a href="/pupdate/"><b>Update  Company</b></a> </li>
       <li><a href="/pedit/"><b>Edit Company</b></a> </li>
-
       <li><a href="/pnotify/"><b>Notify  Candidate</b></a> </li>
       <li><a href="/presult/"><b>Upload Result</b></a> </li>
 
 
     </ul>
     </div>
-    {% endif %}
     </div>
 
 
-
-    <div class="col-sm-8 text-left">
+    <div id="ajaxreplace" name="ajaxreplace" class="col-sm-8 ">
+ <h2 class="text-center">
+ 
+      <b>{{name}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button type="button"  class="btn btn-info" >Download</button>
+     </h2>
+   <!-- Division for filters -->
   
-  <h2 class="text-center"><b>Companies</b></h2> 
-<div style="margin-bottom:20px"></div>
+<div>
+<hr>
 <!-- <p>Table contains placement statistics for the year 2016-17. </p> -->
-<!-- Table Content start -->
-<div class="col-sm-12">
   <div class="table-responsive">          
   <table class="table">
-     <thead>
+
+    <thead>
       <tr>
         <th>ID</th>
-        <th>Company</th>
-        <th>Salary Lpa</th>
-        <th>Deadline</th>
-        <th>Willing</th>
-
-        <th></th>
-        
+        <th>Roll No</th> 
+        <th>Name</th>
+        <th>Branch</th>
+        <th>Average</th>
+        <th>Resume</th>
+  
       </tr>
     </thead>
     <tbody>
-{% for company in companies %}
+{% for student in students %}
       <tr>
         <td>{{forloop.counter}}</td>
-       
-        <td> <a href= /company/{{company.c_id}}/ > {{company.name }}</a> </td>
-
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{company.salary}}</td>
-        <td>{{company.reg_end}}</td>
-        {% if company in arr_list %}
-        <td> <input type="checkbox"  id ="{{company.c_id}}"  name="" checked=""></td>
-        {% else %}
-        <td> <input type="checkbox"  id ="{{company.c_id}}"  name=""></td>
-        {% endif %}
-        <td><button type="button"  class="btn btn-info" onclick="applyCompany({{company.c_id}})">Submit</td>
+          <td>{{student.roll}}</td>
         
+        <td> <a href= /student/{{student.roll}}/ > {{student.name}}</a> </td>
+        <td>&nbsp;{{student.branch}}</td>
+        <td>&nbsp;&nbsp;{{student.average}}</td>
+        <td><a href= {{student.url}}> {{student.url}}</a></td>
+        <td></td>
+      
       </tr>
       {% endfor %}
     </tbody>
   </table>
   </div>
-      </div>
+  </div>
+      
     </div>
     <div class="col-sm-2 sidenav">
       
     </div>
   </div>
 </div>
-
+</div>
 <footer class="container-fluid text-center">
  <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
 <p><a href="/developers-page/">Developers</a></p></div>
 </footer>
 </body>
-</html> 
+</html>

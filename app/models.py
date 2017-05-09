@@ -33,8 +33,9 @@ class Company(models.Model):
 	reg_start	=	models.DateTimeField(null=True,blank=True)
 	reg_end		=	models.DateTimeField(null=True,blank=True)
 	reg_link	=	models.CharField(max_length=1000,null=True,blank=True)
-	y_id		=	models.ForeignKey(Year,null=True,blank=True)															 #foreign key to year table
-
+	y_id		=	models.ForeignKey(Year,null=True,blank=True)							#foreign key to year table
+	applied_students=	models.ManyToManyField('Student')									#student can apply to many companies and a company can have many students
+	
 	def __str__(self):
 		if self.position:
 			return  self.name + "("+ self.position + ")"
@@ -102,7 +103,6 @@ class Student(models.Model):
 	placed		=		models.BooleanField(default=False)
 	url			=		models.CharField(max_length=500,null=True,blank=True)
 	c_id		=		models.ForeignKey(Company,on_delete=models.CASCADE,null=True,blank=True)			#foreign key o company table
-	applied_companies=	models.CharField(max_length=1000,null=True,blank=True)								#list of cids of companies applied
 	lock		=		models.BooleanField(default=False)		
 
 	def __str__(self):

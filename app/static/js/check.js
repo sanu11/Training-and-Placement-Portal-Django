@@ -380,13 +380,8 @@ function applyCompany(c_id){
 
                 data:{c_id:c_id , csrfmiddlewaretoken : csrftoken,applied:checked} ,
                 success: function(message) {
-                    if (message =='nothing') {
-                       
-
-                    }
-                    else{
-                        alert(message);
-                    }
+                  
+                    alert(message);
                     
                 },
                 error: function(xhr, errmsg, err) {
