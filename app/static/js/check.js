@@ -36,7 +36,7 @@ function signup() {
                 success: function(message) {
                 console.log(message);
                     if (message =='success') {
-                       window.location.href = "/presume/";
+                       window.location.href = "/";
                     }
                     else if(message=='exists')
                     {
