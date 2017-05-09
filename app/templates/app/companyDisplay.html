@@ -218,26 +218,8 @@ font-family: Georgia, Times, "Times New Roman", serif;
                 {% endif %}
 </tr>
 
-                {% if company.reg_link %}
-                <tr><th class="row">
-                <div class="form-group">
-                    <label  class="col-sm-11 "  style = "font-size:19px;">Registration Link</label></th>
-                    <div class="col-sm-9">
-                     <td><label  class="col-sm-10 "> <a href={{company.reg_link}} > {{company.reg_link}} </a> </label></td>
-
-                    </div>
-                </div>
-</tr>
-                <tr><th class="row">
-                <div class="form-group">
-                    <label  class="col-sm-11 "  style = "font-size:19px;">Registration Start </label></th>
-                    <div class="col-sm-9">
-                    <td> <label class="col-sm-11 ">{{company.reg_start}}</label></td>
-
-                    </div>
-                </div>
- </tr>
-
+            
+                
                <tr><th class="row">
                 <div class="form-group">
                     <label  class="col-sm-11 "  style = "font-size:19px;" >Registration End</label></th>
@@ -246,7 +228,7 @@ font-family: Georgia, Times, "Times New Roman", serif;
                     </td>
                     </div>
                 </div>
-                {% endif %}
+              
 </tr>
                 <tr><th class="row">
                 <div class="form-group">

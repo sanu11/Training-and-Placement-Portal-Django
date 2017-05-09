@@ -380,9 +380,16 @@ function applyCompany(c_id){
 
                 data:{c_id:c_id , csrfmiddlewaretoken : csrftoken,applied:checked} ,
                 success: function(message) {
-                  
-                    alert(message);
-                    
+                  if(message == "can't"){
+                    alert("Can't apply. Deadline crossed.");
+                    document.getElementById(c_id).checked.value = false;
+                  }
+                  else if (message == "applied"){
+                    alert("Applied Successfully");
+                  }
+                  else if(message == "unapplied"){
+                    alert("Unapplied Successfully");
+                  }
                 },
                 error: function(xhr, errmsg, err) {
                     alert('Error');
@@ -410,19 +417,17 @@ function applyCompany(c_id){
                     salary = data["salary"];
                     position = data["position"];
                     back = data["back"];
-                    reg_link = data["reg_link"];
                     other_details = data["other_details"];
-
-
+                    
                     document.getElementById("criteria").value = criteria;
                     document.getElementById("salary").value = salary;
                     document.getElementById("position").value = position;
                     document.getElementById("back").value = back;
-                    document.getElementById("reg_link").value = reg_link;
                     document.getElementById("other_details").value = other_details;
 
 
                     ppt = data["ppt_date"];
+                    
                     if(ppt!=null){
                     var arr = ppt.split('T');
                     ppt_date = arr[0];
@@ -441,25 +446,9 @@ function applyCompany(c_id){
 
                     }
 
-                    reg_start = data["reg_start"];
-                    if(reg_start != null){
-                    arr = reg_start.split('T');
-                    reg_start_date = arr[0];
-                    reg_start_time = arr[1];
-                    date = reg_start_date.split('-');
-                    year = date[0];
-                    month = date[1];
-                    dt = date[2];
-                    reg_start_date = month + "/"+dt + "/" + year;
-                    reg_start_time = reg_start_time.slice(0,5);
-
-
-                    document.getElementById("reg_start_date").value = reg_start_date;
-                    document.getElementById("reg_start_time").value = reg_start_time;
-
-                    }
-
-                    reg_end = data["reg_end"]
+                    
+                    reg_end = data["reg_end"];
+                    console.log(reg_end);
                     if(reg_end != null){
                     arr = reg_end.split('T');
                     reg_end_date = arr[0];
@@ -525,25 +514,19 @@ function applyCompany(c_id){
         var csrftoken = getCookie('csrftoken');
         var c_id = document.getElementById("name").value; //actually c_id is value
         var ppt_date = document.getElementById("ppt_date").value;
-        var reg_start_date = document.getElementById("reg_start_date").value;
         var reg_end_date = document.getElementById("reg_end_date").value;
         var ppt_time  = document.getElementById("ppt_time").value;
-        var reg_start_time = document.getElementById("reg_start_time").value;
         var reg_end_time = document.getElementById("reg_end_time").value;
 
         if(name == "Select Company")
             alert('Enter name');
         else if(ppt_date && ! isValidDate(ppt_date))
         alert("Invalid Ppt Date");
-        else if( reg_start_date && !isValidDate(reg_start_date))
-        alert("Invalid Reg start date");
         else if(reg_end_date &&! isValidDate(reg_end_date))
         alert("Invalid Reg end date");
 
         else if(ppt_time && !isValidTime(ppt_time))
         alert("Invalid Ppt time");
-        else if(reg_start_time && !isValidTime(reg_start_time))
-        alert("Invalid Reg start time");
         else if(reg_end_time && !isValidTime(reg_end_time))
         alert("Invalid Reg end time");
 
