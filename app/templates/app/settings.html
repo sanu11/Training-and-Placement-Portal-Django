@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
+  <script src="/static/js/check.js"></script>
   
    <!---- BootStrap online Libraries        
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -102,7 +103,10 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav" style="margin-left:15.5%;">
         <li><a href="/">Home</a></li>
-        
+             {% if login == 2 %}
+               <li><a href="/opportunities/">Opportunities</a></li>
+        {% endif %}        
+    
     <li><a href="/companies/">Companies</a></li>
     <li><a href="/notifications/">Notifications</a></li>
      <li><a href="/results/">Results</a></li>
@@ -113,11 +117,15 @@
     <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="/logout/">Logout</a></li>
+           
             {% if login == 2 %}
+            <li><a href="/peditprofile/">Update Profile</a></li>
+            <li><a href="/pstudentdownload/">Download Profile</a></li>
             <li><a href="/psettings/">Settings</a></li>
-              {% endif %}           
 
+            
+              {% endif %}           
+          <li><a href="/logout/">Logout</a></li>
            
           </ul>
         </li>
@@ -167,6 +175,56 @@
   </div>
       <input type="submit" id="singlebutton"  name="singlebutton" class="btn btn-info " value="Submit" ></input>
           
+      </div>
+      </div>
+      </div>
+      </fieldset>
+      </form>
+
+
+
+    <form class="form-horizontal" id="password" role="form" >
+{% csrf_token %}
+<fieldset>
+      <div class="panel-group" id="accordion">
+      <label> <h4><b>Password :</b> </label><br><br>
+ <div class="panel">
+        <h4 >
+        <input type="checkbox"  name= "upload resume"  data-toggle="collapse"  href=#expand2 />&nbsp;&nbsp; Change Password
+       
+    </h4>
+      
+      <div id="expand2" class="panel-collapse collapse">
+      <div class="col-sm-8">
+       <div class="input-group">
+          
+      
+<div class="form-group">
+  <label class="col-md-7 control-label" ><h4>Old Password</h4></label>
+  <div class="col-sm-5">
+    <div class="input-group">
+      <input id="old_password" name="old_password" class="form-control" placeholder="*******" type="password">
+      <span class="input-group-addon"></span>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-7 control-label" ><h4>New Password</h4></label>
+  <div class="col-sm-5">
+    <div class="input-group">
+      <input id="new_password" name="new_password" class="form-control" placeholder="*******" type="password">
+      <span class="input-group-addon"></span>
+    </div>
+  </div>
+</div>
+ </div>
+    <br>
+  </div>
+     <button type="button" class="btn btn-info" onclick="changePassword()">Change</button>
+        
+      </div>
+
       </div>
       <!-- Button -->
 

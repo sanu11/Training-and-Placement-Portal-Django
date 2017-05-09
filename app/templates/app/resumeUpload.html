@@ -95,19 +95,61 @@
       </button>
       
     </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav" style="margin-left:15.5%;">
+        <li><a href="/">Home</a></li>
+         {% if login == 2 %}
+               <li><a href="/opportunities/">Opportunities</a></li>
+        {% endif %}        
+        
+    <li><a href="/companies/">Companies</a></li>
+    <li><a href="/notifications/">Notifications</a></li>
+     <li><a href="/results/">Results</a></li>
+
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
       
-  
+    <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+           
+            {% if login == 2 %}
+            <li><a href="/peditprofile/">Update Profile</a></li>
+             <li><a href="/pstudentdownload/">Download Profile</a></li>
+            <li><a href="/psettings/">Settings</a></li>
+
+            
+              {% endif %}            
+              <li><a href="/logout/">Logout</a></li>
+
+          </ul>
+        </li>
+     </ul>
     </div>
-  <br>
   </div>
 </nav>
+  
   
 <div class="container-fluid ">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
- 
+    {% if login == 1 %}
+ <div class="navbar1"  >
+      <ul class="nav navbar-nav" >
+    <br><br>
+      <li ><a href="/students/"><b>Students</b></a></li>
+      <li><a href="/pregister/"><b>Register  Company</b></a></li>
+      
+      <li><a href="/pedit/"><b>Edit Company</b></a> </li>
+      <li><a href="/pnotify/"><b>Notify  Candidate</b></a> </li>
+      <li><a href="/presult/"><b>Upload Result</b></a> </li>
+      <li><a href="/appliedstudents/"><b>Applied Students</b></a> </li>
+
+
+    </ul>
     </div>
-    <div class="col-sm-8 text-left"> 
+    {% endif %}
+    </div>  <div class="col-sm-8 text-left"> 
     <br>
        <h1 class="text-center"><b>Resume</b></h1>
       <br>
@@ -118,25 +160,39 @@
 <!-- Text input-->
 <!-- Select Basic -->
 
-
-<div class="form-group">
-  <label class="col-md-4 control-label" >Resume Upload</label>
-  <div class="col-sm-4">
-    <div class="input-group">
-      <input  name="resume" class="form-control"  id="resume" type="file">
-    </div>
+<div class="panel-group" id="accordion">
+ <div >
+    <h4 ><b>Resume :</b> &nbsp;&nbsp;    {% if resume %}
+    <a href = {{resume}}>{{resume}}</a>
     
-  </div>
-</div>
+    {% else %}
+    Not Uploaded 
+    {% endif %}</h4>
+    </div>
+    <div class="panel">
+        <h4 >
+        <input type="checkbox"  name= "upload resume"  data-toggle="collapse"  href=#expand />&nbsp;&nbsp;   {% if resume %} Update Resume {% else %} Upload Resume 
+        {% endif %}
+    </h4>
+      
+      <div id="expand" class="panel-collapse collapse">
+      <div class="col-sm-8">
+       <div class="input-group">
+          <input  name="resume" class="form-control"  id="resume" type="file" />
+       </div></div></div>
+    
 
 <!-- Button -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="singlebutton"></label>
   
   <div class="col-sm-4 text-center" align="center" style="margin-left:-2%;margin-right:4%;">
-    <label  ><a href = "/"><u>skip</u></a></label>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <button type="button" class="btn btn-info" onclick="editOtherDetailsPage()">Back</button>
+  
+
       <input type="submit" id="singlebutton"  name="singlebutton" class="btn btn-info " value="Upload Resume" ></input>
+<br> <br>
+<label class="col-sm-4"><a href = "/"><u>skip</u></a></label>
     
   </div>
 </div>

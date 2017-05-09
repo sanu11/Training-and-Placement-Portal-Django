@@ -1,20 +1,16 @@
 import datetime
-from django.shortcuts import render
+from django.utils import timezone
+from django.shortcuts import render 
+from django.template.loader import render_to_string 
 from .models import Student, Company, Message, Verify, Result, Admin ,Year
 from django.http import HttpResponse
 from django.views.decorators.csrf import *
 from django.core import serializers
 from gcm.models import get_device_model
+from django.http import StreamingHttpResponse
 import json,csv
 import dropbox
 import requests
-# sanika account
-# Lae_eeDcmDgAAAAAAAACpAf6K4pN2cMT9Pa3UcARF6HVT5kbljzzyo7DazeUtE9D
-
-# Sirs account
-dbx = dropbox.Dropbox('39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi')
-st = dbx.users_get_current_account()
-
 
 @csrf_exempt
 def verify(request):
@@ -48,7 +44,7 @@ def login_details(request):
     data = json.loads(request.body)
     get_mail = data["email"]
     get_pw = data["password"]
-    if Student.objects.filter(email=get_mail).exists():
+    if Student.oeeebjects.filter(email=get_mail).exists():
         obj = Student.objects.get(email=get_mail)
         if obj.password == get_pw:
             return HttpResponse("Student,"+obj.name)
@@ -146,8 +142,10 @@ def notify(request):
     Device.objects.all().send_message({'type': 'gen_msg', 'title': title, 'body': body})
     return HttpResponse("Message sent")
 
+####################
+########WEB########
+###################
 
-###WEB###
 @csrf_exempt
 def get_main_page(request):
     if not request.session.get("name"):
@@ -188,6 +186,18 @@ def get_developers_page(request):
     return render(request, 'app/developers.html', {"login":login,"name":name})
 
 @csrf_exempt
+def get_settings_page(request):
+    if  request.session.get("name"):
+        name = request.session["name"]
+        email = request.session["email"]
+        student = Student.objects.get(email=email)
+        resume = student.url
+        login = 2
+        return render(request, 'app/settings.html', {"login":login,"name":name,"resume":resume})
+    else:
+        return render(request,'app/redirect2.html',{})
+
+@csrf_exempt
 def get_signup_page(request):
     years = list(Year.objects.all().order_by('-y_id'))
     print ("hello")
@@ -202,26 +212,78 @@ def get_login_page(request):
 @csrf_exempt
 def get_resume_upload_page(request):
     name = request.session["name"]
-    return render(request, 'app/resumeUpload.html',{"login":2,"name":name})
-
-
-
-def get_settings_page(request):
-    name = request.session["name"]
     email = request.session["email"]
     student = Student.objects.get(email=email)
-    resume = None
-    if student.url:
+    if len(str(student.url))>1:
         resume = student.url
+    else:
+        resume = None
+    return render(request, 'app/resumeUpload.html',{"login":2,"name":name,"resume":resume})
 
-    return render(request, 'app/settings.html',{"login":2,"name":name,"resume":resume})
+
+######### student profile pages#####
+
+@csrf_exempt
+def get_edit_profile_page(request):
+    if not request.session.get("name"):
+        return render(request,'app/redirect2.html',{})
+    else:
+        name = request.session["name"]
+        email = request.session["email"]
+        student = Student.objects.get(email=email)
+        years = Year.objects.all()
+        return render(request, 'app/editProfile.html',{"login":2,"name":name,"student":student,"years":years})
+
+@csrf_exempt
+def get_edit_ssc_marks_page(request):
+    if not request.session.get("name"):
+        return render(request,'app/redirect2.html',{})
+    else:
+        name = request.session["name"]
+        email = request.session["email"]
+        student = Student.objects.get(email=email)
+        return render(request, 'app/studentSscMarks.html',{"login":2,"name":name,"student":student})
+
+
+@csrf_exempt
+def get_edit_hsc_marks_page(request):
+    if not request.session.get("name"):
+        return render(request,'app/redirect2.html',{})
+    else:
+        name = request.session["name"]
+        email = request.session["email"]
+        student = Student.objects.get(email=email)
+        return render(request, 'app/studentHscMarks.html',{"login":2,"name":name,"student":student})
+
+@csrf_exempt
+def get_edit_be_marks_page(request):
+    if not request.session.get("name"):
+        return render(request,'app/redirect2.html',{})
+    else:
+        name = request.session["name"]
+        email = request.session["email"]
+        student = Student.objects.get(email=email)
+        return render(request, 'app/studentBeMarks.html',{"login":2,"name":name,"student":student})
+
+@csrf_exempt
+def get_edit_other_details_page(request):
+    if not request.session.get("name"):
+        return render(request,'app/redirect2.html',{})
+    else:
+        name = request.session["name"]
+        email = request.session["email"]
+        student = Student.objects.get(email=email)
+        birth_date = str(student.birth_date)
+        print birth_date
+       
+        return render(request, 'app/studentOtherdetails.html',{"login":2,"name":name,"student":student,"birth_date":birth_date})
 
 
 #####UPLOAD pages
 @csrf_exempt
 def get_register_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -235,9 +297,15 @@ def get_register_page(request):
             return HttpResponse("Not permitted to access")
 
 @csrf_exempt
+def get_student_download_page(request):
+    email = request.session["email"]
+    student = Student.objects.get(email=email)
+    return render(request,'app/studentDownload.html',{"student":student})
+
+@csrf_exempt
 def get_update_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -252,7 +320,7 @@ def get_update_page(request):
 
 def get_company_edit_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -269,7 +337,7 @@ def get_company_edit_page(request):
 @csrf_exempt
 def get_notify_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -284,7 +352,7 @@ def get_notify_page(request):
 @csrf_exempt
 def get_result_upload_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -298,7 +366,7 @@ def get_result_upload_page(request):
 
 def get_company_details(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -315,13 +383,16 @@ def get_company_details(request):
             return HttpResponse("Not permitted to access")
 
 
+
+
+
 #######DISPLAY Pages######
 
 
 @csrf_exempt
 def get_students_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -374,7 +445,7 @@ def get_students_page(request):
 @csrf_exempt
 def get_student_page(request, roll):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -393,7 +464,7 @@ def get_student_page(request, roll):
 @csrf_exempt
 def get_notifications_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -411,7 +482,7 @@ def get_notifications_page(request):
 @csrf_exempt
 def get_companies_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -472,11 +543,57 @@ def get_companies_page(request):
         curr_year = Year.objects.order_by('-y_id')[0]
         return render(request, 'app/companies.html', {"companies": companies,"years":years,"curr_year":curr_year,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login})
 
+@csrf_exempt
+def get_applied_students_page(request):
+    if not request.session.get("name"):
+        return render(request,'app/redirect2.html',{})
+    email = request.session["email"]
+    if Admin.objects.filter(email=email).exists():
+        name = request.session["name"]
+        year = Year.objects.all().order_by('-y_id')[0]
+        companies = Company.objects.filter(y_id=year)
+        login = 1
+        return render(request,'app/appliedStudents.html',{"companies":companies,"login":login,"name":name})
+    else:
+        return HttpResponse("Not permitted to access")
 
+@csrf_exempt
+def web_view_students(request,c_id):
+    if not request.session.get("name"):
+        return render(request,'app/redirect2.html',{})
+    email = request.session["email"]
+    if Admin.objects.filter(email=email).exists():
+        name = request.session["name"]
+        company = Company.objects.get(c_id=c_id)
+        students = company.applied_students.all()
+        name = company.name
+        login = 1
+        print students
+        return render(request,'app/viewStudents.html',{"students":students,"login":login,"name":name,"company":name})
+    else:
+        return HttpResponse("Not permitted to access")
+
+@csrf_exempt
+def web_download_applied_students(request):
+    return HttpResponse("success")
+
+def get_opportunities_page(request):
+    if not request.session.get("name"):
+        return render(request,'app/redirect2.html',{})
+    else:
+        name     = request.session["name"]
+        email = request.session["email"]
+        student = Student.objects.get(email=email)
+        curr_year = Year.objects.order_by('-y_id')[0]
+        companies = Company.objects.filter(y_id=curr_year)
+        arr_list = student.company_set.all()
+        login = 2
+        return render(request,'app/opportunities.html',{"name":name,"companies":companies,"arr_list":arr_list,"login":login})
+    
 @csrf_exempt
 def get_results_page(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -495,7 +612,7 @@ def get_results_page(request):
 @csrf_exempt
 def get_company_page(request, cid):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
@@ -515,7 +632,7 @@ def get_company_page(request, cid):
 @csrf_exempt
 def logout(request):
     if not request.session.get("name"):
-        return render(request, 'app/login.html', {})
+        return render(request,'app/redirect2.html',{})
     else:
 
         del request.session['email']
@@ -529,6 +646,7 @@ def logout(request):
 #####upload STUDENTS#####
 ########################################
 ########################################
+
 @csrf_exempt
 def web_signup(request):
     if request.method == "POST":
@@ -545,17 +663,8 @@ def web_signup(request):
         c.gender = request.POST["gender"]
         c.roll = roll
         c.college_id = request.POST["college_id"]
-        c.prn  = request.POST["prn"]
         c.phone = request.POST["phone"]
         c.branch = request.POST["branch"]
-        c.ssc = request.POST["10th"]
-        c.hsc = request.POST["12th"]
-        c.average = request.POST["average"]
-        if request.POST.get("activeBack",False):
-            c.activeBack = False
-        else:
-            c.activeBack = True
-
         year = request.POST["year"]
         year_obj = Year.objects.get(year=year)
         c.y_id = year_obj
@@ -568,6 +677,14 @@ def web_signup(request):
 
 
 def web_upload_resume(request):
+    # sanika account
+    # Lae_eeDcmDgAAAAAAAACpAf6K4pN2cMT9Pa3UcARF6HVT5kbljzzyo7DazeUtE9D
+
+    # Sirs account
+    dbx = dropbox.Dropbox('39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi')
+    st = dbx.users_get_current_account()
+
+
     email = request.session['email']
     print email
     student = Student.objects.get(email=email)
@@ -637,6 +754,197 @@ def web_login(request):
         else:
             return HttpResponse("User not found")
 
+@csrf_exempt
+def web_apply_company(request):
+    email = request.session["email"]
+    student =  Student.objects.get(email=email)
+    c_id = int(request.POST["c_id"])
+    company = Company.objects.get(c_id=c_id)
+    applied = request.POST["applied"]
+    if applied == "true":
+        reg_end = company.reg_end
+       
+        if reg_end and timezone.now()>reg_end:
+            print "deadline over"
+            return HttpResponse("can't")
+        company.applied_students.add(student)
+        print company.applied_students.all()
+        return HttpResponse("applied")
+    else:
+        company.applied_students.remove(student)
+        return HttpResponse("unapplied")
+    
+
+@csrf_exempt
+def web_edit_profile(request):
+    if request.method == "POST":
+        email = request.POST["email"]
+        name = request.POST["name"]
+        roll = request.POST["roll"]
+        print name, email
+        c = Student.objects.get(email=email)
+        c.name = name
+        c.email = email
+        c.gender = request.POST["gender"]
+        c.roll = roll
+        c.college_id = request.POST["college_id"]
+        c.phone = request.POST["phone"]
+        c.branch = request.POST["branch"]
+        year = request.POST["year"]
+        c.prn = request.POST["prn"]
+        year_obj = Year.objects.get(year=year)
+        c.y_id = year_obj
+        c.save()
+        request.session["name"]=name
+        request.session["email"]=email
+        return HttpResponse('success')
+    else:
+        return HttpResponse('error');
+
+
+@csrf_exempt
+def web_edit_ssc_marks(request):
+    if request.method == "POST":
+        email = request.session["email"]
+        obj  =Student.objects.get(email=email)
+        obj.tenth_board  = request.POST["tenth_board"]
+
+        tenth_marks = request.POST["tenth_marks"]
+        if tenth_marks:
+            obj.tenth_marks = tenth_marks
+        obj.tenth_schoolname  = request.POST["tenth_schoolname"]
+        obj.tenth_city  = request.POST["tenth_city"]
+        
+        list_checked = request.POST.getlist("tenth_yeargap")
+        list_checked = list(list_checked)
+        print list_checked
+        if "tenth_yeargap" in list_checked:
+            obj.tenth_yeargap = True
+            obj.tenth_yeargap_reason  = request.POST["tenth_yeargap_reason"]
+        else:
+            obj.tenth_yeargap = False
+
+        list_checked = request.POST.getlist("is_diploma")
+        list_checked = list(list_checked)
+        print list_checked
+        if "is_diploma" in list_checked:
+            obj.is_diploma = True
+           
+        else:
+            obj.is_diploma= False
+
+        
+    
+        obj.save()        
+        return HttpResponse('success');
+
+@csrf_exempt
+def web_edit_hsc_marks(request):
+    if request.method == "POST":
+        email = request.session["email"]
+        obj  =Student.objects.get(email=email)
+
+        if not obj.is_diploma:
+            obj.twelveth_board  = request.POST["twelveth_board"]
+            obj.twelveth_year  = request.POST["twelveth_year"]
+
+            twelveth_marks = request.POST["twelveth_marks"]
+            if twelveth_marks:
+                obj.twelveth_marks = twelveth_marks
+
+            obj.twelveth_schoolname  = request.POST["twelveth_schoolname"]
+            obj.twelveth_city  = request.POST["twelveth_city"]
+
+            list_checked = request.POST.getlist("twelveth_yeargap")
+            list_checked = list(list_checked)
+          
+            if "twelveth_yeargap" in list_checked:
+                obj.twelveth_yeargap = True
+                obj.twelveth_yeargap_reason  = request.POST["twelveth_yeargap_reason"]
+            else:
+                obj.twelveth_yeargap = False
+        else:
+            obj.diploma_board = request.POST["diploma_board"]
+            obj.diploma_marks = request.POST["diploma_marks"]
+            obj.diploma_outof  = request.POST["diploma_outof"]
+            obj.diploma_year  =  request.POST["diploma_year"]
+        obj.save()
+
+        return HttpResponse("success")
+
+@csrf_exempt
+def web_edit_be_marks(request):
+    if request.method == "POST":
+        email = request.session["email"]
+        obj  =  Student.objects.get(email=email)
+
+        if not obj.is_diploma:
+            obj.fe_marks = request.POST["fe_marks"]
+            obj.fe_outof = request.POST["fe_outof"]
+        
+        obj.se_marks = request.POST["se_marks"]
+        obj.se_outof = request.POST["se_outof"]
+        
+        obj.te_marks = request.POST["te_marks"]
+        obj.te_outof = request.POST["te_outof"]
+        
+        obj.total_marks = request.POST["total_marks"]
+        obj.total_outof = request.POST["total_outof"]
+        
+        obj.average = request.POST["average"]
+        obj.active_back = request.POST["active_back"]
+
+        list_checked = request.POST.getlist("passive_back")
+        list_checked = list(list_checked)
+       
+        if "passive_back" in list_checked:
+            obj.passive_back = True
+        else:
+            obj.passive_back = False
+
+        list_checked = request.POST.getlist("be_yeargap")
+        list_checked = list(list_checked)
+       
+        if "be_yeargap" in list_checked:
+            obj.be_yeargap = True
+        else:
+            obj.be_yeargap = False
+
+        obj.save()
+        return HttpResponse("success")
+
+
+@csrf_exempt
+def web_edit_other_details(request):
+    if request.method == "POST":
+        email = request.session["email"]
+        obj  =  Student.objects.get(email=email)
+        obj.birth_date  = request.POST["birth_date"]
+
+        obj.aadhar_number = request.POST["aadhar_number"]
+        obj.pan_number = request.POST["pan_number"]
+        obj.passport_number = request.POST["passport_number"]
+        obj.cur_address = request.POST["cur_address"]
+        obj.per_address = request.POST["per_address"]
+        obj.city = request.POST["city"]  
+        obj.save()
+      
+        return HttpResponse("success")
+
+
+@csrf_exempt
+def web_change_password(request):
+    if request.method == "POST":
+        email  =request.session["email"]
+        student = Student.objects.get(email=email)
+        password = student.password
+        old_password = request.POST["old_password"]
+        if old_password != password:
+            return HttpResponse("wrong")
+        else:
+            student.password = request.POST["new_password"]
+        student.save()
+        return HttpResponse("success")
 
 #######UPLOAD ADMIN  ###################
 ########################################
@@ -664,6 +972,9 @@ def web_register_company(request):
         ppt_date = request.POST["ppt_date"]
         ppt_time = request.POST["ppt_time"]
         other_details = request.POST["other_details"]
+        reg_end_date = request.POST["reg_end_date"]
+        reg_end_time = request.POST["reg_end_time"]
+
 
         if ppt_date:
             ppt_date = str(ppt_date)
@@ -671,6 +982,14 @@ def web_register_company(request):
 
             ppt_date = datetime.datetime.strptime(ppt_date, '%m/%d/%Y').strftime('%Y-%m-%d')
             print (ppt_date)
+
+        if reg_end_date:
+            reg_end_date = datetime.datetime.strptime(reg_end_date, '%m/%d/%Y').strftime('%Y-%m-%d')
+            reg_end = reg_end_date + " " + reg_end_time
+            
+        else:
+            reg_end = None
+
 
         if other_details == "":
             other_details = None
@@ -692,6 +1011,8 @@ def web_register_company(request):
             obj.other_details = other_details
         if ppt_date:
             obj.ppt_date = ppt_date + " " + ppt_time
+        if reg_end:
+            obj.reg_end = reg_end
         if back:
             obj.back = back
         obj.save()
@@ -700,7 +1021,7 @@ def web_register_company(request):
         Device = get_device_model()
         c_id = obj.c_id;
         Device.objects.all().send_message({'type': 'company_reg', 'c_id':c_id,'name': name, 'criteria': criteria,'position':position, 'salary': salary,
-                                           'other_details': other_details, 'ppt_date': ppt_date, 'back': back})
+                                           'other_details': other_details, 'ppt_date': ppt_date,'reg_end': reg_end, 'back': back})
         print ("Success")
         return HttpResponse("success")
     else:
@@ -724,7 +1045,6 @@ def web_update_company(request):
 
         reg_end_date = request.POST["reg_end_date"]
         reg_end_time = request.POST["reg_end_time"]
-
 
         # convert dateformat
 
@@ -796,12 +1116,12 @@ def web_edit_company(request):
         else:
             ppt_date = None
         print ppt_date
-        reg_link = request.POST["reg_link"]
-        reg_start_date = request.POST["reg_start_date"]
-        reg_start_time = request.POST["reg_start_time"]
-        # convert date format
-        if reg_start_date :
-            reg_start_date = datetime.datetime.strptime(reg_start_date, '%m/%d/%Y').strftime('%Y-%m-%d')
+        # reg_link = request.POST["reg_link"]
+        # reg_start_date = request.POST["reg_start_date"]
+        # reg_start_time = request.POST["reg_start_time"]
+        # # convert date format
+        # if reg_start_date :
+        #     reg_start_date = datetime.datetime.strptime(reg_start_date, '%m/%d/%Y').strftime('%Y-%m-%d')
 
         reg_end_date = request.POST["reg_end_date"]
         reg_end_time = request.POST["reg_end_time"]
@@ -812,24 +1132,24 @@ def web_edit_company(request):
         other_details = request.POST["other_details"]
         hired_count = request.POST["hired_count"]
 
-        reg_start = reg_start_date + " " + reg_start_time
+        # reg_start = reg_start_date + " " + reg_start_time
         reg_end = reg_end_date + " " + reg_end_time
 
 
-        if len(str(reg_start))>1:
-            obj.reg_start = reg_start
-        else:
-            reg_start = None
+        # if len(str(reg_start))>1:
+        #     obj.reg_start = reg_start
+        # else:
+        #     reg_start = None
 
         if len(str(reg_end))>1:
             obj.reg_end = reg_end
         else:
             reg_end = None
 
-        if len(str(reg_link)) > 1:
-            obj.reg_link = reg_link
-        else:
-            reg_link = None
+        # if len(str(reg_link)) > 1:
+        #     obj.reg_link = reg_link
+        # else:
+        #     reg_link = None
 
         if hired_count:
             obj.hired_count = hired_count
@@ -851,7 +1171,7 @@ def web_edit_company(request):
         Device.objects.all().send_message(
             {'type': 'company_edit', 'c_id': c_id, 'name': name, 'criteria': criteria, 'salary': salary,
              'position':position,'other_details': other_details, 'ppt_date': ppt_date, 'back': back,
-             'reg_start':reg_start,'reg_end': reg_end, 'reg_link': reg_link, 'hired_count': hired_count})
+             'reg_end': reg_end,  'hired_count': hired_count})
 
         print ("Success")
         return HttpResponse("success")
@@ -873,6 +1193,14 @@ def web_notify(request):
         obj.save()
         if len(request.FILES) != 0:
             if request.FILES["file"]:
+                # sanika account
+                # Lae_eeDcmDgAAAAAAAACpAf6K4pN2cMT9Pa3UcARF6HVT5kbljzzyo7DazeUtE9D
+
+                # Sirs account
+                dbx = dropbox.Dropbox('39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi')
+                st = dbx.users_get_current_account()
+
+
                 myfile = request.FILES["file"]
                 data = myfile.read()
                 filename = myfile.name
@@ -918,6 +1246,14 @@ def web_upload_result(request):
 
         print choice
         if request.FILES["resultfile"]:
+            # sanika account
+            # Lae_eeDcmDgAAAAAAAACpAf6K4pN2cMT9Pa3UcARF6HVT5kbljzzyo7DazeUtE9D
+
+            # Sirs account
+            dbx = dropbox.Dropbox('39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi')
+            st = dbx.users_get_current_account()
+
+
             myfile = request.FILES["resultfile"]
             data = myfile.read()
             filename = myfile.name
@@ -995,18 +1331,18 @@ def web_download_students(request):
 
     students_min_average = students_branch.filter(average__gte=minavg)
 
-
     students_max_average = students_min_average.filter(average__lte=maxavg)
-
+    print students_max_average
     students = students_max_average
     
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="sanika.csv"'
     writer = csv.writer(response)
-    writer.writerow(['Roll Number', 'Name','Email','Phone','Gender','Branch','SSC','HSC', 'Average','Active back','Resume'])
+
+    writer.writerow(['Roll Number', 'Name','Email','Phone','Gender','Branch', 'Average','Active back','Resume'])
     for x in students:
-        writer.writerow([x.roll, x.name , x.email , x.phone , x.gender, x.branch ,x.ssc , x.hsc , x.average ,x.active_back , x.url])
-        print writer
+        writer.writerow([x.roll, x.name , x.email , x.phone , x.gender, x.branch , x.average ,x.active_back , x.url])
+
     return response
 
 @csrf_exempt

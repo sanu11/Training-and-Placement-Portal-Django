@@ -1,0 +1,348 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Update Profile</title>
+  <meta charset="utf-8">
+  <meta name="description" content="PICT Training and placement online portal">
+<meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!---- BootStrap Libraries         -->
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="/static/js/bootstrap.min.js"></script>
+  <script src="/static/js/check.js"></script>
+  
+  
+
+   <!---- BootStrap online Libraries        
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   -->
+ <style>
+ 
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      background-color:#101B2D;
+      font-family: Georgia, Times, "Times New Roman", serif;
+    }
+.navbar1 {
+      margin-bottom: 0;
+      border-radius: 0;
+      font-family: Georgia, Times, "Times New Roman", serif;
+    }
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 650px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 110%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #353739;
+    font-size:15px;
+      color: #b3b3b1;
+      padding: 15px;
+      font-family: Georgia, Times, "Times New Roman", serif;
+    }
+  footer a:hover
+  {
+  text-decoration:none;
+  color:white;
+  }
+  body {
+  font-family: Georgia, Times, "Times New Roman", serif;}
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+  
+  textarea.form-control
+  {
+    height: 30%;
+  }
+  
+  .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+.switch input {display:none;}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+input:checked + .slider {
+  background-color: #2196F3;
+}
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+.slider.round:before {
+  border-radius: 50%;
+}
+  </style>
+  </head>
+<body>
+
+
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+<h1 class="text-center"> 
+<a class="pull-left" href="/"> 
+<img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
+</a><span style="margin-left: -20%; color: rgb(222, 222, 222);">Training and Placement</span></h1>  
+
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav" style="margin-left:15.5%;">
+        <li><a href="/">Home</a></li>
+             {% if login == 2 %}
+               <li><a href="/opportunities/">Opportunities</a></li>
+        {% endif %}        
+    
+    <li><a href="/companies/">Companies</a></li>
+    <li><a href="/notifications/">Notifications</a></li>
+     <li><a href="/results/">Results</a></li>
+
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+      
+    <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+          
+            {% if login == 2 %}
+            <li><a href="/peditprofile/">Update Profile</a></li>
+            <li><a href="/pstudentdownload/">Download Profile</a></li>
+             <li><a href="/psettings/">Settings</a></li>
+              {% endif %}           
+                <li><a href="/logout/">Logout</a></li>
+           
+          </ul>
+        </li>
+    
+     </ul>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid ">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav ">
+   
+    </div>
+
+    <div class="col-sm-8 text-left"> 
+  <br>
+      <br>
+     <form class="form-horizontal"  method="POST" id="signupform" name="signupform">
+<fieldset>
+<!-- Form Name -->
+<!-- Text input-->
+{% if student.is_diploma %}
+<div class="form-group">
+  <label class="col-sm-4 control-label"><h3>Diploma</h3></label>
+</div>
+
+<div class="form-group">
+  <label class="col-sm-4 control-label">Board</label>
+  <div class="col-sm-5">
+  {% if student.diploma_board %}
+  <input id="diploma_board" name="diploma_board" type="text"  placeholder="msbte"   class="form-control input-md"  value = "{{student.diploma_board}}">
+  {% else %}
+  <input id="diploma_board" name="diploma_board" type="text"  placeholder="msbte"   class="form-control input-md"  >
+  {% endif %}
+  </div>
+</div>
+
+
+<div class="form-group">
+  <label class="col-sm-4 control-label">Passing Year</label>
+  <div class="col-sm-5">
+  {% if student.twelveth_year %}
+  <input id="diploma_year" name="diploma_year" type="text"  placeholder="2014"   class="form-control input-md"  value = {{student.diploma_year}}>
+  {% else %}
+  <input id="diploma_year" name="diploma_year" type="text"  placeholder="2014"   class="form-control input-md"  >
+  {% endif %}
+  </div>
+</div>
+
+
+<div class="form-group">
+  <label class="col-md-4 control-label" ">Marks obtained</label>
+  <div class="col-sm-5">
+    <div class="input-group">
+      <input id="diploma_marks" name="diploma_marks" class="form-control" placeholder="marks" type="number"  value={{student.diploma_marks}} >
+      <span class="input-group-addon"></span>
+    </div>
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-md-4 control-label" ">Marks out of</label>
+  <div class="col-sm-5">
+    <div class="input-group">
+      <input id="diploma_outof" name="diploma_outof" class="form-control" placeholder="out of" type="number"  value={{student.diploma_outof}} >
+      <span class="input-group-addon"></span>
+    </div>
+  </div>
+</div>
+
+{% else %}
+<div class="form-group">
+  <label class="col-sm-4 control-label"><h3>12th</h3></label>
+</div>
+
+
+<div class="form-group">
+  <label class="col-sm-4 control-label">Board</label>
+  <div class="col-sm-5">
+  {% if student.twelveth_board %}
+  <input id="twelveth_board" name="twelveth_board" type="text"  placeholder="cbse"   class="form-control input-md"  value = "{{student.twelveth_board}}">
+  {% else %}
+  <input id="twelveth_board" name="twelveth_board" type="text"  placeholder="cbse"   class="form-control input-md"  >
+  {% endif %}
+  </div>
+</div>
+
+
+<div class="form-group">
+  <label class="col-sm-4 control-label">Passing Year</label>
+  <div class="col-sm-5">
+  {% if student.twelveth_year %}
+  <input id="twelveth_year" name="twelveth_year" type="text"  placeholder="2013"   class="form-control input-md"  value = {{student.twelveth_year}}>
+  {% else %}
+  <input id="twelveth_year" name="twelveth_year" type="text"  placeholder="2013"   class="form-control input-md"  >
+  {% endif %}
+  </div>
+</div>
+
+
+<div class="form-group">
+  <label class="col-md-4 control-label" ">Marks</label>
+  <div class="col-sm-5">
+    <div class="input-group">
+      <input id="twelveth_marks" name="twelveth_marks" class="form-control" placeholder="Percentage/cgpa" type="number"  value={{student.twelveth_marks}} >
+      <span class="input-group-addon"></span>
+    </div>
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-sm-4 control-label">School Name</label>
+  <div class="col-sm-5">
+  {% if student.twelveth_schoolname %}
+  <input id="twelveth_schoolname" name="twelveth_schoolname" type="text"  placeholder="Kendriya Vidyalaya"   class="form-control input-md"  value = "{{student.twelveth_schoolname}}">
+  {% else %}
+  <input id="twelveth_schoolname" name="twelveth_schoolname" type="text"  placeholder="Kendriya Vidyalaya"   class="form-control input-md"  >
+  {% endif %}
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-sm-4 control-label">City</label>
+  <div class="col-sm-5">
+  {% if student.twelveth_city %}
+  <input id="twelveth_city" name="twelveth_city" type="text"  placeholder="Pune"   class="form-control input-md"  value = "{{student.twelveth_city}}">
+  {% else %}
+  <input id="twelveth_city" name="twelveth_city" type="text"  placeholder="Pune"   class="form-control input-md"  >
+  {% endif %}
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-md-4 control-label" for="button1id">Year gap</label>
+  
+  <div class="col-md-8"> 
+ <label class="switch">
+ {% if student.twelveth_yeargap %}
+  <input type="checkbox" name="twelveth_yeargap" value="twelveth_yeargap" checked>
+  {% else %}
+  <input type="checkbox" name="twelveth_yeargap" value="twelveth_yeargap" >
+  {% endif %}
+  <div class="slider round"></div>
+</label>
+</label>
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-sm-4 control-label">Year gap reason</label>
+  <div class="col-sm-5">
+  {% if student.twelveth_yeargap_reason %}
+  <input id="twelveth_city" name="twelveth_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md"  value = "{{student.twelveth_yeargap_reason}}">
+  {% else %}
+  <input id="twelveth_city" name="twelveth_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md"  >
+  {% endif %}
+  </div>
+</div>
+{% endif %}
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="singlebutton"></label>
+  
+  <div class="col-sm-4 text-center" align="center" style="margin-left:-2%;margin-right:4%;">
+  <button type="button" class="btn btn-info" onclick="editSscMarksPage()">Back</button>
+  <button type="button" class="btn btn-info" onclick="editHscMarks()">Next</button>
+  </div>
+</div>
+</fieldset>
+</form>
+ </div>
+ <div class="col-sm-2 sidenav">
+<!--- Side navigation data paste here-->
+</div>
+</div>
+</div>
+<footer class="container-fluid text-center">
+ <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
+<p><a href="/developers-page/">Developers</a></p></div>
+</footer>
+</body>
+</html>
+Contact GitHub 

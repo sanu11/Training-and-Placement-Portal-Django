@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Companies</title>
+  <title>Applied Students</title>
   <meta charset="utf-8">
   <meta name="description" content="PICT Training and placement online portal">
 <meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
@@ -98,6 +98,7 @@
     <li><a href="/opportunities/">Opportunities</a></li>
     {% endif %}
     <li><a href="/companies/">Companies</a></li>
+    
     <li><a href="/notifications/">Notifications</a></li>
      <li><a href="/results/">Results</a></li>
 
@@ -132,13 +133,10 @@
     <br><br>
       <li ><a href="/students/"><b>Students</b></a></li>
       <li><a href="/pregister/"><b>Register  Company</b></a></li>
-    
       <li><a href="/pedit/"><b>Edit Company</b></a> </li>
 
       <li><a href="/pnotify/"><b>Notify  Candidate</b></a> </li>
       <li><a href="/presult/"><b>Upload Result</b></a> </li>
-      <li><a href="/appliedstudents/"><b>Applied Students</b></a> </li>
-
 
 
     </ul>
@@ -150,86 +148,8 @@
 
     <div class="col-sm-8 text-left">
   
-  <h2 class="text-center"><b>Companies</b></h2> 
-<div style="margin-bottom:20px"></div>
+<br><br><div style="margin-bottom:20px"></div>
 <!-- <p>Table contains placement statistics for the year 2016-17. </p> -->
-<hr>
-<!-- Division for filters -->
-<div class="text-left">
-
-
-<form class="form-horizontal" id="student" method="POST" action ='/companies/'>
-{% csrf_token %}
- <div class="form-group text-left">
-   <label class="col-sm-4 control-label" ></label>
- <div class="col-sm-1" style="padding-right:2px;padding-left:2px;"> <label class="control-label" >MIN</label></div>
- <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
-  <label class="control-label" >MAX</label></div>
-    
-   <label class="col-sm-1 control-label" ></label>
- <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
-  <label class="control-label" >MIN</label>
- </div>
- <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
- <label class="control-label" >MAX</label>
- </div>
-   <div class="col-sm-2"></div>
- <div class="col-sm-2">
- </div>
-   </div>
-   
-   
-<div class="form-group">
-   <label class="col-sm-1 control-label"  >Year</label>
-     <div class="col-sm-2">
-        <select class="form-control" name="year" id="year">
-    <!--<option selected disabled hidden>Year</option>-->
-
-           {% for passyear in years %}
-            {% if passyear == curr_year %}
-            <option value = {{passyear.year}} selected="selected" > {{passyear.year}} </option>
-            {%  else %}
-            <option value = {{passyear.year}} > {{passyear.year}} </option>
-            {% endif %}
-            {% endfor %}
-      </select>
-      </div>
-
-
-    <label class="col-sm-1 control-label"  >Salary</label>
-
-<div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
-     <input type="text" name = "minsal" id = "minsal" placeholder="Min" value = {{minsal}} class="form-control" style = "float:left;">
- </div>
-
-<div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
-    <input type="text" name = "maxsal" placeholder="Max"  id= "maxsal" value = {{maxsal}} style = "float:left;" class="form-control">
-</div>
-    
-    <label class="col-sm-1 control-label" >Criteria</label>
-
-<div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
- <input type="text" name = "mincri" placeholder="Min" id = "mincri" value = {{mincri}} class="form-control" style = "float:left;">
- </div>
-
- <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
- <input type="text" name = "maxcri" placeholder="Max" id= "maxcri" value = {{maxcri}} style = "float:left;" class="form-control">
- </div>
-
-   <div class="col-sm-2">
-<input type="submit" class="btn btn-info form-control" value="Submit" >
-   </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-
-    <!--DOWNLOAD COMPANIES -->
- <!--<div class="col-sm-2">-->
-     <!--<button value="Download file" onclick = "downloadCompanies()" class="btn btn-info form-control">Download</button>-->
- <!--</div>-->
-
-</div>
-        </form>
-</div>
-<hr>
 <!-- Table Content start -->
 <div class="col-sm-12">
   <div class="table-responsive">          
@@ -238,12 +158,9 @@
       <tr>
         <th>ID</th>
         <th>Company</th>
-        <th>Salary Lpa</th>
-        <th>Criteria</th>
-        <th>Hired</th>
-        <th>Date</th>
-        <th>Placed</th>
+        <th>Deadline</th>
 
+        <th></th>
         
       </tr>
     </thead>
@@ -253,22 +170,9 @@
         <td>{{forloop.counter}}</td>
        
         <td> <a href= /company/{{company.c_id}}/ > {{company.name }}</a> </td>
-
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{company.salary}}</td>
-        {% if company.criteria == 0 %}
-        <td> NC</td>
-        {% else %}
-        <td>{{company.criteria}}</td>
-        {% endif %}
-        <td>{{company.hired_count}}</td>
-        <td>{{company.ppt_date}}</td>
+        <td>{{company.reg_end}}</td>
         
-        {% if company.placed_url %}
-        <td><a href={{company.placed_url}}>{{company.placed_url}}</td>
-        {% else %}
-        <td></td>
-        
-        {% endif %}
+        <td><a href = /{{company.c_id}}/viewstudents/><button type="button"  class="btn btn-info" >View</button></a></td>
         
       </tr>
       {% endfor %}
@@ -283,7 +187,7 @@
   </div>
 </div>
 
-<footer class="container-fluid text-center" >
+<footer class="container-fluid text-center">
  <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
 <p><a href="/developers-page/">Developers</a></p></div>
 </footer>
