@@ -1,4 +1,5 @@
-import datetime
+from datetime import datetime
+from django.utils import timezone
 from django.shortcuts import render 
 from django.template.loader import render_to_string 
 from .models import Student, Company, Message, Verify, Result, Admin ,Year
@@ -760,6 +761,11 @@ def web_apply_company(request):
     company = Company.objects.get(c_id=c_id)
     applied = request.POST["applied"]
     if applied == "true":
+        reg_end = company.reg_end
+       
+        if reg_end and timezone.now()>reg_end:
+            print "deadline over"
+            return HttpResponse("Can't apply. Deadline crossed.")
         company.applied_students.add(student)
         print company.applied_students.all()
         return HttpResponse("Applied Successfully")
