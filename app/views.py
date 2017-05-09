@@ -551,7 +551,7 @@ def get_applied_students_page(request):
     if Admin.objects.filter(email=email).exists():
         name = request.session["name"]
         year = Year.objects.all().order_by('-y_id')[0]
-        companies = Company.objects.filter(y_id=year)
+        companies = Company.objects.filter(y_id=year).order_by('-ppt_date')
         login = 1
         return render(request,'app/appliedStudents.html',{"companies":companies,"login":login,"name":name})
     else:
@@ -585,7 +585,7 @@ def get_opportunities_page(request):
         email = request.session["email"]
         student = Student.objects.get(email=email)
         curr_year = Year.objects.order_by('-y_id')[0]
-        companies = Company.objects.filter(y_id=curr_year)
+        companies = Company.objects.filter(y_id=curr_year).order_by('-ppt_date')
         arr_list = student.company_set.all()
         login = 2
         return render(request,'app/opportunities.html',{"name":name,"companies":companies,"arr_list":arr_list,"login":login})
