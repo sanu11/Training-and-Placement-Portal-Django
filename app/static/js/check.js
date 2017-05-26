@@ -380,8 +380,11 @@ function applyCompany(c_id){
                 data:{c_id:c_id , csrfmiddlewaretoken : csrftoken,applied:checked} ,
                 success: function(message) {
                   if(message == "can't"){
-                    alert("Can't apply. Deadline crossed.");
+                    alert("Can't apply. Deadline crossed.")
+                   if(checked)
                     document.getElementById(c_id).checked = false;
+                    else
+                    document.getElementById(c_id).checked = true;
                   }
                   else if (message == "applied"){
                     alert("Applied Successfully");

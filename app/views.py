@@ -763,7 +763,6 @@ def web_apply_company(request):
     applied = request.POST["applied"]
     if applied == "true":
         reg_end = company.reg_end
-       
         if reg_end and timezone.now()>reg_end:
             print "deadline over"
             return HttpResponse("can't")
@@ -771,8 +770,12 @@ def web_apply_company(request):
         print company.applied_students.all()
         return HttpResponse("applied")
     else:
-        company.applied_students.remove(student)
-        return HttpResponse("unapplied")
+        if reg_end and timezone.now()>reg_end:
+            print "deadline over"
+            return HttpResponse("can't")
+        else:
+            company.applied_students.remove(student)
+            return HttpResponse("unapplied")
     
 
 @csrf_exempt
