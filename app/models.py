@@ -55,7 +55,7 @@ class Student(models.Model):
 	y_id        =		models.ForeignKey(Year)            												 #foreign key to year table
 	branch		=		models.CharField(max_length=6)
 
-	prn			=		models.CharField(max_length=20,unique=True)
+	prn			=		models.CharField(max_length=20,unique=True,null=True,blank=True)
 	birth_date	=		models.DateField(null=True,blank=True)
 	per_address =		models.CharField(max_length=1000,null=True,blank=True)
 	cur_address =		models.CharField(max_length=1000,null=True,blank=True)
