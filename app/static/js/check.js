@@ -40,13 +40,11 @@ function signup() {
                        window.location.href = "/presume/";
                     }
                     else if(message=='exists')
-                    {
                         alert("User Exists.Please Login");
-                    }
+                    
                     else
-                    {
-                    alert('Error');
-                    }
+                        alert('Error');
+                    
                 },
                 error: function(xhr, errmsg, err) {
                     alert('Error');
