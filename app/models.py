@@ -34,7 +34,7 @@ class Company(models.Model):
 	reg_end		=	models.DateTimeField(null=True,blank=True)
 	reg_link	=	models.CharField(max_length=1000,null=True,blank=True)
 	y_id		=	models.ForeignKey(Year,null=True,blank=True)							#foreign key to year table
-	applied_students=	models.ManyToManyField('Student')									#student can apply to many companies and a company can have many students
+	applied_students=	models.ManyToManyField('Student',blank=True)									#student can apply to many companies and a company can have many students
 	
 	def __str__(self):
 		if self.position:
@@ -55,7 +55,7 @@ class Student(models.Model):
 	y_id        =		models.ForeignKey(Year)            												 #foreign key to year table
 	branch		=		models.CharField(max_length=6)
 
-	prn			=		models.CharField(max_length=20,unique=True)
+	prn			=		models.CharField(max_length=20,unique=True,null=True,blank=True)
 	birth_date	=		models.DateField(null=True,blank=True)
 	per_address =		models.CharField(max_length=1000,null=True,blank=True)
 	cur_address =		models.CharField(max_length=1000,null=True,blank=True)

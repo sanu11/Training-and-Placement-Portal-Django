@@ -27,6 +27,7 @@ class StudentAdmin(ImportExportModelAdmin):
 @admin.register(Company)
 class CompanyAdmin(ImportExportModelAdmin):
     resource_class = CompanyResource
+    readonly_fields=('c_id',)
 
 @admin.register(Message)
 class MessageAdmin(ImportExportModelAdmin):

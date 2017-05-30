@@ -15,18 +15,17 @@ function signup() {
         
         if(name.length==0 || roll.length==0 || email.length == 0 || password.length == 0 || phone.length == 0 )
             alert("Enter all Details"); 
-        else if (roll.length !=4)
-            alert("Enter valid Roll number");
-        else if(password.length<6)
-            alert("Password  should be greater than 6 digits");
+        else if (roll.length !=4) 
+            alert("Enter  valid 4 digit Roll number ");
+    
         else if (atpos<1 || dotpos<atpos+2 || dotpos+2>=email.length) {
-            alert("Not a valid e-mail address");
+            alert("Enter valid e-mail address");
         
         }
         else if(password.length<6)
-            alert("Password  should be greater than 6 digits")
+            alert("Password  should be greater than 5 digits")
         else if(phone.length!=10)
-            alert ("Enter Valid mobile number");
+            alert ("Enter valid mobile number");
         
         else
         {
@@ -37,7 +36,7 @@ function signup() {
                 success: function(message) {
                 console.log(message);
                     if (message =='success') {
-                       window.location.href = "/presume/";
+                       window.location.href = "/";
                     }
                     else if(message=='exists')
                         alert("User Exists.Please Login");
@@ -85,6 +84,33 @@ function studentLogin() {
             },
         });
     }
+
+    function getStudentDetails() {
+
+        var csrftoken = getCookie('csrftoken');
+        var roll = document.getElementById("roll").value;
+        var year = document.getElementById("year").value;
+
+            $.ajax({
+                type: "POST",
+                url: '/roll/',
+                data: {roll:roll,year:year,csrfmiddlewaretoken:csrftoken},
+                success: function(message) {
+                console.log(message);
+                str  = jQuery.parseJSON(message);
+                data = str[0]["fields"];
+
+                
+
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+
+    }
+
+
 
 function editProfilePage(argument) {
     window.location.href = "/peditprofile";
@@ -379,8 +405,11 @@ function applyCompany(c_id){
                 data:{c_id:c_id , csrfmiddlewaretoken : csrftoken,applied:checked} ,
                 success: function(message) {
                   if(message == "can't"){
-                    alert("Can't apply. Deadline crossed.");
-                    document.getElementById(c_id).checked.value = false;
+                    alert("Can't apply. Deadline crossed.")
+                   if(checked)
+                    document.getElementById(c_id).checked = false;
+                    else
+                    document.getElementById(c_id).checked = true;
                   }
                   else if (message == "applied"){
                     alert("Applied Successfully");

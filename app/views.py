@@ -364,6 +364,7 @@ def get_result_upload_page(request):
         else:
             return HttpResponse("Not permitted to access")
 
+@csrf_exempt
 def get_company_details(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -382,7 +383,42 @@ def get_company_details(request):
         else:
             return HttpResponse("Not permitted to access")
 
+@csrf_exempt
+def get_student_details_page(request):
+    if not request.session.get("name"):
+        return render(request,'app/redirect2.html',{})
+    else:
+        get_mail = request.session["email"]
+        if Admin.objects.filter(email=get_mail).exists():
+            name = request.session["name"]
+            years = Year.objects.all()
+            return render(request,'app/lockStudent.html',{"years":years})
+        else:
+            return HttpResponse("Not permitted to access")
 
+
+@csrf_exempt
+def get_student_details(request):
+    if not request.session.get("name"):
+        return render(request,'app/redirect2.html',{})
+    else:
+        get_mail = request.session["email"]
+        if Admin.objects.filter(email=get_mail).exists():
+            name = request.session["name"]
+            years = Year.objects.all()
+            year = str(request.POST["year"])
+            print year
+            if year != "All":
+                year = Year.objects.get(year=year)
+            else:
+                year = Year.objects.all()[0]
+                        
+            roll  = request.POST["roll"]
+            obj = Student.objects.get(roll=roll,y_id=year)
+            data = serializers.serialize("json", [obj,])
+            return HttpResponse(data) 
+        else:
+            return HttpResponse("Not permitted to access")
 
 
 
@@ -551,7 +587,7 @@ def get_applied_students_page(request):
     if Admin.objects.filter(email=email).exists():
         name = request.session["name"]
         year = Year.objects.all().order_by('-y_id')[0]
-        companies = Company.objects.filter(y_id=year)
+        companies = Company.objects.filter(y_id=year).order_by('-ppt_date')
         login = 1
         return render(request,'app/appliedStudents.html',{"companies":companies,"login":login,"name":name})
     else:
@@ -585,7 +621,7 @@ def get_opportunities_page(request):
         email = request.session["email"]
         student = Student.objects.get(email=email)
         curr_year = Year.objects.order_by('-y_id')[0]
-        companies = Company.objects.filter(y_id=curr_year)
+        companies = Company.objects.filter(y_id=curr_year).order_by('-ppt_date')
         arr_list = student.company_set.all()
         login = 2
         return render(request,'app/opportunities.html',{"name":name,"companies":companies,"arr_list":arr_list,"login":login})
@@ -763,7 +799,6 @@ def web_apply_company(request):
     applied = request.POST["applied"]
     if applied == "true":
         reg_end = company.reg_end
-       
         if reg_end and timezone.now()>reg_end:
             print "deadline over"
             return HttpResponse("can't")
@@ -771,8 +806,12 @@ def web_apply_company(request):
         print company.applied_students.all()
         return HttpResponse("applied")
     else:
-        company.applied_students.remove(student)
-        return HttpResponse("unapplied")
+        if reg_end and timezone.now()>reg_end:
+            print "deadline over"
+            return HttpResponse("can't")
+        else:
+            company.applied_students.remove(student)
+            return HttpResponse("unapplied")
     
 
 @csrf_exempt
