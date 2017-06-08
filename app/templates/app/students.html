@@ -158,9 +158,11 @@
     {% csrf_token %}
   <div class="form-group">
   <div class="col-sm-1"></div>
-  <div class="col-sm-2 text-left"><label class="control-label" >Year</label></div>
+  <div class="col-sm-2 text-left" ><label class="control-label" >Year</label></div>
   <div class="col-sm-2 text-left"><label class="control-label" >Branch</label></div>
   <div class="col-sm-2 text-left" style="padding-left:2px;"><label class="control-label" >Average</label></div>
+  <div class="col-sm-2 text-left" style="padding-left:15px;"><label class="control-label" >Lock Status</label></div>
+  
   </div>
   <div class="form-group">
   <div class="col-sm-1"></div>
@@ -226,6 +228,32 @@
  
 </div>
 
+
+<div class="col-sm-2 text-right" >
+    <div class="input-group">
+      <div class="input-group-btn">
+        <select  class="form-control" name="lock" id="lock">
+    <!--<option selected disabled hidden>Branch</option>-->
+            <option value= "All" selected="selected" >All</option>
+            
+            {% if lock  == "locked" %}
+            <option value = "locked" selected="selected" > Locked </option>
+            {% else %}
+            <option value = "locked"> Locked </option>
+            {% endif %}
+
+            {% if lock == "unlocked" %}
+            <option value = "unlocked" selected="selected" > Unlocked </option>
+            {% else %}
+            <option value = "unlocked" > Unlocked </option>
+            {% endif %}
+      
+      </select>
+
+      </div>
+    </div>
+  </div>
+
   <!--<div class="col-sm-3 text-right" >-->
     <!--<div class="input-group">-->
       <!--<div class="input-group-btn">-->
@@ -244,8 +272,9 @@
   <!--</div>-->
 &nbsp;&nbsp;&nbsp;
   <div class="col-sm-2"> <input type="submit" value ="Submit" class="btn btn-info form-control" ></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- <div class="col-sm-2"> <button value="Download file" onclick="downloadStudents()" class="btn btn-info form-control">Download</button>
-</div></div>
+<!--  <div class="col-sm-2"> <button value="Download file" onclick="downloadStudents()" class="btn btn-info form-control">Download</button>
+</div>
+ --></div>
     </form>
   </div>
 
@@ -295,9 +324,7 @@
 
 <footer class="container-fluid text-center">
  <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
-<
-
-p><a href="/developers-page/">Developers</a></p></div>
+<p><a href="/developers-page/">Developers</a></p></div>
 </footer>
 </body>
 </html>

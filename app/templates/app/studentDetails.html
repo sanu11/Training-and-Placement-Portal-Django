@@ -1,22 +1,34 @@
 <html>
 <head>
-<title>PICT | {{student.roll}} | {student.name}} Details.</title>
+<title>PICT | {{student.roll}} | {{student.name}} Details.</title>
 <link rel="stylesheet" href="/static/css/bootstrap.min.css">
 <link rel="stylesheet" href="/static/css/mystyle.css">
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
   <style type="text/css">
-
-  </style>
+ </style>
   <script>
 function printPage() {
     window.print();
 }
 </script>
+<script src="/static/js/check.js"></script>
+  
 </head>
 <body>
 
+
+<!-- this is from studetns profile -->
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{% if lock == -1 %}
 <input class="btn btn-info" type="button" value="Print this page" onclick="printPage()" />
+<!-- this is from admin profile for verification -->
+{% elif lock == 0 %}
+<input class="btn btn-info" type="button" value="Lock" id="lock1" onclick="lock('{{student.prn}}')"/>
+{% elif lock ==  1 %}
+<input class="btn btn-info" type="button" value="Unlock" id="lock1" onclick="unlock('{{student.prn}}')" />
+{% endif %}
+
 <h3>PERSONAL DETAILS</h3>
 <div class="table-responsive table-css">
 <table width="80%" class="table-bordered">
@@ -123,6 +135,16 @@ function printPage() {
 </tbody>
 </table>
 </div>
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{% if lock == -1 %}
+<input class="btn btn-info" type="button" value="Print this page" onclick="printPage()" />
+<!-- this is from admin profile for verification -->
+{% elif lock == 0 %}
+<input class="btn btn-info" type="button" value="Lock"  id="lock2" onclick="lock('{{student.prn}}')"/>
+{% elif lock ==  1 %}
+<input class="btn btn-info" type="button" value="Unlock" id="lock2" onclick="unlock('{{student.prn}}')" />
+{% endif %}
 
 
 

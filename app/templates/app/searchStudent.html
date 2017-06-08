@@ -154,7 +154,7 @@
 
 
 
-<form class="form-horizontal" id="verifyStudent" >
+<form class="form-horizontal" id="verifyStudent" method="POST" action="/roll/">
     {% csrf_token %}
   <div class="form-group">
   <div class="col-sm-1"></div>
@@ -170,7 +170,7 @@
     <!--<option selected disabled hidden>Year</option>-->
             <option value= "All"  selected="selected">All</option>
            {% for passyear in years %}
-            {% if passyear.year == year %}
+            {% if passyear == year %}
             <option value = {{passyear.year}} selected="selected" > {{passyear.year}} </option>
             {%  else %}
             <option value = {{passyear.year}} > {{passyear.year}} </option>
@@ -206,7 +206,7 @@
     <!--</div>-->
   <!--</div>-->
 &nbsp;&nbsp;&nbsp;
-  <div class="col-sm-2"> <button type="button" value ="Submit" class="btn btn-info form-control" onclick="getStudentDetails()"> Submit</button></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <div class="col-sm-2"> <input  type="submit" value ="Submit" class="btn btn-info form-control" ></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
  </div>
     </form>
   </div>

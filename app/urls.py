@@ -25,12 +25,13 @@ urlpatterns = [
 	url(r'^pedit/$', views.get_company_edit_page),
 	url(r'^pnotify/$',views.get_notify_page),
 	url(r'^presult/$',views.get_result_upload_page),	 
-	url(r'^plock/$',views.get_student_details_page),
+	url(r'^psearch/$',views.get_search_student_page),
 
 	url(r'^roll/$',views.get_student_details),
+	url(r'^lockStudent/$',views.web_lock_student),
+	url(r'^unlockStudent/$',views.web_unlock_student),
 
 
-	# url(r'^lockStudent/$',views.web_lock_student),
 
 	url(r'^cregister/$',views.web_register_company),
 	url(r'^update/$',views.web_update_company),

@@ -85,30 +85,86 @@ function studentLogin() {
         });
     }
 
-    function getStudentDetails() {
 
+function lock(prn){
         var csrftoken = getCookie('csrftoken');
-        var roll = document.getElementById("roll").value;
-        var year = document.getElementById("year").value;
+        
+        $.ajax({
+            type: "POST",
+            url: '/lockStudent/',
+            data : {prn:prn,csrfmiddlewaretoken:csrftoken},
+            success: function(message) {
+            console.log(message);
+                if (message =='success') {
+                   window.location.href = "/psearch/";
+                }
+                else
+                {
+                alert('Error');
+                }
+            },
+            error: function(xhr, errmsg, err) {
+                alert('Error');
+            },
+        });
+    }
 
-            $.ajax({
-                type: "POST",
-                url: '/roll/',
-                data: {roll:roll,year:year,csrfmiddlewaretoken:csrftoken},
-                success: function(message) {
-                console.log(message);
-                str  = jQuery.parseJSON(message);
-                data = str[0]["fields"];
+
+function unlock(prn){
+        var csrftoken = getCookie('csrftoken');
+        var button1 = document.getElementById("lock1");
+        var button2 = document.getElementById("lock2");
+       
+        $.ajax({
+            type: "POST",
+            url: '/unlockStudent/',
+            data : {prn:prn,csrfmiddlewaretoken:csrftoken},
+            success: function(message) {
+            console.log(message);
+                if (message =='success') {
+                   alert("Unlocked Student");
+                   button1.value = "Lock";
+                   button2.value = "Lock";
+                   location.reload();
+                }
+                else
+                {
+                alert('Error');
+                }
+            },
+            error: function(xhr, errmsg, err) {
+                alert('Error');
+            },
+        });
+    }
+
+
+
+
+    // function getStudentDetails() {
+
+    //     var csrftoken = getCookie('csrftoken');
+    //     var roll = document.getElementById("roll").value;
+    //     var year = document.getElementById("year").value;
+
+    //         $.ajax({
+    //             type: "POST",
+    //             url: '/roll/',
+    //             data: {roll:roll,year:year,csrfmiddlewaretoken:csrftoken},
+    //             success: function(message) {
+    //             console.log(message);
+    //             str  = jQuery.parseJSON(message);
+    //             data = str[0]["fields"];
 
                 
 
-                },
-                error: function(xhr, errmsg, err) {
-                    alert('Error');
-                },
-            });
+    //             },
+    //             error: function(xhr, errmsg, err) {
+    //                 alert('Error');
+    //             },
+    //         });
 
-    }
+    // }
 
 
 

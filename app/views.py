@@ -300,7 +300,8 @@ def get_register_page(request):
 def get_student_download_page(request):
     email = request.session["email"]
     student = Student.objects.get(email=email)
-    return render(request,'app/studentDownload.html',{"student":student})
+
+    return render(request,'app/studentDetails.html',{"student":student,"lock":-1})
 
 @csrf_exempt
 def get_update_page(request):
@@ -383,8 +384,9 @@ def get_company_details(request):
         else:
             return HttpResponse("Not permitted to access")
 
+
 @csrf_exempt
-def get_student_details_page(request):
+def get_search_student_page(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
     else:
@@ -392,7 +394,8 @@ def get_student_details_page(request):
         if Admin.objects.filter(email=get_mail).exists():
             name = request.session["name"]
             years = Year.objects.all()
-            return render(request,'app/lockStudent.html',{"years":years})
+            year = years.order_by('-y_id')[0]
+            return render(request,'app/searchStudent.html',{"years":years,"year":year})
         else:
             return HttpResponse("Not permitted to access")
 
@@ -415,8 +418,11 @@ def get_student_details(request):
                         
             roll  = request.POST["roll"]
             obj = Student.objects.get(roll=roll,y_id=year)
-            data = serializers.serialize("json", [obj,])
-            return HttpResponse(data) 
+            context = {}
+            context["student"]=obj
+            context["lock"] = obj.lock
+            # print obj.lock
+            return render(request,"app/studentDetails.html",context)
         else:
             return HttpResponse("Not permitted to access")
 
@@ -435,26 +441,22 @@ def get_students_page(request):
             year = "All"
             branch = "All"
             a_id = "All"
-            if  "year"  in request.POST:
-                year = request.POST["year"]
-                if not year == "All":
-                    students_year = Student.objects.filter(year=year)
-                else:
-                    students_year = Student.objects.all()
+            if  "year"  in request.POST and year != "All":
+                year = str(request.POST["year"])
+                yearobj = Year.objects.get(year=year)
+                students_year = Student.objects.filter(y_id=yearobj)
             else:
                 students_year = Student.objects.all()
 
-            if  "branch" in request.POST:
+            if  "branch" in request.POST and branch != "All":
                 branch = request.POST["branch"]
-                if not branch == "All":
-                    students_branch = students_year.filter(branch=branch)
-                else:
-                    students_branch = students_year
+                students_branch = students_year.filter(branch=branch)
             else:
                 students_branch = students_year
 
             minavg = 0
             maxavg=100
+            lock_status = "All"
             
             if "minavg" in request.POST:
                 minavg = request.POST["minavg"]
@@ -468,11 +470,23 @@ def get_students_page(request):
             else:
                 students_max_average = students_min_average
 
-            students = students_max_average
+            if "lock" in request.POST:
+                lock_status = request.POST["lock"]
+                if lock_status == "locked":
+                    students_lock_status = students_max_average.filter(lock=1)
+                elif lock_status == "unlocked":
+                    students_lock_status = students_max_average.filter(lock=0)
+                else:
+                    students_lock_status = students_max_average
+            else:
+                students_lock_status = students_max_average
+
+            students = students_lock_status
             years = Year.objects.all().order_by('-y_id')
+
            
             name = request.session["name"]
-            return render(request, 'app/students.html', {"students": students, "years":years ,"year":year,"branch":branch,"minavg":minavg,"maxavg":maxavg,"name": name})
+            return render(request, 'app/students.html', {"students": students, "years":years ,"year":year,"branch":branch,"minavg":minavg,"maxavg":maxavg,"lock":lock_status,"name": name})
         # student login
         else:
             return HttpResponse("Not permitted to access")
@@ -488,7 +502,7 @@ def get_student_page(request, roll):
             name = request.session["name"]
             if Student.objects.filter(roll=roll).exists():
                 student = Student.objects.get(roll=roll)
-                return render(request, 'app/student.html', {"student": student, "name": name})
+                return render(request, 'app/studentDetails.html', {"student": student, "name": name})
             else:
                 return HttpResponse("Not Found")
         # student login
@@ -985,9 +999,35 @@ def web_change_password(request):
         student.save()
         return HttpResponse("success")
 
+
+
 #######UPLOAD ADMIN  ###################
 ########################################
 ########################################
+
+
+@csrf_exempt
+def web_lock_student(request):
+    if request.method == "POST":
+        prn = request.POST["prn"]
+        student = Student.objects.get(prn=prn)
+        
+        student.lock = 1
+        student.save()
+        return HttpResponse("success")
+
+@csrf_exempt
+def web_unlock_student(request):
+    if request.method == "POST":
+        prn = request.POST["prn"]
+        student = Student.objects.get(prn=prn)
+        
+        if student.lock == 1:
+            student.lock = 0
+            student.save()
+        return HttpResponse("success")
+
+
 @csrf_exempt
 def web_verify(request):
     if request.method == "POST":
