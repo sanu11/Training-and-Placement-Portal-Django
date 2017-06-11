@@ -119,7 +119,9 @@ background-color:#101B2D;
           <ul class="dropdown-menu">
       
            {% if login == 2 %}
+           {% if not lock %}
             <li><a href="/peditprofile/">Update Profile</a></li>
+            {% endif %}            
             <li><a href="/pstudentdownload/">Download Profile</a></li>
             <li><a href="/psettings/">Settings</a></li>
 
@@ -142,19 +144,21 @@ background-color:#101B2D;
 
   
 <div class="container-fluid ">    
+<div class="container-fluid ">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
     {% if login == 1 %}
  <div class="navbar1"  >
       <ul class="nav navbar-nav" >
     <br><br>
-      <li ><a href="/students/"><b>Students</b></a></li>
       <li><a href="/pregister/"><b>Register  Company</b></a></li>
       <li><a href="/pedit/"><b>Edit Company</b></a> </li>
-      <li><a href="/pnotify/"><b>Notify  Candidate</b></a> </li>
-      <li><a href="/presult/"><b>Upload Result</b></a> </li>
-      <li><a href="/appliedstudents/"><b>Applied Students</b></a> </li>
 
+      <li><a href="/pnotify/"><b>Notify Student</b></a> </li>
+      <li><a href="/presult/"><b>Upload Result</b></a> </li>
+      <li ><a href="/students/"><b>Students List</b></a></li>
+      <li><a href="/appliedstudents/"><b>Applied Students</b></a> </li>
+     <li><a href="/psearch/"><b>Search Student</b></a> </li>
 
 
     </ul>

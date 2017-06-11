@@ -328,7 +328,11 @@ input:checked + .slider:before {
   
   <div class="col-sm-4 text-center" align="center" style="margin-left:-2%;margin-right:4%;">
   <button type="button" class="btn btn-info" onclick="editSscMarksPage()">Back</button>
-  <button type="button" class="btn btn-info" onclick="editHscMarks()">Next</button>
+  {% if student.is_diploma %}
+  <button type="button" class="btn btn-info" onclick="editHscMarks(1)">Next</button>
+  {% else %}
+  <button type="button" class="btn btn-info" onclick="editHscMarks(2)">Next</button>
+  {% endif %}
   </div>
 </div>
 </fieldset>

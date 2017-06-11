@@ -158,12 +158,16 @@ def get_main_page(request):
         if Admin.objects.filter(email=get_mail).exists():
             login = 1
             print "Admin login"
+            return render(request, 'app/home.html', {"login": login, "name": name})
+
+
         # student login
         elif Student.objects.filter(email=get_mail).exists():
             login = 2
             print "Student login"
-
-        return render(request, 'app/home.html', {"login": login, "name": name})
+            student = Student.objects.get(email=get_mail)
+            lock = student.lock
+            return render(request, 'app/home.html', {"login": login, "name": name,"lock":lock})
 
 
 @csrf_exempt
@@ -180,10 +184,12 @@ def get_developers_page(request):
         elif Student.objects.filter(email=get_mail).exists():
             login = 2
             print "Student login"
+            student = Student.objects.get(email=get_mail)
+            lock = student.lock
     else:
         login = 0
         name=""
-    return render(request, 'app/developers.html', {"login":login,"name":name})
+    return render(request, 'app/developers.html', {"login":login,"name":name,"lock":lock})
 
 @csrf_exempt
 def get_settings_page(request):
@@ -520,13 +526,16 @@ def get_notifications_page(request):
         if Admin.objects.filter(email=get_mail).exists():
             login = 1
             print "Admin login"
+            lock=0
         # student login
         elif Student.objects.filter(email=get_mail).exists():
             login = 2
             print "Student login"
+            student = Student.objects.get(email=get_mail)
+            lock = student.lock
         name = request.session["name"]
         notifications = Message.objects.all().order_by('-msg_id')
-        return render(request, 'app/notification.html', {"notifications": notifications, "name": name, "login": login})
+        return render(request, 'app/notification.html', {"notifications": notifications, "name": name, "login": login,"lock":lock})
 
 
 @csrf_exempt
@@ -538,10 +547,13 @@ def get_companies_page(request):
         if Admin.objects.filter(email=get_mail).exists():
             login = 1
             print "Admin login"
+            lock=1
         # student login
         elif Student.objects.filter(email=get_mail).exists():
             login = 2
             print "Student login"
+            student = Student.objects.get(email=get_mail)
+            lock = student.lock
         minsal = 0
         maxsal = 50
         mincri = 0
@@ -591,7 +603,7 @@ def get_companies_page(request):
         years = Year.objects.all()
         name = request.session["name"]
         curr_year = Year.objects.order_by('-y_id')[0]
-        return render(request, 'app/companies.html', {"companies": companies,"years":years,"curr_year":curr_year,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login})
+        return render(request, 'app/companies.html', {"companies": companies,"years":years,"curr_year":curr_year,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login,"lock":lock})
 
 @csrf_exempt
 def get_applied_students_page(request):
@@ -631,14 +643,15 @@ def get_opportunities_page(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
     else:
-        name     = request.session["name"]
+        name  = request.session["name"]
         email = request.session["email"]
         student = Student.objects.get(email=email)
         curr_year = Year.objects.order_by('-y_id')[0]
         companies = Company.objects.filter(y_id=curr_year).order_by('-ppt_date')
         arr_list = student.company_set.all()
+        lock = student.lock
         login = 2
-        return render(request,'app/opportunities.html',{"name":name,"companies":companies,"arr_list":arr_list,"login":login})
+        return render(request,'app/opportunities.html',{"name":name,"companies":companies,"arr_list":arr_list,"login":login,"lock":lock})
     
 @csrf_exempt
 def get_results_page(request):
@@ -649,14 +662,17 @@ def get_results_page(request):
         if Admin.objects.filter(email=get_mail).exists():
             login = 1
             print "Admin login"
+            lock=0
         # student login
         elif Student.objects.filter(email=get_mail).exists():
             login = 2
             print "Student login"
+            student= Student.objects.get(email=get_mail)
+            lock =student.lock
         name = request.session["name"]
         results = Result.objects.all().order_by('-r_id')
         print results
-        return render(request, 'app/resultsDisplay.html', {"results": results, "name": name, "login": login})
+        return render(request, 'app/resultsDisplay.html', {"results": results, "name": name, "login": login,"lock":lock})
 
 
 @csrf_exempt
@@ -810,24 +826,32 @@ def web_apply_company(request):
     student =  Student.objects.get(email=email)
     c_id = int(request.POST["c_id"])
     company = Company.objects.get(c_id=c_id)
+    back_allowed = company.back
     applied = request.POST["applied"]
+    print "Already applied " ,applied    
+    reg_end = company.reg_end
     if applied == "true":
-        reg_end = company.reg_end
         if reg_end and timezone.now()>reg_end:
             print "deadline over"
-            return HttpResponse("can't")
-        company.applied_students.add(student)
+            return HttpResponse("Already Applied.Deadline over.")
+        company.applied_students.remove(student)
         print company.applied_students.all()
-        return HttpResponse("applied")
+        return HttpResponse("Removed Application Successfully")
     else:
         if reg_end and timezone.now()>reg_end:
             print "deadline over"
-            return HttpResponse("can't")
-        else:
-            company.applied_students.remove(student)
-            return HttpResponse("unapplied")
+            return HttpResponse("Can't Apply. Deadline over.")
+        else: 
+            if company.back == "Active not Allowed" and student.active_back > 0:
+                return HttpResponse("Can't apply. Active not Allowed")
+            elif company.back == "Passive not Allowed" and student.passive_back:
+                return HttpResponse("Can't apply. Passive back not allowed")
+            elif(student.average<=company.criteria):
+                return HttpResponse("Can't apply. Your average is below criteria.")
+            else:
+                company.applied_students.add(student)
+                return HttpResponse("Applied Succesfully")
     
-
 @csrf_exempt
 def web_edit_profile(request):
     if request.method == "POST":

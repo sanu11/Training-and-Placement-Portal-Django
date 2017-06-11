@@ -23,7 +23,7 @@ class Company(models.Model):
 	c_id		=	models.AutoField(primary_key=True)
 	name		=	models.CharField(max_length=40)
 	criteria	=	models.FloatField(blank=True,null=True)
-	back		=	models.CharField(max_length=100,blank=True,null=True)
+	back		=	models.CharField(max_length=100,blank=True,null=True) ## 1. No Criteria 2. Active not Allowed 3. Passive not allowed
 	position    =   models.CharField(max_length=30,null=True,blank=True)
 	salary      =   models.FloatField(blank=True, null=True)
 	ppt_date	=	models.DateTimeField(null=True,blank=True)

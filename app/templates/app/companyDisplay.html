@@ -141,20 +141,23 @@ font-family: Georgia, Times, "Times New Roman", serif;
 <div class="container-fluid ">    
   <div class="row content">
     <div class="col-sm-2 sidenav ">
+    {% if login == 1 %}
  <div class="navbar1"  >
       <ul class="nav navbar-nav" >
     <br><br>
-      <li ><a href="/students/"><b>Students</b></a></li>
       <li><a href="/pregister/"><b>Register  Company</b></a></li>
       <li><a href="/pedit/"><b>Edit Company</b></a> </li>
-      <li><a href="/pnotify/"><b>Notify  Candidate</b></a> </li>
-      <li><a href="/presult/"><b>Upload Result</b></a> </li>
-      <li><a href="/appliedstudents/"><b>Applied Students</b></a> </li>
 
+      <li><a href="/pnotify/"><b>Notify Student</b></a> </li>
+      <li><a href="/presult/"><b>Upload Result</b></a> </li>
+      <li ><a href="/students/"><b>Students List</b></a></li>
+      <li><a href="/appliedstudents/"><b>Applied Students</b></a> </li>
+     <li><a href="/psearch/"><b>Search Student</b></a> </li>
 
 
     </ul>
     </div>
+    {% endif %}
     </div>
 
     <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 

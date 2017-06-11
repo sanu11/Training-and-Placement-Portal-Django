@@ -240,8 +240,12 @@ function editSscMarks() {
         console.log('signupform');
         var signupform = $('#' + 'signupform');
         var csrftoken = getCookie('csrftoken');
-       
-        
+        var tenth_board = document.getElementById("tenth_board").value;
+        var tenth_marks = document.getElementById("tenth_marks").value;       
+        if (tenth_marks == "" || tenth_board == ""){
+            alert("Please Enter 10th board and marks");
+            return;
+        }
             $.ajax({
                 type: "POST",
                 url: '/editsscmarks/',
@@ -264,12 +268,34 @@ function editSscMarks() {
     }   
 
 
-function editHscMarks() {
+function editHscMarks(is_diploma) {
         console.log('signupform');
         var signupform = $('#' + 'signupform');
         var csrftoken = getCookie('csrftoken');
+        if(!is_diploma){
+        var twelveth_board = document.getElementById("twelveth_board").value;
+        var twelveth_marks = document.getElementById("twelveth_marks").value;
+        var twelveth_year = document.getElementById("twelveth_year").value;
+               
+        if (twelveth_marks == "" || twelveth_board == ""){
+            alert("Please Enter All Details");
+            return;
+            }
+        }
+        else{
+        var diploma_board = document.getElementById("diploma_board").value;
+        var diploma_marks = document.getElementById("diploma_marks").value;
+        var diploma_outof = document.getElementById("diploma_outof").value;
+        var diploma_year = document.getElementById("diploma_year").value;
+         
+        if (diploma_marks == "" || diploma_board == "" || diploma_outof =="" || diploma_year==""){
+            alert("Please Enter All Details");
+            return;
+            }
        
-        
+        }
+
+    
             $.ajax({
                 type: "POST",
                 url: '/edithscmarks/',
@@ -291,12 +317,35 @@ function editHscMarks() {
         
     }   
     
-function editBeMarks() {
+function editBeMarks(is_diploma) {
         console.log('signupform');
         var signupform = $('#' + 'signupform');
         var csrftoken = getCookie('csrftoken');
-       
+        if(!is_diploma){
+        var fe_marks  = document.getElementById("fe_marks").value;
+        var fe_outof  = document.getElementById("fe_outof").value;
+        if(fe_outof =="" ||fe_marks==""){
+            alert("Enter FE marks");
+        }
+
+        }
+        var se_marks = document.getElementById("se_marks").value;
+        var se_outof = document.getElementById("se_outof").value;
+        var te_marks = document.getElementById("te_marks").value;
+        var te_outof = document.getElementById("te_outof").value;
+        var total_marks = document.getElementById("total_marks").value;
+        var total_outof = document.getElementById("total_outof").value;
+        var average = document.getElementById("average").value;
         
+        
+        if(se_marks=="" || se_outof==""||te_marks==""||te_outof==""||total_marks==""||total_outof==""){
+            alert("Enter all marks");
+            return;
+        }
+        else if (average==""){        
+            alert("Enter average");
+            return;
+        }
             $.ajax({
                 type: "POST",
                 url: '/editbemarks/',
@@ -322,7 +371,16 @@ function editOtherDetails() {
         console.log('signupform');
         var signupform = $('#' + 'signupform');
         var csrftoken = getCookie('csrftoken');
-       
+        var birth_date = document.getElementById("birth_date").value;
+        var city = document.getElementById("city").value;
+        if(birth_date==""){
+            alert("Enter Birth Date");
+            return;
+        }
+        else if(city==""){
+            alert("Enter city");
+            return;
+        }
         
             $.ajax({
                 type: "POST",
