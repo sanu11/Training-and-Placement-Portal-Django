@@ -162,6 +162,7 @@
         <th>ID</th>
         <th>Company</th>
         <th>Salary Lpa</th>
+        <th>Criteria</th>   
         <th>Deadline</th>
         <th>Willing</th>
 
@@ -177,6 +178,9 @@
         <td> <a href= /company/{{company.c_id}}/ > {{company.name }}</a> </td>
 
         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{company.salary}}</td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{company.criteria}}</td>
+ 
+ 
         <td>{{company.reg_end}}</td>
         {% if company in arr_list %}
         <td> <input type="checkbox"  id ="{{company.c_id}}"  name="" checked=""></td>

@@ -830,7 +830,7 @@ def web_apply_company(request):
     applied = request.POST["applied"]
     print "Already applied " ,applied    
     reg_end = company.reg_end
-    if applied == "true":
+    if applied == "false":
         if reg_end and timezone.now()>reg_end:
             print "deadline over"
             return HttpResponse("Already Applied.Deadline over.")
@@ -850,7 +850,7 @@ def web_apply_company(request):
                 return HttpResponse("Can't apply. Your average is below criteria.")
             else:
                 company.applied_students.add(student)
-                return HttpResponse("Applied Succesfully")
+                return HttpResponse("Applied Successfully")
     
 @csrf_exempt
 def web_edit_profile(request):

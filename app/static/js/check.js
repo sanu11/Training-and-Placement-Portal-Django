@@ -510,6 +510,7 @@ function companyUpdate() {
 
 function applyCompany(c_id){
         var checked  = document.getElementById(c_id).checked;
+        console.log(checked);
         var csrftoken = getCookie('csrftoken');
         
             $.ajax({
@@ -518,19 +519,15 @@ function applyCompany(c_id){
 
                 data:{c_id:c_id , csrfmiddlewaretoken : csrftoken,applied:checked} ,
                 success: function(message) {
-                  if(message == "can't"){
-                    alert("Can't apply. Deadline crossed.")
-                   if(checked)
-                    document.getElementById(c_id).checked = false;
-                    else
-                    document.getElementById(c_id).checked = true;
-                  }
-                  else if (message == "applied"){
-                    alert("Applied Successfully");
-                  }
-                  else if(message == "unapplied"){
-                    alert("Unapplied Successfully");
-                  }
+                    alert(message);
+                    if(!(message=="Applied Successfully"||message=="Removed Application Successfully")) {
+                        console.log("message");
+                       if(checked)
+                        document.getElementById(c_id).checked = false;
+                        else
+                        document.getElementById(c_id).checked = true;
+                    }
+                  
                 },
                 error: function(xhr, errmsg, err) {
                     alert('Error');
