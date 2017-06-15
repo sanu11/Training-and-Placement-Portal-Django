@@ -484,6 +484,7 @@ def get_students_page(request):
             else:
                 students_max_average = students_min_average
 
+            print students_max_average
             if "lock" in request.POST:
                 lock_status = request.POST["lock"]
                 if lock_status == "locked":
