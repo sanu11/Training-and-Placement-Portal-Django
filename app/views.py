@@ -423,6 +423,8 @@ def get_student_details(request):
                 year = Year.objects.all()[0]
                         
             roll  = request.POST["roll"]
+            if not Student.objects.filter(roll=roll,y_id=year).exists():
+                return HttpResponse("Student not found")
             obj = Student.objects.get(roll=roll,y_id=year)
             context = {}
             context["student"]=obj
@@ -446,17 +448,23 @@ def get_students_page(request):
         if Admin.objects.filter(email=get_mail).exists():
             year = "All"
             branch = "All"
-            a_id = "All"
-            if  "year"  in request.POST and year != "All":
+
+            if  "year"  in request.POST:
                 year = str(request.POST["year"])
-                yearobj = Year.objects.get(year=year)
-                students_year = Student.objects.filter(y_id=yearobj)
+                if year != "All":
+                    yearobj = Year.objects.get(year=year)
+                    students_year = Student.objects.filter(y_id=yearobj)
+                else:
+                    students_year = Student.objects.all()
             else:
                 students_year = Student.objects.all()
 
-            if  "branch" in request.POST and branch != "All":
+            if  "branch" in request.POST:
                 branch = request.POST["branch"]
-                students_branch = students_year.filter(branch=branch)
+                if branch != "All":
+                    students_branch = students_year.filter(branch=branch)
+                else:
+                    students_branch = students_year
             else:
                 students_branch = students_year
 
