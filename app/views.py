@@ -459,6 +459,7 @@ def get_students_page(request):
             else:
                 students_year = Student.objects.all()
 
+            print students_year
             if  "branch" in request.POST:
                 branch = request.POST["branch"]
                 if branch != "All":
