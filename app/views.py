@@ -459,17 +459,15 @@ def get_students_page(request):
             else:
                 students_year = Student.objects.all()
 
-            print students_year
             if  "branch" in request.POST:
                 branch = request.POST["branch"]
-                print branch
                 if branch != "All":
                     students_branch = students_year.filter(branch=branch)
                 else:
                     students_branch = students_year
             else:
                 students_branch = students_year
-            print students_branch
+
             minavg = 0
             maxavg=100
             lock_status = "All"
@@ -486,7 +484,6 @@ def get_students_page(request):
             else:
                 students_max_average = students_min_average
 
-            print students_max_average
             if "lock" in request.POST:
                 lock_status = request.POST["lock"]
                 if lock_status == "locked":
