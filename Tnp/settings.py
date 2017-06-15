@@ -13,35 +13,35 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 #
-# #uncomment this for deploying to heroku
-#
-
-# import dj_database_url
-# db_from_env = dj_database_url.config(conn_max_age=500)
-
-# # Static files (CSS, JavaScript, Images)
-# # https://docs.djangoproject.com/en/1.9/howto/static-files/
-
-# PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+#uncomment this for deploying to heroku
 
 
-# STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-# STATIC_URL = '/static/'
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.9/howto/static-files/
+
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 
-# # Extra places for collectstatic to find static files.
-# STATICFILES_DIRS = (
-#     os.path.join(PROJECT_ROOT, 'static'),
-# )
-
-# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+STATIC_URL = '/static/'
 
 
-# DATABASES={}
-# # Parse database configuration from $DATABASE_URL
-# DATABASES['default'] = dj_database_url.config()
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static'),
+)
 
-# WSGI_APPLICATION = 'Tnp.wsgi.application'
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+
+DATABASES={}
+# Parse database configuration from $DATABASE_URL
+DATABASES['default'] = dj_database_url.config()
+
+WSGI_APPLICATION = 'Tnp.wsgi.application'
 # #
 
 ALLOWED_HOSTS =['*'] 
@@ -152,10 +152,10 @@ GCM_APIKEY = "AIzaSyBQL45koCxt0zvLugl1lmqfzusDM2HdFJw"
 # for local , comment this when deploying to heroku
 
 
-PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(PROJECT_DIR, 'sanika.db'),
-    }
-}
+# PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(PROJECT_DIR, 'sanika.db'),
+#     }
+# }
