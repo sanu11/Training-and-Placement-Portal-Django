@@ -498,7 +498,7 @@ def get_students_page(request):
             students = students_lock_status
             years = Year.objects.all().order_by('-y_id')
 
-           
+            print students
             name = request.session["name"]
             return render(request, 'app/students.html', {"students": students, "years":years ,"year":year,"branch":branch,"minavg":minavg,"maxavg":maxavg,"lock":lock_status,"name": name})
         # student login
