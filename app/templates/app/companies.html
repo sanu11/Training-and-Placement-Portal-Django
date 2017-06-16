@@ -241,9 +241,9 @@
         <th>Company</th>
         <th>Salary Lpa</th>
         <th>Criteria</th>
-        <th>Hired</th>
+
         <th>Date</th>
-        <th>Placed</th>
+        <th>Hired</th>
 
         
       </tr>
@@ -261,15 +261,11 @@
         {% else %}
         <td>{{company.criteria}}</td>
         {% endif %}
-        <td>{{company.hired_count}}</td>
+
         <td>{{company.ppt_date}}</td>
-        
-        {% if company.placed_url %}
-        <td><a href={{company.placed_url}}>{{company.placed_url}}</td>
-        {% else %}
-        <td></td>
-        
-        {% endif %}
+        <td><a href="/company/{{company.c_id}}/students/">{{company.hired_count}}</td>
+
+
         
       </tr>
       {% endfor %}

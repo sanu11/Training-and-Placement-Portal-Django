@@ -17,9 +17,9 @@ urlpatterns = [
 
 	url(r'^student/(?P<roll>[0-9]+)/$',views.get_student_page),
 	url(r'^company/(?P<cid>[0-9]+)/$',views.get_company_page),
+	url(r'^company/(?P<cid>[0-9]+)/students/$', views.get_placed_students_page),
 
-
-###admin side upload pages
+	###admin side upload pages
 	url(r'^pregister/$',views.get_register_page),
 	url(r'^pupdate/$',views.get_update_page),
 	url(r'^pedit/$', views.get_company_edit_page),
@@ -31,7 +31,7 @@ urlpatterns = [
 	url(r'^lockStudent/$',views.web_lock_student),
 	url(r'^unlockStudent/$',views.web_unlock_student),
 
-
+	url(r'^placedStudents/$', views.web_placed_students),
 
 	url(r'^cregister/$',views.web_register_company),
 	url(r'^update/$',views.web_update_company),

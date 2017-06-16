@@ -536,6 +536,39 @@ function applyCompany(c_id){
         
 }
 
+function placedStudents(c_id){
+
+        var inputs = $('tr').find('input');
+        var arr=[];
+
+        for( i=0;i<inputs.length;i++){
+
+        if( inputs[i].checked)
+        arr.push(inputs[i].id);
+        }
+
+
+
+        var csrftoken = getCookie('csrftoken');
+
+            $.ajax({
+                type: "POST",
+                url: '/placedStudents/',
+
+                data:{c_id:c_id ,placed_arr:JSON.stringify(arr), csrfmiddlewaretoken : csrftoken} ,
+                success: function(message) {
+                    alert(message);
+
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+
+
+
+
+}
 
     function loadDetails() {
 
