@@ -332,7 +332,11 @@
 
 <script>
     $(document).ready(function(){
-    $('#myTable').DataTable();
+    $('#myTable').DataTable({
+    "Average": [
+        { "sType": "numeric" }
+    ]
+} );
 });
 </script>
 </body>
