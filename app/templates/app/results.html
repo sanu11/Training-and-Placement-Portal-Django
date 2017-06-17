@@ -181,9 +181,9 @@
         <td>{{forloop.counter}}</td>
           <td>{{result.c_id}}</td>
 
-        <td> <a href= /student/{{student.roll}}/ > {{result.shortlist}}</a> </td>
+        <td>  {{result.shortlist}} </td>
 
-        <td>&nbsp;&nbsp;{{result.url}}</td>
+          <td>&nbsp;<a href="{{result.url}}">{{result.url}}</a></td>
 
       </tr>
       {% endfor %}
