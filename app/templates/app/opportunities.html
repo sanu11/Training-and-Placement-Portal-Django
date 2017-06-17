@@ -212,7 +212,16 @@
 
 <script>
     $(document).ready(function(){
-    $('#myTable').DataTable();
+    $('#myTable').DataTable(
+    {
+    "Salary Lpa": [
+        { "sType": "numeric" }
+    ],
+    "Criteria":[
+    { "sType":"numeric"}
+    ]
+} );
+});
 });
 </script>
 </body>
