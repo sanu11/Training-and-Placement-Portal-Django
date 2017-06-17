@@ -682,7 +682,7 @@ def get_results_page(request):
         name = request.session["name"]
         results = Result.objects.all().order_by('-r_id')
         print results
-        return render(request, 'app/resultsDisplay.html', {"results": results, "name": name, "login": login,"lock":lock})
+        return render(request, 'app/results.html', {"results": results, "name": name, "login": login,"lock":lock})
 
 
 @csrf_exempt
