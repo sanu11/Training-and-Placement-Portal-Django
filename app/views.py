@@ -403,7 +403,8 @@ def get_search_student_page(request):
             name = request.session["name"]
             years = Year.objects.all()
             year = years.order_by('-y_id')[0]
-            return render(request,'app/searchStudent.html',{"years":years,"year":year})
+            name = request.session["name"]
+            return render(request,'app/searchStudent.html',{"years":years,"year":year,"name":name})
         else:
             return HttpResponse("Not permitted to access")
 
