@@ -289,7 +289,11 @@
 
 <script>
     $(document).ready(function(){
-    $('#myTable').DataTable();
+    $('#myTable').DataTable({
+            "columnDefs": [
+                { "type": "num-html", targets: 2 }
+            ]
+        });
 });
 </script>
 </body>
