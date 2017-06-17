@@ -265,7 +265,7 @@
         {% endif %}
 
         <td>{{company.ppt_date}}</td>
-          {% if company.hired_count == None or hired_count == 0 %}
+          {% if company.hired_count == None or company.hired_count == 0 %}
           <td>0</td>
           {% else %}
           <td><a href="/company/{{company.c_id}}/students/">

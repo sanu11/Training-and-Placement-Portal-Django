@@ -33,6 +33,8 @@ class Company(models.Model):
 	reg_start	=	models.DateTimeField(null=True,blank=True)
 	reg_end		=	models.DateTimeField(null=True,blank=True)
 	reg_link	=	models.CharField(max_length=1000,null=True,blank=True)
+	status 		=	models.CharField(max_length=50,null=True,blank=True)
+	lock 		=	models.BooleanField(default=False)
 	y_id		=	models.ForeignKey(Year,null=True,blank=True)							#foreign key to year table
 	applied_students=	models.ManyToManyField('Student',blank=True)									#student can apply to many companies and a company can have many students
 	
