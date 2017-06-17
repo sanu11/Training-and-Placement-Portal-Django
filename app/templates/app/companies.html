@@ -257,7 +257,7 @@
        
         <td> <a href= /company/{{company.c_id}}/ > {{company.name }}</a> </td>
 
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{company.salary}}</td>
+        <td>{{company.salary}}</td>
         {% if company.criteria == 0 %}
         <td> NC</td>
         {% else %}
@@ -289,11 +289,14 @@
 
 <script>
     $(document).ready(function(){
-    $('#myTable').DataTable({
-            "columnDefs": [
-                { "type": "num-html", targets: 2 }
-            ]
-        });
+    $('#myTable').DataTable( {
+    "Salary Lpa": [
+        { "sType": "numeric" }
+    ],
+    "Criteria":[
+    { "sType":"numeric"}
+    ]
+} );
 });
 </script>
 </body>
