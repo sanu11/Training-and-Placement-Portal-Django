@@ -168,7 +168,6 @@ def get_main_page(request):
             lock = student.lock
             return render(request, 'app/home.html', {"login": login, "name": name,"lock":lock})
 
-
 @csrf_exempt
 def get_developers_page(request):
     if  request.session.get("name"):

@@ -137,7 +137,6 @@ class Message(models.Model):
 	def __str__(self):
 		return self.title
 
-
 class Result(models.Model):
 	r_id		=	models.AutoField(primary_key=True)
 	c_id		=	models.ForeignKey(Company,on_delete=models.CASCADE)			#foreign key o company table
