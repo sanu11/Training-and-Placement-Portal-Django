@@ -179,7 +179,7 @@
 {% for result in results %}
       <tr>
         <td>{{forloop.counter}}</td>
-          <td>{{result.c_id}}</td>
+          <td><a href="/company/{{result.c_id.c_id}}"> {{result.c_id}}</a></td>
 
         <td>  {{result.shortlist}} </td>
 
