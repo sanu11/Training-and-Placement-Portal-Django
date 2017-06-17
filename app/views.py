@@ -160,7 +160,6 @@ def get_main_page(request):
             print "Admin login"
             return render(request, 'app/home.html', {"login": login, "name": name})
 
-
         # student login
         elif Student.objects.filter(email=get_mail).exists():
             login = 2
@@ -213,7 +212,10 @@ def get_signup_page(request):
 @csrf_exempt
 def get_login_page(request):
     print "in login page"
-    return render(request, 'app/login.html', {})
+    if request.session.get("email"):
+        return get_main_page(request)
+    else:
+        return render(request, 'app/login.html', {})
 
 @csrf_exempt
 def get_resume_upload_page(request):
@@ -474,7 +476,7 @@ def get_students_page(request):
             
             if "minavg" in request.POST:
                 minavg = request.POST["minavg"]
-                students_min_average = students_branch.filter(average__gte =minavg)
+                students_min_average = students_branch.filter(average__gte = minavg)
             else:
                 students_min_average = students_branch
 
@@ -633,13 +635,13 @@ def web_view_students(request,c_id):
         return render(request,'app/redirect2.html',{})
     email = request.session["email"]
     if Admin.objects.filter(email=email).exists():
-        name = request.session["name"]
+        student_name = request.session["name"]
         company = Company.objects.get(c_id=c_id)
         students = company.applied_students.all()
-        name = company.name
+
         login = 1
         print students
-        return render(request,'app/viewStudents.html',{"students":students,"login":login,"name":name,"company":name})
+        return render(request,'app/viewStudents.html',{"students":students,"login":login,"name":student_name,"company":company})
     else:
         return HttpResponse("Not permitted to access")
 
@@ -702,6 +704,22 @@ def get_company_page(request, cid):
             return render(request, 'app/companyDisplay.html', {"company": company, "name": name, "login": login})
         else:
             return HttpResponse("Not Found")
+
+def get_placed_students_page(request,cid):
+    if not request.session.get("name"):
+        return render(request,'app/redirect2.html',{})
+    get_mail = request.session["email"]
+    if Admin.objects.filter(email=get_mail).exists():
+        login = 1
+        print "Admin login"
+    # student login
+    elif Student.objects.filter(email=get_mail).exists():
+        login = 2
+        print "Student login"
+    name = request.session["name"]
+    company = Company.objects.get(c_id=cid)
+    placed_students = company.student_set.all()
+    return  render(request,'app/placedStudents.html',{"students":placed_students,"companyName":company.name,"login":login,"name":name})
 
 @csrf_exempt
 def logout(request):
@@ -1301,6 +1319,7 @@ def web_notify(request):
         obj = Message()
         obj.title = title
         obj.message = body
+        obj.timestamp = datetime.datetime.now()
         obj.save()
         if len(request.FILES) != 0:
             if request.FILES["file"]:
@@ -1420,6 +1439,35 @@ def web_upload_result(request):
             HttpResponse('file')
     else:
         HttpResponse('error')
+
+
+@csrf_exempt
+def web_placed_students(request):
+    c_id = request.POST["c_id"]
+    company = Company.objects.get(c_id=c_id)
+
+    studentsList = company.student_set.all()
+    for student in studentsList:
+        student.placed= False
+        student.c_id = None
+        student.save()
+
+    print request.POST
+    students = request.POST["placed_arr"]
+    students = json.loads(students)
+
+    for i in students:
+        i = int(i)
+        student = Student.objects.get(s_id=i)
+        student.c_id = company
+        student.placed = True
+        student.save()
+
+    hired_count = len(students)
+    company.hired_count = hired_count
+    company.save()
+
+    return HttpResponse(""+ str(hired_count) + " Students added Successfully to " +company.name)
 
 
 #########called from ajax######

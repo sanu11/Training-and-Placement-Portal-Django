@@ -102,7 +102,7 @@ class Student(models.Model):
 
 	placed		=		models.BooleanField(default=False)
 	url			=		models.CharField(max_length=500,null=True,blank=True)
-	c_id		=		models.ForeignKey(Company,on_delete=models.CASCADE,null=True,blank=True)			#foreign key o company table
+	c_id		=		models.ForeignKey(Company,on_delete=models.SET_NULL,null=True,blank=True)			#foreign key o company table
 	lock		=		models.BooleanField(default=False)		
 
 	def __str__(self):
@@ -128,6 +128,8 @@ class Verify(models.Model):
 
 class Message(models.Model):
 	msg_id		=	models.AutoField(primary_key=True)
+	timestamp 	=	models.DateTimeField()
+	important 	=	models.BooleanField(default=False)
 	title		=	models.CharField(max_length=200,default="")
 	message		=	models.CharField(max_length=10000,default="",null=True,blank=True)
 	url			=	models.CharField(max_length=50,null=True,blank=True)

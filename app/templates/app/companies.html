@@ -8,7 +8,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!---- BootStrap Libraries         -->
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/check.js"></script>
 
@@ -234,16 +236,16 @@
 <!-- Table Content start -->
 <div class="col-sm-12">
   <div class="table-responsive">          
-  <table class="table">
+  <table id="myTable" class="table">
      <thead>
       <tr>
         <th>ID</th>
-        <th>Company</th>
-        <th>Salary Lpa</th>
+        <th id="name_header">Company</th>
+        <th id="salary_header">Salary Lpa</th>
         <th>Criteria</th>
-        <th>Hired</th>
+
         <th>Date</th>
-        <th>Placed</th>
+        <th>Hired</th>
 
         
       </tr>
@@ -261,15 +263,11 @@
         {% else %}
         <td>{{company.criteria}}</td>
         {% endif %}
-        <td>{{company.hired_count}}</td>
+
         <td>{{company.ppt_date}}</td>
-        
-        {% if company.placed_url %}
-        <td><a href={{company.placed_url}}>{{company.placed_url}}</td>
-        {% else %}
-        <td></td>
-        
-        {% endif %}
+        <td><a href="/company/{{company.c_id}}/students/">{{company.hired_count}}</td>
+
+
         
       </tr>
       {% endfor %}
@@ -288,5 +286,11 @@
  <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
 <p><a href="/developers-page/">Developers</a></p></div>
 </footer>
+
+<script>
+    $(document).ready(function(){
+    $('#myTable').DataTable();
+});
+</script>
 </body>
 </html> 

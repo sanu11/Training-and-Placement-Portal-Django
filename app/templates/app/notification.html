@@ -154,11 +154,14 @@
   
     {% for message in notifications %}
     <div class="panel panel-default">
+        <a href="#{{forloop.counter}}" data-toggle="collapse" data-parent="#accordion">
       <div class="panel-heading">
         <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href=#{{forloop.counter}}>{{message.title}}</a>
-        </h4>
+          {{message.title}}
+           <p style="text-align:right">
+               {{message.timestamp}}</p></h4>
       </div>
+    </a>
       <div id={{forloop.counter}} class="panel-collapse collapse">
         <div class="panel-body">{{message.message}}</div>
           {% if message.url %}
