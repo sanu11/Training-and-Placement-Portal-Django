@@ -178,17 +178,18 @@ def get_developers_page(request):
             login = 1
             print "Admin login"
             name = request.session["name"]
-        
+            return render(request, 'app/developers.html', {"login": login, "name": name})
         # student login
         elif Student.objects.filter(email=get_mail).exists():
             login = 2
             print "Student login"
             student = Student.objects.get(email=get_mail)
             lock = student.lock
+            return render(request, 'app/developers.html', {"login": login, "name": name, "lock": lock})
     else:
         login = 0
         name=""
-    return render(request, 'app/developers.html', {"login":login,"name":name,"lock":lock})
+    return render(request, 'app/developers.html', {"login":login,"name":name})
 
 @csrf_exempt
 def get_settings_page(request):
