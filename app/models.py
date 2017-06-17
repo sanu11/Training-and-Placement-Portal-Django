@@ -141,7 +141,7 @@ class Message(models.Model):
 
 class Result(models.Model):
 	r_id		=	models.AutoField(primary_key=True)
-	c_id		=	models.ForeignKey(Company,on_delete=models.CASCADE)			#foreign key o company table
+	c_id		=	models.ForeignKey(Company,on_delete=models.SET_NULL)			#foreign key o company table
 	shortlist 	=	models.CharField(max_length=100)
 	filename	=	models.CharField(max_length=100)
 	url 		=	models.CharField(max_length=100)
