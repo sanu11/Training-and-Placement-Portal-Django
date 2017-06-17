@@ -160,7 +160,6 @@ def get_main_page(request):
             print "Admin login"
             return render(request, 'app/home.html', {"login": login, "name": name})
 
-
         # student login
         elif Student.objects.filter(email=get_mail).exists():
             login = 2
@@ -213,7 +212,10 @@ def get_signup_page(request):
 @csrf_exempt
 def get_login_page(request):
     print "in login page"
-    return render(request, 'app/login.html', {})
+    if request.session.get("email"):
+        return get_main_page(request)
+    else:
+        return render(request, 'app/login.html', {})
 
 @csrf_exempt
 def get_resume_upload_page(request):
@@ -1317,6 +1319,7 @@ def web_notify(request):
         obj = Message()
         obj.title = title
         obj.message = body
+        obj.timestamp = datetime.datetime.now()
         obj.save()
         if len(request.FILES) != 0:
             if request.FILES["file"]:
