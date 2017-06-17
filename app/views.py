@@ -476,7 +476,7 @@ def get_students_page(request):
             
             if "minavg" in request.POST:
                 minavg = request.POST["minavg"]
-                students_min_average = students_branch.filter(average__gte =minavg)
+                students_min_average = students_branch.filter(average__gte = minavg)
             else:
                 students_min_average = students_branch
 

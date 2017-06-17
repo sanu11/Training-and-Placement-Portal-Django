@@ -10,6 +10,9 @@
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
   <script src="/static/js/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+
   <script src="/static/js/check.js"></script>
   
   
@@ -153,9 +156,6 @@
  <h2 class="text-center">
       <b>{{company.name}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <!-- <button type="button"  class="btn btn-info" >Download</button> -->
-     <div class="col-md-3">
-     <input type="text" id="search" name="search"  placeholder="search" class="form-control ">
-     </div>
 <button type="button" onclick="placedStudents('{{company.c_id}}')" class="btn btn-info">Submit</button>
  </h2>
    <!-- Division for filters -->
@@ -164,7 +164,7 @@
 <hr>
 <!-- <p>Table contains placement statistics for the year 2016-17. </p> -->
   <div class="table-responsive">          
-  <table class="table">
+  <table class="table" id="myTable">
 
     <thead>
     
@@ -214,21 +214,12 @@
 </footer>
 
 <script>
-$(document).ready(function(){
-    var $rows = $("tr").not(':first');
-    $("#search").keyup(function(){
-    var val = $.trim(this.value);
-    if(val == "")
-        $rows.show();
-    else{
-        $rows.hide();
-        var str = "td:contains(" + val  + ")";
-        $rows.has(str).show();
-    }
-    });
+
+<script>
+    $(document).ready(function(){
+    $('#myTable').DataTable();
 });
-
-
+</script>
 </script>
 
 </body>
