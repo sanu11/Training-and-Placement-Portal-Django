@@ -167,6 +167,7 @@
         <th>Salary Lpa</th>
         <th>Criteria</th>   
         <th>Deadline</th>
+        <th>Status</th>
         <th>Willing</th>
 
         <th></th>
@@ -185,7 +186,8 @@
  
  
         <td>{{company.reg_end}}</td>
-        {% if company in arr_list %}
+        <td >{{company.status}}</td>
+          {% if company in arr_list %}
         <td> <input type="checkbox"  id ="{{company.c_id}}"  name="" checked=""></td>
         {% else %}
         <td> <input type="checkbox"  id ="{{company.c_id}}"  name=""></td>
@@ -221,7 +223,6 @@
     { "sType":"numeric"}
     ]
 } );
-});
 });
 </script>
 </body>

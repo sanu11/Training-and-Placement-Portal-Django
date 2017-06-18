@@ -659,6 +659,15 @@ def get_opportunities_page(request):
         student = Student.objects.get(email=email)
         curr_year = Year.objects.order_by('-y_id')[0]
         companies = Company.objects.filter(y_id=curr_year).order_by('-ppt_date')
+        for company in companies:
+            if company.lock:
+                company.status="Closed"
+            elif company.reg_end and company.reg_end < timezone.now():
+                company.status = "Ongoing"
+            elif company.reg_end and company.reg_end > timezone.now() and not company.lock:
+                company.status = "Open"
+            company.save()
+
         arr_list = student.company_set.all()
         lock = student.lock
         login = 2
@@ -1441,7 +1450,6 @@ def web_upload_result(request):
     else:
         HttpResponse('error')
 
-
 @csrf_exempt
 def web_placed_students(request):
     c_id = request.POST["c_id"]
@@ -1470,6 +1478,14 @@ def web_placed_students(request):
 
     return HttpResponse(""+ str(hired_count) + " Students added Successfully to " +company.name)
 
+@csrf_exempt
+def web_lock_company(request):
+    c_id = request.POST["c_id"]
+    company = Company.objects.get(c_id=c_id)
+    company.lock = 1
+    company.status = "Closed"
+    company.save()
+    return HttpResponse(company.name + " Locked Successfully")
 
 #########called from ajax######
 @csrf_exempt

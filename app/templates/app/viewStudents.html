@@ -156,8 +156,15 @@
  <h2 class="text-center">
       <b>{{company.name}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <!-- <button type="button"  class="btn btn-info" >Download</button> -->
-<button type="button" onclick="placedStudents('{{company.c_id}}')" class="btn btn-info">Submit</button>
- </h2>
+     <div align="right">
+<button type="button" onclick="placedStudents('{{company.c_id}}','{{company.lock}}')" class="btn btn-info">Submit</button>
+
+    {% if company.lock %}
+    <button type="button" id="lock" onclick="lockCompany('{{company.c_id}}',1)" class="btn btn-info">Locked</button>
+    {% else %}
+    <button type="button" id="lock" onclick="lockCompany('{{company.c_id}}',0)" class="btn btn-info">Lock</button>
+    {% endif %}
+     </div> </h2>
    <!-- Division for filters -->
   
 <div>
@@ -188,9 +195,9 @@
         <td>&nbsp;{{student.branch}}</td>
         <td>&nbsp;&nbsp;{{student.average}}</td>
           {% if student.c_id == company %}
-        <td><input type="checkbox" id ="{{student.s_id}}" class="checkbox" checked></td>
+        <td><input type="checkbox" id ="{{student.s_id}}" class="checkbox" checked> </td>
           {% else %}
-        <td><input type="checkbox" id ="{{student.s_id}}" class="checkbox" ></td>
+        <td><input type="checkbox" id ="{{student.s_id}}" class="checkbox" > </td>
          {% endif %}
         <td></td>
       
@@ -213,7 +220,6 @@
 <p><a href="/developers-page/">Developers</a></p></div>
 </footer>
 
-<script>
 
 <script>
     $(document).ready(function(){
@@ -223,7 +229,7 @@
     ]
 } );
 });
-</script>
+
 </script>
 
 </body>

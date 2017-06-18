@@ -536,8 +536,12 @@ function applyCompany(c_id){
         
 }
 
-function placedStudents(c_id){
-
+function placedStudents(c_id,lock){
+console.log(lock);
+        if(lock=='True'){
+        alert("Already Locked");
+        return;
+        }
         var inputs = $('tr').find('input');
         var arr=[];
 
@@ -565,10 +569,32 @@ function placedStudents(c_id){
                 },
             });
 
+}
+function lockCompany(c_id,lock){
 
+        var csrftoken = getCookie('csrftoken');
+        if(lock == 1){
+        alert("Already locked");
+        return;
+        }
+            $.ajax({
+                type: "POST",
+                url: '/lockCompany/',
 
+                data:{c_id:c_id , csrfmiddlewaretoken : csrftoken} ,
+                success: function(message) {
+                    alert(message);
+                 document.getElementById("lock").innerHTML = "Locked";
+
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
 
 }
+
+
 
     function loadDetails() {
 
