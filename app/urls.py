@@ -32,6 +32,7 @@ urlpatterns = [
 	url(r'^unlockStudent/$',views.web_unlock_student),
 
 	url(r'^placedStudents/$', views.web_placed_students),
+	url(r'^lockCompany/$', views.web_lock_company),
 
 	url(r'^cregister/$',views.web_register_company),
 	url(r'^update/$',views.web_update_company),
