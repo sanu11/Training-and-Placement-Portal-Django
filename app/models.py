@@ -61,7 +61,7 @@ class Student(models.Model):
 	birth_date	=		models.DateField(null=True,blank=True)
 	per_address =		models.CharField(max_length=1000,null=True,blank=True)
 	cur_address =		models.CharField(max_length=1000,null=True,blank=True)
-	city		=		models.CharField(max_length=30,null=True,blank=True)
+	city		=		models.CharField(max_length=100,null=True,blank=True)
 	aadhar_number=		models.CharField(max_length=20,null=True,blank=True)
 	pan_number	 =		models.CharField(max_length=20,null=True,blank=True)
 	passport_number=	models.CharField(max_length=50,null=True,blank=True)
