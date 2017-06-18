@@ -67,22 +67,22 @@ class Student(models.Model):
 	passport_number=	models.CharField(max_length=50,null=True,blank=True)
 	
 
-	tenth_board =		models.CharField(max_length=20,null=True,blank=True)
+	tenth_board =		models.CharField(max_length=30,null=True,blank=True)
 	tenth_marks	=		models.FloatField(null=True,blank=True)
-	tenth_schoolname=	models.CharField(max_length=100,null=True,blank=True)
-	tenth_city	=		models.CharField(max_length=30,null=True,blank=True)
+	tenth_schoolname=	models.CharField(max_length=500,null=True,blank=True)
+	tenth_city	=		models.CharField(max_length=500,null=True,blank=True)
 	tenth_yeargap =  	models.BooleanField(default=False)
 	tenth_yeargap_reason=models.CharField(max_length=50,null=True,blank=True)
 
 	is_diploma	  =		models.BooleanField(default=False)
-	
-	twelveth_board= 	models.CharField(max_length=20,null=True,blank=True)
+
+	twelveth_board= 	models.CharField(max_length=30,null=True,blank=True)
 	twelveth_year = 	models.CharField(max_length=20,null=True,blank=True)
 	twelveth_marks=		models.FloatField(null=True,blank=True)
-	twelveth_schoolname=models.CharField(max_length=50,null=True,blank=True)
-	twelveth_city	=	models.CharField(max_length=50,null=True,blank=True)
+	twelveth_schoolname=models.CharField(max_length=500,null=True,blank=True)
+	twelveth_city	=	models.CharField(max_length=500,null=True,blank=True)
 	twelveth_yeargap=	models.BooleanField(default=False)
-	twelveth_yeargap_reason=models.CharField(max_length=50,null=True,blank=True)
+	twelveth_yeargap_reason=models.CharField(max_length=100,null=True,blank=True)
 
 	diploma_board = 	models.CharField(max_length=30,null=True,blank=True)
 	diploma_marks =		models.FloatField(null=True,blank=True)
