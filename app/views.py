@@ -862,6 +862,8 @@ def web_apply_company(request):
     student =  Student.objects.get(email=email)
     c_id = int(request.POST["c_id"])
     company = Company.objects.get(c_id=c_id)
+    if company.deadline == None:
+        return HttpResponse("Not accepting applications")
     back_allowed = company.back
     applied = request.POST["applied"]
     print "Already applied " ,applied    
