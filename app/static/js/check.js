@@ -570,6 +570,8 @@ console.log(lock);
             });
 
 }
+
+
 function lockCompany(c_id,lock){
 
         var csrftoken = getCookie('csrftoken');
@@ -585,6 +587,32 @@ function lockCompany(c_id,lock){
                 success: function(message) {
                     alert(message);
                  document.getElementById("lock").innerHTML = "Locked";
+
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+
+}
+
+function hideCompany(c_id,hide){
+
+        var csrftoken = getCookie('csrftoken');
+
+
+            $.ajax({
+                type: "POST",
+                url: '/hide/'+c_id+'/',
+
+                data:{csrfmiddlewaretoken : csrftoken} ,
+                success: function(message) {
+                    alert(message);
+                    //console.log(hide+" " + document.getElementById("hide").innerHTML);
+                    if(document.getElementById(c_id).innerHTML == "Hide")
+                        document.getElementById(c_id).innerHTML = "Unhide";
+                    else
+                        document.getElementById(c_id).innerHTML = "Hide";
 
                 },
                 error: function(xhr, errmsg, err) {

@@ -18,6 +18,7 @@ urlpatterns = [
 	url(r'^student/(?P<roll>[0-9]+)/$',views.get_student_page),
 	url(r'^company/(?P<cid>[0-9]+)/$',views.get_company_page),
 	url(r'^company/(?P<cid>[0-9]+)/students/$', views.get_placed_students_page),
+	url(r'^hide/(?P<cid>[0-9]+)/$', views.web_hide_company),
 
 	###admin side upload pages
 	url(r'^pregister/$',views.get_register_page),

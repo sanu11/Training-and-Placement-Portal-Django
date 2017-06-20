@@ -1489,6 +1489,22 @@ def web_lock_company(request):
     company.save()
     return HttpResponse(company.name + " Locked Successfully")
 
+
+@csrf_exempt
+def web_hide_company(request,cid):
+    company = Company.objects.get(c_id=cid)
+    if company.hidden:
+        company.hidden = 0
+        company.save()
+        return HttpResponse(company.name + " Company will be visible to students now.")
+    else:
+        company.hidden = 1
+        company.save()
+        return HttpResponse(company.name + " Company won't be visible to students now.")
+
+
+
+
 #########called from ajax######
 @csrf_exempt
 def web_download_students(request):
