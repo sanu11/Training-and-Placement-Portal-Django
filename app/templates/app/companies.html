@@ -247,7 +247,11 @@
      <thead>
       <tr>
         <th>ID</th>
-        <th id="name_header">Company</th>
+
+          {% if login == 1 %}
+          <th> Code</th>
+          {% endif %}
+           <th id="name_header">Company</th>
         <th id="salary_header">Salary Lpa</th>
         <th>Criteria</th>
 
@@ -261,7 +265,9 @@
 {% for company in companies %}
       <tr>
         <td>{{forloop.counter}}</td>
-       
+       {% if login == 1 %}
+          <td>{{company.code_name}}</td>
+          {% endif %}
         <td> <a href= /company/{{company.c_id}}/ > {{company.name }}</a> </td>
 
         <td>{{company.salary}}</td>

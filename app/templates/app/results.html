@@ -179,8 +179,11 @@
 {% for result in results %}
       <tr>
         <td>{{forloop.counter}}</td>
+          {% if login == 1 %}
           <td><a href="/company/{{result.c_id.c_id}}"> {{result.c_id}}</a></td>
-
+            {% else %}
+          <td><a href="/company/{{result.c_id.c_id}}"> {{result.c_id.code_name}}</a></td>
+         {% endif %}
         <td>  {{result.shortlist}} </td>
 
           <td>&nbsp;<a href="{{result.url}}">{{result.url}}</a></td>
