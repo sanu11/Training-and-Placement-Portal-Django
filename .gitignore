@@ -1,6 +1,5 @@
 venv
 *.pyc
-staticfiles
 .env
 /myprojectenv/*
 nohup.*
