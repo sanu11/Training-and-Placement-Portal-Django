@@ -1476,28 +1476,30 @@ def web_placed_students(request):
     company = Company.objects.get(c_id=c_id)
 
     studentsList = company.student_set.all()
-    for student in studentsList:
-        student.placed= False
-        student.c_id = None
-        student.save()
+    if company.lock == 0:
+        for student in studentsList:
+            student.placed= False
+            student.c_id = None
+            student.save()
 
-    print request.POST
-    students = request.POST["placed_arr"]
-    students = json.loads(students)
+        print request.POST
+        students = request.POST["placed_arr"]
+        students = json.loads(students)
 
-    for i in students:
-        i = int(i)
-        student = Student.objects.get(s_id=i)
-        student.c_id = company
-        student.placed = True
-        student.save()
+        for i in students:
+            i = int(i)
+            student = Student.objects.get(s_id=i)
+            student.c_id = company
+            student.placed = True
+            student.save()
 
-    hired_count = len(students)
-    company.hired_count = hired_count
-    company.save()
+        hired_count = len(students)
+        company.hired_count = hired_count
+        company.save()
 
-    return HttpResponse(""+ str(hired_count) + " Students added Successfully to " +company.name)
-
+        return HttpResponse(""+ str(hired_count) + " Students added Successfully to " +company.name)
+    else:
+        return  HttpResponse("Company Locked")
 @csrf_exempt
 def web_lock_company(request):
     c_id = request.POST["c_id"]
