@@ -11,6 +11,7 @@ from django.http import StreamingHttpResponse
 import json,csv
 import dropbox
 import requests
+import random,string
 
 @csrf_exempt
 def verify(request):
@@ -584,10 +585,13 @@ def get_companies_page(request):
             year_obj = Year.objects.get(year=year)
 
         else:
-            if prev_year:
-                year_obj = Year.objects.order_by('-y_id')[1]
+            if login == 2:
+                if prev_year:
+                    year_obj = Year.objects.order_by('-y_id')[1]
+                else:
+                    return HttpResponse("No data")
             else:
-                return HttpResponse("No data")
+                year_obj = Year.objects.order_by('-y_id')[0]
 
         companies_year = Company.objects.filter(y_id=year_obj)
         print  companies_year
@@ -1125,6 +1129,10 @@ def web_register_company(request):
         other_details = request.POST["other_details"]
         reg_end_date = request.POST["reg_end_date"]
         reg_end_time = request.POST["reg_end_time"]
+
+
+        s = string.lowercase + string.digits
+        x= ''.join(random.sample(s, 4))
 
 
         if ppt_date:
