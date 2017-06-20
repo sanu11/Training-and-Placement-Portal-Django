@@ -229,6 +229,67 @@
     ]
 } );
 });
+function placedStudents(c_id,lock){
+console.log(lock);
+        if(lock=='True'){
+        alert("Already Locked");
+        return;
+        }
+        var inputs = $('tr').find('input');
+        var arr=[];
+
+        for( i=0;i<inputs.length;i++){
+
+        if( inputs[i].checked)
+        arr.push(inputs[i].id);
+        }
+
+
+
+        var csrftoken = getCookie('csrftoken');
+
+            $.ajax({
+                type: "POST",
+                url: '/placedStudents/',
+
+                data:{c_id:c_id ,placed_arr:JSON.stringify(arr), csrfmiddlewaretoken : csrftoken} ,
+                success: function(message) {
+                    alert(message);
+
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+
+}
+
+
+
+function lockCompany(c_id,lock){
+
+        var csrftoken = getCookie('csrftoken');
+        if(lock == 1){
+        alert("Already locked");
+        return;
+        }
+            $.ajax({
+                type: "POST",
+                url: '/lockCompany/',
+
+                data:{c_id:c_id , csrfmiddlewaretoken : csrftoken} ,
+                success: function(message) {
+                    alert(message);
+                 document.getElementById("lock").innerHTML = "Locked";
+
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+
+}
+
 
 </script>
 
