@@ -167,38 +167,6 @@ function unlock(prn){
     // }
 
 
-function changePassword() {
-       
-        var csrftoken = getCookie('csrftoken');
-        var old_password = document.getElementById("old_password").value;
-        var new_password = document.getElementById("new_password").value;
-        
-            $.ajax({
-                type: "POST",
-                url: '/changepassword/',
-                data:{old_password:old_password,new_password:new_password,csrfmiddlewaretoken:csrftoken},
-                
-                success: function(message) {
-                console.log(message);
-                    if (message =='success') {
-                       alert("Password changed Successfully");
-                       window.location.href = "/logout";
-                    }
-                    else if (message == 'wrong')
-                    
-                        alert('Enter correct password');
-                    
-                    else
-                        alert("error");
-                    
-
-                },
-                error: function(xhr, errmsg, err) {
-                    alert('Error');
-                },
-                    
-            });
-    }
 
 function companyRegister() {
         console.log('registerform');
