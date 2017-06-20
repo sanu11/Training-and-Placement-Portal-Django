@@ -221,7 +221,7 @@ input:checked + .slider:before {
                             <select id="selectbasic" name="company" class="form-control">
                                 <option selected disabled hidden>Select Company</option>
                                 {% for company in companies %}
-                                <option> {{company.name}}</option>
+                                <option value = {{company.c_id}}> {{company.name}}</option>
                                 {% endfor %}
 
                             </select>
