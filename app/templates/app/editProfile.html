@@ -350,5 +350,54 @@ input:checked + .slider:before {
  <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
 <p><a href="/developers-page/">Developers</a></p></div>
 </footer>
+
+<script>
+
+
+    function editProfile() {
+        console.log('signupform');
+        var signupform = $('#' + 'signupform');
+        var csrftoken = getCookie('csrftoken');
+        var name = document.getElementById('name').value;
+        var roll = document.getElementById('roll').value;
+        var email = document.getElementById('email').value;
+        var phone = document.getElementById('phone').value;
+
+
+        var atpos = email.indexOf("@");
+        var dotpos = email.lastIndexOf(".");
+
+        if (roll.length !=4)
+            alert("Enter valid Roll number");
+        else if (atpos<1 || dotpos<atpos+2 || dotpos+2>=email.length) {
+            alert("Not a valid e-mail address");
+        }
+        else if(phone.length!=10)
+            alert ("Enter Valid mobile number");
+
+        else
+        {
+            $.ajax({
+                type: "POST",
+                url: '/editprofile/',
+                data: signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                console.log(message);
+                    if (message =='success') {
+                       window.location.href = "/peditsscmarks/";
+                    }
+                    else
+                    {
+                    alert('Error');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+        }
+    }
+
+</script>
 </body>
 </html>

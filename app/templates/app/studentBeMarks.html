@@ -377,5 +377,63 @@ input:checked + .slider:before {
  <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
 <p><a href="/developers-page/">Developers</a></p></div>
 </footer>
+<script>
+   function editBeMarks(is_diploma) {
+        console.log('signupform');
+        var signupform = $('#' + 'signupform');
+        var csrftoken = getCookie('csrftoken');
+        if(!is_diploma){
+        var fe_marks  = document.getElementById("fe_marks").value;
+        var fe_outof  = document.getElementById("fe_outof").value;
+        if(fe_outof =="" ||fe_marks==""){
+            alert("Enter FE marks");
+        }
+
+        }
+        var se_marks = document.getElementById("se_marks").value;
+        var se_outof = document.getElementById("se_outof").value;
+        var te_marks = document.getElementById("te_marks").value;
+        var te_outof = document.getElementById("te_outof").value;
+        var total_marks = document.getElementById("total_marks").value;
+        var total_outof = document.getElementById("total_outof").value;
+        var average = document.getElementById("average").value;
+
+
+        if(se_marks=="" || se_outof==""||te_marks==""||te_outof==""||total_marks==""||total_outof==""){
+            alert("Enter all marks");
+            return;
+        }
+        else if (average==""){
+            alert("Enter average");
+            return;
+        }
+            $.ajax({
+                type: "POST",
+                url: '/editbemarks/',
+                data: signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                console.log(message);
+                    if (message =='success') {
+                       window.location.href = "/peditotherdetails/";
+                    }
+                    else
+                    {
+                    alert('Error');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+
+    }
+
+    function editHscMarksPage(argument) {
+    window.location.href = "/pedithscmarks";
+    // body...
+}
+
+
+</script>
 </body>
 </html>
