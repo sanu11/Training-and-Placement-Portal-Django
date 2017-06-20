@@ -227,6 +227,34 @@
     ]
 } );
 });
+
+function applyCompany(c_id){
+        var checked  = document.getElementById(c_id).checked;
+        console.log(checked);
+        var csrftoken = getCookie('csrftoken');
+
+            $.ajax({
+                type: "POST",
+                url: '/applycompany/',
+
+                data:{c_id:c_id , csrfmiddlewaretoken : csrftoken,applied:checked} ,
+                success: function(message) {
+                    alert(message);
+                    if(!(message=="Applied Successfully"||message=="Removed Application Successfully")) {
+                        console.log("message");
+                       if(checked)
+                        document.getElementById(c_id).checked = false;
+                        else
+                        document.getElementById(c_id).checked = true;
+                    }
+
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+
+}
 </script>
 </body>
 </html> 
