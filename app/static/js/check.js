@@ -86,88 +86,6 @@ function studentLogin() {
     }
 
 
-function lock(prn){
-        var csrftoken = getCookie('csrftoken');
-        
-        $.ajax({
-            type: "POST",
-            url: '/lockStudent/',
-            data : {prn:prn,csrfmiddlewaretoken:csrftoken},
-            success: function(message) {
-            console.log(message);
-                if (message =='success') {
-                   window.location.href = "/psearch/";
-                }
-                else
-                {
-                alert('Error');
-                }
-            },
-            error: function(xhr, errmsg, err) {
-                alert('Error');
-            },
-        });
-    }
-
-
-function unlock(prn){
-        var csrftoken = getCookie('csrftoken');
-        var button1 = document.getElementById("lock1");
-        var button2 = document.getElementById("lock2");
-       
-        $.ajax({
-            type: "POST",
-            url: '/unlockStudent/',
-            data : {prn:prn,csrfmiddlewaretoken:csrftoken},
-            success: function(message) {
-            console.log(message);
-                if (message =='success') {
-                   alert("Unlocked Student");
-                   button1.value = "Lock";
-                   button2.value = "Lock";
-                   location.reload();
-                }
-                else
-                {
-                alert('Error');
-                }
-            },
-            error: function(xhr, errmsg, err) {
-                alert('Error');
-            },
-        });
-    }
-
-
-
-
-    // function getStudentDetails() {
-
-    //     var csrftoken = getCookie('csrftoken');
-    //     var roll = document.getElementById("roll").value;
-    //     var year = document.getElementById("year").value;
-
-    //         $.ajax({
-    //             type: "POST",
-    //             url: '/roll/',
-    //             data: {roll:roll,year:year,csrfmiddlewaretoken:csrftoken},
-    //             success: function(message) {
-    //             console.log(message);
-    //             str  = jQuery.parseJSON(message);
-    //             data = str[0]["fields"];
-
-                
-
-    //             },
-    //             error: function(xhr, errmsg, err) {
-    //                 alert('Error');
-    //             },
-    //         });
-
-    // }
-
-
-
 function companyRegister() {
         console.log('registerform');
         var registerform = $('#' + 'register');
@@ -471,29 +389,6 @@ function downloadCompanies() {
     }
     return cookieValue;
 };
-//function notifyCandidate() {
-//        console.log('notifyform');
-//        var notifyform = $('# b' + 'notify');
-//        var csrftoken = getCookie('csrftoken');
-//
-//        $.ajax({
-//            type: "POST",
-//            url: '/notify/',
-//            data:notifyform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
-//            success: function(message) {
-//                if (message =='success') {
-//                    alert('Notification Sent');
-//                    window.location.href = "/";
-//
-//                }else{
-//                    alert('Error occured');
-//                }
-//            },
-//            error: function(xhr, errmsg, err) {
-//                alert('Error');
-//            },
-//        });
-//    }
 
 //function uploadResult() {
 //        console.log('resultform');
