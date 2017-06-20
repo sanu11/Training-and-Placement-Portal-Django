@@ -163,8 +163,10 @@
      <thead>
       <tr>
         <th>ID</th>
-        <th>Company</th>
-        <th>Salary Lpa</th>
+
+          <th>Company Code</th>
+
+          <th>Salary Lpa</th>
         <th>Criteria</th>   
         <th>Deadline</th>
         <th>Status</th>
@@ -180,8 +182,8 @@
       <tr>
 
         <td>{{forloop.counter}}</td>
-       
-        <td> <a href= /company/{{company.c_id}}/ > {{company.name }}</a> </td>
+
+        <td> <a href= /company/{{company.c_id}}/ > {{company.code_name }}</a> </td>
 
         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{company.salary}}</td>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{company.criteria}}</td>
