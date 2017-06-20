@@ -367,7 +367,8 @@ def get_result_upload_page(request):
         get_mail = request.session["email"]
         if Admin.objects.filter(email=get_mail).exists():
             name = request.session["name"]
-            companies = list(Company.objects.all().order_by('-c_id'))
+            year = Year.objects.all().order_by('-y_id')[0]
+            companies = list(Company.objects.filter(y_id=year).order_by('-c_id'))
             return render(request, 'app/resultUpload.html', {"companies": companies, "name": name})
 
         # student login
