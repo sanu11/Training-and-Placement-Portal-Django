@@ -574,22 +574,27 @@ def get_companies_page(request):
         prev_year = None
         if (Year.objects.all().count() > 1):
             prev_year = Year.objects.order_by('-y_id')[1]
-
+        print prev_year
         #year
         if "year" in request.POST:
             year = request.POST["year"]
-            print year
-            if year:
-                year_obj = Year.objects.get(year=year)
+
+            if year == curr_year.year and login == 2:
+                return HttpResponse("Can't access current year's data")
+            year_obj = Year.objects.get(year=year)
+
         else:
-            year_obj = Year.objects.order_by('-y_id')[0]
+            if prev_year:
+                year_obj = Year.objects.order_by('-y_id')[1]
+            else:
+                return HttpResponse("No data")
 
         companies_year = Company.objects.filter(y_id=year_obj)
-
+        print  companies_year
         ##min salary
         if "minsal" in request.POST:
             minsal = request.POST["minsal"]
-            companies_min_salary =companies_year.filter(salary__gte=minsal)
+            companies_min_salary = companies_year.filter(salary__gte=minsal)
         else:
             companies_min_salary = companies_year
 
