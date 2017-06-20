@@ -169,7 +169,11 @@
 
       <tr>
         <th>ID</th>
+          {% if login == 1 %}
         <th>Company</th>
+          {% else %}
+        <th>Company Code</th>
+           {% endif %}
         <th>Round</th>
         <th>Link</th>
 
