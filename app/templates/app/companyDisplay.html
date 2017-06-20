@@ -160,9 +160,13 @@ font-family: Georgia, Times, "Times New Roman", serif;
     {% endif %}
     </div>
 
-    <div class="col-sm-8 text-left" style="background-color:#FFFFFF"> 
+    <div class="col-sm-8 text-left" style="background-color:#FFFFFF">
+        {% if login == 2%}
+        <h2 class="text-center" ><b>{{company.code_name}}</b></h2>
+        {% else %}
         <h2 class="text-center" ><b>{{company.name}}</b></h2>
-      <form class="form-horizontal" role="form" action="/cregister/" method="POST">
+        {% endif %}
+        <form class="form-horizontal" role="form" action="/cregister/" method="POST">
           
                 
         <table class="table">
