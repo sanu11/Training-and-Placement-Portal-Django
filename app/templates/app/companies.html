@@ -189,11 +189,23 @@
     <!--<option selected disabled hidden>Year</option>-->
 
            {% for passyear in years %}
-            {% if passyear == curr_year %}
-            <option value = {{passyear.year}} selected="selected" > {{passyear.year}} </option>
-            {%  else %}
+            <!--for students login dont show current year-->
+            {% if login == 2 and prev_year == None %}{{break}}
+
+            {% elif login == 2  and passyear == prev_year %}
+            <option value = {{passyear.year}} selected="selected"> {{passyear.year}} </option>
+
+            {% elif login == 2 and not passyear == curr_year  %}
             <option value = {{passyear.year}} > {{passyear.year}} </option>
+
+            {% elif login == 1 and passyear == curr_year %}
+            <option value = {{passyear.year}}  selected="selected"> {{passyear.year}} </option>
+
+            {% else %}
+            <option value = {{passyear.year}}> {{passyear.year}} </option>
+
             {% endif %}
+
             {% endfor %}
       </select>
       </div>
