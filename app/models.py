@@ -37,7 +37,8 @@ class Company(models.Model):
 	lock 		=	models.BooleanField(default=False)
 	y_id		=	models.ForeignKey(Year,null=True,blank=True)							#foreign key to year table
 	applied_students=	models.ManyToManyField('Student',blank=True)									#student can apply to many companies and a company can have many students
-	
+	hidden		=	models.BooleanField(default=False)
+
 	def __str__(self):
 		if self.position:
 			return  self.name + "("+ self.position + ")"

@@ -273,7 +273,15 @@
           </a></td>
           {% endif %}
 
-        
+          <!--hide company-->
+          {% if login == 1 %}
+          {% if company.hidden %}
+           <td ><a id="{{company.c_id}}" href="javascript:hideCompany('{{company.c_id}}',0);" >Unhide</a></td>
+          {% else %}
+          <td ><a id="{{company.c_id}}"  href="javascript:hideCompany('{{company.c_id}}',1);" >Hide</a></td>
+          {% endif %}
+          {% endif %}
+
       </tr>
       {% endfor %}
     </tbody>

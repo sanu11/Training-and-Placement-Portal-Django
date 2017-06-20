@@ -176,7 +176,9 @@
     </thead>
     <tbody>
 {% for company in companies %}
+{% if not company.hidden %}
       <tr>
+
         <td>{{forloop.counter}}</td>
        
         <td> <a href= /company/{{company.c_id}}/ > {{company.name }}</a> </td>
@@ -195,6 +197,7 @@
         <td><button type="button"  class="btn btn-info" onclick="applyCompany({{company.c_id}})">Submit</td>
         
       </tr>
+{% endif %}
       {% endfor %}
     </tbody>
   </table>
