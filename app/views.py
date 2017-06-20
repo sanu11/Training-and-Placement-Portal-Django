@@ -1410,9 +1410,8 @@ def web_notify(request):
 def web_upload_result(request):
     if request.method == "POST":
         choice = request.POST["choice"]
-        company = request.POST["company"]
-
-        print choice
+        c_id = request.POST["company"]
+        company = Company.objects.get(c_id=c_id)
         if request.FILES["resultfile"]:
             # sanika account
             # Lae_eeDcmDgAAAAAAAACpAf6K4pN2cMT9Pa3UcARF6HVT5kbljzzyo7DazeUtE9D
@@ -1426,7 +1425,7 @@ def web_upload_result(request):
             data = myfile.read()
             filename = myfile.name
             extension = filename.split('.')
-            filename = company + ' ' + choice + '.' + extension[1]
+            filename = company.name + ' ' + choice + '.' + extension[1]
             file_to = "/results/" + filename
             print file_to
             dbx.files_upload(data, file_to)
@@ -1452,7 +1451,7 @@ def web_upload_result(request):
             # store in table
             obj = Result()
 
-            obj.c_id = Company.objects.get(name=company)
+            obj.c_id = company
             obj.shortlist = choice
             obj.filename = filename
             obj.url = url
@@ -1463,11 +1462,10 @@ def web_upload_result(request):
 
             # save the url in company table
             if choice == "Placed":
-                obj = Company.objects.get(name=company)
-                obj.placed_url = url
-                obj.save()
+                company.placed_url = url
+                company.save()
 
-            title = company + " " + choice
+            title = company.name + " " + choice
 
             Device = get_device_model()
             Device.objects.all().send_message({'type': 'result', 'title': title, 'url': url})
