@@ -307,5 +307,49 @@ input:checked + .slider:before {
  <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
 <p><a href="/developers-page/">Developers</a></p></div>
 </footer>
+<script>
+
+function editBeMarksPage(argument) {
+    window.location.href = "/peditbemarks";
+    // body...
+}
+
+function editOtherDetails() {
+        console.log('signupform');
+        var signupform = $('#' + 'signupform');
+        var csrftoken = getCookie('csrftoken');
+        var birth_date = document.getElementById("birth_date").value;
+        var city = document.getElementById("city").value;
+        if(birth_date==""){
+            alert("Enter Birth Date");
+            return;
+        }
+        else if(city==""){
+            alert("Enter city");
+            return;
+        }
+
+            $.ajax({
+                type: "POST",
+                url: '/editotherdetails/',
+                data: signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                console.log(message);
+                    if (message =='success') {
+                       window.location.href = "/presume/";
+                    }
+                    else
+                    {
+                    alert('Error');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+
+    }
+
+</script>
 </body>
 </html>

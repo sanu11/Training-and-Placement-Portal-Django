@@ -316,5 +316,46 @@ input:checked + .slider:before {
  <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
 <p><a href="/developers-page/">Developers</a></p></div>
 </footer>
+<script>
+    function editSscMarks() {
+        console.log('signupform');
+        var signupform = $('#' + 'signupform');
+        var csrftoken = getCookie('csrftoken');
+        var tenth_board = document.getElementById("tenth_board").value;
+        var tenth_marks = document.getElementById("tenth_marks").value;
+        if (tenth_marks == "" || tenth_board == ""){
+            alert("Please Enter 10th board and marks");
+            return;
+        }
+            $.ajax({
+                type: "POST",
+                url: '/editsscmarks/',
+                data: signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                console.log(message);
+                    if (message =='success') {
+                       window.location.href = "/pedithscmarks/";
+                    }
+                    else
+                    {
+                    alert('Error');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+
+    }
+
+
+function editProfilePage(argument) {
+    window.location.href = "/peditprofile";
+    // body...
+
+}
+
+
+</script>
 </body>
 </html>
