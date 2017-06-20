@@ -570,11 +570,17 @@ def get_companies_page(request):
         mincri = 0
         maxcri = 100
 
+        curr_year = Year.objects.order_by('-y_id')[0]
+        prev_year = None
+        if (Year.objects.all().count() > 1):
+            prev_year = Year.objects.order_by('-y_id')[1]
 
         #year
         if "year" in request.POST:
             year = request.POST["year"]
-            year_obj = Year.objects.get(year=year)
+            print year
+            if year:
+                year_obj = Year.objects.get(year=year)
         else:
             year_obj = Year.objects.order_by('-y_id')[0]
 
@@ -613,8 +619,7 @@ def get_companies_page(request):
         companies = companies_max_criteria.order_by('ppt_date')
         years = Year.objects.all()
         name = request.session["name"]
-        curr_year = Year.objects.order_by('-y_id')[0]
-        return render(request, 'app/companies.html', {"companies": companies,"years":years,"curr_year":curr_year,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login,"lock":lock})
+    return render(request, 'app/companies.html', {"companies": companies,"years":years,"curr_year":curr_year,"prev_year":prev_year,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login,"lock":lock})
 
 @csrf_exempt
 def get_applied_students_page(request):
