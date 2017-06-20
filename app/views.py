@@ -1131,9 +1131,6 @@ def web_register_company(request):
         reg_end_time = request.POST["reg_end_time"]
 
 
-        s = string.lowercase + string.digits
-        x= ''.join(random.sample(s, 4))
-
 
         if ppt_date:
             ppt_date = str(ppt_date)
@@ -1174,7 +1171,17 @@ def web_register_company(request):
             obj.reg_end = reg_end
         if back:
             obj.back = back
-        obj.save()
+
+
+        codes = Company.objects.values('code_name')
+        print codes
+        while(1):
+            s = string.lowercase + string.digits
+            code = ''.join(random.sample(s, 4))
+            if code not in codes:
+                obj.code_name = code
+                obj.save()
+                break
 
         # send notification
         Device = get_device_model()
