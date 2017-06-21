@@ -153,6 +153,7 @@ def get_main_page(request):
         login = 0
         return render(request, 'app/home.html', {"login": login})
     else:
+        print  request.session.get_expire_at_browser_close()
         name = request.session["name"]
         get_mail = request.session["email"]
         # admin login
@@ -849,6 +850,8 @@ def web_login(request):
 
         if Student.objects.filter(email=get_mail).exists():
             obj = Student.objects.get(email=get_mail)
+            if obj.placed:
+                return HttpResponse("You can't login since you are placed.")
             if obj.password == get_pw:
                 name = obj.name
                 print name, get_mail
@@ -877,6 +880,10 @@ def web_apply_company(request):
     student =  Student.objects.get(email=email)
     c_id = int(request.POST["c_id"])
     company = Company.objects.get(c_id=c_id)
+    if student.placed:
+        return  HttpResponse("You are already placed.")
+    if not student.lock:
+        return  HttpResponse("Can't apply unless your profile is verified.")
     if company.reg_end == None:
         return HttpResponse("Not accepting applications")
     back_allowed = company.back

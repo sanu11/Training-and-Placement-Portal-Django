@@ -66,17 +66,9 @@ function studentLogin() {
                 if (message =='Success') {
                    window.location.href = "/";
                 }
-                else if(message=='Incorrect Password')
-                {
-                    alert("Incorrect Password");
-                }
-                else if (message == 'User not found')
-                {
-                    alert('User not found');
-                }
                 else
                 {
-                alert('Error');
+                    alert(message);
                 }
             },
             error: function(xhr, errmsg, err) {
