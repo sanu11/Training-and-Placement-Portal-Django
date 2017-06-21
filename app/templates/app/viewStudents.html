@@ -206,6 +206,9 @@
     </tbody>
   </table>
   </div>
+     <br><br>
+      <div  class=" col-sm-2 col-md-offset-9"> <button value="Download file" onclick="downloadAppliedStudents()" class="btn btn-info form-control">Download</button>
+ </div>
   </div>
       
     </div>
@@ -290,6 +293,22 @@ function lockCompany(c_id,lock){
 
 }
 
+function downloadAppliedStudents() {
+        var csrftoken = getCookie('csrftoken');
+        var c_id  = {{company.c_id}};
+        var json =  { c_id:c_id , minavg:minavg,maxavg:maxavg,csrfmiddlewaretoken:csrftoken};
+        console.log(json);
+
+         $.ajax({
+            type: "POST",
+            url: '/downloadappliedstudents/',
+            data:  json ,
+            success: function(message) {
+            console.log(message);
+
+            },
+        });
+ }
 
 </script>
 

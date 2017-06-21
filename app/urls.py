@@ -71,9 +71,9 @@ urlpatterns = [
 ##download pages
 	url(r'^downloadstudents/$', views.web_download_students),
 	url(r'^downloadcompanies/$', views.web_download_companies),
-	
+	url(r'^downloadappliedcompanies/$', views.web_download_applied_students),
 
-##display pages
+	##display pages
 	url(r'^results/$',views.get_results_page),	 
 	url(r'^companies/$',views.get_companies_page),
 	url(r'^opportunities/$',views.get_opportunities_page),	 
