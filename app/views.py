@@ -592,47 +592,48 @@ def get_companies_page(request):
             if login == 2:
                 if prev_year:
                     year_obj = Year.objects.order_by('-y_id')[1]
+
                 else:
                     return HttpResponse("No data")
             else:
                 year_obj = Year.objects.order_by('-y_id')[0]
 
+
         companies_year = Company.objects.filter(y_id=year_obj)
         print  companies_year
+
+
         ##min salary
         if "minsal" in request.POST:
-            minsal = request.POST["minsal"]
-            companies_min_salary = companies_year.filter(salary__gte=minsal)
-        else:
-            companies_min_salary = companies_year
+            minsal = int(request.POST["minsal"])
+            maxsal = int(request.POST["maxsal"])
+            if minsal ==  0 and maxsal == 50:
+                companies_max_salary = companies_year
 
-        ##max salary
-        if "maxsal" in request.POST:
-            maxsal = request.POST["maxsal"]
-            companies_max_salary = companies_min_salary.filter(salary__lte=maxsal)
+            else:
+                companies_min_salary = companies_year.filter(salary__gte=minsal)
+                companies_max_salary = companies_min_salary.filter(salary__lte=maxsal)
+
         else:
-            companies_max_salary = companies_min_salary
+            companies_max_salary = companies_year
 
         ##min criteria
         if "mincri" in request.POST:
-            mincri = request.POST["mincri"]
-            companies_min_criteria = companies_max_salary.filter(criteria__gte=mincri)
+            mincri = int(request.POST["mincri"])
+            maxcri = int(request.POST["maxcri"])
+            print mincri , maxcri
+            if mincri == 0 and maxcri == 100:
+                companies_max_criteria = companies_max_salary
+            else:
+                companies_min_criteria = companies_max_salary.filter(criteria__gte=mincri)
+                companies_max_criteria = companies_min_criteria.filter(criteria__lte=maxcri)
         else:
-            companies_min_criteria = companies_max_salary
-
-        ##max cri
-        if "maxcri" in request.POST:
-            maxcri = request.POST["maxcri"]
-            print maxcri
-            companies_max_criteria = companies_min_criteria.filter(criteria__lte=maxcri)
-            print companies_max_criteria
-        else:
-            companies_max_criteria = companies_min_criteria
+            companies_max_criteria = companies_max_salary
 
         companies = companies_max_criteria.order_by('ppt_date')
         years = Year.objects.all()
         name = request.session["name"]
-    return render(request, 'app/companies.html', {"companies": companies,"years":years,"curr_year":curr_year,"prev_year":prev_year,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login,"lock":lock})
+    return render(request, 'app/companies.html', {"companies": companies,"years":years,"year":year_obj,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login,"lock":lock})
 
 @csrf_exempt
 def get_applied_students_page(request):

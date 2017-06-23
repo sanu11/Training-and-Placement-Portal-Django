@@ -191,11 +191,9 @@
            {% for passyear in years %}
 
 
-            {% if login == 2  and passyear == prev_year %}
+            {% if passyear == year %}
             <option value = {{passyear.year}} selected="selected"> {{passyear.year}} </option>
 
-            {% elif login == 1 and  passyear == curr_year  %}
-            <option value = {{passyear.year}} selected="selected"> {{passyear.year}} </option>
 
             {% else %}
             <option value = {{passyear.year}}> {{passyear.year}} </option>
@@ -243,31 +241,25 @@
 <!-- Table Content start -->
 <div class="col-sm-12">
   <div class="table-responsive">          
-  <table id="myTable" class="table">
+  <table  class="table" id = "Table">
      <thead>
       <tr>
         <th>ID</th>
-
-          {% if login == 1 %}
-          <th> Code</th>
-          {% endif %}
-           <th id="name_header">Company</th>
+        <th> Code</th>
+        <th id="name_header">Company</th>
         <th id="salary_header">Salary Lpa</th>
         <th>Criteria</th>
-
         <th>Date</th>
         <th>Hired</th>
-
-        
+         <th>Visibility </th>
       </tr>
     </thead>
     <tbody>
 {% for company in companies %}
       <tr>
         <td>{{forloop.counter}}</td>
-       {% if login == 1 %}
-          <td>{{company.code_name}}</td>
-          {% endif %}
+       <td>{{company.code_name}}</td>
+
         <td> <a href= /company/{{company.c_id}}/ > {{company.name }}</a> </td>
 
         <td>{{company.salary}}</td>
@@ -289,9 +281,9 @@
           <!--hide company-->
           {% if login == 1 %}
           {% if company.hidden %}
-           <td ><a id="{{company.c_id}}" href="javascript:hideCompany('{{company.c_id}}',0);" >Unhide</a></td>
+           <td><a id='{{company.c_id}}' href="javascript:hideCompany('{{company.c_id}}',0);" >Unhide</a></td>
           {% else %}
-          <td ><a id="{{company.c_id}}"  href="javascript:hideCompany('{{company.c_id}}',1);" >Hide</a></td>
+          <td><a id={{company.c_id}}'  href="javascript:hideCompany('{{company.c_id}}',1);" >Hide</a></td>
           {% endif %}
           {% endif %}
 
@@ -320,7 +312,7 @@
 
 <script>
     $(document).ready(function(){
-    $('#myTable').DataTable( {
+    $('#Table').DataTable( {
     "Salary Lpa": [
         { "sType": "numeric" }
     ],
