@@ -306,64 +306,8 @@ function companyUpdate() {
         }
     }
 
-function downloadStudents() {
 
-        var csrftoken = getCookie('csrftoken');
-        var year = document.getElementById("year").value;
-        var branch = document.getElementById("branch").value;
-        var minavg = document.getElementById("minavg").value;
-        var maxavg = document.getElementById("maxavg").value;
-        var json =  { year :year , branch :branch , minavg:minavg,maxavg:maxavg,csrfmiddlewaretoken:csrftoken};
-        console.log(json);
-       
-        $.ajax({
-            type: "POST",
-            url: '/downloadstudents/',
-            data:  json ,
-            success: function(message) {
-                console.log("success");
-                var hiddenElement = document.createElement('a');
-                hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(message);
-                hiddenElement.target = '_blank';
-                hiddenElement.download = year + '_' + branch + '_' + minavg + 'to' + maxavg  + '.csv';
-                hiddenElement.click();
-                },
-            error: function(xhr, errmsg, err) {
-                alert('Error'+errmsg + xhr);
-            },
-        });
 
- }
-
-function downloadCompanies() {
-
-        var csrftoken = getCookie('csrftoken');
-        var minsal = document.getElementById("minsal").value;
-        var maxsal = document.getElementById("maxsal").value;
-        var mincri = document.getElementById("mincri").value;
-        var maxcri = document.getElementById("maxcri").value;
-        
-        var json =  { mincri:mincri,maxcri:maxcri,minsal:minsal,maxsal:maxsal,csrfmiddlewaretoken:csrftoken}; 
-        console.log(json);
-    
-        $.ajax({
-            type: "POST",
-            url: '/downloadcompanies/',
-            data:  json ,
-            success: function(message) {
-                console.log("success");
-                var hiddenElement = document.createElement('a');
-                hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(message);
-                hiddenElement.target = '_blank';
-                hiddenElement.download = minsal  + 'to' + maxsal + 'lpa_' + mincri + 'to' + maxcri +  'per'+ '.csv';
-                hiddenElement.click();
-                },
-            error: function(xhr, errmsg, err) {
-                alert('Error');
-            },
-        });
-
- }
 
 
  function getCookie(name) {

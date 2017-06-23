@@ -1,9 +1,9 @@
 import datetime
 from django.utils import timezone
-from django.shortcuts import render 
+from django.shortcuts import render , redirect
 from django.template.loader import render_to_string 
 from .models import Student, Company, Message, Verify, Result, Admin ,Year
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.views.decorators.csrf import *
 from django.core import serializers
 from gcm.models import get_device_model
@@ -11,7 +11,9 @@ from django.http import StreamingHttpResponse
 import json,csv
 import dropbox
 import requests
+import io
 import random,string
+from djqscsv import render_to_csv_response,write_csv
 
 @csrf_exempt
 def verify(request):
@@ -45,7 +47,7 @@ def login_details(request):
     data = json.loads(request.body)
     get_mail = data["email"]
     get_pw = data["password"]
-    if Student.oeeebjects.filter(email=get_mail).exists():
+    if Student.objects.filter(email=get_mail).exists():
         obj = Student.objects.get(email=get_mail)
         if obj.password == get_pw:
             return HttpResponse("Student,"+obj.name)
@@ -661,10 +663,6 @@ def web_view_students(request,c_id):
         return render(request,'app/viewStudents.html',{"students":students,"login":login,"name":student_name,"company":company})
     else:
         return HttpResponse("Not permitted to access")
-
-@csrf_exempt
-def web_download_applied_students(request):
-    return HttpResponse("success")
 
 def get_opportunities_page(request):
     if not request.session.get("name"):
@@ -1353,9 +1351,6 @@ def web_edit_company(request):
         return HttpResponse("error")
 
 
-
-
-
 @csrf_exempt
 def web_notify(request):
     if request.method == "POST":
@@ -1513,6 +1508,7 @@ def web_placed_students(request):
         return HttpResponse(""+ str(hired_count) + " Students added Successfully to " +company.name)
     else:
         return  HttpResponse("Company Locked")
+
 @csrf_exempt
 def web_lock_company(request):
     c_id = request.POST["c_id"]
@@ -1536,8 +1532,6 @@ def web_hide_company(request,cid):
         return HttpResponse(company.name + " Company won't be visible to students now.")
 
 
-
-
 #########called from ajax######
 @csrf_exempt
 def web_download_students(request):
@@ -1548,8 +1542,11 @@ def web_download_students(request):
 
     if year == "All":
         students_year = Student.objects.all()
+
     else:
-        students_year = Student.objects.filter(year=year)
+        year = Year.objects.get(year=year)
+        students_year = Student.objects.filter(y_id=year)
+        year = year.year
 
     if branch == "All":
         students_branch = students_year
@@ -1561,16 +1558,41 @@ def web_download_students(request):
     students_max_average = students_min_average.filter(average__lte=maxavg)
     print students_max_average
     students = students_max_average
-    
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="sanika.csv"'
-    writer = csv.writer(response)
 
-    writer.writerow(['Roll Number', 'Name','Email','Phone','Gender','Branch', 'Average','Active back','Resume'])
-    for x in students:
-        writer.writerow([x.roll, x.name , x.email , x.phone , x.gender, x.branch , x.average ,x.active_back , x.url])
+    with open('test.csv', 'w') as csv_file:
+        write_csv(students, csv_file)
 
-    return response
+    data = open('test.csv', 'r').read()
+
+    dbx = dropbox.Dropbox('39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi')
+
+    filename = year  + " " +  branch  + " "  + maxavg + " " + minavg + ".csv"
+
+    file_to = "/students/" + filename
+    print file_to
+    dbx.files_upload(data, file_to)
+
+    url = "https://api.dropboxapi.com/2/sharing/create_shared_link"
+
+    payload = "{\"path\":" + '"' + file_to + '"' + ",\"short_url\": true}"
+    print payload
+
+    # Sanikas account
+    # Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR
+    # Sirs account
+    headers = {
+        'authorization': "Bearer 39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi",
+        'content-type': "application/json",
+        'cache-control': "no-cache",
+    }
+
+    response = requests.request("POST", url, data=payload, headers=headers)
+
+    res = json.loads(response.text)
+    url = res["url"]
+    print  url
+    return render_to_csv_response(students)
+
 
 @csrf_exempt
 def web_download_companies(request):
@@ -1585,11 +1607,72 @@ def web_download_companies(request):
     companies_max_criteria = companies_min_criteria.filter(criteria__lte = maxcri)
 
     companies = companies_max_criteria
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="sanika.csv"'
-    writer = csv.writer(response)
-    writer.writerow(['Name','Salary','Criteria','Date','Placed_Url','Hired ','Other_Details'])
-    for x in companies:
-        writer.writerow([x.name,x.salary,x.criteria,x.ppt_date,x.placed_url,x.hired_people,x.other_details])
-        print writer
-    return response
+
+    filename = minsal + "to" + maxsal + "lpa_" + mincri + "to" + maxcri + "criteria.csv"
+    with open('test.csv', 'w') as csv_file:
+        write_csv(companies, csv_file)
+
+    data = open('test.csv', 'r').read()
+    dbx = dropbox.Dropbox('39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi')
+    file_to = "/companies/" + filename
+
+    print file_to
+    dbx.files_upload(data, file_to)
+
+    url = "https://api.dropboxapi.com/2/sharing/create_shared_link"
+
+    payload = "{\"path\":" + '"' + file_to + '"' + ",\"short_url\": true}"
+    print payload
+    # Sanikas account
+    # Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR
+    # Sirs account
+    headers = {
+        'authorization': "Bearer 39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi",
+        'content-type': "application/json",
+        'cache-control': "no-cache",
+    }
+
+    response = requests.request("POST", url, data=payload, headers=headers)
+
+    res = json.loads(response.text)
+    url = res["url"]
+    print  url
+    return render_to_csv_response(companies)
+
+
+@csrf_exempt
+def web_download_applied_students(request):
+    c_id  = request.POST["c_id"]
+    company = Company.objects.get(c_id=c_id)
+    applied_students = company.applied_students.all()
+
+    filename = company.name  + "_applied_students list.csv"
+    with open('test.csv', 'w') as csv_file:
+        write_csv(applied_students, csv_file)
+
+    data = open('test.csv', 'r').read()
+    dbx = dropbox.Dropbox('39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi')
+    file_to = "/appliedstudents/" + filename
+
+    print file_to
+    dbx.files_upload(data, file_to)
+
+    url = "https://api.dropboxapi.com/2/sharing/create_shared_link"
+
+    payload = "{\"path\":" + '"' + file_to + '"' + ",\"short_url\": true}"
+    print payload
+    # Sanikas account
+    # Bearer Lae_eeDcmDgAAAAAAAACpcij58JNKKidOEQRTOx56qvE7hUiOJs_QW75We_r1psR
+    # Sirs account
+    headers = {
+        'authorization': "Bearer 39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi",
+        'content-type': "application/json",
+        'cache-control': "no-cache",
+    }
+
+    response = requests.request("POST", url, data=payload, headers=headers)
+
+    res = json.loads(response.text)
+    url = res["url"]
+    print  url
+    return render_to_csv_response(applied_students)

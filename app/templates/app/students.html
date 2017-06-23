@@ -151,21 +151,22 @@
     <div id="ajaxreplace" name="ajaxreplace" class="col-sm-8 ">
  <h2 class="text-center">
  
-      <b>Students</b>  </h2><br>
+      <b>Students</b> </h2>
    <!-- Division for filters -->
    <div>
 
-
-
 <form class="form-horizontal" id="student" method="POST" action ='/students/'>
     {% csrf_token %}
+
   <div class="form-group">
+
   <div class="col-sm-1"></div>
+
   <div class="col-sm-2 text-left" ><label class="control-label" >Year</label></div>
   <div class="col-sm-2 text-left"><label class="control-label" >Branch</label></div>
   <div class="col-sm-2 text-left" style="padding-left:2px;"><label class="control-label" >Average</label></div>
   <div class="col-sm-2 text-left" style="padding-left:15px;"><label class="control-label" >Lock Status</label></div>
-  
+
   </div>
   <div class="form-group">
   <div class="col-sm-1"></div>
@@ -273,11 +274,10 @@
       <!--</div>-->
     <!--</div>-->
   <!--</div>-->
-&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;
   <div class="col-sm-2"> <input type="submit" value ="Submit" class="btn btn-info form-control" ></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<!--  <div class="col-sm-2"> <button value="Download file" onclick="downloadStudents()" class="btn btn-info form-control">Download</button>
-</div>
- --></div>
+
+  </div>
     </form>
   </div>
 
@@ -317,12 +317,17 @@
     </tbody>
   </table>
   </div>
-      
+        <br><br>
+      <div  class=" col-sm-2 col-md-offset-9"> <button value="Download file" onclick="downloadStudents()" class="btn btn-info form-control">Download</button>
+ </div>
     </div>
+
     <div class="col-sm-2 sidenav">
-      
+
     </div>
+
   </div>
+
 </div>
 
 <footer class="container-fluid text-center">
@@ -338,6 +343,33 @@
     ]
 } );
 });
+
+function downloadStudents() {
+        var csrftoken = getCookie('csrftoken');
+        var year = document.getElementById("year").value;
+        var branch = document.getElementById("branch").value;
+        var minavg = document.getElementById("minavg").value;
+        var maxavg = document.getElementById("maxavg").value;
+        var json =  { year :year , branch :branch , minavg:minavg,maxavg:maxavg,csrfmiddlewaretoken:csrftoken};
+        console.log(json);
+
+         $.ajax({
+            type: "POST",
+            url: '/downloadstudents/',
+            data:  json ,
+            success: function(message) {
+            console.log(message);
+            var hiddenElement = document.createElement('a');
+                hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(message);
+                hiddenElement.target = '_blank';
+                hiddenElement.download = year + "_" + branch + "_" + minavg +  "_" + maxavg + '.csv';
+                hiddenElement.click();
+
+            },
+        });
+ }
+
 </script>
 </body>
 </html>
+
