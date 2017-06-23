@@ -359,6 +359,11 @@ function downloadStudents() {
             data:  json ,
             success: function(message) {
             console.log(message);
+            var hiddenElement = document.createElement('a');
+                hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(message);
+                hiddenElement.target = '_blank';
+                hiddenElement.download = year + "_" + branch + "_" + minavg +  "_" + maxavg + '.csv';
+                hiddenElement.click();
 
             },
         });

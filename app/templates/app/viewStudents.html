@@ -296,7 +296,7 @@ function lockCompany(c_id,lock){
 function downloadAppliedStudents() {
         var csrftoken = getCookie('csrftoken');
         var c_id  = {{company.c_id}};
-        var json =  { c_id:c_id , minavg:minavg,maxavg:maxavg,csrfmiddlewaretoken:csrftoken};
+        var json =  { c_id:c_id ,csrfmiddlewaretoken:csrftoken};
         console.log(json);
 
          $.ajax({
@@ -305,6 +305,11 @@ function downloadAppliedStudents() {
             data:  json ,
             success: function(message) {
             console.log(message);
+            var hiddenElement = document.createElement('a');
+                hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(message);
+                hiddenElement.target = '_blank';
+                hiddenElement.download = c_id + '.csv';
+                hiddenElement.click();
 
             },
         });

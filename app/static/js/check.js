@@ -307,35 +307,7 @@ function companyUpdate() {
     }
 
 
-function downloadCompanies() {
 
-        var csrftoken = getCookie('csrftoken');
-        var minsal = document.getElementById("minsal").value;
-        var maxsal = document.getElementById("maxsal").value;
-        var mincri = document.getElementById("mincri").value;
-        var maxcri = document.getElementById("maxcri").value;
-        
-        var json =  { mincri:mincri,maxcri:maxcri,minsal:minsal,maxsal:maxsal,csrfmiddlewaretoken:csrftoken}; 
-        console.log(json);
-    
-        $.ajax({
-            type: "POST",
-            url: '/downloadcompanies/',
-            data:  json ,
-            success: function(message) {
-                console.log("success");
-                var hiddenElement = document.createElement('a');
-                hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(message);
-                hiddenElement.target = '_blank';
-                hiddenElement.download = minsal  + 'to' + maxsal + 'lpa_' + mincri + 'to' + maxcri +  'per'+ '.csv';
-                hiddenElement.click();
-                },
-            error: function(xhr, errmsg, err) {
-                alert('Error');
-            },
-        });
-
- }
 
 
  function getCookie(name) {
