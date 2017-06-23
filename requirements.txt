@@ -13,4 +13,5 @@ requests==2.11.1
 six==1.10.0
 dropbox
 django-import-export
+django-queryset-csv
 
