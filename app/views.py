@@ -1540,7 +1540,7 @@ def web_download_students(request):
     branch = request.POST["branch"]
     minavg = request.POST["minavg"]
     maxavg = request.POST["maxavg"]
-
+    print  type(minavg)
     if year == "All":
         students_year = Student.objects.all()
 
@@ -1597,20 +1597,20 @@ def web_download_students(request):
 
 @csrf_exempt
 def web_download_companies(request):
-    minsal = int(request.POST["minsal"])
-    maxsal = int(request.POST["maxsal"])
-    mincri = int(request.POST["mincri"])
-    maxcri = int(request.POST["maxcri"])
+    minsal = request.POST["minsal"]
+    maxsal = request.POST["maxsal"]
+    mincri = request.POST["mincri"]
+    maxcri = request.POST["maxcri"]
     year   = request.POST["year"]
     print year
     year = Year.objects.get(year=year)
-    if minsal == 0 and maxsal == 50:
-        companies_max_salary = Company.objects.get(y_id=year)
+    if int(minsal) == 0 and int(maxsal) == 50:
+        companies_max_salary = Company.objects.filter(y_id=year)
     else:
         companies_min_salary = Company.objects.filter(salary__gte = minsal)
         companies_max_salary = companies_min_salary.filter(salary__lte = maxsal)
 
-    if mincri == 0 and maxcri == 100:
+    if int(mincri) == 0 and int(maxcri) == 100:
         companies_max_criteria = companies_max_salary
     else:
         companies_min_criteria = companies_max_salary.filter(criteria__gte = mincri)
@@ -1623,6 +1623,7 @@ def web_download_companies(request):
         write_csv(companies, csv_file)
 
     data = open('test.csv', 'r').read()
+    print data
     dbx = dropbox.Dropbox('39HKzewZZ6AAAAAAAAAADYTBmHhTrhWOgP_4VMABOZOyezxh5G35921KEGPSIwsi')
     file_to = "/companies/" + filename
 
