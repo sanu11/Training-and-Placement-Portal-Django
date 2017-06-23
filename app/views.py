@@ -1597,15 +1597,24 @@ def web_download_students(request):
 
 @csrf_exempt
 def web_download_companies(request):
-    minsal = request.POST["minsal"]
-    maxsal = request.POST["maxsal"]
-    mincri = request.POST["mincri"]
-    maxcri = request.POST["maxcri"]
+    minsal = int(request.POST["minsal"])
+    maxsal = int(request.POST["maxsal"])
+    mincri = int(request.POST["mincri"])
+    maxcri = int(request.POST["maxcri"])
+    year   = request.POST["year"]
+    print year
+    year = Year.objects.get(year=year)
+    if minsal == 0 and maxsal == 50:
+        companies_max_salary = Company.objects.get(y_id=year)
+    else:
+        companies_min_salary = Company.objects.filter(salary__gte = minsal)
+        companies_max_salary = companies_min_salary.filter(salary__lte = maxsal)
 
-    companies_min_salary = Company.objects.filter(salary__gte = minsal)
-    companies_max_salary = companies_min_salary.filter(salary__lte = maxsal)
-    companies_min_criteria = companies_max_salary.filter(criteria__gte = mincri)
-    companies_max_criteria = companies_min_criteria.filter(criteria__lte = maxcri)
+    if mincri == 0 and maxcri == 100:
+        companies_max_criteria = companies_max_salary
+    else:
+        companies_min_criteria = companies_max_salary.filter(criteria__gte = mincri)
+        companies_max_criteria = companies_min_criteria.filter(criteria__lte = maxcri)
 
     companies = companies_max_criteria
 

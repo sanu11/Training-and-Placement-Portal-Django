@@ -358,8 +358,9 @@ function downloadCompanies() {
         var maxsal = document.getElementById("maxsal").value;
         var mincri = document.getElementById("mincri").value;
         var maxcri = document.getElementById("maxcri").value;
+        var year   = document.getElementById("year").value;
 
-        var json =  { mincri:mincri,maxcri:maxcri,minsal:minsal,maxsal:maxsal,csrfmiddlewaretoken:csrftoken};
+        var json =  { year:year,mincri:mincri,maxcri:maxcri,minsal:minsal,maxsal:maxsal,csrfmiddlewaretoken:csrftoken};
         console.log(json);
 
         $.ajax({
