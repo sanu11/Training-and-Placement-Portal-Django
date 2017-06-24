@@ -203,7 +203,7 @@ input:checked + .slider:before {
 
 {% if not  student.is_diploma %}
 <div class="form-group">
-  <label class="col-md-4 control-label" >FE marks obtained</label>
+    <label class="col-md-4 control-label" >FE marks obtained<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
       <input id="fe_marks" name="fe_marks" class="form-control" placeholder="1100" type="number"  value={{student.fe_marks}} >
@@ -213,7 +213,7 @@ input:checked + .slider:before {
 </div>
 
 <div class="form-group">
-  <label class="col-md-4 control-label"">FE marks out of</label>
+  <label class="col-md-4 control-label">FE marks out of<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
       <input id="fe_outof" name="fe_outof" class="form-control" placeholder="1500" type="number"  value={{student.fe_outof}} >
@@ -224,7 +224,7 @@ input:checked + .slider:before {
 {% endif %}
 
 <div class="form-group">
-  <label class="col-md-4 control-label" >SE marks obtained</label>
+  <label class="col-md-4 control-label" >SE marks obtained<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
       <input id="se_marks" name="se_marks" class="form-control" placeholder="1000" type="number"  value={{student.se_marks}} >
@@ -234,7 +234,7 @@ input:checked + .slider:before {
 </div>
 
 <div class="form-group">
-  <label class="col-md-4 control-label"">SE marks out of</label>
+  <label class="col-md-4 control-label">SE marks out of<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
       <input id="se_outof" name="se_outof" class="form-control" placeholder="1400" type="number"  value={{student.se_outof}} >
@@ -247,7 +247,7 @@ input:checked + .slider:before {
 
 
 <div class="form-group">
-  <label class="col-md-4 control-label" >TE marks obtained</label>
+  <label class="col-md-4 control-label" >TE marks obtained<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
       <input id="te_marks" name="te_marks" class="form-control" placeholder="1000" type="number"  value={{student.te_marks}} >
@@ -257,7 +257,7 @@ input:checked + .slider:before {
 </div>
 
 <div class="form-group">
-  <label class="col-md-4 control-label"">TE marks out of</label>
+  <label class="col-md-4 control-label">TE marks out of<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
       <input id="te_outof" name="te_outof" class="form-control" placeholder="1400" type="number"  value={{student.te_outof}} >
@@ -266,8 +266,31 @@ input:checked + .slider:before {
   </div>
 </div>
 
+
 <div class="form-group">
-  <label class="col-md-4 control-label" >Total marks obtained</label>
+  <label class="col-md-4 control-label" >BE marks obtained</label>
+  <div class="col-sm-5">
+    <div class="input-group">
+      <input id="be_marks" name="be_marks" class="form-control" placeholder="1000" type="number"  value={{student.be_marks}} >
+      <span class="input-group-addon"></span>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label">BE marks out of</label>
+  <div class="col-sm-5">
+    <div class="input-group">
+      <input id="be_outof" name="be_outof" class="form-control" placeholder="1400" type="number"  value={{student.be_outof}} >
+      <span class="input-group-addon"></span>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="form-group">
+  <label class="col-md-4 control-label" >Total marks obtained<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
       <input id="total_marks" name="total_marks" class="form-control" placeholder="3100" type="number"  value={{student.total_marks}} >
@@ -277,7 +300,7 @@ input:checked + .slider:before {
 </div>
 
 <div class="form-group">
-  <label class="col-md-4 control-label"">Total marks out of</label>
+  <label class="col-md-4 control-label">Total marks out of<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
       <input id="total_outof" name="total_outof" class="form-control" placeholder="4300" type="number"  value={{student.total_outof}} >
@@ -287,7 +310,7 @@ input:checked + .slider:before {
 </div>
 
 <div class="form-group">
-  <label class="col-md-4 control-label"">Average</label>
+  <label class="col-md-4 control-label">Average<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
       <input id="average" name="average" class="form-control" placeholder="72" type="number"  value={{student.average}} >
@@ -297,7 +320,7 @@ input:checked + .slider:before {
 </div>
 
 <div class="form-group">
-  <label class="col-md-4 control-label"">Active Back</label>
+  <label class="col-md-4 control-label">Active Back<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
       <input id="active_back" name="active_back" class="form-control" placeholder="0" type="number"  value={{student.active_back}} >
@@ -309,7 +332,7 @@ input:checked + .slider:before {
 
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="button1id">Passive Back</label>
+  <label class="col-md-4 control-label" for="button1id">Passive Back<label style="color:blue">*</label></label>
   
   <div class="col-md-8"> 
  <label class="switch">
@@ -327,7 +350,7 @@ input:checked + .slider:before {
 
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="button1id">Year gap</label>
+  <label class="col-md-4 control-label" for="button1id">Year gap<label style="color:blue">*</label></label>
   
   <div class="col-md-8"> 
  <label class="switch">
@@ -340,6 +363,17 @@ input:checked + .slider:before {
 </label>
 </label>
   </div>
+
+    <div class="form-group">
+  <label class="col-sm-4 control-label">Year gap reason</label>
+  <div class="col-sm-5">
+      {% if student.be_yeargap_reason %}
+  <input id="be_yeargap_reason" name="be_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md"  value = "{{student.be_yeargap_reason}}">
+{% else %}
+  <input id="be_yeargap_reason" name="be_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md" >
+{% endif %}
+  </div>
+</div>
 </div>
 
 
@@ -390,6 +424,7 @@ input:checked + .slider:before {
         }
 
         }
+
         var se_marks = document.getElementById("se_marks").value;
         var se_outof = document.getElementById("se_outof").value;
         var te_marks = document.getElementById("te_marks").value;
@@ -414,7 +449,11 @@ input:checked + .slider:before {
                 success: function(message) {
                 console.log(message);
                     if (message =='success') {
-                       window.location.href = "/peditotherdetails/";
+                        if("{{student.be_or_me}}" == "ME")
+                               window.location.href = "/peditmemarks/";
+                        else{
+                               window.location.href = "/peditotherdetails/";
+                        }
                     }
                     else
                     {
@@ -432,7 +471,6 @@ input:checked + .slider:before {
     window.location.href = "/pedithscmarks";
     // body...
 }
-
 
 </script>
 </body>

@@ -222,6 +222,53 @@ input:checked + .slider:before {
   </div>
 </div>
 
+    <div class="form-group">
+  <label class="col-md-4 control-label" for="selectbasic">Course</label>
+  <div class="col-sm-5">
+    <select id="be_or_me" name="be_or_me" class="form-control">
+        {% if student.be_or_me == "BE" %}
+      <option value="BE" selected="selected">BE</option>
+        {% else %}
+      <option value="BE">BE</option>
+        {% endif %}
+       {% if student.be_or_me  == "ME" %}
+        <option value="ME" selected="selected">ME</option>
+        {% else %}
+        <option value="ME">ME</option>
+        {% endif %}
+    </select>
+  </div>
+</div>
+
+
+    <div class="form-group">
+  <label class="col-md-4 control-label" for="selectbasic">Branch</label>
+  <div class="col-sm-5">
+    <select id="selectbasic" name="branch" class="form-control">
+
+      {% if student.branch == "Comp" %}
+      <option value="Comp" selected="=selected">COMP</option>
+      {% else %}
+      <option value="Comp">COMP</option>
+      {% endif %}
+
+      {% if student.branch  == "EnTC" %}
+      <option value="EnTC" selected="selected">ENTC</option>
+      {% else %}
+       <option value="EnTC" >ENTC</option>
+      {% endif %}
+
+      {% if student.branch == "IT" %}
+      <option value="IT" selected="=selected">IT </option>
+      {% else %}
+      <option value="IT">IT </option>
+      {% endif %}
+
+    </select>
+  </div>
+</div>
+
+
 <div class="form-group">
   <label class="col-sm-4 control-label">Roll Number</label>
   <div class="col-sm-5">
@@ -285,38 +332,16 @@ input:checked + .slider:before {
 </div>
 
 
-<!-- Select Basic -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="selectbasic">Branch</label>
-  <div class="col-sm-5">
-    <select id="selectbasic" name="branch" class="form-control">
-      
-      {% if student.branch == "Comp" %}
-      <option value="Comp" selected="=selected">COMP</option>
-      {% else %}
-      <option value="Comp">COMP</option>
-      {% endif %}
-      
-      {% if student.branch  == "EnTC" %}
-      <option value="EnTC" selected="selected">ENTC</option>
-      {% else %}
-       <option value="EnTC" >ENTC</option>
-      {% endif %}
 
-      {% if student.branch == "IT" %}
-      <option value="IT" selected="=selected">IT </option>
-      {% else %}
-      <option value="IT">IT </option>
-      {% endif %}
-
-    </select>
-  </div>
-</div>
 
 <div class="form-group">
   <label class="col-sm-4 control-label">PRN</label>
   <div class="col-sm-5">
+      {% if student.prn != "None" %}
   <input id="prn" name="prn" type="text"  placeholder="71401159C"   class="form-control input-md"  value = {{student.prn}}>
+    {% else %}
+  <input id="prn" name="prn" type="text"  placeholder="71401159C"   class="form-control input-md" >
+    {% endif %}
   </div>
 </div>
 
@@ -336,7 +361,6 @@ input:checked + .slider:before {
 
  </div>
 
-
  <div class="col-sm-2 sidenav">
 <!--- Side navigation data paste here-->
 </div>
@@ -354,7 +378,7 @@ input:checked + .slider:before {
 <script>
 
 
-    function editProfile() {
+function editProfile() {
         console.log('signupform');
         var signupform = $('#' + 'signupform');
         var csrftoken = getCookie('csrftoken');
@@ -362,6 +386,7 @@ input:checked + .slider:before {
         var roll = document.getElementById('roll').value;
         var email = document.getElementById('email').value;
         var phone = document.getElementById('phone').value;
+        var prn   = document.getElementById('prn').value;
 
 
         var atpos = email.indexOf("@");
@@ -374,7 +399,8 @@ input:checked + .slider:before {
         }
         else if(phone.length!=10)
             alert ("Enter Valid mobile number");
-
+        else if(prn == ""){
+        alert("Please enter PRN");}
         else
         {
             $.ajax({

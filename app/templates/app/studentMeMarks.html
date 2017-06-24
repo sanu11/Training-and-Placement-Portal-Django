@@ -11,17 +11,17 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
   <script src="/static/js/check.js"></script>
-  
-  
 
-   <!---- BootStrap online Libraries        
+
+
+   <!---- BootStrap online Libraries
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
    -->
  <style>
- 
-    /* Remove the navbar's default margin-bottom and rounded borders */ 
+
+    /* Remove the navbar's default margin-bottom and rounded borders */
     .navbar {
       margin-bottom: 0;
       border-radius: 0;
@@ -36,14 +36,14 @@
     }
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
     .row.content {height: 650px}
-    
+
     /* Set gray background color and 100% height */
     .sidenav {
       padding-top: 20px;
       background-color: #f1f1f1;
       height: 110%;
     }
-    
+
     /* Set black background color, white text and some padding */
     footer {
       background-color: #353739;
@@ -59,21 +59,21 @@
   }
   body {
   font-family: Georgia, Times, "Times New Roman", serif;}
-    
+
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
       .sidenav {
         height: auto;
         padding: 15px;
       }
-      .row.content {height:auto;} 
+      .row.content {height:auto;}
     }
-  
+
   textarea.form-control
   {
     height: 30%;
   }
-  
+
   .switch {
   position: relative;
   display: inline-block;
@@ -137,58 +137,59 @@ input:checked + .slider:before {
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
-<h1 class="text-center"> 
-<a class="pull-left" href="/"> 
+<h1 class="text-center">
+<a class="pull-left" href="/">
 <img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
-</a><span style="margin-left: -20%; color: rgb(222, 222, 222);">Training and Placement</span></h1>  
+</a><span style="margin-left: -20%; color: rgb(222, 222, 222);">Training and Placement</span></h1>
 
 
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
+        <span class="icon-bar"></span>
       </button>
-      
+
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav" style="margin-left:15.5%;">
         <li><a href="/">Home</a></li>
              {% if login == 2 %}
                <li><a href="/opportunities/">Opportunities</a></li>
-        {% endif %}        
-    
+        {% endif %}
+
     <li><a href="/companies/">Companies</a></li>
     <li><a href="/notifications/">Notifications</a></li>
      <li><a href="/results/">Results</a></li>
 
       </ul>
       <ul class="nav navbar-nav navbar-right">
-      
+
     <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
-          
+
             {% if login == 2 %}
             <li><a href="/peditprofile/">Update Profile</a></li>
             <li><a href="/pstudentdownload/">Download Profile</a></li>
              <li><a href="/psettings/">Settings</a></li>
-              {% endif %}           
+              {% endif %}
              <li><a href="/logout/">Logout</a></li>
           </ul>
         </li>
-    
+
      </ul>
     </div>
   </div>
 </nav>
-<div class="container-fluid ">    
+
+<div class="container-fluid ">
   <div class="row content">
     <div class="col-sm-2 sidenav ">
-    
+
     </div>
 
-    <div class="col-sm-8 text-left"> 
+    <div class="col-sm-8 text-left">
   <br>
       <br>
      <form class="form-horizontal"  method="POST" id="signupform" name="signupform">
@@ -197,83 +198,51 @@ input:checked + .slider:before {
 <!-- Text input-->
 
 <div class="form-group">
-  <label class="col-sm-4 control-label">Birth date<label style="color:blue">*</label></label>
+  <label class="col-sm-4 control-label">BE College Name<label style="color:blue">*</label></label>
   <div class="col-sm-5">
-  {% if student.birth_date %}
-  <input id="birth_date" name="birth_date" type="date"  placeholder="01/01/1995"   class="form-control input-md"  value = "{{birth_date}}">
-  {% else %}
-  <input id="birth_date" name="birth_date" type="date"  placeholder="01/01/1995"   class="form-control input-md"  >
-  {% endif %}
-  </div>
-</div>
-
-
-
-
-<div class="form-group">
-  <label class="col-sm-4 control-label">Aadhar card number</label>
-  <div class="col-sm-5">
-  {% if student.aadhar_number %}
-  <input id="aadhar_number" name="aadhar_number" type="text"  placeholder="6048 1136 9599"   class="form-control input-md"  value = "{{student.aadhar_number}}">
-  {% else %}
-  <input id="aadhar_number" name="aadhar_number" type="text"  placeholder="6048 1136 9599"   class="form-control input-md"  >
-  {% endif %}
+      {% if student.be_collegename %}
+  <input id="be_collegename" name="be_collegename" type="text"  class="form-control input-md"  value = "{{student.be_collegename}}">
+    {% else %}
+  <input id="be_collegename" name="be_collegename" placeholder="PICT" type="text"  class="form-control input-md" >
+    {% endif %}
   </div>
 </div>
 
 
 <div class="form-group">
-  <label class="col-sm-4 control-label">Pan card number</label>
+  <label class="col-sm-4 control-label">BE University<label style="color:blue">*</label></label>
   <div class="col-sm-5">
-  {% if student.pan_number %}
-  <input id="pan_number" name="pan_number" type="text"  placeholder="PSFWG3008K"   class="form-control input-md"  value = "{{student.pan_number}}">
-  {% else %}
-  <input id="pan_number" name="pan_number" type="text"  placeholder="PSFWG3008K"   class="form-control input-md"  >
-  {% endif %}
+      {% if student.be_university %}
+  <input id="be_university" name="be_university" type="text"     class="form-control input-md"  value = "{{student.be_university}}">
+    {% else %}
+  <input id="be_university" name="be_university" type="text"  placeholder="Pune University"   class="form-control input-md" >
+    {% endif %}
   </div>
 </div>
 
 
 <div class="form-group">
-  <label class="col-sm-4 control-label">Passport number</label>
+  <label class="col-sm-4 control-label">ME First Year Marks<label style="color:blue">*</label></label>
   <div class="col-sm-5">
-  {% if student.passport_number %}
-  <input id="pan_number" name="passport_number" type="text"  placeholder="340008765"  class="form-control input-md"  value = "{{student.passport_number}}">
-  {% else %}
-  <input id="passport_number" name="passport_number" type="text"  placeholder="340008765"  class="form-control input-md"  >
-  {% endif %}
+  <input id="me_fy_marks" name="me_fy_marks" type="number"  placeholder="9"  class="form-control input-md"  value = "{{student.me_fy_marks}}">
   </div>
 </div>
+
 <div class="form-group">
-  <label class="col-sm-4 control-label">Current Address</label>
+  <label class="col-sm-4 control-label">ME Second Year Marks</label>
   <div class="col-sm-5">
-  {% if student.cur_address %}
-  <input id="cur_address" name="cur_address" type="text"  placeholder="Katraj ,Pune"   class="form-control input-md"  value = "{{student.cur_address}}">
-  {% else %}
-  <input id="cur_address" name="cur_address" type="text"  placeholder="Katraj ,Pune"   class="form-control input-md"  >
-  {% endif %}
+  <input id="me_sy_marks" name="me_sy_marks" type="number"  placeholder="9"  class="form-control input-md"  value = "{{student.me_sy_marks}}">
   </div>
 </div>
 
 
 <div class="form-group">
-  <label class="col-sm-4 control-label">Permanent Address</label>
+  <label class="col-sm-4 control-label">BE Passing Year<label style="color:blue">*</label></label>
   <div class="col-sm-5">
-  {% if student.per_address %}
-  <input id="per_address" name="per_address" type="text"  placeholder="Mumbai"   class="form-control input-md"  value = "{{student.per_address}}">
+  {% if student.be_passing_year%}
+  <input id="be_passing_year" name="be_passing_year" type="text"  class="form-control input-md"  value = "{{student.be_passing_year}}">
   {% else %}
-  <input id="per_address" name="per_address" type="text"  placeholder="Mumbai"   class="form-control input-md"  >
-  {% endif %}
-  </div>
-</div>
-
-<div class="form-group">
-  <label class="col-sm-4 control-label">City<label style="color:blue">*</label></label>
-  <div class="col-sm-5">
-  {% if student.city %}
-  <input id="city" name="city" type="text"  placeholder="Mumbai"   class="form-control input-md"  value = "{{student.city}}">
-  {% else %}
-  <input id="city" name="city" type="text"  placeholder="Mumbai"   class="form-control input-md"  >
+  <input id="be_passing_year" name="be_passing_year" type="text"  placeholder="2015-16"   class="form-control input-md"  >
   {% endif %}
   </div>
 </div>
@@ -282,14 +251,10 @@ input:checked + .slider:before {
 <!-- Button -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="singlebutton"></label>
-  
+
   <div class="col-sm-4 text-center" align="center" style="margin-left:-2%;margin-right:4%;">
-      {% if student.be_or_me == "BE" %}
   <button type="button" class="btn btn-info" onclick="editBeMarksPage()">Back</button>
-      {% else %}
-  <button type="button" class="btn btn-info" onclick="editMeMarksPage()">Back</button>
-    {% endif %}
-  <button type="button" class="btn btn-info" onclick="editOtherDetails()">Next</button>
+  <button type="button" class="btn btn-info" onclick="editMeMarks()">Next</button>
   </div>
 </div>
 </fieldset>
@@ -318,33 +283,40 @@ function editBeMarksPage(argument) {
     // body...
 }
 
-function editMeMarksPage(argument) {
-    window.location.href = "/peditmemarks";
-    // body...
-}
-function editOtherDetails() {
+function editMeMarks() {
         console.log('signupform');
         var signupform = $('#' + 'signupform');
         var csrftoken = getCookie('csrftoken');
-        var birth_date = document.getElementById("birth_date").value;
-        var city = document.getElementById("city").value;
-        if(birth_date==""){
-            alert("Enter Birth Date");
+        var be_collegename = document.getElementById("be_collegename").value;
+        var be_university = document.getElementById("be_university").value;
+        var me_fy_marks = document.getElementById("me_fy_marks").value;
+        var be_passing_year = document.getElementById("be_passing_year").value;
+
+        if(be_collegename == ""){
+            alert("Enter College Name");
             return;
         }
-        else if(city==""){
-            alert("Enter city");
+        else if(be_university == ""){
+            alert("Enter University");
+            return;
+        }
+        else if(me_fy_marks == ""){
+            alert("Enter ME marks");
+            return;
+        }
+        else if(be_passing_year == ""){
+            alert("Enter Passing Year");
             return;
         }
 
             $.ajax({
                 type: "POST",
-                url: '/editotherdetails/',
+                url: '/editmemarks/',
                 data: signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
                 success: function(message) {
                 console.log(message);
                     if (message =='success') {
-                       window.location.href = "/presume/";
+                       window.location.href = "/peditotherdetails/";
                     }
                     else
                     {

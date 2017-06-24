@@ -52,6 +52,7 @@ urlpatterns = [
 	url(r'^peditsscmarks/$',views.get_edit_ssc_marks_page),
 	url(r'^pedithscmarks/$',views.get_edit_hsc_marks_page),
 	url(r'^peditbemarks/$',views.get_edit_be_marks_page),
+	url(r'^peditmemarks/$', views.get_edit_me_marks_page),
 	url(r'^peditotherdetails/$',views.get_edit_other_details_page),
 	url(r'^presume/$',views.get_resume_upload_page),
 	url(r'^pstudentdownload/$',views.get_student_download_page),
@@ -66,6 +67,7 @@ urlpatterns = [
 	url(r'^editsscmarks/$', views.web_edit_ssc_marks),
 	url(r'^edithscmarks/$', views.web_edit_hsc_marks),
 	url(r'^editbemarks/$', views.web_edit_be_marks),
+	url(r'^editmemarks/$', views.web_edit_me_marks),
 	url(r'^editotherdetails/$', views.web_edit_other_details),
 
 ##download pages
