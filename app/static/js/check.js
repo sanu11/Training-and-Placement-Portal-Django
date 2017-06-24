@@ -112,13 +112,15 @@ function companyUpdate() {
                     str  = jQuery.parseJSON(message);
                     data = str[0]["fields"];
 
-                    criteria = data["criteria"];
+                    be_criteria = data["be_criteria"];
+                    me_criteria = data["me_criteria"];
                     salary = data["salary"];
                     position = data["position"];
                     back = data["back"];
                     other_details = data["other_details"];
                     
-                    document.getElementById("criteria").value = criteria;
+                    document.getElementById("be_criteria").value = be_criteria;
+                    document.getElementById("me_criteria").value = me_criteria;
                     document.getElementById("salary").value = salary;
                     document.getElementById("position").value = position;
                     document.getElementById("back").value = back;

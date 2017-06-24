@@ -1158,7 +1158,8 @@ def web_register_company(request):
         name = request.POST["name"]
         salary = request.POST["salary"]
         position = request.POST["position"]
-        criteria = request.POST["criteria"]
+        be_criteria = request.POST["be_criteria"]
+        me_criteria = request.POST["me_criteria"]
         back = request.POST["back"]
         ppt_date = request.POST["ppt_date"]
         ppt_time = request.POST["ppt_time"]
@@ -1193,8 +1194,10 @@ def web_register_company(request):
         obj.name = name
         obj.y_id = year_obj
 
-        if criteria:
-            obj.criteria = criteria
+        if be_criteria:
+            obj.be_criteria = be_criteria
+        if me_criteria:
+            obj.me_criteria = me_criteria
         if salary:
             obj.salary = salary
         if position:
@@ -1222,7 +1225,7 @@ def web_register_company(request):
         # send notification
         Device = get_device_model()
         c_id = obj.c_id;
-        Device.objects.all().send_message({'type': 'company_reg', 'c_id':c_id,'name': name, 'criteria': criteria,'position':position, 'salary': salary,
+        Device.objects.all().send_message({'type': 'company_reg', 'c_id':c_id,'name': name, 'be_criteria': be_criteria,'me_criteria':me_criteria,'position':position, 'salary': salary,
                                            'other_details': other_details, 'ppt_date': ppt_date,'reg_end': reg_end, 'back': back})
         print ("Success")
         return HttpResponse("success")
@@ -1290,7 +1293,8 @@ def web_edit_company(request):
         obj = Company.objects.get(c_id=name, y_id=year) #name contains id
         c_id = obj.c_id
         salary = request.POST["salary"]
-        criteria = request.POST["criteria"]
+        be_criteria = request.POST["be_criteria"]
+        me_criteria = request.POST["me_criteria"]
         position = request.POST["position"]
         if "back" in request.POST:
             back = request.POST["back"]
@@ -1299,8 +1303,10 @@ def web_edit_company(request):
         ppt_date = request.POST["ppt_date"]
         ppt_time = request.POST["ppt_time"]
 
-        if criteria:
-            obj.criteria = criteria
+        if be_criteria:
+            obj.be_criteria = be_criteria
+        if me_criteria:
+            obj.me_criteria = me_criteria
         if salary:
             obj.salary = salary
         if position:
@@ -1371,7 +1377,7 @@ def web_edit_company(request):
         Device = get_device_model()
 
         Device.objects.all().send_message(
-            {'type': 'company_edit', 'c_id': c_id, 'name': name, 'criteria': criteria, 'salary': salary,
+            {'type': 'company_edit', 'c_id': c_id, 'name': name, 'be_criteria': be_criteria, 'me_criteria':me_criteria,'salary': salary,
              'position':position,'other_details': other_details, 'ppt_date': ppt_date, 'back': back,
              'reg_end': reg_end,  'hired_count': hired_count})
 
