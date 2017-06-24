@@ -260,24 +260,40 @@
 {% for company in companies %}
       <tr>
         <td>{{forloop.counter}}</td>
-       <td>{{company.code_name}}</td>
+
+        {% if company.code_name %}
+        <td>{{company.code_name}}</td>
+        {% else %}
+        <td></td>
+        {% endif %}
 
         <td> <a href= /company/{{company.c_id}}/ > {{company.name }}</a> </td>
 
+        {% if company.salary %}
         <td>{{company.salary}}</td>
-        {% if company.criteria == 0 %}
-        <td> NC</td>
         {% else %}
-        <td>{{company.criteria}}</td>
+        <td></td>
         {% endif %}
 
+        {% if company.be_criteria and company.me_criteria %}
+        <td> {{company.be_criteria}} / {{company.me_criteria}} cgpa </td>
+        {% elif company.be_criteria %}
+        <td>{{company.be_criteria}}</td>
+        {% else %}
+        <td></td>
+        {% endif %}
+
+        {% if company.ppt_date %}
         <td>{{company.ppt_date}}</td>
+        {% else %}
+        <td></td>
+        {% endif %}
+
           {% if company.hired_count == None or company.hired_count == 0 %}
           <td>0</td>
           {% else %}
           <td><a href="/company/{{company.c_id}}/students/">
-          {{company.hired_count}}
-          </a></td>
+          {{company.hired_count}}</a></td>
           {% endif %}
 
           <!--hide company-->
@@ -295,7 +311,7 @@
   </table>
   </div>
       </div>
-         <br><br>
+         <br><br><br>
         {% if login == 1 %}
       <div  class=" col-sm-2 col-md-offset-9"> <button value="Download file" onclick="downloadCompanies()" class="btn btn-info form-control">Download</button>
  </div>
