@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Companies</title>
+  <meta charset="utf-8">
+  <meta name="description" content="PICT Training and placement online portal">
+<meta name="keywords" content="PICT, pict, tnp, tpo, training, and , placement">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!---- BootStrap Libraries         -->
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+  <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/check.js"></script>
+
+  
+   <!---- BootStrap online Libraries        
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   -->
+ <style>
+ 
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      background-color:#101B2D;
+      font-family: Georgia, Times, "Times New Roman", serif;
+    }
+    .navbar1 {
+      margin-bottom: 0;
+      border-radius: 0;
+
+      font-family: Georgia, Times, "Times New Roman", serif;
+    }
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 160%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #353739;
+    font-size:15px;
+      color: #b3b3b1;
+      padding: 15px;
+      font-family: Georgia, Times, "Times New Roman", serif;
+    }
+  footer a:hover
+  {
+  text-decoration:none;
+  color:white;
+  }
+  body {
+  font-family: Georgia, Times, "Times New Roman", serif;
+  }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+  
+  </style>
+  </head>
+<body>
+
+
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+<h1 class="text-center"> 
+<a class="pull-left" href="/"> 
+<img class="img-responsive" style="vertical-align: bottom;" src="/static/pict_logo.png" alt="pict logo"/>
+</a><span style="margin-left: -20%; color: rgb(222, 222, 222);">Training and Placement</span></h1>  
+
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav" style="margin-left:15.5%;">
+        <li><a href="/">Home</a></li>
+         {% if login == 2 %}
+    <li><a href="/opportunities/">Opportunities</a></li>
+    {% endif %}
+    <li><a href="/companies/">Companies</a></li>
+    <li><a href="/notifications/">Notifications</a></li>
+     <li><a href="/results/">Results</a></li>
+
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+      
+    <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+           
+            {% if login == 2 %}
+            {% if not lock %}
+            <li><a href="/peditprofile/">Update Profile</a></li>
+            {% endif %}
+            <li><a href="/pstudentdownload/">Download Profile</a></li>
+            <li><a href="/psettings/">Settings</a></li>
+
+              {% endif %}           
+               <li><a href="/logout/">Logout</a></li>
+           
+          </ul>
+        </li>
+    
+     </ul>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid ">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav ">
+    {% if login == 1 %}
+ <div class="navbar1"  >
+      <ul class="nav navbar-nav" >
+    <br><br>
+      <li><a href="/pregister/"><b>Register  Company</b></a></li>
+      <li><a href="/pedit/"><b>Edit Company</b></a> </li>
+
+      <li><a href="/pnotify/"><b>Notify Student</b></a> </li>
+      <li><a href="/presult/"><b>Upload Result</b></a> </li>
+      <li ><a href="/students/"><b>Students List</b></a></li>
+      <li><a href="/appliedstudents/"><b>Applied Students</b></a> </li>
+     <li><a href="/psearch/"><b>Search Student</b></a> </li>
+
+
+    </ul>
+    </div>
+    {% endif %}
+    </div>
+
+
+
+    <div class="col-sm-8 text-left">
+  
+  <h2 class="text-center"><b>Companies</b></h2> 
+<div style="margin-bottom:20px"></div>
+<!-- <p>Table contains placement statistics for the year 2016-17. </p> -->
+<hr>
+<!-- Division for filters -->
+<div class="text-left">
+
+
+<form class="form-horizontal" id="student" method="POST" action ='/companies/'>
+{% csrf_token %}
+ <div class="form-group text-left">
+   <label class="col-sm-4 control-label" ></label>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;"> <label class="control-label" >MIN</label></div>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+  <label class="control-label" >MAX</label></div>
+    
+   <label class="col-sm-1 control-label" ></label>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+  <label class="control-label" >MIN</label>
+ </div>
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+ <label class="control-label" >MAX</label>
+ </div>
+   <div class="col-sm-2"></div>
+ <div class="col-sm-2">
+ </div>
+   </div>
+   
+   
+<div class="form-group">
+   <label class="col-sm-1 control-label"  >Year</label>
+     <div class="col-sm-2">
+        <select class="form-control" name="year" id="year">
+    <!--<option selected disabled hidden>Year</option>-->
+
+           {% for passyear in years %}
+
+
+            {% if passyear == year %}
+            <option value = {{passyear.year}} selected="selected"> {{passyear.year}} </option>
+
+
+            {% else %}
+            <option value = {{passyear.year}}> {{passyear.year}} </option>
+
+            {% endif %}
+
+            {% endfor %}
+      </select>
+      </div>
+
+    <label class="col-sm-1 control-label"  >Salary</label>
+
+<div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+     <input type="text" name = "minsal" id = "minsal" placeholder="Min" value = {{minsal}} class="form-control" style = "float:left;">
+ </div>
+
+<div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+    <input type="text" name = "maxsal" placeholder="Max"  id= "maxsal" value = {{maxsal}} style = "float:left;" class="form-control">
+</div>
+    
+    <label class="col-sm-1 control-label" >Criteria</label>
+
+<div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+ <input type="text" name = "mincri" placeholder="Min" id = "mincri" value = {{mincri}} class="form-control" style = "float:left;">
+ </div>
+
+ <div class="col-sm-1" style="padding-right:2px;padding-left:2px;">
+ <input type="text" name = "maxcri" placeholder="Max" id= "maxcri" value = {{maxcri}} style = "float:left;" class="form-control">
+ </div>
+
+   <div class="col-sm-2">
+<input type="submit" class="btn btn-info form-control" value="Submit" >
+   </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+    <!--DOWNLOAD COMPANIES -->
+ <!--<div class="col-sm-2">-->
+     <!--<button value="Download file" onclick = "downloadCompanies()" class="btn btn-info form-control">Download</button>-->
+ <!--</div>-->
+
+</div>
+        </form>
+</div>
+<hr>
+<!-- Table Content start -->
+<div class="col-sm-12">
+  <div class="table-responsive">          
+  <table  class="table" id = "Table">
+     <thead>
+      <tr>
+        <th>ID</th>
+        <th> Code</th>
+        <th id="name_header">Company</th>
+        <th id="salary_header">Salary Lpa</th>
+        <th>Criteria</th>
+        <th>Date</th>
+        <th>Hired</th>
+         <th>Visibility </th>
+      </tr>
+    </thead>
+    <tbody>
+{% for company in companies %}
+      <tr>
+        <td>{{forloop.counter}}</td>
+       <td>{{company.code_name}}</td>
+
+        <td> <a href= /company/{{company.c_id}}/ > {{company.name }}</a> </td>
+
+        <td>{{company.salary}}</td>
+        {% if company.criteria == 0 %}
+        <td> NC</td>
+        {% else %}
+        <td>{{company.criteria}}</td>
+        {% endif %}
+
+        <td>{{company.ppt_date}}</td>
+          {% if company.hired_count == None or company.hired_count == 0 %}
+          <td>0</td>
+          {% else %}
+          <td><a href="/company/{{company.c_id}}/students/">
+          {{company.hired_count}}
+          </a></td>
+          {% endif %}
+
+          <!--hide company-->
+          {% if login == 1 %}
+          {% if company.hidden %}
+           <td><a id='{{company.c_id}}' href="javascript:hideCompany('{{company.c_id}}',0);" >Unhide</a></td>
+          {% else %}
+          <td><a id={{company.c_id}}'  href="javascript:hideCompany('{{company.c_id}}',1);" >Hide</a></td>
+          {% endif %}
+          {% endif %}
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+      </div>
+         <br><br>
+		 
+        {% if login == 1 %}
+      <div  class=" col-sm-2 col-md-offset-9"> 
+	  <div style="margin-bottom:10px;margin-top:10px"></div>
+	  <button value="Download file" onclick="downloadCompanies()" class="btn btn-info form-control">Download</button>
+ </div>
+        {% endif %}
+    </div>
+    <div class="col-sm-2 sidenav">
+      
+    </div>
+  </div>
+</div>
+
+<footer class="container-fluid text-center" >
+ <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
+<p><a href="/developers-page/">Developers</a></p></div>
+</footer>
+
+<script>
+    $(document).ready(function(){
+    $('#Table').DataTable( {
+    "Salary Lpa": [
+        { "sType": "numeric" }
+    ],
+    "Criteria":[
+    { "sType":"numeric"}
+    ],
+    "Hired":[
+    { "sType":"numeric"}
+    ]
+} );
+});
+
+function hideCompany(c_id,hide){
+
+        var csrftoken = getCookie('csrftoken');
+
+
+            $.ajax({
+                type: "POST",
+                url: '/hide/'+c_id+'/',
+
+                data:{csrfmiddlewaretoken : csrftoken} ,
+                success: function(message) {
+                    alert(message);
+                    //console.log(hide+" " + document.getElementById("hide").innerHTML);
+                    if(document.getElementById(c_id).innerHTML == "Hide")
+                        document.getElementById(c_id).innerHTML = "Unhide";
+                    else
+                        document.getElementById(c_id).innerHTML = "Hide";
+
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+
+}
+
+function downloadCompanies() {
+
+        var csrftoken = getCookie('csrftoken');
+        var minsal = document.getElementById("minsal").value;
+        var maxsal = document.getElementById("maxsal").value;
+        var mincri = document.getElementById("mincri").value;
+        var maxcri = document.getElementById("maxcri").value;
+        var year   = document.getElementById("year").value;
+
+        var json =  { year:year,mincri:mincri,maxcri:maxcri,minsal:minsal,maxsal:maxsal,csrfmiddlewaretoken:csrftoken};
+        console.log(json);
+
+        $.ajax({
+            type: "POST",
+            url: '/downloadcompanies/',
+            data:  json ,
+            success: function(message) {
+                console.log("success");
+                var hiddenElement = document.createElement('a');
+                hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(message);
+                hiddenElement.target = '_blank';
+                hiddenElement.download = minsal  + 'to' + maxsal + 'lpa_' + mincri + 'to' + maxcri +  'per'+ '.csv';
+                hiddenElement.click();
+                },
+            error: function(xhr, errmsg, err) {
+                alert('Error');
+            },
+        });
+
+ }
+
+</script>
+</body>
+</html> 
