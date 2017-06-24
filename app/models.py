@@ -100,9 +100,18 @@ class Student(models.Model):
 	total_marks   = 	models.IntegerField(null=True,blank=True)
 	total_outof	  = 	models.IntegerField(null=True,blank=True)
 	average		  =		models.FloatField(null=True,blank=True)
-	be_yeargap	  =		models.BooleanField(default=False)
 	active_back	 =		models.IntegerField(default=0)
 	passive_back = 		models.BooleanField(default=False)
+
+	#ME students
+	be_or_me = models.CharField(max_length=10,null=True,blank=True,default="BE")
+	me_fy_marks = models.FloatField(null=True,blank=True)
+	me_sy_marks = models.FloatField(null=True,blank=True)
+	be_college_name = models.CharField(max_length=1000,null=True,blank=True)
+	be_university = models.CharField(max_length=1000,null=True,blank=True)
+	be_passing_year = models.CharField(max_length=100,null=True,blank=True)
+	be_yeargap = models.BooleanField(default=False)
+	be_yeargap_reason = models.CharField(max_length=1000,null=True,blank=True)
 
 	placed		=		models.BooleanField(default=False)
 	url			=		models.CharField(max_length=500,null=True,blank=True)

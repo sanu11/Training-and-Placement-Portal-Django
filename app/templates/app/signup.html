@@ -185,6 +185,29 @@ input:checked + .slider:before {
   <input id="name" name="name" type="text" placeholder="Name" class="form-control input-md">
   </div>
 </div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="selectbasic">Course</label>
+  <div class="col-sm-5">
+    <select id="be_or_me" name="be_or_me" class="form-control">
+      <option value="BE">BE</option>
+      <option value="ME">ME</option>
+    </select>
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="selectbasic">Branch</label>
+  <div class="col-sm-5">
+    <select id="branch" name="branch" class="form-control">
+      <option value="Comp">COMP</option>
+      <option value="EnTC">ENTC</option>
+      <option value="IT">IT </option>
+    </select>
+  </div>
+</div>
+
 <div class="form-group">
   <label class="col-sm-4 control-label">Roll Number</label>
   <div class="col-sm-5">
@@ -246,17 +269,6 @@ input:checked + .slider:before {
 </div>
 
 
-<!-- Select Basic -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="selectbasic">Branch</label>
-  <div class="col-sm-5">
-    <select id="selectbasic" name="branch" class="form-control">
-      <option value="Comp">COMP</option>
-      <option value="EnTC">ENTC</option>
-      <option value="IT">IT </option>
-    </select>
-  </div>
-</div>
 
 <!-- Button -->
 <div class="form-group">
@@ -286,5 +298,61 @@ input:checked + .slider:before {
  <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
 <p><a href="/developers-page/">Developers</a></p></div>
 </footer>
+<script>
+
+  function signup() {
+        console.log('signupform');
+        var signupform = $('#' + 'signupform');
+        var csrftoken = getCookie('csrftoken');
+        var name = document.getElementById('name').value;
+        var roll = document.getElementById('roll').value;
+        var email = document.getElementById('email').value;
+        var password  =document.getElementById('password').value;
+        var phone = document.getElementById('phone').value;
+
+
+        var atpos = email.indexOf("@");
+        var dotpos = email.lastIndexOf(".");
+
+        if(name.length==0 || roll.length==0 || email.length == 0 || password.length == 0 || phone.length == 0 )
+            alert("Enter all Details");
+        else if (roll.length !=4)
+            alert("Enter  valid 4 digit Roll number ");
+
+        else if (atpos<1 || dotpos<atpos+2 || dotpos+2>=email.length) {
+            alert("Enter valid e-mail address");
+
+        }
+        else if(password.length<6)
+            alert("Password  should be greater than 5 digits")
+        else if(phone.length!=10)
+            alert ("Enter valid mobile number");
+
+        else
+        {
+            $.ajax({
+                type: "POST",
+                url: '/signup/',
+                data: signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                console.log(message);
+                    if (message =='success') {
+                       window.location.href = "/";
+                    }
+                    else if(message=='exists')
+                        alert("User Exists.Please Login");
+
+                    else
+                        alert('Error');
+
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+        }
+    }
+
+</script>
 </body>
 </html>
