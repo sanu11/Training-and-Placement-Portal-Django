@@ -277,6 +277,17 @@ def get_edit_be_marks_page(request):
         student = Student.objects.get(email=email)
         return render(request, 'app/studentBeMarks.html',{"login":2,"name":name,"student":student})
 
+
+@csrf_exempt
+def get_edit_me_marks_page(request):
+    if not request.session.get("name"):
+        return render(request,'app/redirect2.html',{})
+    else:
+        name = request.session["name"]
+        email = request.session["email"]
+        student = Student.objects.get(email=email)
+        return render(request, 'app/studentMeMarks.html',{"login":2,"name":name,"student":student})
+
 @csrf_exempt
 def get_edit_other_details_page(request):
     if not request.session.get("name"):
@@ -782,6 +793,7 @@ def web_signup(request):
         c.college_id = request.POST["college_id"]
         c.phone = request.POST["phone"]
         c.branch = request.POST["branch"]
+        c.be_or_me = request.POST["be_or_me"]
         year = request.POST["year"]
         year_obj = Year.objects.get(year=year)
         c.y_id = year_obj
@@ -926,6 +938,7 @@ def web_edit_profile(request):
         c.college_id = request.POST["college_id"]
         c.phone = request.POST["phone"]
         c.branch = request.POST["branch"]
+        c.be_or_me = request.POST["be_or_me"]
         year = request.POST["year"]
         c.prn = request.POST["prn"]
         year_obj = Year.objects.get(year=year)
@@ -1049,6 +1062,22 @@ def web_edit_be_marks(request):
         obj.save()
         return HttpResponse("success")
 
+
+@csrf_exempt
+def web_edit_me_marks(request):
+    if request.method == "POST":
+        email = request.session["email"]
+        student = Student.objects.get(email=email)
+        print request.POST
+        student.be_collegename = request.POST["be_collegename"]
+        student.be_university = request.POST["be_university"]
+        student.be_passing_year = request.POST["be_passing_year"]
+        student.me_fy_marks = request.POST["me_fy_marks"]
+        me_sy_marks = request.POST["me_sy_marks"]
+        if me_sy_marks:
+            student.me_sy_marks = me_sy_marks
+        student.save()
+    return HttpResponse("success")
 
 @csrf_exempt
 def web_edit_other_details(request):

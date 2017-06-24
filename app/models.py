@@ -107,7 +107,7 @@ class Student(models.Model):
 	be_or_me = models.CharField(max_length=10,null=True,blank=True,default="BE")
 	me_fy_marks = models.FloatField(null=True,blank=True)
 	me_sy_marks = models.FloatField(null=True,blank=True)
-	be_college_name = models.CharField(max_length=1000,null=True,blank=True)
+	be_collegename = models.CharField(max_length=1000,null=True,blank=True)
 	be_university = models.CharField(max_length=1000,null=True,blank=True)
 	be_passing_year = models.CharField(max_length=100,null=True,blank=True)
 	be_yeargap = models.BooleanField(default=False)

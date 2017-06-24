@@ -195,7 +195,7 @@ input:checked + .slider:before {
 </div>
 
 <div class="form-group">
-  <label class="col-sm-4 control-label">Board</label>
+  <label class="col-sm-4 control-label">Board<label style="color:blue">*</label></label>
   <div class="col-sm-5">
   {% if student.diploma_board %}
   <input id="diploma_board" name="diploma_board" type="text"  placeholder="msbte"   class="form-control input-md"  value = "{{student.diploma_board}}">
@@ -207,9 +207,9 @@ input:checked + .slider:before {
 
 
 <div class="form-group">
-  <label class="col-sm-4 control-label">Passing Year</label>
+  <label class="col-sm-4 control-label">Passing Year<label style="color:blue">*</label></label>
   <div class="col-sm-5">
-  {% if student.twelveth_year %}
+  {% if student.diploma_year %}
   <input id="diploma_year" name="diploma_year" type="text"  placeholder="2014"   class="form-control input-md"  value = {{student.diploma_year}}>
   {% else %}
   <input id="diploma_year" name="diploma_year" type="text"  placeholder="2014"   class="form-control input-md"  >
@@ -219,7 +219,7 @@ input:checked + .slider:before {
 
 
 <div class="form-group">
-  <label class="col-md-4 control-label" ">Marks obtained</label>
+  <label class="col-md-4 control-label" >Marks obtained<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
       <input id="diploma_marks" name="diploma_marks" class="form-control" placeholder="marks" type="number"  value={{student.diploma_marks}} >
@@ -228,7 +228,7 @@ input:checked + .slider:before {
   </div>
 </div>
 <div class="form-group">
-  <label class="col-md-4 control-label" ">Marks out of</label>
+  <label class="col-md-4 control-label">Marks out of<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
       <input id="diploma_outof" name="diploma_outof" class="form-control" placeholder="out of" type="number"  value={{student.diploma_outof}} >
@@ -244,7 +244,7 @@ input:checked + .slider:before {
 
 
 <div class="form-group">
-  <label class="col-sm-4 control-label">Board</label>
+  <label class="col-sm-4 control-label">Board<label style="color:blue">*</label></label>
   <div class="col-sm-5">
   {% if student.twelveth_board %}
   <input id="twelveth_board" name="twelveth_board" type="text"  placeholder="cbse"   class="form-control input-md"  value = "{{student.twelveth_board}}">
@@ -256,7 +256,7 @@ input:checked + .slider:before {
 
 
 <div class="form-group">
-  <label class="col-sm-4 control-label">Passing Year</label>
+  <label class="col-sm-4 control-label">Passing Year<label style="color:blue">*</label></label>
   <div class="col-sm-5">
   {% if student.twelveth_year %}
   <input id="twelveth_year" name="twelveth_year" type="text"  placeholder="2013"   class="form-control input-md"  value = {{student.twelveth_year}}>
@@ -268,7 +268,7 @@ input:checked + .slider:before {
 
 
 <div class="form-group">
-  <label class="col-md-4 control-label" ">Marks</label>
+  <label class="col-md-4 control-label" >Marks<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
       <input id="twelveth_marks" name="twelveth_marks" class="form-control" placeholder="Percentage/cgpa" type="number"  value={{student.twelveth_marks}} >
@@ -297,7 +297,7 @@ input:checked + .slider:before {
   </div>
 </div>
 <div class="form-group">
-  <label class="col-md-4 control-label" for="button1id">Year gap</label>
+  <label class="col-md-4 control-label" for="button1id">Year gap<label style="color:blue">*</label></label>
   
   <div class="col-md-8"> 
  <label class="switch">
@@ -315,9 +315,9 @@ input:checked + .slider:before {
   <label class="col-sm-4 control-label">Year gap reason</label>
   <div class="col-sm-5">
   {% if student.twelveth_yeargap_reason %}
-  <input id="twelveth_city" name="twelveth_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md"  value = "{{student.twelveth_yeargap_reason}}">
+  <input id="twelveth_yeargap_reason" name="twelveth_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md"  value = "{{student.twelveth_yeargap_reason}}">
   {% else %}
-  <input id="twelveth_city" name="twelveth_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md"  >
+  <input id="twelveth_yeargap_reason" name="twelveth_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md"  >
   {% endif %}
   </div>
 </div>
@@ -333,6 +333,7 @@ input:checked + .slider:before {
   {% else %}
   <button type="button" class="btn btn-info" onclick="editHscMarks(0)">Next</button>
   {% endif %}
+
   </div>
 </div>
 </fieldset>

@@ -166,7 +166,7 @@ input:checked + .slider:before {
       <ul class="nav navbar-nav navbar-right">
       
     <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}}<span class="caret"></span></a>
           <ul class="dropdown-menu">
            
             {% if login == 2 %}
@@ -202,7 +202,7 @@ input:checked + .slider:before {
 
 
 <div class="form-group">
-  <label class="col-sm-4 control-label">Board</label>
+  <label class="col-sm-4 control-label">Board<label style="color:blue">*</label></label>
   <div class="col-sm-5">
   {% if student.tenth_board %}
   <input id="tenth_board" name="tenth_board" type="text"  placeholder="cbse"   class="form-control input-md"  value = "{{student.tenth_board}}">
@@ -214,7 +214,7 @@ input:checked + .slider:before {
 
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="10th">Marks</label>
+  <label class="col-md-4 control-label" for="10th">Marks<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
       <input id="tenth_marks" name="tenth_marks" class="form-control" placeholder="Percentage/cgpa" type="number"  value={{student.tenth_marks}} >
@@ -246,7 +246,7 @@ input:checked + .slider:before {
 </div>
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="button1id">Year gap</label>
+  <label class="col-md-4 control-label" for="button1id">Year gap<label style="color:blue">*</label></label>
   
   <div class="col-md-8"> 
  <label class="switch">
