@@ -177,6 +177,7 @@
     
       <tr>
         <th>ID</th>
+        <th>Course</th>
         <th>Roll No</th> 
         <th>Name</th>
         <th>Branch</th>
@@ -188,9 +189,9 @@
     <tbody>
 {% for student in students %}
       <tr>
-        <td>{{forloop.counter}}</td>
+        <td>&nbsp;&nbsp;&nbsp;{{forloop.counter}}</td>
+          <td>{{student.course}}</td>
           <td>{{student.roll}}</td>
-        
         <td> <a href= /student/{{student.roll}}/ > {{student.name}}</a> </td>
         <td>&nbsp;{{student.branch}}</td>
         <td>&nbsp;&nbsp;{{student.average}}</td>
@@ -199,7 +200,7 @@
           {% else %}
         <td><input type="checkbox" id ="{{student.s_id}}" class="checkbox" > </td>
          {% endif %}
-        <td></td>
+
       
       </tr>
       {% endfor %}
