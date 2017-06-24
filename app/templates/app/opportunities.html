@@ -164,7 +164,7 @@
       <tr>
         <th>ID</th>
 
-          <th>Company Code</th>
+          <th>Code</th>
 
           <th>Salary Lpa</th>
         <th>Criteria</th>   
@@ -183,14 +183,36 @@
 
         <td>{{forloop.counter}}</td>
 
+         {% if company.code_name %}
         <td> <a href= /company/{{company.c_id}}/ > {{company.code_name }}</a> </td>
+        {% else %}
+          <td></td>
+          {% endif %}
+          {% if company.salary %}
+        <td>{{company.salary}}</td>
+          {% else %}
+          <td></td>
+          {% endif %}
 
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{company.salary}}</td>
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{company.criteria}}</td>
+          {% if company.be_criteria and company.me_criteria %}
+        <td>{{company.be_criteria}} / {{company.me_criteria}} cgpa</td>
+          {% elif company.be_criteria %}
+        <td>{{company.be_criteria}} </td>
+          {% else %}
+        <td></td>
+          {% endif %}
  
- 
+        {% if company.reg_end %}
         <td>{{company.reg_end}}</td>
-        <td >{{company.status}}</td>
+        {% else %}
+        <td></td>
+         {% endif %}
+
+          {% if company.status %}
+          <td>{{company.status}}</td>
+          {% else %}
+          <td></td>
+            {% endif %}
           {% if company in arr_list %}
         <td> <input type="checkbox"  id ="{{company.c_id}}"  name="" checked=""></td>
         {% else %}
