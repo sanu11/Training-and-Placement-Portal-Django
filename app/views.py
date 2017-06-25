@@ -551,6 +551,7 @@ def get_student_page(request, roll):
         # student login
         else:
             return HttpResponse("Not permitted to access")
+            return HttpResponse("Not permitted to access")
 
 
 ###Accessible to students
@@ -784,6 +785,7 @@ def logout(request):
 #####upload STUDENTS#####
 ########################################
 ########################################
+
 
 @csrf_exempt
 def web_signup(request):
@@ -1151,6 +1153,27 @@ def web_unlock_student(request):
 
 
 @csrf_exempt
+def web_unlock_all_students(request):
+    if request.method == "POST":
+        year = Year.objects.order_by('-y_id')[0]
+        students = Student.objects.filter(y_id=year)
+        for student in students:
+            student.lock = False
+            student.save()
+        return HttpResponse("success")
+
+@csrf_exempt
+def web_lock_all_students(request):
+    if request.method == "POST":
+        year = Year.objects.order_by('-y_id')[0]
+        students = Student.objects.filter(y_id=year)
+        for student in students:
+            student.lock = True
+            student.save()
+        return HttpResponse("success")
+
+
+@csrf_exempt
 def web_verify(request):
     if request.method == "POST":
         prn = request.POST["prn"]
@@ -1158,7 +1181,6 @@ def web_verify(request):
             return HttpResponse("Success")
         else:
             return HttpResponse("Failed")
-
 
 
 @csrf_exempt
