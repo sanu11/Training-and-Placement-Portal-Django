@@ -257,8 +257,14 @@
     <tbody>
 {% for company in companies %}
       <tr>
+
         <td>{{forloop.counter}}</td>
-       <td>{{company.code_name}}</td>
+
+        {% if company.code_name %}
+        <td>{{company.code_name}}</td>
+        {% else %}
+        <td></td>
+        {% endif %}
 
         <td> <a href= /company/{{company.c_id}}/ > {{company.name }}</a> </td>
 
@@ -269,23 +275,28 @@
         <td>{{company.criteria}}</td>
         {% endif %}
 
+        {% if company.ppt_date %}
         <td>{{company.ppt_date}}</td>
-          {% if company.hired_count == None or company.hired_count == 0 %}
-          <td>0</td>
-          {% else %}
-          <td><a href="/company/{{company.c_id}}/students/">
-          {{company.hired_count}}
-          </a></td>
-          {% endif %}
+        {% else %}
+        <td></td>
+        {% endif %}
+
+        {% if company.hired_count == None or company.hired_count == 0 %}
+        <td>0</td>
+        {% else %}
+        <td><a href="/company/{{company.c_id}}/students/">
+        {{company.hired_count}}
+        </a></td>
+        {% endif %}
 
           <!--hide company-->
-          {% if login == 1 %}
-          {% if company.hidden %}
-           <td><a id='{{company.c_id}}' href="javascript:hideCompany('{{company.c_id}}',0);" >Unhide</a></td>
-          {% else %}
-          <td><a id={{company.c_id}}'  href="javascript:hideCompany('{{company.c_id}}',1);" >Hide</a></td>
-          {% endif %}
-          {% endif %}
+        {% if login == 1 %}
+        {% if company.hidden %}
+        <td><a id='{{company.c_id}}' href="javascript:hideCompany('{{company.c_id}}',0);" >Unhide</a></td>
+        {% else %}
+        <td><a id={{company.c_id}}'  href="javascript:hideCompany('{{company.c_id}}',1);" >Hide</a></td>
+        {% endif %}
+        {% endif %}
 
       </tr>
       {% endfor %}
