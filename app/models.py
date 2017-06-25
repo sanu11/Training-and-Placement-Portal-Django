@@ -105,7 +105,7 @@ class Student(models.Model):
 	passive_back = 		models.BooleanField(default=False)
 
 	#ME students
-	be_or_me = models.CharField(max_length=10,null=True,blank=True,default="BE")
+	course = models.CharField(max_length=10, null=True, blank=True, default="BE")
 	me_fy_marks = models.FloatField(null=True,blank=True)
 	me_sy_marks = models.FloatField(null=True,blank=True)
 	be_collegename = models.CharField(max_length=1000,null=True,blank=True)

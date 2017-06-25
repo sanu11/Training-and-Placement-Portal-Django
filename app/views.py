@@ -467,16 +467,26 @@ def get_students_page(request):
         if Admin.objects.filter(email=get_mail).exists():
             year = "All"
             branch = "All"
+            course = "All"
+
+            if "course" in request.POST:
+                course = request.POST["course"]
+                if course != "All":
+                    students_course = Student.objects.filter(course=course)
+                else:
+                    students_course = Student.objects.all()
+            else:
+                students_course = Student.objects.all()
 
             if  "year"  in request.POST:
                 year = str(request.POST["year"])
                 if year != "All":
                     yearobj = Year.objects.get(year=year)
-                    students_year = Student.objects.filter(y_id=yearobj)
+                    students_year = students_course.filter(y_id=yearobj)
                 else:
-                    students_year = Student.objects.all()
+                    students_year = students_course
             else:
-                students_year = Student.objects.all()
+                students_year = students_course
 
             if  "branch" in request.POST:
                 branch = request.POST["branch"]
@@ -519,7 +529,7 @@ def get_students_page(request):
 
            
             name = request.session["name"]
-            return render(request, 'app/students.html', {"students": students, "years":years ,"year":year,"branch":branch,"minavg":minavg,"maxavg":maxavg,"lock":lock_status,"name": name})
+            return render(request, 'app/students.html', {"students": students,"course":course, "years":years ,"year":year,"branch":branch,"minavg":minavg,"maxavg":maxavg,"lock":lock_status,"name": name})
         # student login
         else:
             return HttpResponse("Not permitted to access")
@@ -793,7 +803,7 @@ def web_signup(request):
         c.college_id = request.POST["college_id"]
         c.phone = request.POST["phone"]
         c.branch = request.POST["branch"]
-        c.be_or_me = request.POST["be_or_me"]
+        c.course = request.POST["course"]
         year = request.POST["year"]
         year_obj = Year.objects.get(year=year)
         c.y_id = year_obj
@@ -938,7 +948,7 @@ def web_edit_profile(request):
         c.college_id = request.POST["college_id"]
         c.phone = request.POST["phone"]
         c.branch = request.POST["branch"]
-        c.be_or_me = request.POST["be_or_me"]
+        c.course = request.POST["course"]
         year = request.POST["year"]
         c.prn = request.POST["prn"]
         year_obj = Year.objects.get(year=year)
