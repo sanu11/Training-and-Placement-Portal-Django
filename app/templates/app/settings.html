@@ -153,20 +153,19 @@
 <fieldset>
  <div class="panel-group" id="accordion">
  <div>
-    <h4><b>Resume :</b> &nbsp;&nbsp;    {% if resume %}
+    <h4><b>{% if resume %} Update Resume {% else %} Upload Resume 
+        {% endif %}:</b> &nbsp;&nbsp;    {% if resume %}
     <a href = {{resume}}>{{resume}}</a>
     
     {% else %}
     Not Uploaded 
     {% endif %}</h4>
+	<hr>
     </div>
-    <div class="panel">
-        <h4 >
-        <input type="checkbox"  name= "upload resume"  data-toggle="collapse"  href=#expand />&nbsp;&nbsp;   {% if resume %} Update Resume {% else %} Upload Resume 
-        {% endif %}
-		</h4>
+	
+     <h4 ></h4>
       
-      <div id="expand" class="panel-collapse collapse">
+     
       <div class="col-sm-8">
        <div class="input-group">
           <input  name="resume" class="form-control"  id="resume" type="file" />
@@ -174,9 +173,6 @@
     
   </div>
       <input type="submit" id="singlebutton"  name="singlebutton" class="btn btn-info " value="Submit" ></input>
-          
-      </div>
-      </div>
       </div>
       </fieldset>
       </form>
@@ -187,45 +183,37 @@
 {% csrf_token %}
 <fieldset>
       <div class="panel-group" id="accordion">
-      <label> <h4><b>Password :</b> </label><br><br>
- <div class="panel">
-        <h4 >
-        <input type="checkbox"  name= "upload resume"  data-toggle="collapse"  href=#expand2 />&nbsp;&nbsp; Change Password
+       <h4><b>Change Password :</b><br><br>
+ 
+      <div class="col-sm-12">
        
-    </h4>
-      
-      <div id="expand2" class="panel-collapse collapse">
-      <div class="col-sm-8">
-       <div class="input-group">
-          
-      
-<div class="form-group">
-  <label class="col-md-7 control-label" ><h4>Old Password</h4></label>
-  <div class="col-sm-5">
-    <div class="input-group">
-      <input id="old_password" name="old_password" class="form-control" placeholder="*******" type="password">
+		<div class="form-group">
+		<div class="col-sm-4 control-label text-left"  style="padding-top:0px;" ><h4>Old Password</h4></div>
+		<div class="col-sm-5">
+		
+	   <div class="input-group">
+      <input id="old_password" name="old_password" class="form-control text-right" placeholder="*******" type="password">
       <span class="input-group-addon"></span>
     </div>
   </div>
 </div>
 
 <div class="form-group">
-  <label class="col-md-7 control-label" ><h4>New Password</h4></label>
+  <label class="col-sm-4 control-label"  style="padding-top:0px;"><h4>New Password</h4></label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="new_password" name="new_password" class="form-control" placeholder="*******" type="password">
+      <input id="new_password" name="new_password" class="form-control text-right" placeholder="*******" type="password">
       <span class="input-group-addon"></span>
     </div>
   </div>
 </div>
- </div>
-    <br>
+ 
+ <div class="form-group text-center">
+   <button type="button" class="btn btn-info" onclick="changePassword()">Update Password</button>
   </div>
-     <button type="button" class="btn btn-info" onclick="changePassword()">Change</button>
-        
-      </div>
-
-      </div>
+  </div>
+    
+ 
       <!-- Button -->
 
  
