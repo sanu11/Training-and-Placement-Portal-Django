@@ -28,18 +28,21 @@ urlpatterns = [
 	url(r'^presult/$',views.get_result_upload_page),	 
 	url(r'^psearch/$',views.get_search_student_page),
 
-	url(r'^roll/$',views.get_student_details),
+    url(r'^roll/$',views.get_student_details),
 	url(r'^lockStudent/$',views.web_lock_student),
 	url(r'^unlockStudent/$',views.web_unlock_student),
     url(r'^lockAllStudents/$', views.web_lock_all_students),
     url(r'^unlockAllStudents/$', views.web_unlock_all_students),
+    url(r'^updatemarksoption/$', views.web_update_marks_option),
 
     url(r'manage/$',views.manage),
 
-    url(r'^placedStudents/$', views.web_placed_students),
+    url(r'^(?P<c_id>[0-9]+)/viewstudents/$', views.web_view_students),
+    url(r'^downloadappliedstudents/$', views.web_download_applied_students),
 	url(r'^lockCompany/$', views.web_lock_company),
+    url(r'^placedStudents/$', views.web_placed_students),
 
-	url(r'^cregister/$',views.web_register_company),
+    url(r'^cregister/$',views.web_register_company),
 	url(r'^update/$',views.web_update_company),
 	url(r'^editCompany/$', views.web_edit_company),
 	url(r'^getCompanyDetails/$',views.get_company_details),
@@ -59,15 +62,18 @@ urlpatterns = [
 	url(r'^peditmemarks/$', views.get_edit_me_marks_page),
 	url(r'^peditotherdetails/$',views.get_edit_other_details_page),
 	url(r'^presume/$',views.get_resume_upload_page),
+
 	url(r'^pstudentdownload/$',views.get_student_download_page),
+    url(r'^pupdatemarks/$', views.get_update_marks_page),
 
-
-	url(r'^signup/$',views.web_signup),
+    url(r'^signup/$',views.web_signup),
 	url(r'^login/$',views.web_login),
 	url(r'^changepassword/$', views.web_change_password),
 	url(r'^resume/$',views.web_upload_resume),
+    url(r'^applycompany/$', views.web_apply_company),
+    url(r'^updatemarks/$', views.web_update_marks),
 
-	url(r'^editprofile/$', views.web_edit_profile),
+    url(r'^editprofile/$', views.web_edit_profile),
 	url(r'^editsscmarks/$', views.web_edit_ssc_marks),
 	url(r'^edithscmarks/$', views.web_edit_hsc_marks),
 	url(r'^editbemarks/$', views.web_edit_be_marks),
@@ -88,15 +94,7 @@ urlpatterns = [
 	url(r'^students/$',views.get_students_page),
 
 
-##student
-	url(r'^applycompany/$',views.web_apply_company),
-	
-###admin
-	url(r'^(?P<c_id>[0-9]+)/viewstudents/$',views.web_view_students),
-	url(r'^downloadappliedstudents/$',views.web_download_applied_students),
-
-
-	url(r'^logout/$',views.logout),
+    url(r'^logout/$',views.logout),
 	url(r'^home/$',views.get_main_page),
 	
 

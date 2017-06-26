@@ -45,16 +45,10 @@
     
     /* Set black background color, white text and some padding */
     footer {
-   background-color: #353739;
+      background-color: #353739;
     font-size:15px;
       color: #b3b3b1;
       padding: 15px;
-    position:fixed;
-    height:50px;
-      bottom:0px;
-      left:0px;
-      right:0px;
-      margin-bottom:0px;
     }
   footer a:hover
   {
@@ -69,11 +63,23 @@
         padding: 15px;
       }
       .row.content {height:auto;} 
-    body{
+    }
+	body{
       font-family: Georgia, Times, "Times New Roman", serif;
       }
+	*[role="form"] {
+    max-width: 530px;
+    padding: 15px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 0.3em;
+}
 
-    }
+
+*[role="form"] h2 {
+    margin-left: 5em;
+    margin-bottom: 1em;
+}
   </style>
   </head>
 <body>
@@ -131,6 +137,7 @@
   
 <div class="container-fluid ">    
   <div class="row content">
+  
     <div class="col-sm-2 sidenav ">
     {% if login == 1 %}
  <div class="navbar1"  >
@@ -144,64 +151,60 @@
       <li ><a href="/students/"><b>Students List</b></a></li>
       <li><a href="/appliedstudents/"><b>Applied Students</b></a> </li>
      <li><a href="/psearch/"><b>Search Student</b></a> </li>
-
-
     </ul>
     </div>
     {% endif %}
     </div>
     
-    </div>  <div class="col-sm-8 text-left"> 
+     <div class="col-sm-8 text-left"> 
     <br>
        <h1 class="text-center"><b>Resume</b></h1>
-      <br>
-  <form class="form-horizontal" id="result" enctype="multipart/form-data" action="/resume/" method="POST" >
+      <div style="margin-bottom:10px;"></div>
+  <form class="form-horizontal" role="form" id="result" enctype="multipart/form-data" action="/resume/" method="POST" >
 {% csrf_token %}
 <fieldset>
 <!-- Form Name -->
 <!-- Text input-->
 <!-- Select Basic -->
-
 <div class="panel-group" id="accordion">
- <div >
-    <h4 ><b>Resume :</b> &nbsp;&nbsp;    {% if resume %}
+ <div>
+    <h4><b>{% if resume %} Update Resume {% else %} Upload Resume 
+        {% endif %}:</b> &nbsp;&nbsp;    {% if resume %}
     <a href = {{resume}}>{{resume}}</a>
     
     {% else %}
     Not Uploaded 
     {% endif %}</h4>
+	<hr>
     </div>
-    <div class="panel">
-        <h4 >
-        <input type="checkbox"  name= "upload resume"  data-toggle="collapse"  href=#expand />&nbsp;&nbsp;   {% if resume %} Update Resume {% else %} Upload Resume 
-        {% endif %}
-    </h4>
-      
-      <div id="expand" class="panel-collapse collapse">
-      <div class="col-sm-8">
+	
+     <h4 ></h4>
+      <div class="col-sm-12">
        <div class="input-group">
-          <input  name="resume" class="form-control"  id="resume" type="file" />
-       </div></div></div>
-    
+          <input  name="resume" class="form-control"  id="resume" type="file" style="height:42px;" />
+       </div>
+	   <div style="margin-bottom:20px;"></div>
+	   <div class="input-group">
+	   <div class="col-sm-6" style="padding-left:0px;">
+    <button type="button" class="btn btn-info" onclick="editOtherDetailsPage()">Back</button></div>
+      <div class="col-sm-6">  <input type="submit" id="singlebutton"  name="singlebutton" class="btn btn-info " value="Upload Resume" ></input></div>
+  </div>
+  <div style="margin-bottom:20px;"></div>
+  <div class="input-group">
+<div class="col-sm-10 text-center" align="center" style="margin-left:-2%;margin-right:4%;">
+<label><a href = "/"><u>skip</u></a></label>
+</div>
+</div>
+    </div>
 
 <!-- Button -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="singlebutton"></label>
-  
-  <div class="col-sm-4 text-center" align="center" style="margin-left:-2%;margin-right:4%;">
-   <button type="button" class="btn btn-info" onclick="editOtherDetailsPage()">Back</button>
-  
 
-      <input type="submit" id="singlebutton"  name="singlebutton" class="btn btn-info " value="Upload Resume" ></input>
-<br> <br>
-<label class="col-sm-4"><a href = "/"><u>skip</u></a></label>
-    
-  </div>
 </div>
 </fieldset>
 </form>
 
  </div>
+ 
  <div class="col-sm-2 sidenav">
 <!--- Side navigation data paste here-->
 </div>
@@ -210,7 +213,7 @@
 
 
 <footer class="container-fluid text-center">
- <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
+<div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
 <p><a href="/developers-page/">Developers</a></p></div>
 </footer>
 <script>

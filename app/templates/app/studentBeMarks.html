@@ -206,8 +206,14 @@ input:checked + .slider:before {
     <label class="col-md-4 control-label" >FE marks obtained<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="fe_marks" name="fe_marks" class="form-control" placeholder="1100" type="number"  value={{student.fe_marks}} >
-      <span class="input-group-addon"></span>
+
+        {% if update_marks == -1 %}
+        <input id="fe_marks" name="fe_marks" class="form-control" placeholder="1100" type="number"  value='{{student.fe_marks}}' >
+        {% else %}
+        <input id="fe_marks" name="fe_marks" class="form-control" placeholder="1100" type="number"  value='{{student.fe_marks}}' disabled >
+        {% endif %}
+        <span class="input-group-addon"></span>
+
     </div>
   </div>
 </div>
@@ -216,8 +222,14 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label">FE marks out of<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="fe_outof" name="fe_outof" class="form-control" placeholder="1500" type="number"  value={{student.fe_outof}} >
-      <span class="input-group-addon"></span>
+
+        {% if update_marks == -1 %}
+        <input id="fe_outof" name="fe_outof" class="form-control" placeholder="1500" type="number"  value='{{student.fe_outof}}' >
+        {% else %}
+        <input id="fe_outof" name="fe_outof" class="form-control" placeholder="1500" type="number"  value='{{student.fe_outof}}' disabled >
+        {% endif %}
+        <span class="input-group-addon"></span>
+
     </div>
   </div>
 </div>
@@ -227,8 +239,14 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" >SE marks obtained<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="se_marks" name="se_marks" class="form-control" placeholder="1000" type="number"  value={{student.se_marks}} >
-      <span class="input-group-addon"></span>
+
+        {% if update_marks == -1 or update_marks == 1 %}
+        <input id="se_marks" name="se_marks" class="form-control" placeholder="1000" type="number"  value='{{student.se_marks}}' >
+        {% else %}
+        <input id="se_marks" name="se_marks" class="form-control" placeholder="1000" type="number"  value='{{student.se_marks}}' disabled >
+        {% endif %}
+        <span class="input-group-addon"></span>
+
     </div>
   </div>
 </div>
@@ -237,20 +255,24 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label">SE marks out of<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="se_outof" name="se_outof" class="form-control" placeholder="1400" type="number"  value={{student.se_outof}} >
-      <span class="input-group-addon"></span>
+
+        {% if update_marks == -1 or update_marks == 1 %}
+        <input id="se_outof" name="se_outof" class="form-control" placeholder="1400" type="number"  value='{{student.se_outof}}' >
+        {% else %}
+        <input id="se_outof" name="se_outof" class="form-control" placeholder="1400" type="number"  value='{{student.se_outof}}'  disabled>
+        {% endif %}
+        <span class="input-group-addon"></span>
+
     </div>
   </div>
 </div>
-
-
 
 
 <div class="form-group">
   <label class="col-md-4 control-label" >TE marks obtained<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="te_marks" name="te_marks" class="form-control" placeholder="1000" type="number"  value={{student.te_marks}} >
+      <input id="te_marks" name="te_marks" class="form-control" placeholder="1000" type="number"  value='{{student.te_marks}}' >
       <span class="input-group-addon"></span>
     </div>
   </div>
@@ -260,7 +282,7 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label">TE marks out of<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="te_outof" name="te_outof" class="form-control" placeholder="1400" type="number"  value={{student.te_outof}} >
+      <input id="te_outof" name="te_outof" class="form-control" placeholder="1400" type="number"  value='{{student.te_outof}}' >
       <span class="input-group-addon"></span>
     </div>
   </div>
@@ -271,7 +293,13 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" >BE marks obtained</label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="be_marks" name="be_marks" class="form-control" placeholder="1000" type="number"  value={{student.be_marks}} >
+
+        {% if update_marks == -1 or update_marks == 2 %}
+        <input id="be_marks" name="be_marks" class="form-control" placeholder="1000" type="number"  value='{{student.be_marks}}'>
+        {% else %}
+        <input id="be_marks" name="be_marks" class="form-control" placeholder="1000" type="number"  value='{{student.be_marks}}' disabled>
+        {% endif %}
+
       <span class="input-group-addon"></span>
     </div>
   </div>
@@ -281,7 +309,13 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label">BE marks out of</label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="be_outof" name="be_outof" class="form-control" placeholder="1400" type="number"  value={{student.be_outof}} >
+
+        {% if update_marks == -1 or update_marks == 2 %}
+        <input id="be_outof" name="be_outof" class="form-control" placeholder="1400" type="number"  value='{{student.be_outof}}' >
+        {% else %}
+        <input id="be_outof" name="be_outof" class="form-control" placeholder="1400" type="number"  value='{{student.be_outof}}' disabled >
+        {% endif %}
+
       <span class="input-group-addon"></span>
     </div>
   </div>
@@ -332,7 +366,7 @@ input:checked + .slider:before {
 
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="button1id">Passive Back<label style="color:blue">*</label></label>
+  <label class="col-md-4 control-label" >Passive Back<label style="color:blue">*</label></label>
   
   <div class="col-md-8"> 
  <label class="switch">
@@ -350,15 +384,23 @@ input:checked + .slider:before {
 
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="button1id">Year gap<label style="color:blue">*</label></label>
+  <label class="col-md-4 control-label" >Year gap<label style="color:blue">*</label></label>
   
   <div class="col-md-8"> 
  <label class="switch">
-  {% if student.be_yeargap %}
-  <input type="checkbox" name="be_yeargap" value="be_yeargap" checked>
-  {% else %}
-  <input type="checkbox" name="be_yeargap" value="be_yeargap">
-  {% endif %}
+     {% if update_marks == -1 %}
+          {% if student.be_yeargap %}
+          <input type="checkbox" name="be_yeargap" value="be_yeargap" checked>
+          {% else %}
+          <input type="checkbox" name="be_yeargap" value="be_yeargap">
+          {% endif %}
+     {% else %}
+          {% if student.be_yeargap %}
+          <input type="checkbox" name="be_yeargap" value="be_yeargap" checked disabled>
+          {% else %}
+          <input type="checkbox" name="be_yeargap" value="be_yeargap" disabled>
+          {% endif %}
+     {% endif %}
   <div class="slider round"></div>
 </label>
 </label>
@@ -367,11 +409,19 @@ input:checked + .slider:before {
     <div class="form-group">
   <label class="col-sm-4 control-label">Year gap reason</label>
   <div class="col-sm-5">
-      {% if student.be_yeargap_reason %}
-  <input id="be_yeargap_reason" name="be_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md"  value = "{{student.be_yeargap_reason}}">
-{% else %}
-  <input id="be_yeargap_reason" name="be_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md" >
-{% endif %}
+      {% if update_marks == -1 %}
+            {% if student.be_yeargap_reason %}
+            <input id="be_yeargap_reason" name="be_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md"  value = "{{student.be_yeargap_reason}}">
+            {% else %}
+            <input id="be_yeargap_reason" name="be_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md" >
+            {% endif %}
+      {% else %}
+            {% if student.be_yeargap_reason %}
+            <input id="be_yeargap_reason" name="be_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md"  value = "{{student.be_yeargap_reason}}" disabled>
+            {% else %}
+            <input id="be_yeargap_reason" name="be_yeargap_reason" type="text"  placeholder="Fail"   class="form-control input-md"  disabled>
+            {% endif %}
+      {% endif %}
   </div>
 </div>
 </div>
@@ -380,15 +430,21 @@ input:checked + .slider:before {
 
 <!-- Button -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="singlebutton"></label>
-  
+  <label class="col-md-4 control-label" ></label>
+
   <div class="col-sm-4 text-center" align="center" style="margin-left:-2%;margin-right:4%;">
-  <button type="button" class="btn btn-info" onclick="editHscMarksPage()">Back</button>
-  {% if student.is_diploma  %}
-  <button type="button" class="btn btn-info" onclick="editBeMarks(1)">Next</button>
+  {% if update_marks == -1 %}
+      <button type="button" class="btn btn-info" onclick="editHscMarksPage()">Back</button>
+      {% if student.is_diploma  %}
+      <button type="button" class="btn btn-info" onclick="editBeMarks(1)">Next</button>
+      {% else %}
+      <button type="button" class="btn btn-info" onclick="editBeMarks(2)">Next</button>
+      {% endif %}
   {% else %}
-  <button type="button" class="btn btn-info" onclick="editBeMarks(2)">Next</button>
+        <button type="button" class="btn btn-info" onclick="updateMarks()">Submit</button>
   {% endif %}
+
+
   </div>
 </div>
 </fieldset>
@@ -449,7 +505,7 @@ input:checked + .slider:before {
                 success: function(message) {
                 console.log(message);
                     if (message =='success') {
-                        if("{{student.be_or_me}}" == "ME")
+                     if("{{student.be_or_me}}" == "ME")
                                window.location.href = "/peditmemarks/";
                         else{
                                window.location.href = "/peditotherdetails/";
@@ -466,11 +522,55 @@ input:checked + .slider:before {
             });
 
     }
+function updateMarks() {
+        console.log('signupform');
+        var signupform = $('#' + 'signupform');
+        var csrftoken = getCookie('csrftoken');
 
+        var se_marks = document.getElementById("se_marks").value;
+        var se_outof = document.getElementById("se_outof").value;
+        var te_marks = document.getElementById("te_marks").value;
+        var te_outof = document.getElementById("te_outof").value;
+        var total_marks = document.getElementById("total_marks").value;
+        var total_outof = document.getElementById("total_outof").value;
+        var average = document.getElementById("average").value;
+
+
+        if(se_marks=="" || se_outof==""||te_marks==""||te_outof==""||total_marks==""||total_outof==""){
+            alert("Enter all marks");
+            return;
+        }
+        else if (average==""){
+            alert("Enter average");
+            return;
+        }
+            $.ajax({
+                type: "POST",
+                url: '/updatemarks/',
+                data: signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                console.log(message);
+                    if (message =='success') {
+                       alert("Updated successfully");
+                       window.location.href = "/";
+                    }
+                    else
+                    {
+                    alert('Error');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+
+    }
     function editHscMarksPage(argument) {
     window.location.href = "/pedithscmarks";
     // body...
 }
+
+
 
 </script>
 </body>
