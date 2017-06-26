@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!---- BootStrap Libraries         -->
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="/static/js/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/check.js"></script>
 
@@ -120,13 +120,19 @@
           <ul class="dropdown-menu">
            
             {% if login == 2 %}
-            <li><a href="/peditprofile/">Update Profile</a></li>
-             <li><a href="/pstudentdownload/">Download Profile</a></li>
-            <li><a href="/psettings/">Settings</a></li>
+                {% if not lock %}
+                <li><a href="/peditprofile/">Update Profile</a></li>
+                {% endif %}
 
-            
-              {% endif %}            
-              <li><a href="/logout/">Logout</a></li>
+                {% if update_marks != 0 %}
+                <li><a href="/pupdatemarks/">Update Marks</a></li>
+                {% endif %}
+
+                <li><a href="/pstudentdownload/">Download Profile</a></li>
+                <li><a href="/psettings/">Settings</a></li>
+            {% endif %}
+
+               <li><a href="/logout/">Logout</a></li>
 
           </ul>
         </li>

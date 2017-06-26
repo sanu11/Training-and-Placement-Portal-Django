@@ -93,17 +93,24 @@
 
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav" style="margin-left:15.5%;">
-        <li><a href="/">Home</a></li>
+          <ul class="dropdown-menu">
+
             {% if login == 2 %}
-               <li><a href="/opportunities/">Opportunities</a></li>
-        {% endif %}
+                {% if not lock %}
+                <li><a href="/peditprofile/">Update Profile</a></li>
+                {% endif %}
 
-    <li><a href="/companies/">Companies</a></li>
-    <li><a href="/notifications/">Notifications</a></li>
-     <li><a href="/results/">Results</a></li>
+                {% if update_marks != 0 %}
+                <li><a href="/pupdatemarks/">Update Marks</a></li>
+                {% endif %}
 
-      </ul>
+                <li><a href="/pstudentdownload/">Download Profile</a></li>
+                <li><a href="/psettings/">Settings</a></li>
+            {% endif %}
+
+               <li><a href="/logout/">Logout</a></li>
+
+          </ul>
       <ul class="nav navbar-nav navbar-right">
 
     <li class="dropdown">
