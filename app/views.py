@@ -1144,7 +1144,6 @@ def web_change_password(request):
 ########################################
 ########################################
 
-
 @csrf_exempt
 def web_lock_student(request):
     if request.method == "POST":
@@ -1154,6 +1153,7 @@ def web_lock_student(request):
         student.lock = 1
         student.save()
         return HttpResponse("success")
+
 
 @csrf_exempt
 def web_unlock_student(request):
@@ -1177,6 +1177,7 @@ def web_unlock_all_students(request):
             student.save()
         return HttpResponse("success")
 
+
 @csrf_exempt
 def web_lock_all_students(request):
     if request.method == "POST":
@@ -1185,6 +1186,35 @@ def web_lock_all_students(request):
         for student in students:
             student.lock = True
             student.save()
+        return HttpResponse("success")
+
+
+@csrf_exempt
+def web_update_marks(request):
+    if request.method == "POST":
+        year = Year.objects.order_by('-y_id')[0]
+        students = Student.objects.filter(y_id=year)
+        lastyear = request.POST["lastyear"]
+        open     = request.POST["open"]
+        if lastyear == 1:
+            if open == 1:
+                for student in students:
+                    student.update_marks = 1
+                    student.save()
+            elif open == 0:
+                for student in students:
+                    student.update_marks = 0
+                    student.save()
+        else:
+            if open == 1:
+                for student in students:
+                    student.update_marks = 2
+                    student.save()
+            elif open == 0:
+                for student in students:
+                    student.update_marks = 0
+                    student.save()
+
         return HttpResponse("success")
 
 

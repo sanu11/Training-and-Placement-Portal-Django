@@ -33,6 +33,8 @@ urlpatterns = [
 	url(r'^unlockStudent/$',views.web_unlock_student),
     url(r'^lockAllStudents/$', views.web_lock_all_students),
     url(r'^unlockAllStudents/$', views.web_unlock_all_students),
+    url(r'^updatemarks/$', views.web_update_marks),
+
 
     url(r'manage/$',views.manage),
 
