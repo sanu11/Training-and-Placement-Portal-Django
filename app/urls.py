@@ -31,8 +31,12 @@ urlpatterns = [
 	url(r'^roll/$',views.get_student_details),
 	url(r'^lockStudent/$',views.web_lock_student),
 	url(r'^unlockStudent/$',views.web_unlock_student),
+    url(r'^lockAllStudents/$', views.web_lock_all_students),
+    url(r'^unlockAllStudents/$', views.web_unlock_all_students),
 
-	url(r'^placedStudents/$', views.web_placed_students),
+    url(r'manage/$',views.manage),
+
+    url(r'^placedStudents/$', views.web_placed_students),
 	url(r'^lockCompany/$', views.web_lock_company),
 
 	url(r'^cregister/$',views.web_register_company),

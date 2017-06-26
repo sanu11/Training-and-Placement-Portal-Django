@@ -1182,6 +1182,9 @@ def web_verify(request):
         else:
             return HttpResponse("Failed")
 
+@csrf_exempt
+def manage(request):
+    return render(request,'app/manage.html',{})
 
 @csrf_exempt
 def web_register_company(request):

@@ -117,7 +117,11 @@ class Student(models.Model):
 	placed		=		models.BooleanField(default=False)
 	url			=		models.CharField(max_length=500,null=True,blank=True)
 	c_id		=		models.ForeignKey(Company,on_delete=models.SET_NULL,null=True,blank=True)			#foreign key o company table
-	lock		=		models.BooleanField(default=False)		
+	lock		=		models.BooleanField(default=False)
+	update_marks =   	models.IntegerField(default=0)  ### option to be opened after results
+						# 0 - option closed
+						# 1 - update last year marks
+						# 2 - update current sems marks
 
 	def __str__(self):
 		return  self.name
