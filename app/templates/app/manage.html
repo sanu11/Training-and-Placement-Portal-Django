@@ -170,10 +170,10 @@
      <ul>
          <li> <h3><a href="javascript:lockAll()">Lock all students</a></h3> </li>
          <li><h3><a href="javascript:unlockAll()">Unlock all students</a></h3></li>
-         <li><h3><a href="javascript:updatemarks(1,1)">Open update marks option (last year)</a></h3></li>
-         <li><h3><a href="javascript:updatemarks(1,0)">Close update marks option (last year)</a></h3></li>
-         <li><h3><a href="javascript:updatemarks(0,1)">Open update marks option (current year)</a></h3></li>
-         <li><h3><a href="javascript:updatemarks(0,0)">Close update marks option (current year)</a></h3></li>
+         <li><h3><a href="javascript:updatemarksoption(1,1)">Open update marks option (last year)</a></h3></li>
+         <li><h3><a href="javascript:updatemarksoption(1,0)">Close update marks option (last year)</a></h3></li>
+         <li><h3><a href="javascript:updatemarksoption(0,1)">Open update marks option (current year)</a></h3></li>
+         <li><h3><a href="javascript:updatemarksoption(0,0)">Close update marks option (current year)</a></h3></li>
     </ul>
     </div>
     <div class="col-sm-2 sidenav">
@@ -236,21 +236,21 @@ function unlockAll() {
         }
     }
 
-function updatemarks(lastyear,open) {
+function updatemarksoption(lastyear,open) {
             if(lastyear == 1 && open == 1)
             {
-                var answer  = confirm('Are you sure you want to open update marks option of last year?');
+                var answer  = confirm('Are you sure you want to open update marks (last year) option?');
                 var csrftoken = getCookie('csrftoken');
                 if ( ! answer) {
                     return;
                 } else {
                     $.ajax({
                     type: "POST",
-                    url: '/updatemarks/',
+                    url: '/updatemarksoption/',
                     data:  {lastyear:1,open:1,csrfmiddlewaretoken:csrftoken},
                     success: function(message) {
                     if(message=="success")
-                        alert("Update marks Option opened for all students");
+                        alert("Update marks (last year) option opened for all students");
                     },
                     error: function(xhr, errmsg, err) {
                         alert('Error');
@@ -260,7 +260,7 @@ function updatemarks(lastyear,open) {
             }
             else if(lastyear == 1  && open == 0)
             {
-                var answer  = confirm('Are you sure you want to close update marks option for last year?');
+                var answer  = confirm('Are you sure you want to close update marks (last year) option?');
                 var csrftoken = getCookie('csrftoken');
                 if ( ! answer) {
                     return;
@@ -268,11 +268,11 @@ function updatemarks(lastyear,open) {
                 {
                     $.ajax({
                     type: "POST",
-                    url: '/updatemarks/',
+                    url: '/updatemarksoption/',
                     data:  {lastyear:1,open:0,csrfmiddlewaretoken:csrftoken},
                     success: function(message) {
                     if(message=="success")
-                        alert("Update marks option closed for all students");
+                        alert("Update marks option (last year) closed for all students");
                     },
                     error: function(xhr, errmsg, err) {
                         alert('Error');
@@ -281,10 +281,53 @@ function updatemarks(lastyear,open) {
                 }
             }
 
+            else if(lastyear == 0  && open == 1)
+            {
+                var answer  = confirm('Are you sure you want to open update marks (current year) option?');
+                var csrftoken = getCookie('csrftoken');
+                if ( ! answer) {
+                    return;
+                } else
+                {
+                    $.ajax({
+                    type: "POST",
+                    url: '/updatemarksoption/',
+                    data:  {lastyear:0,open:1,csrfmiddlewaretoken:csrftoken},
+                    success: function(message) {
+                    if(message=="success")
+                        alert("Update marks (current year) option opened for all students");
+                    },
+                    error: function(xhr, errmsg, err) {
+                        alert('Error');
+                    },
+                    });
+                }
+            }
+
+
+            else if(lastyear == 0  && open == 0)
+            {
+                var answer  = confirm('Are you sure you want to close update marks (current year) option?');
+                var csrftoken = getCookie('csrftoken');
+                if ( ! answer) {
+                    return;
+                } else
+                {
+                    $.ajax({
+                    type: "POST",
+                    url: '/updatemarksoption/',
+                    data:  {lastyear:0,open:0,csrfmiddlewaretoken:csrftoken},
+                    success: function(message) {
+                    if(message=="success")
+                        alert("Update marks (current year) option closed for all students");
+                    },
+                    error: function(xhr, errmsg, err) {
+                        alert('Error');
+                    },
+                    });
+                }
+            }
     }
-
-
-
 
 </script>
 </body>

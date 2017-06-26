@@ -33,8 +33,7 @@ urlpatterns = [
 	url(r'^unlockStudent/$',views.web_unlock_student),
     url(r'^lockAllStudents/$', views.web_lock_all_students),
     url(r'^unlockAllStudents/$', views.web_unlock_all_students),
-    url(r'^updatemarks/$', views.web_update_marks),
-
+    url(r'^updatemarksoption/$', views.web_update_marks_option),
 
     url(r'manage/$',views.manage),
 
@@ -72,6 +71,7 @@ urlpatterns = [
 	url(r'^changepassword/$', views.web_change_password),
 	url(r'^resume/$',views.web_upload_resume),
     url(r'^applycompany/$', views.web_apply_company),
+    url(r'^updatemarks/$', views.web_update_marks),
 
     url(r'^editprofile/$', views.web_edit_profile),
 	url(r'^editsscmarks/$', views.web_edit_ssc_marks),

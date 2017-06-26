@@ -218,10 +218,16 @@ def get_signup_page(request):
 def get_update_marks_page(request):
     email = request.session["email"]
     student = Student.objects.get(email=email)
-    lock = student.lock
-    update_marks = student.update_marks
-    name = student.name
-    return render(request,'app/studentBEMarks.html',{"login":2,"lock":lock,"update_marks":update_marks,"name":name})
+    if student.update_marks != 0:
+        lock = student.lock
+        update_marks = int(student.update_marks)
+        name = student.name
+        if student.course == "BE":
+            return render(request,'app/studentBEMarks.html',{"login":2,"lock":lock,"student":student,"update_marks":update_marks,"name":name})
+        elif student.course == "ME":
+            return render(request, 'app/studentMEMarks.html',{"login": 2, "lock": lock,"student":student, "update_marks": update_marks, "name": name})
+    else:
+        return HttpResponse("Can't access. Contact admin")
 
 @csrf_exempt
 def get_login_page(request):
@@ -254,6 +260,8 @@ def get_edit_profile_page(request):
         name = request.session["name"]
         email = request.session["email"]
         student = Student.objects.get(email=email)
+        if student.lock == 1:
+            return HttpResponse("Permission denied. Profile locked.")
         years = Year.objects.all()
         return render(request, 'app/editProfile.html',{"login":2,"name":name,"student":student,"years":years})
 
@@ -265,6 +273,8 @@ def get_edit_ssc_marks_page(request):
         name = request.session["name"]
         email = request.session["email"]
         student = Student.objects.get(email=email)
+        if student.lock == 1:
+            return HttpResponse("Permission denied. Profile locked.")
         return render(request, 'app/studentSscMarks.html',{"login":2,"name":name,"student":student})
 
 
@@ -276,6 +286,8 @@ def get_edit_hsc_marks_page(request):
         name = request.session["name"]
         email = request.session["email"]
         student = Student.objects.get(email=email)
+        if student.lock == 1:
+            return HttpResponse("Permission denied. Profile locked.")
         return render(request, 'app/studentHscMarks.html',{"login":2,"name":name,"student":student})
 
 
@@ -287,6 +299,8 @@ def get_edit_be_marks_page(request):
         name = request.session["name"]
         email = request.session["email"]
         student = Student.objects.get(email=email)
+        if student.lock == 1:
+            return HttpResponse("Permission denied. Profile locked.")
         return render(request, 'app/studentBeMarks.html',{"login":2,"name":name,"student":student,"update_marks":-1})
 
 
@@ -298,7 +312,9 @@ def get_edit_me_marks_page(request):
         name = request.session["name"]
         email = request.session["email"]
         student = Student.objects.get(email=email)
-        return render(request, 'app/studentMeMarks.html',{"login":2,"name":name,"student":student})
+        if student.lock == 1:
+            return HttpResponse("Permission denied. Profile locked.")
+        return render(request, 'app/studentMeMarks.html',{"login":2,"name":name,"update_marks":-1,"student":student})
 
 
 @csrf_exempt
@@ -310,8 +326,8 @@ def get_edit_other_details_page(request):
         email = request.session["email"]
         student = Student.objects.get(email=email)
         birth_date = str(student.birth_date)
-        print birth_date
-       
+        if student.lock == 1:
+            return HttpResponse("Permission denied. Profile locked.")
         return render(request, 'app/studentOtherdetails.html',{"login":2,"name":name,"student":student,"birth_date":birth_date})
 
 
@@ -1060,13 +1076,13 @@ def web_edit_be_marks(request):
         
         obj.se_marks = request.POST["se_marks"]
         obj.se_outof = request.POST["se_outof"]
-        
+
         obj.te_marks = request.POST["te_marks"]
         obj.te_outof = request.POST["te_outof"]
-        
+
         obj.total_marks = request.POST["total_marks"]
         obj.total_outof = request.POST["total_outof"]
-        
+
         obj.average = request.POST["average"]
         obj.active_back = request.POST["active_back"]
 
@@ -1138,6 +1154,35 @@ def web_change_password(request):
         student.save()
         return HttpResponse("success")
 
+@csrf_exempt
+def web_update_marks(request):
+    if request.method == "POST":
+        print request.POST
+        email = request.session["email"]
+        obj = Student.objects.get(email=email)
+
+        obj.se_marks = request.POST["se_marks"]
+        obj.se_outof = request.POST["se_outof"]
+
+        obj.te_marks = request.POST["te_marks"]
+        obj.te_outof = request.POST["te_outof"]
+
+        obj.total_marks = request.POST["total_marks"]
+        obj.total_outof = request.POST["total_outof"]
+
+        obj.average = request.POST["average"]
+        obj.active_back = request.POST["active_back"]
+
+        list_checked = request.POST.getlist("passive_back")
+        list_checked = list(list_checked)
+
+        if "passive_back" in list_checked:
+            obj.passive_back = True
+        else:
+            obj.passive_back = False
+        obj.save()
+
+        return HttpResponse("success")
 
 
 #######UPLOAD ADMIN  ###################
@@ -1190,12 +1235,16 @@ def web_lock_all_students(request):
 
 
 @csrf_exempt
-def web_update_marks(request):
+def web_update_marks_option(request):
     if request.method == "POST":
-        year = Year.objects.order_by('-y_id')[0]
+        year     = Year.objects.order_by('-y_id')[0]
         students = Student.objects.filter(y_id=year)
         lastyear = request.POST["lastyear"]
         open     = request.POST["open"]
+        lastyear = int(lastyear)
+        open     =  int(open)
+        print type(lastyear)
+
         if lastyear == 1:
             if open == 1:
                 for student in students:
