@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!---- BootStrap Libraries         -->
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-  <script src="/static/js/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/check.js"></script>
 
@@ -120,9 +120,7 @@
           <ul class="dropdown-menu">
            
             {% if login == 2 %}
-              {% if not lock %}
             <li><a href="/peditprofile/">Update Profile</a></li>
-              {% endif %}
              <li><a href="/pstudentdownload/">Download Profile</a></li>
             <li><a href="/psettings/">Settings</a></li>
 
@@ -183,7 +181,7 @@
      <h4 ></h4>
       <div class="col-sm-12">
        <div class="input-group">
-          <input  name="resume" class="form-control"  id="resume" type="file" />
+          <input  name="resume" class="form-control"  id="resume" type="file" style="height:42px;" />
        </div>
 	   <div style="margin-bottom:20px;"></div>
 	   <div class="input-group">
