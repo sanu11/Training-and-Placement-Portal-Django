@@ -98,6 +98,8 @@ class Student(models.Model):
 	se_outof	  = 	models.IntegerField(null=True,blank=True)
 	te_marks 	  = 	models.IntegerField(null=True,blank=True)
 	te_outof	  = 	models.IntegerField(null=True,blank=True)
+	be_marks	  = 	models.IntegerField(blank=True,null=True)
+	be_outof	  = 	models.IntegerField(blank=True,null=True)
 	total_marks   = 	models.IntegerField(null=True,blank=True)
 	total_outof	  = 	models.IntegerField(null=True,blank=True)
 	average		  =		models.FloatField(null=True,blank=True)

@@ -214,6 +214,7 @@ def get_signup_page(request):
     print ("hello")
     return render(request, 'app/signup.html', {"years":years})
 
+
 @csrf_exempt
 def get_update_marks_page(request):
     email = request.session["email"]
@@ -228,6 +229,7 @@ def get_update_marks_page(request):
             return render(request, 'app/studentMEMarks.html',{"login": 2, "lock": lock,"student":student, "update_marks": update_marks, "name": name})
     else:
         return HttpResponse("Can't access. Contact admin")
+
 
 @csrf_exempt
 def get_login_page(request):
@@ -246,8 +248,8 @@ def get_resume_upload_page(request):
         resume = student.url
     else:
         resume = None
-    return render(request, 'app/resumeUpload.html',{"login":2,"name":name,"resume":resume})
-
+    lock = student.lock
+    return render(request, 'app/resumeUpload.html',{"login":2,"name":name,"resume":resume,"lock":lock})
 
 
 ######### student profile pages#####
@@ -262,7 +264,7 @@ def get_edit_profile_page(request):
         student = Student.objects.get(email=email)
         if student.lock == 1:
             return HttpResponse("Permission denied. Profile locked.")
-        years = Year.objects.all()
+        years = Year.objects.all().order_by('-y_id')
         return render(request, 'app/editProfile.html',{"login":2,"name":name,"student":student,"years":years})
 
 @csrf_exempt
@@ -1160,28 +1162,37 @@ def web_update_marks(request):
         print request.POST
         email = request.session["email"]
         obj = Student.objects.get(email=email)
+        if obj.course == "BE":
+            if obj.update_marks == 1:
+                obj.se_marks = request.POST["se_marks"]
+                obj.se_outof = request.POST["se_outof"]
 
-        obj.se_marks = request.POST["se_marks"]
-        obj.se_outof = request.POST["se_outof"]
+            obj.te_marks = request.POST["te_marks"]
+            obj.te_outof = request.POST["te_outof"]
 
-        obj.te_marks = request.POST["te_marks"]
-        obj.te_outof = request.POST["te_outof"]
+            if obj.update_marks == 2:
+                obj.be_marks = request.POST["be_marks"]
+                obj.be_outof = request.POST["be_outof"]
 
-        obj.total_marks = request.POST["total_marks"]
-        obj.total_outof = request.POST["total_outof"]
+            obj.total_marks = request.POST["total_marks"]
+            obj.total_outof = request.POST["total_outof"]
 
-        obj.average = request.POST["average"]
-        obj.active_back = request.POST["active_back"]
+            obj.average = request.POST["average"]
+            obj.active_back = request.POST["active_back"]
 
-        list_checked = request.POST.getlist("passive_back")
-        list_checked = list(list_checked)
+            list_checked = request.POST.getlist("passive_back")
+            list_checked = list(list_checked)
 
-        if "passive_back" in list_checked:
-            obj.passive_back = True
-        else:
-            obj.passive_back = False
-        obj.save()
-
+            if "passive_back" in list_checked:
+                obj.passive_back = True
+            else:
+                obj.passive_back = False
+            obj.save()
+        elif obj.course == "ME":
+            obj.me_fy_marks = request.POST["me_fy_marks"]
+            if obj.update_marks == 2:
+                obj.me_sy_marks = request.POST["me_sy_marks"]
+            obj.save()
         return HttpResponse("success")
 
 
@@ -1243,13 +1254,14 @@ def web_update_marks_option(request):
         open     = request.POST["open"]
         lastyear = int(lastyear)
         open     =  int(open)
-        print type(lastyear)
-
+        print lastyear,open
         if lastyear == 1:
             if open == 1:
+
                 for student in students:
                     student.update_marks = 1
                     student.save()
+                    print student.name,student.update_marks
             elif open == 0:
                 for student in students:
                     student.update_marks = 0

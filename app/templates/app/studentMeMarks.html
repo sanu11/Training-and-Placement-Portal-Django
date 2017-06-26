@@ -275,7 +275,7 @@ input:checked + .slider:before {
 
 <!-- Button -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="singlebutton"></label>
+  <label class="col-md-4 control-label" f></label>
 
    {% if student.update_marks == -1 %}
         <div class="col-sm-4 text-center" align="center" style="margin-left:-2%;margin-right:4%;">
@@ -362,6 +362,40 @@ function editMeMarks() {
             });
 
     }
+
+    function updateMarks() {
+        console.log('signupform');
+        var signupform = $('#' + 'signupform');
+        var csrftoken = getCookie('csrftoken');
+        var me_fy_marks = document.getElementById("me_fy_marks").value;
+
+        if(me_fy_marks == ""){
+            alert("Enter marks");
+            return;
+        }
+
+            $.ajax({
+                type: "POST",
+                url: '/updatemarks/',
+                data: signupform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                console.log(message);
+                    if (message =='success') {
+                        alert("Marks updated successfully");
+                       window.location.href = "/";
+                    }
+                    else
+                    {
+                    alert('Error');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+
+    }
+
 
 </script>
 </body>
