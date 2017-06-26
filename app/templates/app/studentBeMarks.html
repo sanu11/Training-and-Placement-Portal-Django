@@ -206,8 +206,14 @@ input:checked + .slider:before {
     <label class="col-md-4 control-label" >FE marks obtained<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="fe_marks" name="fe_marks" class="form-control" placeholder="1100" type="number"  value={{student.fe_marks}} >
-      <span class="input-group-addon"></span>
+
+        {% if update_marks == -1 %}
+        <input id="fe_marks" name="fe_marks" class="form-control" placeholder="1100" type="number"  value='{{student.fe_marks}}' >
+        {% else %}
+        <input id="fe_marks" name="fe_marks" class="form-control" placeholder="1100" type="number"  value='{{student.fe_marks}}' disabled >
+        {% endif %}
+        <span class="input-group-addon"></span>
+
     </div>
   </div>
 </div>
@@ -216,8 +222,14 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label">FE marks out of<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="fe_outof" name="fe_outof" class="form-control" placeholder="1500" type="number"  value={{student.fe_outof}} >
-      <span class="input-group-addon"></span>
+
+        {% if update_marks == -1 %}
+        <input id="fe_outof" name="fe_outof" class="form-control" placeholder="1500" type="number"  value='{{student.fe_outof}}' >
+        {% else %}
+        <input id="fe_outof" name="fe_outof" class="form-control" placeholder="1500" type="number"  value='{{student.fe_outof}}' disabled >
+        {% endif %}
+        <span class="input-group-addon"></span>
+
     </div>
   </div>
 </div>
@@ -227,8 +239,14 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" >SE marks obtained<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="se_marks" name="se_marks" class="form-control" placeholder="1000" type="number"  value={{student.se_marks}} >
-      <span class="input-group-addon"></span>
+
+        {% if update_marks == -1 %}
+        <input id="se_marks" name="se_marks" class="form-control" placeholder="1000" type="number"  value='{{student.se_marks}}' >
+        {% else %}
+        <input id="se_marks" name="se_marks" class="form-control" placeholder="1000" type="number"  value='{{student.se_marks}}' disabled >
+        {% endif %}
+        <span class="input-group-addon"></span>
+
     </div>
   </div>
 </div>
@@ -237,8 +255,14 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label">SE marks out of<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="se_outof" name="se_outof" class="form-control" placeholder="1400" type="number"  value={{student.se_outof}} >
-      <span class="input-group-addon"></span>
+
+        {% if update_marks == -1 %}
+        <input id="se_outof" name="se_outof" class="form-control" placeholder="1400" type="number"  value='{{student.se_outof}}'  >
+        {% else %}
+        <input id="se_outof" name="se_outof" class="form-control" placeholder="1400" type="number"  value='{{student.se_outof}}'  disabled>
+        {% endif %}
+        <span class="input-group-addon"></span>
+
     </div>
   </div>
 </div>
@@ -271,7 +295,11 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label" >BE marks obtained</label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="be_marks" name="be_marks" class="form-control" placeholder="1000" type="number"  value={{student.be_marks}} >
+        {% if update_marks == 2  or update_marks == -1 %}
+      <input id="be_marks" name="be_marks" class="form-control" placeholder="1000" type="number"  value='{{student.be_marks}}'>
+        {% else %}
+      <input id="be_marks" name="be_marks" class="form-control" placeholder="1000" type="number"  value='{{student.be_marks}}'  disabled>
+        {% endif %}
       <span class="input-group-addon"></span>
     </div>
   </div>
@@ -281,7 +309,12 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label">BE marks out of</label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="be_outof" name="be_outof" class="form-control" placeholder="1400" type="number"  value={{student.be_outof}} >
+        {% if update_marks == 2 or update_marks == -1 %}
+      <input id="be_outof" name="be_outof" class="form-control" placeholder="1400" type="number"  value='{{student.be_outof}}' >
+        {% else %}
+      <input id="be_outof" name="be_outof" class="form-control" placeholder="1400" type="number"  value='{{student.be_outof}}'  disabled>
+        {% endif %}
+
       <span class="input-group-addon"></span>
     </div>
   </div>
@@ -380,7 +413,7 @@ input:checked + .slider:before {
 
 <!-- Button -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="singlebutton"></label>
+  <label class="col-md-4 control-label" ></label>
   
   <div class="col-sm-4 text-center" align="center" style="margin-left:-2%;margin-right:4%;">
   <button type="button" class="btn btn-info" onclick="editHscMarksPage()">Back</button>
