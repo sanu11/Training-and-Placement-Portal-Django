@@ -204,7 +204,8 @@ def get_settings_page(request):
         student = Student.objects.get(email=email)
         resume = student.url
         login = 2
-        return render(request, 'app/settings.html', {"login":login,"name":name,"resume":resume})
+        lock = student.lock
+        return render(request, 'app/settings.html', {"login":login,"name":name,"resume":resume,"lock":lock})
     else:
         return render(request,'app/redirect2.html',{})
 
@@ -774,14 +775,17 @@ def get_company_page(request, cid):
         if Admin.objects.filter(email=get_mail).exists():
             login = 1
             print "Admin login"
+            lock = 1
         # student login
         elif Student.objects.filter(email=get_mail).exists():
             login = 2
             print "Student login"
+            student = Student.objects.get(email=get_mail)
+            lock = student.lock
         name = request.session["name"]
         if Company.objects.filter(c_id=cid).exists():
             company = Company.objects.get(c_id=cid)
-            return render(request, 'app/companyDisplay.html', {"company": company, "name": name, "login": login})
+            return render(request, 'app/companyDisplay.html', {"company": company, "name": name, "login": login,"lock":lock})
         else:
             return HttpResponse("Not Found")
 

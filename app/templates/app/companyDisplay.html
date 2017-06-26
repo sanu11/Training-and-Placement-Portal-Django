@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% if login == 1 %}
+  {% if login == 1 %}
   <title>{{company.name}}</title>
   {% else %}
   <title>{{company.code_name}}</title>
@@ -122,16 +122,22 @@ font-family: Georgia, Times, "Times New Roman", serif;
       
     <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            
-            {% if login == 2 %}
-            <li><a href="/peditprofile/">Update Profile</a></li>
-            <li><a href="/pstudentdownload/">Download Profile</a></li>
-            <li><a href="/psettings/">Settings</a></li>
+                    <ul class="dropdown-menu">
 
-            
-             {% endif %}
-             <li><a href="/logout/">Logout</a></li>
+            {% if login == 2 %}
+                {% if not lock %}
+                <li><a href="/peditprofile/">Update Profile</a></li>
+                {% endif %}
+
+                {% if update_marks != 0 %}
+                <li><a href="/pupdatemarks/">Update Marks</a></li>
+                {% endif %}
+
+                <li><a href="/pstudentdownload/">Download Profile</a></li>
+                <li><a href="/psettings/">Settings</a></li>
+            {% endif %}
+
+               <li><a href="/logout/">Logout</a></li>
            
           </ul>
         </li>
