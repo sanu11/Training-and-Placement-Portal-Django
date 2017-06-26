@@ -225,13 +225,13 @@ input:checked + .slider:before {
     <div class="form-group">
   <label class="col-md-4 control-label" for="selectbasic">Course</label>
   <div class="col-sm-5">
-    <select id="be_or_me" name="be_or_me" class="form-control">
-        {% if student.be_or_me == "BE" %}
+    <select id="course" name="course" class="form-control">
+        {% if student.course == "BE" %}
       <option value="BE" selected="selected">BE</option>
         {% else %}
       <option value="BE">BE</option>
         {% endif %}
-       {% if student.be_or_me  == "ME" %}
+       {% if student.course  == "ME" %}
         <option value="ME" selected="selected">ME</option>
         {% else %}
         <option value="ME">ME</option>

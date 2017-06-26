@@ -173,10 +173,25 @@
       <div class="input-group-btn">
         <select  class="form-control" name="course" id="course">
     <!--<option selected disabled hidden>Branch</option>-->
-            <option value= "All" selected="selected" >All</option>         
-            <option value = "Comp" selected="selected"> BE </option>          
-            <option value = "IT" selected="selected"> ME </option>       
-		</select>
+            {% if course == "All" %}
+            <option value= "All" selected="selected" >All</option>
+            {% else %}
+            <option value= "All" >All</option>
+            {% endif %}
+
+            {% if course == "BE" %}
+            <option value = "BE" selected="selected"> BE </option>
+            {% else %}
+            <option value = "BE" > BE </option>
+            {% endif %}
+
+            {% if course == "ME" %}
+            <option value = "ME" selected="selected"> ME </option>
+            {% else %}
+            <option value = "ME"> ME </option>
+            {% endif %}
+
+        </select>
 		</div>
 	</div>
   </div>
