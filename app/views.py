@@ -171,7 +171,8 @@ def get_main_page(request):
             print "Student login"
             student = Student.objects.get(email=get_mail)
             lock = student.lock
-            return render(request, 'app/home.html', {"login": login, "name": name,"lock":lock})
+            update_marks = student.update_marks
+            return render(request, 'app/home.html', {"login": login, "name": name,"lock":lock,"update_marks":update_marks})
 
 @csrf_exempt
 def get_developers_page(request):
@@ -593,20 +594,22 @@ def get_notifications_page(request):
         return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
+        name = request.session["name"]
+        notifications = Message.objects.all().order_by('-msg_id')
+
         if Admin.objects.filter(email=get_mail).exists():
             login = 1
             print "Admin login"
             lock=0
         # student login
+            return render(request, 'app/notification.html',{"notifications": notifications, "name": name, "login": login})
         elif Student.objects.filter(email=get_mail).exists():
             login = 2
             print "Student login"
             student = Student.objects.get(email=get_mail)
             lock = student.lock
-        name = request.session["name"]
-        notifications = Message.objects.all().order_by('-msg_id')
-        return render(request, 'app/notification.html', {"notifications": notifications, "name": name, "login": login,"lock":lock})
-
+            update_marks = student.update_marks
+            return render(request, 'app/notification.html',{"notifications": notifications, "name": name, "login": login, "lock": lock,"update_marks":update_marks})
 
 @csrf_exempt
 def get_companies_page(request):
@@ -741,8 +744,9 @@ def get_opportunities_page(request):
 
         arr_list = student.company_set.all()
         lock = student.lock
+        update_marks = student.update_marks
         login = 2
-        return render(request,'app/opportunities.html',{"name":name,"companies":companies,"arr_list":arr_list,"login":login,"lock":lock})
+        return render(request,'app/opportunities.html',{"name":name,"companies":companies,"arr_list":arr_list,"login":login,"lock":lock,"update_marks":update_marks})
     
 @csrf_exempt
 def get_results_page(request):
@@ -760,10 +764,11 @@ def get_results_page(request):
             print "Student login"
             student= Student.objects.get(email=get_mail)
             lock =student.lock
+            update_marks = student.update_marks
         name = request.session["name"]
         results = Result.objects.all().order_by('-r_id')
         print results
-        return render(request, 'app/results.html', {"results": results, "name": name, "login": login,"lock":lock})
+        return render(request, 'app/results.html', {"results": results, "name": name, "login": login,"lock":lock,"update_marks":update_marks})
 
 
 @csrf_exempt
@@ -782,10 +787,11 @@ def get_company_page(request, cid):
             print "Student login"
             student = Student.objects.get(email=get_mail)
             lock = student.lock
+            update_marks = student.update_marks
         name = request.session["name"]
         if Company.objects.filter(c_id=cid).exists():
             company = Company.objects.get(c_id=cid)
-            return render(request, 'app/companyDisplay.html', {"company": company, "name": name, "login": login,"lock":lock})
+            return render(request, 'app/companyDisplay.html', {"company": company, "name": name, "login": login,"lock":lock,"update_marks":update_marks})
         else:
             return HttpResponse("Not Found")
 
@@ -846,6 +852,10 @@ def web_signup(request):
         year = request.POST["year"]
         year_obj = Year.objects.get(year=year)
         c.y_id = year_obj
+        curr_year = Year.objects.all().order_by('-y_id')[0]
+        if year_obj != curr_year:
+            c.lock = 1
+            c.update_marks = 0
         c.save()
         request.session["name"]=name
         request.session["email"]=email
