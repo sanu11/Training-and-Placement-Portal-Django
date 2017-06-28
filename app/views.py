@@ -561,7 +561,7 @@ def get_students_page(request):
 
            
             name = request.session["name"]
-            return render(request, 'app/students.html', {"students": students,"course":course, "years":years ,"year":year,"branch":branch,"minavg":minavg,"maxavg":maxavg,"lock":lock_status,"name": name})
+            return render(request, 'app/students.html', {"students": students,"login":1,"course":course, "years":years ,"year":year,"branch":branch,"minavg":minavg,"maxavg":maxavg,"lock":lock_status,"name": name})
         # student login
         else:
             return HttpResponse("Not permitted to access")
