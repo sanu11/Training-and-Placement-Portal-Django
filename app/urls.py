@@ -28,15 +28,15 @@ urlpatterns = [
 	url(r'^presult/$',views.get_result_upload_page),	 
 	url(r'^psearch/$',views.get_search_student_page),
 
-
-    url(r'^cregister/$',views.web_register_company),
+	url(r'^cregister/$',views.web_register_company),
 	url(r'^update/$',views.web_update_company),
 	url(r'^editCompany/$', views.web_edit_company),
 	url(r'^getCompanyDetails/$',views.get_company_details),
 	url(r'^notify/$',views.web_notify),
 	url(r'^result/$',views.web_upload_result),
+	url(r'^changepassword/$', views.web_change_password_fromadmin),
 
-    url(r'^roll/$',views.get_student_details),
+	url(r'^roll/$',views.get_student_details),
 	url(r'^lockStudent/$',views.web_lock_student),
 	url(r'^unlockStudent/$',views.web_unlock_student),
     url(r'^lockAllStudents/$', views.web_lock_all_students),

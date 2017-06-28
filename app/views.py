@@ -13,6 +13,7 @@ import dropbox
 import requests
 import io
 import random,string
+from django.contrib.auth.hashers import make_password,check_password
 from djqscsv import render_to_csv_response,write_csv
 
 @csrf_exempt
@@ -49,7 +50,7 @@ def login_details(request):
     get_pw = data["password"]
     if Student.objects.filter(email=get_mail).exists():
         obj = Student.objects.get(email=get_mail)
-        if obj.password == get_pw:
+        if check_password(get_pw,obj.password):
             return HttpResponse("Student,"+obj.name)
         else:
             return HttpResponse("Incorrect Password")
@@ -842,7 +843,7 @@ def web_signup(request):
         c = Student()
         c.name = name
         c.email = email
-        c.password = request.POST["password"]
+        password = request.POST["password"]
         c.gender = request.POST["gender"]
         c.roll = roll
         c.college_id = request.POST["college_id"]
@@ -856,6 +857,9 @@ def web_signup(request):
         if year_obj != curr_year:
             c.lock = 1
             c.update_marks = 0
+        #encrypt password
+        encrypt_password = make_password(password,salt=None)
+        c.password = encrypt_password
         c.save()
         request.session["name"]=name
         request.session["email"]=email
@@ -922,7 +926,7 @@ def web_login(request):
             obj = Student.objects.get(email=get_mail)
             if obj.placed:
                 return HttpResponse("You can't login since you are placed.")
-            if obj.password == get_pw:
+            if check_password(get_pw,obj.password):
                 name = obj.name
                 print name, get_mail
                 request.session['email'] = get_mail
@@ -1163,12 +1167,26 @@ def web_change_password(request):
         student = Student.objects.get(email=email)
         password = student.password
         old_password = request.POST["old_password"]
-        if old_password != password:
+        if not check_password(old_password, password):
             return HttpResponse("wrong")
         else:
-            student.password = request.POST["new_password"]
+            new_password = request.POST["new_password"]
+            new_encrypt_password = make_password(new_password,salt=None)
+            student.password = new_encrypt_password
         student.save()
         return HttpResponse("success")
+
+@csrf_exempt
+def web_change_password_fromadmin(request):
+    if request.method == "POST":
+        s_id  = request.POST["s_id"]
+        student = Student.objects.get(s_id=s_id)
+        password = request.POST["password"]
+        print password
+        new_encrypt_password = make_password(password,salt=None)
+        student.password = new_encrypt_password
+        student.save()
+        return render(request, 'app/studentDetails.html', {"student": student, "lock": -1})
 
 @csrf_exempt
 def web_update_marks(request):
@@ -1885,3 +1903,16 @@ def web_download_applied_students(request):
     url = res["url"]
     print  url
     return render_to_csv_response(applied_students)
+
+def password_generate():
+    size = 6
+    chars = string.ascii_uppercase + string.digits + string.lowercase
+    year = Year.objects.all().order_by('-y_id')[0]
+    students = Student.objects.filter(y_id=year)
+    print len(students)
+    for student in students:
+        # password  = ''.join(random.choice(chars) for _ in range(size))
+        # student.password = password
+        encrypt_password = make_password(student.password, salt=None)
+        student.password = encrypt_password
+        student.save()
