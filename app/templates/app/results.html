@@ -123,7 +123,11 @@
                 <li><a href="/psettings/">Settings</a></li>
             {% endif %}
 
-               <li><a href="/logout/">Logout</a></li>
+              {% if login == 1 %}
+                 <li><a href="/manage/">Manage</a></li>
+              {% endif %}
+
+                <li><a href="/logout/">Logout</a></li>
 
           </ul>
         </li>
