@@ -13,7 +13,8 @@
   <script src="/static/js/check.js"></script>
   
    <!---- BootStrap online Libraries        
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://m
+  axcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
    -->
@@ -102,14 +103,15 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav" style="margin-left:15.5%;">
-        <li><a href="/">Home</a></li>
-             {% if login == 2 %}
-               <li><a href="/opportunities/">Opportunities</a></li>
+
+                <li><a href="/">Home</a></li>
+         {% if login == 2 %}
+                <li><a href="/opportunities/">Opportunities</a></li>
         {% endif %}        
-    
-    <li><a href="/companies/">Companies</a></li>
-    <li><a href="/notifications/">Notifications</a></li>
-     <li><a href="/results/">Results</a></li>
+
+                <li><a href="/companies/">Companies</a></li>
+                <li><a href="/notifications/">Notifications</a></li>
+                <li><a href="/results/">Results</a></li>
 
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -130,6 +132,10 @@
                 <li><a href="/pstudentdownload/">Download Profile</a></li>
                 <li><a href="/psettings/">Settings</a></li>
             {% endif %}
+
+            {% if login == 1 %}
+               <li><a href="/manage/">Manage</a></li>
+             {% endif %}
 
                <li><a href="/logout/">Logout</a></li>
            

@@ -109,16 +109,20 @@ font-family: Georgia, Times, "Times New Roman", serif;
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav" style="margin-left:15.5%;">
-        <li><a href="/">Home</a></li>
-         {% if login == 2 %}
-    <li><a href="/opportunities/">Opportunities</a></li>
-    {% endif %}
-    <li><a href="/companies/">Companies</a></li>
-    <li><a href="/notifications/">Notifications</a></li>
-     <li><a href="/results/">Results</a></li>
+
+            <li><a href="/">Home</a></li>
+
+        {% if login == 2 %}
+            <li><a href="/opportunities/">Opportunities</a></li>
+        {% endif %}
+
+            <li><a href="/companies/">Companies</a></li>
+            <li><a href="/notifications/">Notifications</a></li>
+            <li><a href="/results/">Results</a></li>
 
       </ul>
-      <ul class="nav navbar-nav navbar-right">
+
+    <ul class="nav navbar-nav navbar-right">
       
     <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
@@ -126,18 +130,22 @@ font-family: Georgia, Times, "Times New Roman", serif;
 
             {% if login == 2 %}
                 {% if not lock %}
-                <li><a href="/peditprofile/">Update Profile</a></li>
+                    <li><a href="/peditprofile/">Update Profile</a></li>
                 {% endif %}
 
                 {% if update_marks != 0 %}
-                <li><a href="/pupdatemarks/">Update Marks</a></li>
+                    <li><a href="/pupdatemarks/">Update Marks</a></li>
                 {% endif %}
 
-                <li><a href="/pstudentdownload/">Download Profile</a></li>
-                <li><a href="/psettings/">Settings</a></li>
+                    <li><a href="/pstudentdownload/">Download Profile</a></li>
+                    <li><a href="/psettings/">Settings</a></li>
             {% endif %}
 
-               <li><a href="/logout/">Logout</a></li>
+            {% if login == 1 %}
+                   <li><a href="/manage/">Manage</a></li>
+            {% endif %}
+
+                    <li><a href="/logout/">Logout</a></li>
            
           </ul>
         </li>

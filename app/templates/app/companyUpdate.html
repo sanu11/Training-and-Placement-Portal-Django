@@ -105,13 +105,13 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav" style="margin-left:15.5%;">
-        <li><a href="/">Home</a></li>
-                 {% if login == 2 %}
-                         <li><a href="/opportunities/">Opportunities</a></li>
-                {% endif %}          
-    <li><a href="/companies/">Companies</a></li>
-    <li><a href="/notifications/">Notifications</a></li>
-     <li><a href="/results/">Results</a></li>
+            <li><a href="/">Home</a></li>
+        {% if login == 2 %}
+             <li><a href="/opportunities/">Opportunities</a></li>
+        {% endif %}
+            <li><a href="/companies/">Companies</a></li>
+            <li><a href="/notifications/">Notifications</a></li>
+            <li><a href="/results/">Results</a></li>
 
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -119,11 +119,10 @@
     <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{name}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
+
+            <li><a href="/manage/">Manage</a></li>
             <li><a href="/logout/">Logout</a></li>
-            {% if login == 2 %}
-            <li><a href="/peditprofile/">Update Profile</a></li>
-              {% endif %}           
-           
+
           </ul>
         </li>
     

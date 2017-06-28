@@ -108,7 +108,10 @@
                 <li><a href="/psettings/">Settings</a></li>
             {% endif %}
 
-               <li><a href="/logout/">Logout</a></li>
+                {% if login == 1 %}
+                    <li><a href="/manage/">Manage</a></li>
+                {% endif %}
+                    <li><a href="/logout/">Logout</a></li>
 
           </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -118,13 +121,12 @@
           <ul class="dropdown-menu">
 
             {% if login == 2 %}
-            <li><a href="/peditprofile/">Update Profile</a></li>
-            <li><a href="/pstudentdownload/">Download Profile</a></li>
-            <li><a href="/psettings/">Settings</a></li>
-
+                <li><a href="/peditprofile/">Update Profile</a></li>
+                <li><a href="/pstudentdownload/">Download Profile</a></li>
+                <li><a href="/psettings/">Settings</a></li>
 
              {% endif %}
-             <li><a href="/logout/">Logout</a></li>
+                <li><a href="/logout/">Logout</a></li>
 
           </ul>
         </li>
