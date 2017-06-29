@@ -1213,7 +1213,7 @@ def web_update_marks(request):
         obj = Student.objects.get(email=email)
         if obj.course == "BE":
             if obj.update_marks == 1:
-                se_marks = request.POST["se_marks"]
+                se_marks = int(request.POST["se_marks"])
                 obj.se_marks  = se_marks
             else:
                 se_marks = obj.se_marks
@@ -1221,12 +1221,12 @@ def web_update_marks(request):
             fe_marks = obj.fe_marks
             fe_outof = obj.fe_outof
             se_outof = obj.se_outof
-            te_marks = request.POST["te_marks"]
-            te_outof = request.POST["te_outof"]
+            te_marks = int(request.POST["te_marks"])
+            te_outof = int(request.POST["te_outof"])
 
             if obj.update_marks == 2:
-                be_marks = request.POST["be_marks"]
-                be_outof = request.POST["be_outof"]
+                be_marks = int(request.POST["be_marks"])
+                be_outof = int(request.POST["be_outof"])
             else:
                 be_marks = 0
                 be_outof = 0
