@@ -1091,19 +1091,35 @@ def web_edit_be_marks(request):
         obj  =  Student.objects.get(email=email)
 
         if not obj.is_diploma:
-            obj.fe_marks = request.POST["fe_marks"]
-            obj.fe_outof = request.POST["fe_outof"]
-        
-        obj.se_marks = request.POST["se_marks"]
-        obj.se_outof = request.POST["se_outof"]
+            fe_marks = int(request.POST["fe_marks"])
+            fe_outof = obj.fe_outof
+        else:
+            fe_marks  = 0
+            fe_outof = 0
 
-        obj.te_marks = request.POST["te_marks"]
-        obj.te_outof = request.POST["te_outof"]
+        se_marks = int(request.POST["se_marks"])
+        se_outof = obj.se_outof
+        te_marks = int(request.POST["te_marks"])
+        te_outof = int(request.POST["te_outof"])
 
-        obj.total_marks = request.POST["total_marks"]
-        obj.total_outof = request.POST["total_outof"]
+        obj.fe_marks = fe_marks
+        obj.se_marks = se_marks
+        obj.te_marks = te_marks
+        obj.te_outof = te_outof
 
-        obj.average = request.POST["average"]
+        total_marks = fe_marks + se_marks + te_marks
+        total_outof = fe_outof + se_outof + te_outof
+
+        average = float(total_marks)/float(total_outof)
+        average = average*100
+        average = round(average, 2)
+
+        print total_marks,total_outof,average
+
+        obj.total_marks  = total_marks
+        obj.total_outof = total_outof
+        obj.average = average
+
         obj.active_back = request.POST["active_back"]
 
         list_checked = request.POST.getlist("passive_back")

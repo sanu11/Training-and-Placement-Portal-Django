@@ -282,7 +282,7 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label">TE marks out of<label style="color:blue">*</label></label>
   <div class="col-sm-5">
     <div class="input-group">
-      <input id="te_outof" name="te_outof" class="form-control"  type="number"  value='{{student.te_outof}}' disabled >
+      <input id="te_outof" name="te_outof" class="form-control"  type="number"  value='{{student.te_outof}}'>
       <span class="input-group-addon"></span>
     </div>
   </div>
@@ -309,9 +309,11 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label">BE marks out of</label>
   <div class="col-sm-5">
     <div class="input-group">
-
+        {% if  update_marks == 2 %}
+        <input id="be_outof" name="be_outof" class="form-control"  type="number"  value='{{student.be_outof}}'>
+         {% else %}
         <input id="be_outof" name="be_outof" class="form-control"  type="number"  value='{{student.be_outof}}' disabled >
-
+        {% endif %}
       <span class="input-group-addon"></span>
     </div>
   </div>
@@ -319,35 +321,35 @@ input:checked + .slider:before {
 
 
 
-<div class="form-group">
-  <label class="col-md-4 control-label" >Total marks obtained<label style="color:blue">*</label></label>
-  <div class="col-sm-5">
-    <div class="input-group">
-      <input id="total_marks" name="total_marks" class="form-control" type="number"  value={{student.total_marks}} >
-      <span class="input-group-addon"></span>
-    </div>
-  </div>
-</div>
+<!--<div class="form-group">-->
+  <!--<label class="col-md-4 control-label" >Total marks obtained<label style="color:blue">*</label></label>-->
+  <!--<div class="col-sm-5">-->
+    <!--<div class="input-group">-->
+      <!--<input id="total_marks" name="total_marks" class="form-control" type="number"  value={{student.total_marks}} >-->
+      <!--<span class="input-group-addon"></span>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
 
-<div class="form-group">
-  <label class="col-md-4 control-label">Total marks out of<label style="color:blue">*</label></label>
-  <div class="col-sm-5">
-    <div class="input-group">
-      <input id="total_outof" name="total_outof" class="form-control" type="number"  value={{student.total_outof}} >
-      <span class="input-group-addon"></span>
-    </div>
-  </div>
-</div>
+<!--<div class="form-group">-->
+  <!--<label class="col-md-4 control-label">Total marks out of<label style="color:blue">*</label></label>-->
+  <!--<div class="col-sm-5">-->
+    <!--<div class="input-group">-->
+      <!--<input id="total_outof" name="total_outof" class="form-control" type="number"  value={{student.total_outof}} >-->
+      <!--<span class="input-group-addon"></span>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
 
-<div class="form-group">
-  <label class="col-md-4 control-label">Average<label style="color:blue">*</label></label>
-  <div class="col-sm-5">
-    <div class="input-group">
-      <input id="average" name="average" class="form-control"  type="number"  value={{student.average}} >
-      <span class="input-group-addon"></span>
-    </div>
-  </div>
-</div>
+<!--<div class="form-group">-->
+  <!--<label class="col-md-4 control-label">Average<label style="color:blue">*</label></label>-->
+  <!--<div class="col-sm-5">-->
+    <!--<div class="input-group">-->
+      <!--<input id="average" name="average" class="form-control"  type="number"  value={{student.average}} >-->
+      <!--<span class="input-group-addon"></span>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
 
 <div class="form-group">
   <label class="col-md-4 control-label">Active Back<label style="color:blue">*</label></label>
@@ -470,30 +472,23 @@ input:checked + .slider:before {
         var csrftoken = getCookie('csrftoken');
         if(!is_diploma){
         var fe_marks  = document.getElementById("fe_marks").value;
-        var fe_outof  = document.getElementById("fe_outof").value;
-        if(fe_outof =="" ||fe_marks==""){
+
+        if(fe_marks==""){
             alert("Enter FE marks");
         }
 
         }
 
         var se_marks = document.getElementById("se_marks").value;
-        var se_outof = document.getElementById("se_outof").value;
+
         var te_marks = document.getElementById("te_marks").value;
         var te_outof = document.getElementById("te_outof").value;
-        var total_marks = document.getElementById("total_marks").value;
-        var total_outof = document.getElementById("total_outof").value;
-        var average = document.getElementById("average").value;
 
-
-        if(se_marks=="" || se_outof==""||te_marks==""||te_outof==""||total_marks==""||total_outof==""){
+        if(se_marks=="" || te_marks==""||te_outof==""){
             alert("Enter all marks");
             return;
         }
-        else if (average==""){
-            alert("Enter average");
-            return;
-        }
+
             $.ajax({
                 type: "POST",
                 url: '/editbemarks/',
