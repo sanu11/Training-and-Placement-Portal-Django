@@ -252,7 +252,8 @@ def get_resume_upload_page(request):
     else:
         resume = None
     lock = student.lock
-    return render(request, 'app/resumeUpload.html',{"login":2,"name":name,"resume":resume,"lock":lock})
+    update_marks = student.update_marks
+    return render(request, 'app/resumeUpload.html',{"login":2,"name":name,"resume":resume,"lock":lock,"update_marks":update_marks})
 
 
 ######### student profile pages#####
