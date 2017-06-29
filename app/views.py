@@ -227,9 +227,9 @@ def get_update_marks_page(request):
         update_marks = int(student.update_marks)
         name = student.name
         if student.course == "BE":
-            return render(request,'app/studentBEMarks.html',{"login":2,"lock":lock,"student":student,"update_marks":update_marks,"name":name})
+            return render(request,'app/studentBeMarks.html',{"login":2,"lock":lock,"student":student,"update_marks":update_marks,"name":name})
         elif student.course == "ME":
-            return render(request, 'app/studentMEMarks.html',{"login": 2, "lock": lock,"student":student, "update_marks": update_marks, "name": name})
+            return render(request, 'app/studentMeMarks.html',{"login": 2, "lock": lock,"student":student, "update_marks": update_marks, "name": name})
     else:
         return HttpResponse("Can't access. Contact admin")
 
