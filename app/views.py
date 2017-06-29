@@ -1236,7 +1236,7 @@ def web_update_marks(request):
             obj.be_marks = be_marks
             obj.be_outof = be_outof
 
-            if student.is_diploma:
+            if obj.is_diploma:
                 fe_marks = 0
                 fe_outof = 0
 
