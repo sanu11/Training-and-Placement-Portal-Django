@@ -1212,20 +1212,43 @@ def web_update_marks(request):
         obj = Student.objects.get(email=email)
         if obj.course == "BE":
             if obj.update_marks == 1:
-                obj.se_marks = request.POST["se_marks"]
-                obj.se_outof = request.POST["se_outof"]
+                se_marks = request.POST["se_marks"]
+                obj.se_marks  = se_marks
+            else:
+                se_marks = obj.se_marks
 
-            obj.te_marks = request.POST["te_marks"]
-            obj.te_outof = request.POST["te_outof"]
+            fe_marks = obj.fe_marks
+            fe_outof = obj.fe_outof
+            se_outof = obj.se_outof
+            te_marks = request.POST["te_marks"]
+            te_outof = request.POST["te_outof"]
 
             if obj.update_marks == 2:
-                obj.be_marks = request.POST["be_marks"]
-                obj.be_outof = request.POST["be_outof"]
+                be_marks = request.POST["be_marks"]
+                be_outof = request.POST["be_outof"]
+            else:
+                be_marks = 0
+                be_outof = 0
 
-            obj.total_marks = request.POST["total_marks"]
-            obj.total_outof = request.POST["total_outof"]
+            obj.te_marks = te_marks
+            obj.te_outof = te_outof
+            obj.be_marks = be_marks
+            obj.be_outof = be_outof
 
-            obj.average = request.POST["average"]
+            if student.is_diploma:
+                fe_marks = 0
+                fe_outof = 0
+
+            total_marks = fe_marks + se_marks + te_marks + be_marks
+            total_outof = fe_outof + se_outof + te_outof + be_outof
+            average = float(total_marks)/float(total_outof)
+            average = average*100
+            average = round(average,2)
+
+            obj.total_marks = total_marks
+            obj.total_outof = total_outof
+            obj.average = average
+            print average
             obj.active_back = request.POST["active_back"]
 
             list_checked = request.POST.getlist("passive_back")

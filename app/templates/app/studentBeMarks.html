@@ -519,22 +519,15 @@ function updateMarks() {
         var csrftoken = getCookie('csrftoken');
 
         var se_marks = document.getElementById("se_marks").value;
-        var se_outof = document.getElementById("se_outof").value;
         var te_marks = document.getElementById("te_marks").value;
         var te_outof = document.getElementById("te_outof").value;
-        var total_marks = document.getElementById("total_marks").value;
-        var total_outof = document.getElementById("total_outof").value;
-        var average = document.getElementById("average").value;
 
 
-        if(se_marks=="" || se_outof==""||te_marks==""||te_outof==""||total_marks==""||total_outof==""){
+        if(se_marks=="" ||te_marks==""||te_outof==""){
             alert("Enter all marks");
             return;
         }
-        else if (average==""){
-            alert("Enter average");
-            return;
-        }
+
             $.ajax({
                 type: "POST",
                 url: '/updatemarks/',
