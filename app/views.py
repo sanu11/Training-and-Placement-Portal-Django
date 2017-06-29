@@ -1331,7 +1331,6 @@ def web_update_marks_option(request):
             if open == 1:
                 for student in students:
                     student.update_marks = 1
-                    student.te_outof = 1500
                     student.save()
 
             elif open == 0:
@@ -1343,7 +1342,6 @@ def web_update_marks_option(request):
             if open == 1:
                 for student in students:
                     student.update_marks = 2
-                    student.be_outof = 750
                     student.save()
             elif open == 0:
                 for student in students:
