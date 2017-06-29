@@ -293,7 +293,7 @@ input:checked + .slider:before {
   <label class="col-md-4 control-label"></label>
   
   <div class="col-sm-4 text-center" align="center" style="margin-left:-2%;margin-right:4%;">
-      {% if student.be_or_me == "BE" %}
+      {% if student.course == "BE" %}
   <button type="button" class="btn btn-info" onclick="editBeMarksPage()">Back</button>
       {% else %}
   <button type="button" class="btn btn-info" onclick="editMeMarksPage()">Back</button>
