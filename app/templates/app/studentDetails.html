@@ -84,9 +84,11 @@ function printPage() {
 <input class="btn btn-info" type="button" value="Unlock" id="lock1" onclick="unlock('{{student.prn}}')" />
 {% endif %}
 
+{% if login == 1 %}
 <div align="right" style="margin-right:20px;margin-top:-30px">
 <input class="btn btn-info" type="button" value="Change password" id="myBtn"/>
 </div>
+ {% endif %}
 
 <h3>PERSONAL DETAILS</h3>
 <div class="table-responsive table-css">
