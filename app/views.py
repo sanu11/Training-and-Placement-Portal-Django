@@ -1289,19 +1289,21 @@ def web_update_marks_option(request):
         print lastyear,open
         if lastyear == 1:
             if open == 1:
-
                 for student in students:
                     student.update_marks = 1
+                    student.te_outof = 1500
                     student.save()
-                    print student.name,student.update_marks
+
             elif open == 0:
                 for student in students:
                     student.update_marks = 0
                     student.save()
-        else:
+
+        elif lastyear == 0:
             if open == 1:
                 for student in students:
                     student.update_marks = 2
+                    student.be_outof = 750
                     student.save()
             elif open == 0:
                 for student in students:
