@@ -358,8 +358,8 @@ def get_register_page(request):
 def get_student_download_page(request):
     email = request.session["email"]
     student = Student.objects.get(email=email)
-
-    return render(request,'app/studentDetails.html',{"student":student,"lock":-1})
+    login = 2
+    return render(request,'app/studentDetails.html',{"student":student,"lock":-1,"login":login})
 
 @csrf_exempt
 def get_update_page(request):
@@ -483,6 +483,7 @@ def get_student_details(request):
             context = {}
             context["student"]=obj
             context["lock"] = obj.lock
+            context["login"] = 1
             # print obj.lock
             return render(request,"app/studentDetails.html",context)
         else:
@@ -1196,6 +1197,9 @@ def web_change_password(request):
 @csrf_exempt
 def web_change_password_fromadmin(request):
     if request.method == "POST":
+        email  = request.session["email"]
+        if Student.objects.filter(email=email).exists():
+            return HttpResponse("Not permitted to acess")
         s_id  = request.POST["s_id"]
         student = Student.objects.get(s_id=s_id)
         password = request.POST["password"]
