@@ -327,7 +327,7 @@ input:checked + .slider:before {
 <div class="form-group">
   <label class="col-sm-4 control-label">PRN</label>
   <div class="col-sm-5">
-      {% if student.prn != "None" %}
+      {% if student.prn %}
   <input id="prn" name="prn" type="text"  placeholder="71401159C"   class="form-control input-md"  value = {{student.prn}}>
     {% else %}
   <input id="prn" name="prn" type="text"  placeholder="71401159C"   class="form-control input-md" >
