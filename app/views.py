@@ -1416,6 +1416,7 @@ def web_register_company(request):
         obj.y_id = year_obj
 
         if be_criteria:
+            be_criteria = round(float(be_criteria),2)
             obj.be_criteria = be_criteria
         if me_criteria:
             obj.me_criteria = me_criteria
