@@ -54,7 +54,7 @@ def login_details(request):
             return HttpResponse("Student,"+obj.name)
         else:
             return HttpResponse("Incorrect Password")
-    
+
     elif Admin.objects.filter(email=get_mail).exists():
         obj = Admin.objects.get(email=get_mail)
         if obj.password == get_pw:
@@ -151,7 +151,7 @@ def notify(request):
 ########WEB########
 ###################
 
-@csrf_exempt
+
 def get_main_page(request):
     if not request.session.get("name"):
         login = 0
@@ -175,7 +175,7 @@ def get_main_page(request):
             update_marks = student.update_marks
             return render(request, 'app/home.html', {"login": login, "name": name,"lock":lock,"update_marks":update_marks})
 
-@csrf_exempt
+
 def get_developers_page(request):
     if  request.session.get("name"):
         name = request.session["name"]
@@ -198,7 +198,7 @@ def get_developers_page(request):
     return render(request, 'app/developers.html', {"login":login,"name":name})
 
 
-@csrf_exempt
+
 def get_settings_page(request):
     if  request.session.get("name"):
         name = request.session["name"]
@@ -211,14 +211,14 @@ def get_settings_page(request):
     else:
         return render(request,'app/redirect2.html',{})
 
-@csrf_exempt
+
 def get_signup_page(request):
     years = list(Year.objects.all().order_by('-y_id'))
     print ("hello")
     return render(request, 'app/signup.html', {"years":years})
 
 
-@csrf_exempt
+
 def get_update_marks_page(request):
     email = request.session["email"]
     student = Student.objects.get(email=email)
@@ -234,7 +234,7 @@ def get_update_marks_page(request):
         return HttpResponse("Can't access. Contact admin")
 
 
-@csrf_exempt
+
 def get_login_page(request):
     print "in login page"
     if request.session.get("email"):
@@ -242,7 +242,7 @@ def get_login_page(request):
     else:
         return render(request, 'app/login.html', {})
 
-@csrf_exempt
+
 def get_resume_upload_page(request):
     name = request.session["name"]
     email = request.session["email"]
@@ -258,7 +258,7 @@ def get_resume_upload_page(request):
 
 ######### student profile pages#####
 
-@csrf_exempt
+
 def get_edit_profile_page(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -271,7 +271,7 @@ def get_edit_profile_page(request):
         years = Year.objects.all().order_by('-y_id')
         return render(request, 'app/editProfile.html',{"login":2,"name":name,"student":student,"years":years})
 
-@csrf_exempt
+
 def get_edit_ssc_marks_page(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -284,7 +284,7 @@ def get_edit_ssc_marks_page(request):
         return render(request, 'app/studentSscMarks.html',{"login":2,"name":name,"student":student})
 
 
-@csrf_exempt
+
 def get_edit_hsc_marks_page(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -297,7 +297,7 @@ def get_edit_hsc_marks_page(request):
         return render(request, 'app/studentHscMarks.html',{"login":2,"name":name,"student":student})
 
 
-@csrf_exempt
+
 def get_edit_be_marks_page(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -310,7 +310,7 @@ def get_edit_be_marks_page(request):
         return render(request, 'app/studentBeMarks.html',{"login":2,"name":name,"student":student,"update_marks":-1})
 
 
-@csrf_exempt
+
 def get_edit_me_marks_page(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -323,7 +323,7 @@ def get_edit_me_marks_page(request):
         return render(request, 'app/studentMeMarks.html',{"login":2,"name":name,"update_marks":-1,"student":student})
 
 
-@csrf_exempt
+
 def get_edit_other_details_page(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -338,7 +338,7 @@ def get_edit_other_details_page(request):
 
 
 #####UPLOAD pages
-@csrf_exempt
+
 def get_register_page(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -354,14 +354,14 @@ def get_register_page(request):
         else:
             return HttpResponse("Not permitted to access")
 
-@csrf_exempt
+
 def get_student_download_page(request):
     email = request.session["email"]
     student = Student.objects.get(email=email)
     login = 2
     return render(request,'app/studentDetails.html',{"student":student,"lock":-1,"login":login})
 
-@csrf_exempt
+
 def get_update_page(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -393,7 +393,7 @@ def get_company_edit_page(request):
         else:
             return HttpResponse("Not permitted to access")
 
-@csrf_exempt
+
 def get_notify_page(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -408,7 +408,7 @@ def get_notify_page(request):
             return HttpResponse("Not permitted to access")
 
 
-@csrf_exempt
+
 def get_result_upload_page(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -424,7 +424,7 @@ def get_result_upload_page(request):
         else:
             return HttpResponse("Not permitted to access")
 
-@csrf_exempt
+
 def get_company_details(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -444,7 +444,7 @@ def get_company_details(request):
             return HttpResponse("Not permitted to access")
 
 
-@csrf_exempt
+
 def get_search_student_page(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -460,7 +460,7 @@ def get_search_student_page(request):
             return HttpResponse("Not permitted to access")
 
 
-@csrf_exempt
+
 def get_student_details(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -475,7 +475,7 @@ def get_student_details(request):
                 year = Year.objects.get(year=year)
             else:
                 year = Year.objects.all()[0]
-                        
+
             roll  = request.POST["roll"]
             if not Student.objects.filter(roll=roll,y_id=year).exists():
                 return HttpResponse("Student not found")
@@ -490,11 +490,10 @@ def get_student_details(request):
             return HttpResponse("Not permitted to access")
 
 
-
 #######DISPLAY Pages######
 
 
-@csrf_exempt
+
 def get_students_page(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -536,7 +535,7 @@ def get_students_page(request):
             minavg = 0
             maxavg=100
             lock_status = "All"
-            
+
             if "minavg" in request.POST:
                 minavg = request.POST["minavg"]
                 students_min_average = students_branch.filter(average__gte = minavg)
@@ -563,7 +562,7 @@ def get_students_page(request):
             students = students_lock_status
             years = Year.objects.all().order_by('-y_id')
 
-            print students
+
             name = request.session["name"]
             return render(request, 'app/students.html', {"students": students,"login":1,"course":course, "years":years ,"year":year,"branch":branch,"minavg":minavg,"maxavg":maxavg,"lock":lock_status,"name": name})
         # student login
@@ -571,7 +570,7 @@ def get_students_page(request):
             return HttpResponse("Not permitted to access")
 
 #handled using ajax
-@csrf_exempt
+
 def get_student_page(request, roll):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -591,7 +590,7 @@ def get_student_page(request, roll):
 
 
 ###Accessible to students
-@csrf_exempt
+
 def get_notifications_page(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -614,7 +613,7 @@ def get_notifications_page(request):
             update_marks = student.update_marks
             return render(request, 'app/notification.html',{"notifications": notifications, "name": name, "login": login, "lock": lock,"update_marks":update_marks})
 
-@csrf_exempt
+
 def get_companies_page(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -697,7 +696,7 @@ def get_companies_page(request):
         name = request.session["name"]
     return render(request, 'app/companies.html', {"companies": companies,"years":years,"year":year_obj,"minsal":minsal ,"maxsal":maxsal,"mincri":mincri, "maxcri":maxcri ,"name": name, "login": login,"lock":lock,"update_marks":update_marks})
 
-@csrf_exempt
+
 def get_applied_students_page(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -711,7 +710,7 @@ def get_applied_students_page(request):
     else:
         return HttpResponse("Not permitted to access")
 
-@csrf_exempt
+
 def web_view_students(request,c_id):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -750,8 +749,8 @@ def get_opportunities_page(request):
         update_marks = student.update_marks
         login = 2
         return render(request,'app/opportunities.html',{"name":name,"companies":companies,"arr_list":arr_list,"login":login,"lock":lock,"update_marks":update_marks})
-    
-@csrf_exempt
+
+
 def get_results_page(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -774,7 +773,7 @@ def get_results_page(request):
         return render(request, 'app/results.html', {"results": results, "name": name, "login": login,"lock":lock,"update_marks":update_marks})
 
 
-@csrf_exempt
+
 def get_company_page(request, cid):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -814,7 +813,7 @@ def get_placed_students_page(request,cid):
     placed_students = company.student_set.all()
     return  render(request,'app/placedStudents.html',{"students":placed_students,"companyName":company.name,"login":login,"name":name})
 
-@csrf_exempt
+
 def logout(request):
     if not request.session.get("name"):
         return render(request,'app/redirect2.html',{})
@@ -833,7 +832,7 @@ def logout(request):
 ########################################
 
 
-@csrf_exempt
+
 def web_signup(request):
     if request.method == "POST":
         email = request.POST["email"]
@@ -916,7 +915,7 @@ def web_upload_resume(request):
     else:
         HttpResponse("Error")
 
-@csrf_exempt
+
 def web_login(request):
     if request.method == "POST":
         print "in web_login"
@@ -950,7 +949,7 @@ def web_login(request):
         else:
             return HttpResponse("User not found")
 
-@csrf_exempt
+
 def web_apply_company(request):
     email = request.session["email"]
     student =  Student.objects.get(email=email)
@@ -964,7 +963,7 @@ def web_apply_company(request):
         return HttpResponse("Not accepting applications")
     back_allowed = company.back
     applied = request.POST["applied"]
-    print "Already applied " ,applied    
+    print "Already applied " ,applied
     reg_end = company.reg_end
     if applied == "false":
         if reg_end and timezone.now()>reg_end:
@@ -977,7 +976,7 @@ def web_apply_company(request):
         if reg_end and timezone.now()>reg_end:
             print "deadline over"
             return HttpResponse("Can't Apply. Deadline over.")
-        else: 
+        else:
             if company.back == "Active not Allowed" and student.active_back > 0:
                 return HttpResponse("Can't apply. Active not Allowed")
             elif company.back == "Passive not Allowed" and student.passive_back:
@@ -987,8 +986,8 @@ def web_apply_company(request):
             else:
                 company.applied_students.add(student)
                 return HttpResponse("Applied Successfully")
-    
-@csrf_exempt
+
+
 def web_edit_profile(request):
     if request.method == "POST":
         email = request.POST["email"]
@@ -1016,7 +1015,7 @@ def web_edit_profile(request):
         return HttpResponse('error');
 
 
-@csrf_exempt
+
 def web_edit_ssc_marks(request):
     if request.method == "POST":
         email = request.session["email"]
@@ -1028,7 +1027,7 @@ def web_edit_ssc_marks(request):
             obj.tenth_marks = tenth_marks
         obj.tenth_schoolname  = request.POST["tenth_schoolname"]
         obj.tenth_city  = request.POST["tenth_city"]
-        
+
         list_checked = request.POST.getlist("tenth_yeargap")
         list_checked = list(list_checked)
         print list_checked
@@ -1043,16 +1042,16 @@ def web_edit_ssc_marks(request):
         print list_checked
         if "is_diploma" in list_checked:
             obj.is_diploma = True
-           
+
         else:
             obj.is_diploma= False
 
-        
-    
-        obj.save()        
+
+
+        obj.save()
         return HttpResponse('success');
 
-@csrf_exempt
+
 def web_edit_hsc_marks(request):
     if request.method == "POST":
         email = request.session["email"]
@@ -1071,7 +1070,7 @@ def web_edit_hsc_marks(request):
 
             list_checked = request.POST.getlist("twelveth_yeargap")
             list_checked = list(list_checked)
-          
+
             if "twelveth_yeargap" in list_checked:
                 obj.twelveth_yeargap = True
                 obj.twelveth_yeargap_reason  = request.POST["twelveth_yeargap_reason"]
@@ -1086,7 +1085,7 @@ def web_edit_hsc_marks(request):
 
         return HttpResponse("success")
 
-@csrf_exempt
+
 def web_edit_be_marks(request):
     if request.method == "POST":
         email = request.session["email"]
@@ -1144,7 +1143,7 @@ def web_edit_be_marks(request):
         return HttpResponse("success")
 
 
-@csrf_exempt
+
 def web_edit_me_marks(request):
     if request.method == "POST":
         email = request.session["email"]
@@ -1160,7 +1159,7 @@ def web_edit_me_marks(request):
         student.save()
     return HttpResponse("success")
 
-@csrf_exempt
+ 
 def web_edit_other_details(request):
     if request.method == "POST":
         email = request.session["email"]
@@ -1178,7 +1177,7 @@ def web_edit_other_details(request):
         return HttpResponse("success")
 
 
-@csrf_exempt
+ 
 def web_change_password(request):
     if request.method == "POST":
         email  =request.session["email"]
@@ -1194,7 +1193,7 @@ def web_change_password(request):
         student.save()
         return HttpResponse("success")
 
-@csrf_exempt
+ 
 def web_change_password_fromadmin(request):
     if request.method == "POST":
         email  = request.session["email"]
@@ -1209,7 +1208,7 @@ def web_change_password_fromadmin(request):
         student.save()
         return render(request, 'app/studentDetails.html', {"student": student, "lock": -1})
 
-@csrf_exempt
+ 
 def web_update_marks(request):
     if request.method == "POST":
         print request.POST
@@ -1276,7 +1275,7 @@ def web_update_marks(request):
 ########################################
 ########################################
 
-@csrf_exempt
+ 
 def web_lock_student(request):
     if request.method == "POST":
         prn = request.POST["prn"]
@@ -1287,7 +1286,7 @@ def web_lock_student(request):
         return HttpResponse("success")
 
 
-@csrf_exempt
+ 
 def web_unlock_student(request):
     if request.method == "POST":
         prn = request.POST["prn"]
@@ -1299,7 +1298,7 @@ def web_unlock_student(request):
         return HttpResponse("success")
 
 
-@csrf_exempt
+ 
 def web_unlock_all_students(request):
     if request.method == "POST":
         year = Year.objects.order_by('-y_id')[0]
@@ -1310,7 +1309,7 @@ def web_unlock_all_students(request):
         return HttpResponse("success")
 
 
-@csrf_exempt
+ 
 def web_lock_all_students(request):
     if request.method == "POST":
         year = Year.objects.order_by('-y_id')[0]
@@ -1321,7 +1320,7 @@ def web_lock_all_students(request):
         return HttpResponse("success")
 
 
-@csrf_exempt
+ 
 def web_update_marks_option(request):
     if request.method == "POST":
         year     = Year.objects.order_by('-y_id')[0]
@@ -1355,7 +1354,7 @@ def web_update_marks_option(request):
         return HttpResponse("success")
 
 
-@csrf_exempt
+ 
 def web_verify(request):
     if request.method == "POST":
         prn = request.POST["prn"]
@@ -1364,7 +1363,7 @@ def web_verify(request):
         else:
             return HttpResponse("Failed")
 
-@csrf_exempt
+ 
 def manage(request):
     name = request.session["name"]
     email = request.session["email"]
@@ -1374,7 +1373,7 @@ def manage(request):
     else:
         return HttpResponse("Not permitted to access")
 
-@csrf_exempt
+ 
 def web_register_company(request):
     if request.method == "POST":
         year = request.POST["year"]
@@ -1457,7 +1456,7 @@ def web_register_company(request):
         return HttpResponse("error")
 
 
-@csrf_exempt
+ 
 def web_update_company(request):
     if request.method == "POST":
         name = request.POST["name"]
@@ -1509,7 +1508,7 @@ def web_update_company(request):
         return HttpResponse("success")
     return HttpResponse("error")
 
-@csrf_exempt
+ 
 def web_edit_company(request):
     if request.method == "POST":
         name = request.POST["name"] #gives id
@@ -1611,7 +1610,7 @@ def web_edit_company(request):
         return HttpResponse("error")
 
 
-@csrf_exempt
+ 
 def web_notify(request):
     if request.method == "POST":
         title = request.POST["title"]
@@ -1668,7 +1667,7 @@ def web_notify(request):
         return HttpResponse("error")
 
 
-@csrf_exempt
+ 
 def web_upload_result(request):
     if request.method == "POST":
         choice = request.POST["choice"]
@@ -1739,7 +1738,7 @@ def web_upload_result(request):
         HttpResponse('error')
 
 
-@csrf_exempt
+ 
 def web_placed_students(request):
     c_id = request.POST["c_id"]
     company = Company.objects.get(c_id=c_id)
@@ -1771,7 +1770,7 @@ def web_placed_students(request):
         return  HttpResponse("Company Locked")
 
 
-@csrf_exempt
+ 
 def web_lock_company(request):
     c_id = request.POST["c_id"]
     company = Company.objects.get(c_id=c_id)
@@ -1781,7 +1780,7 @@ def web_lock_company(request):
     return HttpResponse(company.name + " Locked Successfully")
 
 
-@csrf_exempt
+ 
 def web_hide_company(request,cid):
     company = Company.objects.get(c_id=cid)
     if company.hidden:
@@ -1795,7 +1794,7 @@ def web_hide_company(request,cid):
 
 
 #########called from ajax######
-@csrf_exempt
+ 
 def web_download_students(request):
     year = request.POST["year"]
     branch = request.POST["branch"]
@@ -1856,7 +1855,7 @@ def web_download_students(request):
     return render_to_csv_response(students)
 
 
-@csrf_exempt
+ 
 def web_download_companies(request):
     minsal = request.POST["minsal"]
     maxsal = request.POST["maxsal"]
@@ -1912,7 +1911,7 @@ def web_download_companies(request):
     return render_to_csv_response(companies)
 
 
-@csrf_exempt
+ 
 def web_download_applied_students(request):
     c_id  = request.POST["c_id"]
     company = Company.objects.get(c_id=c_id)
