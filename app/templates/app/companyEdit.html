@@ -358,6 +358,83 @@ input::-webkit-calendar-picker-indicator{
   })
 
 
+
+    function loadDetails() {
+
+        var csrftoken = getCookie('csrftoken');
+        var company = document.getElementById("name").value;
+
+            $.ajax({
+                type: "POST",
+                url: '/getCompanyDetails/',
+                data: {company:company,csrfmiddlewaretoken:csrftoken},
+                success: function(message) {
+                console.log(message);
+                    str  = jQuery.parseJSON(message);
+                    data = str[0]["fields"];
+
+                    be_criteria = data["be_criteria"];
+                    me_criteria = data["me_criteria"];
+                    salary = data["salary"];
+                    position = data["position"];
+                    back = data["back"];
+                    other_details = data["other_details"];
+
+                    document.getElementById("be_criteria").value = be_criteria;
+                    document.getElementById("me_criteria").value = me_criteria;
+                    document.getElementById("salary").value = salary;
+                    document.getElementById("position").value = position;
+                    document.getElementById("back").value = back;
+                    document.getElementById("other_details").value = other_details;
+
+
+                    ppt = data["ppt_date"];
+
+                    if(ppt!=null){
+                    var arr = ppt.split('T');
+                    ppt_date = arr[0];
+                    ppt_time = arr[1];
+
+                    var date = ppt_date.split('-');
+                    var year = date[0];
+                    var month = date[1];
+                    var dt = date[2];
+                    ppt_date = month + "/"+dt + "/" + year;
+                    ppt_time = ppt_time.slice(0,5);
+
+                    document.getElementById("ppt_date").value =ppt_date;
+                    document.getElementById("ppt_time").value = ppt_time;
+
+
+                    }
+
+
+                    reg_end = data["reg_end"];
+                    console.log(reg_end);
+                    if(reg_end != null){
+                    arr = reg_end.split('T');
+                    reg_end_date = arr[0];
+                    reg_end_time = arr[1].slice(0,5);
+
+
+                    date = reg_end_date.split('-');
+                    year = date[0];
+                    month = date[1];
+                    dt = date[2];
+                    reg_end_date = month + "/"+dt + "/" + year;
+
+                    document.getElementById("reg_end_date").value = reg_end_date;
+                    document.getElementById("reg_end_time").value = reg_end_time;
+
+                    }
+
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+
+    }
 </script>
 <footer class="container-fluid text-center">
     <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
