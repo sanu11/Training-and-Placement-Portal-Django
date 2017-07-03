@@ -781,6 +781,7 @@ def get_company_page(request, cid):
         return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
+        update_marks = -1
         if Admin.objects.filter(email=get_mail).exists():
             login = 1
             print "Admin login"
