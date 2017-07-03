@@ -166,5 +166,32 @@
  <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
 <p><a href="/developers-page/">Developers</a></p></div>
 </footer>
+<script>
+
+function studentLogin() {
+        console.log('loginform');
+        var loginform = $('#' + 'loginform');
+        var csrftoken = getCookie('csrftoken');
+
+        $.ajax({
+            type: "POST",
+            url: '/login/',
+            data: loginform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+            success: function(message) {
+            console.log(message);
+                if (message =='Success') {
+                   window.location.href = "/";
+                }
+                else
+                {
+                    alert(message);
+                }
+            },
+            error: function(xhr, errmsg, err) {
+                alert('Error');
+            },
+        });
+    }
+</script>
 </body>
 </html>
