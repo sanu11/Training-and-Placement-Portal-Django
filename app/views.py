@@ -756,16 +756,18 @@ def get_results_page(request):
         return render(request,'app/redirect2.html',{})
     else:
         get_mail = request.session["email"]
+        update_marks = -1
         if Admin.objects.filter(email=get_mail).exists():
             login = 1
             print "Admin login"
             lock=0
+
         # student login
         elif Student.objects.filter(email=get_mail).exists():
             login = 2
             print "Student login"
             student= Student.objects.get(email=get_mail)
-            lock =student.lock
+            lock = student.lock
             update_marks = student.update_marks
         name = request.session["name"]
         results = Result.objects.all().order_by('-r_id')
