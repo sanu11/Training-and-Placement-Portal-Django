@@ -435,6 +435,57 @@ input::-webkit-calendar-picker-indicator{
             });
 
     }
+
+    function companyEdit() {
+        console.log('editform');
+        var registerform = $('#' + 'edit');
+        var csrftoken = getCookie('csrftoken');
+        var c_id = document.getElementById("name").value; //actually c_id is value
+        var ppt_date = document.getElementById("ppt_date").value;
+        var reg_end_date = document.getElementById("reg_end_date").value;
+        var ppt_time  = document.getElementById("ppt_time").value;
+        var reg_end_time = document.getElementById("reg_end_time").value;
+
+        if(name == "Select Company")
+            alert('Enter name');
+        else if(ppt_date && ! isValidDate(ppt_date))
+        alert("Invalid Ppt Date");
+        else if(reg_end_date &&! isValidDate(reg_end_date))
+        alert("Invalid Reg end date");
+
+        else if(ppt_time && !isValidTime(ppt_time))
+        alert("Invalid Ppt time");
+        else if(reg_end_time && !isValidTime(reg_end_time))
+        alert("Invalid Reg end time");
+
+        else
+        {
+            $.ajax({
+                type: "POST",
+                url: '/editCompany/',
+                data: registerform.serialize() + '&csrfmiddlewaretoken=' + csrftoken,
+                success: function(message) {
+                    if (message =='success') {
+                        alert('Edited Successfully');
+                         window.location.href = "/";
+
+                    }
+
+                    else
+                    {
+                        alert('Error occured');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    alert('Error');
+                },
+            });
+        }
+    }
+
+
+
+
 </script>
 <footer class="container-fluid text-center">
     <div>© 2016-2017 <a href="http://pict.edu">PICT.EDU</a>, All rights reserved.<br/>
