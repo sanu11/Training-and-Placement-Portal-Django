@@ -207,6 +207,7 @@ input:checked + .slider:before {
 
 
             <form class="form-horizontal" id="result" enctype="multipart/form-data" action="/result/" method="POST">
+                {% csrf_token %}
                 <fieldset>
                     <!-- Form Name -->
                     <!-- Text input-->
