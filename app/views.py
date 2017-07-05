@@ -1,4 +1,4 @@
-djangoimport datetime
+import datetime
 from django.utils import timezone
 from django.shortcuts import render , redirect
 from django.template.loader import render_to_string 
