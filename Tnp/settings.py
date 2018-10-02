@@ -154,7 +154,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-GCM_APIKEY = "AIzaSyBQL45koCxt0zvLugl1lmqfzusDM2HdFJw"
+GCM_APIKEY = "AIzaSyCfv_LOKw49nU1aeXZ7oBOajsM7TXVzfRg"
 
 
 # for local , comment this when deploying to heroku
@@ -167,3 +167,5 @@ GCM_APIKEY = "AIzaSyBQL45koCxt0zvLugl1lmqfzusDM2HdFJw"
 #         'NAME': os.path.join(PROJECT_DIR, 'sanika.db'),
 #     }
 # }
+
+django_heroku.settings(locals())
