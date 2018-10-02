@@ -1,8 +1,6 @@
 venv
 *.pyc
-staticfiles
 .env
 /myprojectenv/*
 nohup.*
 *.db
-settings.py
