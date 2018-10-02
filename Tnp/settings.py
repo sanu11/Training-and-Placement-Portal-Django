@@ -168,5 +168,3 @@ GCM_APIKEY = "AIzaSyCfv_LOKw49nU1aeXZ7oBOajsM7TXVzfRg"
 #         'NAME': os.path.join(PROJECT_DIR, 'sanika.db'),
 #     }
 # }
-
-django_heroku.settings(locals())
