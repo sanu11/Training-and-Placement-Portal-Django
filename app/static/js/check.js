@@ -108,7 +108,8 @@ function companyUpdate() {
     return valid;
 }
 
-
+// Add the middleware 'django.middleware.csrf.CsrfViewMiddleware' to your list of middleware classes, MIDDLEWARE_CLASSES. (It should come before any view middleware that assume that CSRF attacks have been dealt with.)
+//csrf token  will be set if you’ve enabled CSRF protection for your views as outlined above.
 
  function getCookie(name) {
     var cookieValue = null;

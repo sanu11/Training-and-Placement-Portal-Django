@@ -4,3 +4,4 @@ venv
 /myprojectenv/*
 nohup.*
 *.db
+settings.py
