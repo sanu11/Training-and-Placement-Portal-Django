@@ -5,4 +5,3 @@ It's integrated with android-app wherein people are notified when any updations 
 Link to code for android app is here : - https://github.com/sanu11/Tnp_app<br>
 django-gcm module is to communicate with Firebase Messaging Service which is used to send notifications to android app<br>
 Student test login: Username: sanikashah1110@gmail.com Password: sanika <br>
-Admin test login:   Useranme: admin@gmail.com Password: admin <br>
